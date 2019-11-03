@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>All Models Are Wrong</title>
+  <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="All Models Are Wrong" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://allmodelsarewrong.github.io" />
+  
+  <meta property="og:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="All Models Are Wrong" />
+  
+  <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  
+
+<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+
+
+<meta name="date" content="2019-11-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="about.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Welcome</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>II Intro</b></span></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#basic-notation"><i class="fa fa-check"></i><b>2.1</b> Basic Notation</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#about-statistical-learning"><i class="fa fa-check"></i><b>2.2</b> About Statistical Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="duality.html"><a href="duality.html"><i class="fa fa-check"></i><b>3</b> Geometric Duality</a><ul>
+<li class="chapter" data-level="3.1" data-path="duality.html"><a href="duality.html#rows-space"><i class="fa fa-check"></i><b>3.1</b> Rows Space</a></li>
+<li class="chapter" data-level="3.2" data-path="duality.html"><a href="duality.html#columns-space"><i class="fa fa-check"></i><b>3.2</b> Columns Space</a></li>
+<li class="chapter" data-level="3.3" data-path="duality.html"><a href="duality.html#cloud-of-individuals"><i class="fa fa-check"></i><b>3.3</b> Cloud of Individuals</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="duality.html"><a href="duality.html#average-individual"><i class="fa fa-check"></i><b>3.3.1</b> Average Individual</a></li>
+<li class="chapter" data-level="3.3.2" data-path="duality.html"><a href="duality.html#centered-data"><i class="fa fa-check"></i><b>3.3.2</b> Centered Data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="duality.html"><a href="duality.html#distance-between-individuals"><i class="fa fa-check"></i><b>3.3.3</b> Distance between individuals</a></li>
+<li class="chapter" data-level="3.3.4" data-path="duality.html"><a href="duality.html#distance-to-the-centroid"><i class="fa fa-check"></i><b>3.3.4</b> Distance to the centroid</a></li>
+<li class="chapter" data-level="3.3.5" data-path="duality.html"><a href="duality.html#measures-of-dispersion"><i class="fa fa-check"></i><b>3.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="duality.html"><a href="duality.html#cloud-of-variables"><i class="fa fa-check"></i><b>3.4</b> Cloud of Variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="duality.html"><a href="duality.html#mean-of-a-variable"><i class="fa fa-check"></i><b>3.4.1</b> Mean of a Variable</a></li>
+<li class="chapter" data-level="3.4.2" data-path="duality.html"><a href="duality.html#variance-of-a-variable"><i class="fa fa-check"></i><b>3.4.2</b> Variance of a Variable</a></li>
+<li class="chapter" data-level="3.4.3" data-path="duality.html"><a href="duality.html#variance-with-vector-notation"><i class="fa fa-check"></i><b>3.4.3</b> Variance with Vector Notation</a></li>
+<li class="chapter" data-level="3.4.4" data-path="duality.html"><a href="duality.html#standard-deviation-as-a-norm"><i class="fa fa-check"></i><b>3.4.4</b> Standard Deviation as a Norm</a></li>
+<li class="chapter" data-level="3.4.5" data-path="duality.html"><a href="duality.html#covariance"><i class="fa fa-check"></i><b>3.4.5</b> Covariance</a></li>
+<li class="chapter" data-level="3.4.6" data-path="duality.html"><a href="duality.html#correlation"><i class="fa fa-check"></i><b>3.4.6</b> Correlation</a></li>
+<li class="chapter" data-level="3.4.7" data-path="duality.html"><a href="duality.html#geometry-of-correlation"><i class="fa fa-check"></i><b>3.4.7</b> Geometry of Correlation</a></li>
+<li class="chapter" data-level="3.4.8" data-path="duality.html"><a href="duality.html#orthogonal-projections"><i class="fa fa-check"></i><b>3.4.8</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="3.4.9" data-path="duality.html"><a href="duality.html#the-mean-as-an-orthogonal-projection"><i class="fa fa-check"></i><b>3.4.9</b> The mean as an orthogonal projection</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
+<li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">All Models Are Wrong</h1>
+<h2 class="subtitle"><em>Concepts of Statistical Learning (CSL)</em></h2>
+<p class="author"><em>by Gaston Sanchez, and Ethan Marzban</em></p>
+<p class="date"><em>2019-11-02</em></p>
+</div>
+<div id="preface" class="section level1 unnumbered">
+<h1>Preface</h1>
+<p>This is a work in progress for an introductory text about concepts of
+Statistical Learning, covering common supervised as well as unsupervised methods.</p>
+<p><strong>How to cite this book</strong>:</p>
+<p>Sanchez, G., Marzban E. (2019) <strong>All Models Are Wrong: Concepts of Statistical Learning</strong>. <br>
+<a href="https://allmodelsarewrong.github.io" class="uri">https://allmodelsarewrong.github.io</a></p>
+<p>© 2019 Sanchez, Marzban. All Rights Reserved.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="about.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

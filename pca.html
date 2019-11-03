@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Principal Components Analysis | All Models Are Wrong</title>
+  <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Principal Components Analysis | All Models Are Wrong" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://allmodelsarewrong.github.io" />
+  
+  <meta property="og:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Principal Components Analysis | All Models Are Wrong" />
+  
+  <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  
+
+<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+
+
+<meta name="date" content="2019-11-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="duality.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Welcome</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>II Intro</b></span></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#basic-notation"><i class="fa fa-check"></i><b>2.1</b> Basic Notation</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#about-statistical-learning"><i class="fa fa-check"></i><b>2.2</b> About Statistical Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="duality.html"><a href="duality.html"><i class="fa fa-check"></i><b>3</b> Geometric Duality</a><ul>
+<li class="chapter" data-level="3.1" data-path="duality.html"><a href="duality.html#rows-space"><i class="fa fa-check"></i><b>3.1</b> Rows Space</a></li>
+<li class="chapter" data-level="3.2" data-path="duality.html"><a href="duality.html#columns-space"><i class="fa fa-check"></i><b>3.2</b> Columns Space</a></li>
+<li class="chapter" data-level="3.3" data-path="duality.html"><a href="duality.html#cloud-of-individuals"><i class="fa fa-check"></i><b>3.3</b> Cloud of Individuals</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="duality.html"><a href="duality.html#average-individual"><i class="fa fa-check"></i><b>3.3.1</b> Average Individual</a></li>
+<li class="chapter" data-level="3.3.2" data-path="duality.html"><a href="duality.html#centered-data"><i class="fa fa-check"></i><b>3.3.2</b> Centered Data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="duality.html"><a href="duality.html#distance-between-individuals"><i class="fa fa-check"></i><b>3.3.3</b> Distance between individuals</a></li>
+<li class="chapter" data-level="3.3.4" data-path="duality.html"><a href="duality.html#distance-to-the-centroid"><i class="fa fa-check"></i><b>3.3.4</b> Distance to the centroid</a></li>
+<li class="chapter" data-level="3.3.5" data-path="duality.html"><a href="duality.html#measures-of-dispersion"><i class="fa fa-check"></i><b>3.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="duality.html"><a href="duality.html#cloud-of-variables"><i class="fa fa-check"></i><b>3.4</b> Cloud of Variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="duality.html"><a href="duality.html#mean-of-a-variable"><i class="fa fa-check"></i><b>3.4.1</b> Mean of a Variable</a></li>
+<li class="chapter" data-level="3.4.2" data-path="duality.html"><a href="duality.html#variance-of-a-variable"><i class="fa fa-check"></i><b>3.4.2</b> Variance of a Variable</a></li>
+<li class="chapter" data-level="3.4.3" data-path="duality.html"><a href="duality.html#variance-with-vector-notation"><i class="fa fa-check"></i><b>3.4.3</b> Variance with Vector Notation</a></li>
+<li class="chapter" data-level="3.4.4" data-path="duality.html"><a href="duality.html#standard-deviation-as-a-norm"><i class="fa fa-check"></i><b>3.4.4</b> Standard Deviation as a Norm</a></li>
+<li class="chapter" data-level="3.4.5" data-path="duality.html"><a href="duality.html#covariance"><i class="fa fa-check"></i><b>3.4.5</b> Covariance</a></li>
+<li class="chapter" data-level="3.4.6" data-path="duality.html"><a href="duality.html#correlation"><i class="fa fa-check"></i><b>3.4.6</b> Correlation</a></li>
+<li class="chapter" data-level="3.4.7" data-path="duality.html"><a href="duality.html#geometry-of-correlation"><i class="fa fa-check"></i><b>3.4.7</b> Geometry of Correlation</a></li>
+<li class="chapter" data-level="3.4.8" data-path="duality.html"><a href="duality.html#orthogonal-projections"><i class="fa fa-check"></i><b>3.4.8</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="3.4.9" data-path="duality.html"><a href="duality.html#the-mean-as-an-orthogonal-projection"><i class="fa fa-check"></i><b>3.4.9</b> The mean as an orthogonal projection</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
+<li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pca" class="section level1">
+<h1><span class="header-section-number">4</span> Principal Components Analysis</h1>
+<p>Our first unsupervised method of the book is Principal Components Analysis,
+commonly referred to as PCA.</p>
+<p>Principal Components Analysis (PCA) is the workhorse method of multivariate data
+analysis. Simply put, PCA helps us study and explore a data set of quantitative
+variables measured on a set of objects. One way to look at the purpose of principal
+components analysis is to get the <em>best</em> low-dimensional representation of the
+variation in data. Among the various appealing features of PCA is that it allows
+us to obtain a visualization of the objects in order to see their proximities.
+Likewise, it also provides us results to get a graphic representation of the
+variables in terms of their correlations. Overall, PCA is a multivariate technique
+that allows us to summarize the systematic patterns of variations in a data set.</p>
+<p>The classic reference for PCA is the work by the eminent British biostatistician
+Karl Pearson “On Lines and Planes of Closest Fit to Systems of Points in Space,”
+from 1901. This publication presents the PCA problem under a purely geometric
+standpoint, describing how to find low-dimensional subspaces that best
+fit—in the least squares sense—a cloud of points. The other seminal work of
+PCA is the one by the American mathematician and economic theorist Harold Hotelling
+with “Analysis of a Complex of Statistical Variables into Principal Components,”
+from 1933. Unlike Pearson, Hotelling finds the principal components as
+orthogonal linear combinations of the variables of maximum variance.</p>
+<p>PCA is one of those methods that can be approached from multiple, seemingly
+unrelated, perspectives. The way we are going to introduce PCA is not the typical
+way in which PCA is discussed in most books published in English. However, our
+introduction is actually based on the ideas and concepts originally published
+in <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson’s</a> 1901 paper
+<em>On lines and planes of closest fit to systems of points in space</em>. This is what
+can be considered to be the first paper on PCA, although keep in mind that
+Karl Pearson never used the term <em>principal components analysis</em>. That term was
+coined by Harold Hotelling, who formalized the method by giving it a more
+mature statistical perspective.</p>
+<div id="low-dimensional-representations" class="section level2">
+<h2><span class="header-section-number">4.1</span> Low-dimensional Representations</h2>
+<p>Let’s play the following game. Imagine for a minute that you have the superpower
+to see any type of multidimensional space (not just three-dimensions). As we
+mentioned before, we think of the individuals as forming a cloud of points in a
+<span class="math inline">\(p\)</span>-dim space, and the variables forming a cloud of arrows in an <span class="math inline">\(n\)</span>-dim space.</p>
+<p>Pretend that you have some data in which its cloud of points has the shape of
+a mug, like in the following diagram:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
+<img src="images/pca/mug-data.png" alt="Cloud of points in the form of a mug" width="40%" />
+<p class="caption">
+Figure 4.1: Cloud of points in the form of a mug
+</p>
+</div>
+<p>This mug is supposed be high-dimensional, and something that you are not supposed
+to ever see in real life. So the question is: Is there a way in which we can get
+a low-dimensional representation of this data?</p>
+<p>Luckily, the answer is: YES, we can!</p>
+<p>How? Well, the name of the game is <strong>projections</strong>: we can look for projections
+of the data into sub-spaces of lower dimension, like in the diagram below.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<img src="images/pca/mug-projections.png" alt="Various projections onto subspaces" width="70%" />
+<p class="caption">
+Figure 4.2: Various projections onto subspaces
+</p>
+</div>
+<p>Think of <em>projections</em> as taking photographs or x-rays of the mug. You can take a
+photo of the mug from different angles. For instance, a picture in which the lens
+of the camera lies on the top of the mug, or another picture in which the lens is
+below the mug (from the bottom), and so on.</p>
+<p>As you can tell from the above figure, we have three candidate subspaces:
+<span class="math inline">\(\mathbb{H}_A\)</span>, <span class="math inline">\(\mathbb{H}_B\)</span>, and <span class="math inline">\(\mathbb{H}_C\)</span>. Among the three possible
+projections, subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the one that provides the best low
+dimensional representation, in the sense that the projected silhouette is the
+most similar to the original mug shape. We can say that this “photo” is the one
+that most resembles the original object. Now, keep in mind that the resulting
+image in the low-dimensional space is not capturing the whole pattern. In other
+words, there is some loss of information. However, by chosing the right project,
+we hope to minimize such loss.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="50%" />
+<p class="caption">
+Figure 4.3: The shape of the projection is similar to the original mug shape.
+</p>
+</div>
+</div>
+<div id="pca-idea" class="section level2">
+<h2><span class="header-section-number">4.2</span> PCA Idea</h2>
+<p>The overall idea behind PCA is the following. Given a set of <span class="math inline">\(p\)</span> variables
+<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>, we want to obtain new <span class="math inline">\(k\)</span> variables
+<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
+<p>A principal component is a linear combination: <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>.
+The first PC is a linear mix:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
+<img src="images/pca/pca-path-diag1.png" alt="PCs as linear combinations of X-variables" width="50%" />
+<p class="caption">
+Figure 4.4: PCs as linear combinations of X-variables
+</p>
+</div>
+<p>The second PC is another linear mix:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<img src="images/pca/pca-path-diag2.png" alt="PCs as linear combinations of X-variables" width="50%" />
+<p class="caption">
+Figure 4.5: PCs as linear combinations of X-variables
+</p>
+</div>
+<p>We want to compute the <strong>PCs as linear combinations</strong> of the original variables.</p>
+<p><span class="math display">\[ 
+\begin{array}{c}
+\mathbf{z_1} = v_{11} \mathbf{x_1} + \dots + v_{1p} \mathbf{x_p} \\
+\mathbf{z_2} = v_{21} \mathbf{x_1} + \dots + v_{2p} \mathbf{x_p} \\
+\vdots \\
+\mathbf{z_k} = v_{k1} \mathbf{x_1} + \dots + v_{kp} \mathbf{x_p} \\
+\end{array}
+\]</span></p>
+<p>Or in matrix notation:</p>
+<p><span class="math display">\[
+\mathbf{Z} = \mathbf{X V}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{Z}\)</span> is an <span class="math inline">\(n \times k\)</span> matrix of principal components, and
+<span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
+vectors of the principal axes. The following figure shows a graphical
+representation of a PCA problem in diagram notation:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<img src="images/pca/pca-path-diag4.png" alt="PCs as linear combinations of X-variables" width="70%" />
+<p class="caption">
+Figure 4.6: PCs as linear combinations of X-variables
+</p>
+</div>
+<p>We look to transform the original variables into a smaller set of new variables,
+the Principal Components (PCs), that summarize the variation in data.
+The PCs are obtained as linear combinations (i.e. weighted sums) of the
+original variables. We look for PCs is in such a way that they have maximum
+variance, and being mutually uncorrelated.</p>
+<div id="finding-principal-components" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Finding Principal Components</h3>
+<p>The way to find principal components is to construct them as weighted sums of
+the original variables, looking to optimize some criterion and following some
+constraints. One way in which we can express the criterion is to require components
+<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span> that capture most of the variation
+in the data <span class="math inline">\(\mathbf{X}\)</span>. “Capturing most of the variation,” implies looking
+for a vector <span class="math inline">\(\mathbf{v_j}\)</span> such that a component <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span>
+has maximum variance:</p>
+<p><span class="math display">\[
+\max_{\mathbf{v_h}} \; var(\mathbf{z_h}) \quad \Rightarrow \quad \max_{\mathbf{v_h}} \; var(\mathbf{X v_h})
+\]</span></p>
+<p>that is</p>
+<p><span class="math display">\[
+\max_{\mathbf{v_h}} \; \frac{1}{n} \mathbf{v_{h}^\mathsf{T} X^\mathsf{T} X v_h}
+\]</span></p>
+<p>As you can tell, this is a maximization problem. Without any constraints, this
+problem is unbounded, not to mention useless. We could take <span class="math inline">\(\mathbf{v_h}\)</span> as
+bigger as we want without being able to reach any maximum. To get a feasible
+solution we need to impose some kind of restriction. The standard adopted
+constraint is to require <span class="math inline">\(\mathbf{v_h}\)</span> to be of unit norm:</p>
+<p><span class="math display">\[
+\| \mathbf{v_h} \| = 1 \; \hspace{1mm} \Rightarrow \; \hspace{1mm} \mathbf{v_{h}^\mathsf{T} v_h} = 1 
+\]</span></p>
+<p>Note that <span class="math inline">\((1/n) \mathbf{X^\mathsf{T} X}\)</span> is the variance-covariance matrix.
+If we denote <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T} X}\)</span> then the criterion to
+be maximized is:</p>
+<p><span class="math display">\[
+\max_{\mathbf{v_h}} \; \mathbf{v_{h}^\mathsf{T} S v_h}
+\]</span></p>
+<p>subject to <span class="math inline">\(\mathbf{v_{h}^\mathsf{T} v_h} = 1\)</span></p>
+<p>To avoid a PC <span class="math inline">\(\mathbf{z_h}\)</span> from capturing the same variation as other PCs
+<span class="math inline">\(\mathbf{z_l}\)</span> (i.e. avoiding redundant information), we also require them to be
+<strong>mutually orthogonal</strong> so they are uncorrelated with each other. Formally,
+we impose the restriction <span class="math inline">\(\mathbf{z_h}\)</span> to be perpendicular to other components:
+<span class="math inline">\(\mathbf{z_{h}^\mathsf{T} z_l} = 0; (h \neq l)\)</span>.</p>
+</div>
+<div id="finding-the-first-pc" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Finding the first PC</h3>
+<p>In order to get the first principal component <span class="math inline">\(\mathbf{z_1} = \mathbf{X v_1}\)</span>,
+we need to find <span class="math inline">\(\mathbf{v_1}\)</span> such that:</p>
+<p><span class="math display">\[
+\max_{\mathbf{v_1}} \; \mathbf{v_{1}^\mathsf{T} S v_1}
+\]</span></p>
+<p>subject to <span class="math inline">\(\mathbf{v_{1}^\mathsf{T} v_1} = 1\)</span></p>
+<p>Being a maximization problem, the typical procedure to find the solution is by
+using the <strong>Lagrangian multiplier</strong> method. Using Lagrange multipliers we get:</p>
+<p><span class="math display">\[
+\mathbf{v_{1}^\mathsf{T} S v_1} - \lambda (\mathbf{v_{1}^\mathsf{T} v_1} - 1) = 0
+\]</span></p>
+<p>Differentiation with respect to <span class="math inline">\(\mathbf{v_1}\)</span>, and equating to zero gives:</p>
+<p><span class="math display">\[
+\mathbf{S v_1} - \lambda_1 \mathbf{v_1} = \mathbf{0}
+\]</span></p>
+<p>Rearranging some terms we get:</p>
+<p><span class="math display">\[
+\mathbf{S v_1} = \lambda_1 \mathbf{v_1}
+\]</span></p>
+<p>What does this mean? It means that <span class="math inline">\(\lambda_1\)</span> is an eigenvalue of <span class="math inline">\(\mathbf{S}\)</span>,
+and <span class="math inline">\(\mathbf{v_1}\)</span> is the corresponding eigenvector.</p>
+</div>
+<div id="finding-the-second-pc" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Finding the second PC</h3>
+<p>In order to find the second principal component <span class="math inline">\(\mathbf{z_2} = \mathbf{X v_2}\)</span>,
+we need to find <span class="math inline">\(\mathbf{v_2}\)</span> such that</p>
+<p><span class="math display">\[
+\max_{\mathbf{v_2}} \; \mathbf{v_{2}^\mathsf{T} S v_2}
+\]</span></p>
+<p>subject to <span class="math inline">\(\| \mathbf{v_2} \| = 1\)</span> and <span class="math inline">\(\mathbf{z_{1}^\mathsf{T} z_2} = 0\)</span>.
+Remember that <span class="math inline">\(\mathbf{z_2}\)</span> must be uncorrelated to <span class="math inline">\(\mathbf{z_1}\)</span>.
+Applying the Lagrange multipliers, it can be shown that the desired
+<span class="math inline">\(\mathbf{v_2}\)</span> is such that</p>
+<p><span class="math display">\[
+\mathbf{S v_2} = \lambda_2 \mathbf{v_2}
+\]</span></p>
+<p>In other words. <span class="math inline">\(\lambda_2\)</span> is an eigenvalue of <span class="math inline">\(\mathbf{S}\)</span> and <span class="math inline">\(\mathbf{v_2}\)</span>
+is the corresponding eigenvector.</p>
+</div>
+<div id="finding-all-pcs" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> Finding all PCs</h3>
+<p>All PCs can be found simultaneously by <strong>diagonalizing</strong> <span class="math inline">\(\mathbf{S}\)</span>.
+Diagonalizing <span class="math inline">\(\mathbf{S}\)</span> involves expressing it as the product:</p>
+<p><span class="math display">\[ 
+\mathbf{S} = \mathbf{V \Lambda V^\mathsf{T}}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{D}\)</span> is a diagonal matrix</li>
+<li>the elements in the diagonal of <span class="math inline">\(\mathbf{D}\)</span> are the eigenvalues of <span class="math inline">\(\mathbf{S}\)</span></li>
+<li>the columns of <span class="math inline">\(\mathbf{V}\)</span> are orthonormal: <span class="math inline">\(\mathbf{V^\mathsf{T} V= I}\)</span></li>
+<li>the columns of <span class="math inline">\(\mathbf{V}\)</span> are the eigenvectors of <span class="math inline">\(\mathbf{S}\)</span></li>
+<li><span class="math inline">\(\mathbf{V^\mathsf{T}} = \mathbf{V^{-1}}\)</span></li>
+</ul>
+<p>Diagonalizing a symmetric matrix is nothing more than obtaining its
+<strong>eigenvalue decomposition</strong> (a.k.a. spectral decomposition).
+A <span class="math inline">\(p \times p\)</span> symmetric matrix <span class="math inline">\(\mathbf{S}\)</span> has the following properties:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{S}\)</span> has <span class="math inline">\(p\)</span> real eigenvalues (counting multiplicites)</li>
+<li>the eigenvectors corresponding to different eigenvalues are orthogonal</li>
+<li><span class="math inline">\(\mathbf{S}\)</span> is orthogonally diagonalizable (<span class="math inline">\(\mathbf{S} = \mathbf{V \Lambda V^\mathsf{T}}\)</span>)</li>
+<li>the set of eigenvalues of <span class="math inline">\(\mathbf{S}\)</span> is called the <strong>spectrum</strong> of <span class="math inline">\(\mathbf{S}\)</span></li>
+</ul>
+<p>In summary: The PCA solution can be obtained with an Eigenvalue Decomposition
+of the matrix <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T}X}\)</span></p>
+</div>
+</div>
+<div id="pca-model" class="section level2">
+<h2><span class="header-section-number">4.3</span> PCA Model</h2>
+<p>Formally, PCA involves finding scores and loadings such that the data can be
+expressed as a product of two matrices:</p>
+<p><span class="math display">\[
+\underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \underset{k \times p}{\mathbf{V^\mathsf{T}}}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{Z}\)</span> is the matrix of PCs or <em>scores</em>, and <span class="math inline">\(\mathbf{V}\)</span> is the
+matrix of <em>loadings</em>. We can obtain as many different eigenvalues as the rank of
+<span class="math inline">\(\mathbf{S}\)</span> denoted by <span class="math inline">\(k\)</span>. Ideally, we expect <span class="math inline">\(k\)</span> to be smaller than <span class="math inline">\(p\)</span>
+so we get a convenient data reduction. But usually we will only retain just a
+few PCs (i.e. <span class="math inline">\(k \ll p\)</span>) expecting not to lose too much information:</p>
+<p><span class="math display">\[
+\underset{n \times p}{\mathbf{X}} \approx \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times p}{\mathbf{V^\mathsf{T}}} + \text{Residual}
+\]</span></p>
+<p>The previous expression means that just a few PCs will <em>optimally</em> summarize the main structure of the data</p>
+</div>
+<div id="another-perspective" class="section level2">
+<h2><span class="header-section-number">4.4</span> Another Perspective</h2>
+<p>Finding <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span> with maximum variance has another
+important property that it is not always mentioned in multivariate textbooks
+but that we find worth mentioning. <span class="math inline">\(\mathbf{z_h}\)</span> is such that</p>
+<p><span class="math display">\[
+\max \sum_{j = 1}^{p} cor^2(\mathbf{z_h, x_j})
+\]</span></p>
+<p>What this expression implies is that principal components <span class="math inline">\(\mathbf{z_h}\)</span> are
+computed to be the <em>best</em> representants in terms of maximizing the sum of
+squared correlations with the variables
+<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_j}\)</span>.
+Interestingly, you can think of PCs as predictors
+of the variables in <span class="math inline">\(\mathbf{X}\)</span>. Under this perspective, we can reverse the
+relations and see PCA from a regression-like model perspective:</p>
+<p><span class="math display">\[
+\mathbf{x_j} = v_{jh} \mathbf{z_h} + \mathbf{e_h}
+\]</span></p>
+<p>Notice that the regression coefficient is the <span class="math inline">\(j\)</span>-th element of the <span class="math inline">\(h\)</span>-th
+eigenvector.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="duality.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
