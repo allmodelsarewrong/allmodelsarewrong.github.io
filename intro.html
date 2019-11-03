@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Introduction | All Models Are Wrong</title>
+  <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Introduction | All Models Are Wrong" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://allmodelsarewrong.github.io" />
+  
+  <meta property="og:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Introduction | All Models Are Wrong" />
+  
+  <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  
+
+<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+
+
+<meta name="date" content="2019-11-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="about.html"/>
+<link rel="next" href="duality.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Welcome</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>II Intro</b></span></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#basic-notation"><i class="fa fa-check"></i><b>2.1</b> Basic Notation</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#about-statistical-learning"><i class="fa fa-check"></i><b>2.2</b> About Statistical Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="duality.html"><a href="duality.html"><i class="fa fa-check"></i><b>3</b> Geometric Duality</a><ul>
+<li class="chapter" data-level="3.1" data-path="duality.html"><a href="duality.html#rows-space"><i class="fa fa-check"></i><b>3.1</b> Rows Space</a></li>
+<li class="chapter" data-level="3.2" data-path="duality.html"><a href="duality.html#columns-space"><i class="fa fa-check"></i><b>3.2</b> Columns Space</a></li>
+<li class="chapter" data-level="3.3" data-path="duality.html"><a href="duality.html#cloud-of-individuals"><i class="fa fa-check"></i><b>3.3</b> Cloud of Individuals</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="duality.html"><a href="duality.html#average-individual"><i class="fa fa-check"></i><b>3.3.1</b> Average Individual</a></li>
+<li class="chapter" data-level="3.3.2" data-path="duality.html"><a href="duality.html#centered-data"><i class="fa fa-check"></i><b>3.3.2</b> Centered Data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="duality.html"><a href="duality.html#distance-between-individuals"><i class="fa fa-check"></i><b>3.3.3</b> Distance between individuals</a></li>
+<li class="chapter" data-level="3.3.4" data-path="duality.html"><a href="duality.html#distance-to-the-centroid"><i class="fa fa-check"></i><b>3.3.4</b> Distance to the centroid</a></li>
+<li class="chapter" data-level="3.3.5" data-path="duality.html"><a href="duality.html#measures-of-dispersion"><i class="fa fa-check"></i><b>3.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="duality.html"><a href="duality.html#cloud-of-variables"><i class="fa fa-check"></i><b>3.4</b> Cloud of Variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="duality.html"><a href="duality.html#mean-of-a-variable"><i class="fa fa-check"></i><b>3.4.1</b> Mean of a Variable</a></li>
+<li class="chapter" data-level="3.4.2" data-path="duality.html"><a href="duality.html#variance-of-a-variable"><i class="fa fa-check"></i><b>3.4.2</b> Variance of a Variable</a></li>
+<li class="chapter" data-level="3.4.3" data-path="duality.html"><a href="duality.html#variance-with-vector-notation"><i class="fa fa-check"></i><b>3.4.3</b> Variance with Vector Notation</a></li>
+<li class="chapter" data-level="3.4.4" data-path="duality.html"><a href="duality.html#standard-deviation-as-a-norm"><i class="fa fa-check"></i><b>3.4.4</b> Standard Deviation as a Norm</a></li>
+<li class="chapter" data-level="3.4.5" data-path="duality.html"><a href="duality.html#covariance"><i class="fa fa-check"></i><b>3.4.5</b> Covariance</a></li>
+<li class="chapter" data-level="3.4.6" data-path="duality.html"><a href="duality.html#correlation"><i class="fa fa-check"></i><b>3.4.6</b> Correlation</a></li>
+<li class="chapter" data-level="3.4.7" data-path="duality.html"><a href="duality.html#geometry-of-correlation"><i class="fa fa-check"></i><b>3.4.7</b> Geometry of Correlation</a></li>
+<li class="chapter" data-level="3.4.8" data-path="duality.html"><a href="duality.html#orthogonal-projections"><i class="fa fa-check"></i><b>3.4.8</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="3.4.9" data-path="duality.html"><a href="duality.html#the-mean-as-an-orthogonal-projection"><i class="fa fa-check"></i><b>3.4.9</b> The mean as an orthogonal projection</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
+<li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1">
+<h1><span class="header-section-number">2</span> Introduction</h1>
+<p>Picture a data set containing scores of several course for college students.
+For example, courses like matrix algebra, multivariable calculus,
+statistics, and probability. And say we also have historical data about a course in Statistical
+Learning. In particular we have final scores measured on a scale from 0 to 100,
+we also have final grades (letter grade scale), as well as a third interesting
+variable “Pass - Non-Pass” indicating whether the student passed statistical learning.
+Some data like that fits perfectly well in a tabular format. The rows contain
+the records for a bunch of students, and the columns refer to the variables.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Math 54</th>
+<th>Math 55</th>
+<th>Stat 135</th>
+<th>Stat 134</th>
+<th>Stat 154</th>
+<th>Grade</th>
+<th>P/NP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x_{11}\)</span></td>
+<td><span class="math inline">\(x_{12}\)</span></td>
+<td><span class="math inline">\(x_{13}\)</span></td>
+<td><span class="math inline">\(x_{14}\)</span></td>
+<td><span class="math inline">\(x_{15}\)</span></td>
+<td><span class="math inline">\(y_{15}\)</span></td>
+<td><span class="math inline">\(y_{16}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_{21}\)</span></td>
+<td><span class="math inline">\(x_{22}\)</span></td>
+<td><span class="math inline">\(x_{23}\)</span></td>
+<td><span class="math inline">\(x_{24}\)</span></td>
+<td><span class="math inline">\(x_{25}\)</span></td>
+<td><span class="math inline">\(y_{15}\)</span></td>
+<td><span class="math inline">\(y_{16}\)</span></td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_{n1}\)</span></td>
+<td><span class="math inline">\(x_{n2}\)</span></td>
+<td><span class="math inline">\(x_{n3}\)</span></td>
+<td><span class="math inline">\(x_{n4}\)</span></td>
+<td><span class="math inline">\(x_{n5}\)</span></td>
+<td><span class="math inline">\(y_{n5}\)</span></td>
+<td><span class="math inline">\(y_{n6}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Suppose that, based on this historical data, we wish to predict the score of a
+new student (whose Math 54, Math 55, and Stat 135 grades are known) in Stat 154.</p>
+<p>To do so, we would fit some sort of model to our data; i.e. we would perform
+regression. This is a form of supervised learning, since our model is trained
+using known inputs (i.e. Math 54, Math 55, and Stat 135 grades) as well as
+known responses (i.e. the Stat 154 grades of the previous students).</p>
+<p><strong>Unsupervised Learning</strong>: where we have inputs, but not response variables.</p>
+<div id="basic-notation" class="section level2">
+<h2><span class="header-section-number">2.1</span> Basic Notation</h2>
+<p>In this book we are going to use a fair amount of math notation. Becoming familiar
+with the meaning of all the different symbols as soon as possible, should allow
+you to keep the learning curve a little bit less steep.</p>
+<p>The starting point is always the data, which we will assume to be in a tabular
+format, that can be translated into a mathematical matrix object. Here’s an
+example of a data matrix <span class="math inline">\(\mathbf{X}\)</span> of size <span class="math inline">\(n \times p\)</span></p>
+<p><span class="math display">\[
+\mathbf{X} = 
+\
+\begin{bmatrix} 
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np} \\
+\end{bmatrix}
+\]</span></p>
+<p>By default, we will assume that the rows of a data matrix correspond to the
+individuals or objects. Likewise, we will also assume that the columns of a data
+matrix correspond to the variables or features observed on the individuals.
+In this sense, the symbol <span class="math inline">\(x_{ij}\)</span> represents the value observed for the <span class="math inline">\(j\)</span>-th
+variable on the <span class="math inline">\(i\)</span>-th individual.</p>
+<p>Throughout this book, every time you see the letter <span class="math inline">\(i\)</span>, either alone or as an
+index associated with any other symbol (superscript or subscript), it means
+that such term corresponds to an individual or a row of some data matrix.
+For instance, symbols like <span class="math inline">\(x_i\)</span>, <span class="math inline">\(\mathbf{x_i}\)</span>, and <span class="math inline">\(\alpha_i\)</span> are all
+examples that refer to—or denote a connection with—individuals.</p>
+<p>In turn, we will always use the letter <span class="math inline">\(j\)</span> to conveyed association with variables.
+For instance, <span class="math inline">\(x_j\)</span>, <span class="math inline">\(\mathbf{x_j}\)</span>, and <span class="math inline">\(\alpha_j\)</span> are examples that refer
+to—or denote a connection with—variables.</p>
+<p>For better or for worse, we’ve made the decision to represent row vectors and column
+vectors with the same notation: as bold lower case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and
+<span class="math inline">\(\mathbf{x_j}\)</span>. Because of the risk of confusing a row vector with a column vector,
+sometimes we will use the arrow notation for row vectors: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
+<p>So, going back to the above data matrix <span class="math inline">\(\mathbf{X}\)</span>, we can represent the first
+variable as a vector <span class="math inline">\(\mathbf{x_1} = (x_{11}, x_{21}, \dots, x_{n1})\)</span>.
+Likewise, we can represent the first individual with the vector
+<span class="math inline">\(\mathbf{\vec{x}_1} = (x_{11}, x_{12}, \dots, x_{1n})\)</span>.</p>
+<p>Here’s a reference table with the notation and symbols used throughout the book</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(n\)</span></td>
+<td align="left">number of objects</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(p\)</span></td>
+<td align="left">number of variables</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(i\)</span></td>
+<td align="left">running index for rows</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(j\)</span></td>
+<td align="left">running index for columns</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(k\)</span></td>
+<td align="left">running index for sets of variables (i.e. blocks)</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(l, m, q\)</span></td>
+<td align="left">auxiliar index</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(f()\)</span>, <span class="math inline">\(g()\)</span>, <span class="math inline">\(h()\)</span></td>
+<td align="left">functions</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\lambda, \mu, \gamma, \alpha\)</span></td>
+<td align="left">greek letters represent scalars</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\varepsilon\)</span></td>
+<td align="left">decimal tolerance threshold (e.g. 0.00001)</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(\mathbf{y}\)</span></td>
+<td align="left">variables, size determined by context</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbf{w}\)</span>, <span class="math inline">\(\mathbf{a}\)</span>, <span class="math inline">\(\mathbf{b}\)</span></td>
+<td align="left">vectors of weight coefficients</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathbf{z}\)</span>, <span class="math inline">\(\mathbf{t}\)</span>, <span class="math inline">\(\mathbf{u}\)</span></td>
+<td align="left">components or latent variables</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbf{X} : n \times p\)</span></td>
+<td align="left">data matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(p\)</span> columns</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(x_{ij}\)</span></td>
+<td align="left">element of a matrix in <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbf{1}\)</span></td>
+<td align="left">vector of ones, size determined by context</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathbf{I}\)</span></td>
+<td align="left">identity matrix, size determined by context</td>
+</tr>
+</tbody>
+</table>
+<p>By the way, there are many more symbols that will appear in later chapters.
+But for now these are the fundamental ones.</p>
+<p>Common operators</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Symbol</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbb{E}[X]\)</span></td>
+<td align="left">expected value of a random variable <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\|\mathbf{a}\|\)</span></td>
+<td align="left">euclidean norm of a vector</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbf{a}^{\mathsf{T}}\)</span></td>
+<td align="left">transpose of a vector (or matrix)</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathbf{a^{\mathsf{T}}b}\)</span></td>
+<td align="left">inner product of two vectors</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\langle \mathbf{a}, \mathbf{b} \rangle\)</span></td>
+<td align="left">inner product of two vectors</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(det(\mathbf{A})\)</span></td>
+<td align="left">determinant of a square matrix</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(tr(\mathbf{A})\)</span></td>
+<td align="left">trace of a square matrix</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\mathbf{A}^{-1}\)</span></td>
+<td align="left">inverse of a square matrix</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(diag(\mathbf{A})\)</span></td>
+<td align="left">diagonal of a square matrix</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(var()\)</span></td>
+<td align="left">variance</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(cov()\)</span></td>
+<td align="left">covariance</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="about-statistical-learning" class="section level2">
+<h2><span class="header-section-number">2.2</span> About Statistical Learning</h2>
+<p>We will focus on supervised learning as well as unsupervised learning.
+We won’t discuss more recent fields of deep learning and reinforcement learning.</p>
+<p>To visualize the different types of learning, the different types of variables, and the methodology associated with each combination of learning/data types, we can use the following graphic:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="images/introduction/four_corners.png" alt="Supervised and Unsupervised" width="80%" />
+<p class="caption">
+Figure 2.1: Supervised and Unsupervised
+</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="about.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="duality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
