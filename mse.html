@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Introduction | All Models Are Wrong</title>
+  <title>8 MSE of Estimator | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Introduction | All Models Are Wrong" />
+  <meta property="og:title" content="8 MSE of Estimator | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Introduction | All Models Are Wrong" />
+  <meta name="twitter:title" content="8 MSE of Estimator | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="about.html"/>
-<link rel="next" href="duality.html"/>
+<link rel="prev" href="learning.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -170,258 +170,183 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction</h1>
-<p>Picture a data set containing scores of several course for college students.
-For example, courses like matrix algebra, multivariable calculus,
-statistics, and probability. And say we also have historical data about a course in Statistical
-Learning. In particular we have final scores measured on a scale from 0 to 100,
-we also have final grades (letter grade scale), as well as a third interesting
-variable “Pass - Non-Pass” indicating whether the student passed statistical learning.
-Some data like that fits perfectly well in a tabular format. The rows contain
-the records for a bunch of students, and the columns refer to the variables.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Math 54</th>
-<th>Math 55</th>
-<th>Stat 135</th>
-<th>Stat 134</th>
-<th>Stat 154</th>
-<th>Grade</th>
-<th>P/NP</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(x_{11}\)</span></td>
-<td><span class="math inline">\(x_{12}\)</span></td>
-<td><span class="math inline">\(x_{13}\)</span></td>
-<td><span class="math inline">\(x_{14}\)</span></td>
-<td><span class="math inline">\(x_{15}\)</span></td>
-<td><span class="math inline">\(y_{15}\)</span></td>
-<td><span class="math inline">\(y_{16}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(x_{21}\)</span></td>
-<td><span class="math inline">\(x_{22}\)</span></td>
-<td><span class="math inline">\(x_{23}\)</span></td>
-<td><span class="math inline">\(x_{24}\)</span></td>
-<td><span class="math inline">\(x_{25}\)</span></td>
-<td><span class="math inline">\(y_{15}\)</span></td>
-<td><span class="math inline">\(y_{16}\)</span></td>
-</tr>
-<tr class="odd">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(x_{n1}\)</span></td>
-<td><span class="math inline">\(x_{n2}\)</span></td>
-<td><span class="math inline">\(x_{n3}\)</span></td>
-<td><span class="math inline">\(x_{n4}\)</span></td>
-<td><span class="math inline">\(x_{n5}\)</span></td>
-<td><span class="math inline">\(y_{n5}\)</span></td>
-<td><span class="math inline">\(y_{n6}\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>Suppose that, based on this historical data, we wish to predict the score of a
-new student (whose Math 54, Math 55, and Stat 135 grades are known) in Stat 154.</p>
-<p>To do so, we would fit some sort of model to our data; i.e. we would perform
-regression. This is a form of supervised learning, since our model is trained
-using known inputs (i.e. Math 54, Math 55, and Stat 135 grades) as well as
-known responses (i.e. the Stat 154 grades of the previous students).</p>
-<p><strong>Unsupervised Learning</strong>: where we have inputs, but not response variables.</p>
-<div id="basic-notation" class="section level2">
-<h2><span class="header-section-number">2.1</span> Basic Notation</h2>
-<p>In this book we are going to use a fair amount of math notation. Becoming familiar
-with the meaning of all the different symbols as soon as possible, should allow
-you to keep the learning curve a little bit less steep.</p>
-<p>The starting point is always the data, which we will assume to be in a tabular
-format, that can be translated into a mathematical matrix object. Here’s an
-example of a data matrix <span class="math inline">\(\mathbf{X}\)</span> of size <span class="math inline">\(n \times p\)</span></p>
-<p><span class="math display">\[
-\mathbf{X} = 
-\
-\begin{bmatrix} 
-x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p} \\
-x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p} \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np} \\
-\end{bmatrix}
-\]</span></p>
-<p>By default, we will assume that the rows of a data matrix correspond to the
-individuals or objects. Likewise, we will also assume that the columns of a data
-matrix correspond to the variables or features observed on the individuals.
-In this sense, the symbol <span class="math inline">\(x_{ij}\)</span> represents the value observed for the <span class="math inline">\(j\)</span>-th
-variable on the <span class="math inline">\(i\)</span>-th individual.</p>
-<p>Throughout this book, every time you see the letter <span class="math inline">\(i\)</span>, either alone or as an
-index associated with any other symbol (superscript or subscript), it means
-that such term corresponds to an individual or a row of some data matrix.
-For instance, symbols like <span class="math inline">\(x_i\)</span>, <span class="math inline">\(\mathbf{x_i}\)</span>, and <span class="math inline">\(\alpha_i\)</span> are all
-examples that refer to—or denote a connection with—individuals.</p>
-<p>In turn, we will always use the letter <span class="math inline">\(j\)</span> to conveyed association with variables.
-For instance, <span class="math inline">\(x_j\)</span>, <span class="math inline">\(\mathbf{x_j}\)</span>, and <span class="math inline">\(\alpha_j\)</span> are examples that refer
-to—or denote a connection with—variables.</p>
-<p>For better or for worse, we’ve made the decision to represent row vectors and column
-vectors with the same notation: as bold lower case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and
-<span class="math inline">\(\mathbf{x_j}\)</span>. Because of the risk of confusing a row vector with a column vector,
-sometimes we will use the arrow notation for row vectors: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
-<p>So, going back to the above data matrix <span class="math inline">\(\mathbf{X}\)</span>, we can represent the first
-variable as a vector <span class="math inline">\(\mathbf{x_1} = (x_{11}, x_{21}, \dots, x_{n1})\)</span>.
-Likewise, we can represent the first individual with the vector
-<span class="math inline">\(\mathbf{\vec{x}_1} = (x_{11}, x_{12}, \dots, x_{1n})\)</span>.</p>
-<p>Here’s a reference table with the notation and symbols used throughout the book</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(n\)</span></td>
-<td align="left">number of objects</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(p\)</span></td>
-<td align="left">number of variables</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(i\)</span></td>
-<td align="left">running index for rows</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(j\)</span></td>
-<td align="left">running index for columns</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(k\)</span></td>
-<td align="left">running index for sets of variables (i.e. blocks)</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(l, m, q\)</span></td>
-<td align="left">auxiliar index</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(f()\)</span>, <span class="math inline">\(g()\)</span>, <span class="math inline">\(h()\)</span></td>
-<td align="left">functions</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\lambda, \mu, \gamma, \alpha\)</span></td>
-<td align="left">greek letters represent scalars</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\varepsilon\)</span></td>
-<td align="left">decimal tolerance threshold (e.g. 0.00001)</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(\mathbf{y}\)</span></td>
-<td align="left">variables, size determined by context</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{w}\)</span>, <span class="math inline">\(\mathbf{a}\)</span>, <span class="math inline">\(\mathbf{b}\)</span></td>
-<td align="left">vectors of weight coefficients</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{z}\)</span>, <span class="math inline">\(\mathbf{t}\)</span>, <span class="math inline">\(\mathbf{u}\)</span></td>
-<td align="left">components or latent variables</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{X} : n \times p\)</span></td>
-<td align="left">data matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(p\)</span> columns</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(x_{ij}\)</span></td>
-<td align="left">element of a matrix in <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{1}\)</span></td>
-<td align="left">vector of ones, size determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{I}\)</span></td>
-<td align="left">identity matrix, size determined by context</td>
-</tr>
-</tbody>
-</table>
-<p>By the way, there are many more symbols that will appear in later chapters.
-But for now these are the fundamental ones.</p>
-<p>Common operators</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbb{E}[X]\)</span></td>
-<td align="left">expected value of a random variable <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\|\mathbf{a}\|\)</span></td>
-<td align="left">euclidean norm of a vector</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{a}^{\mathsf{T}}\)</span></td>
-<td align="left">transpose of a vector (or matrix)</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{a^{\mathsf{T}}b}\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\langle \mathbf{a}, \mathbf{b} \rangle\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(det(\mathbf{A})\)</span></td>
-<td align="left">determinant of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(tr(\mathbf{A})\)</span></td>
-<td align="left">trace of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{A}^{-1}\)</span></td>
-<td align="left">inverse of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(diag(\mathbf{A})\)</span></td>
-<td align="left">diagonal of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(var()\)</span></td>
-<td align="left">variance</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(cov()\)</span></td>
-<td align="left">covariance</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="about-statistical-learning" class="section level2">
-<h2><span class="header-section-number">2.2</span> About Statistical Learning</h2>
-<p>We will focus on supervised learning as well as unsupervised learning.
-We won’t discuss more recent fields of deep learning and reinforcement learning.</p>
-<p>To visualize the different types of learning, the different types of variables, and the methodology associated with each combination of learning/data types, we can use the following graphic:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="images/introduction/four_corners.png" alt="Supervised and Unsupervised" width="80%" />
+<div id="mse" class="section level1">
+<h1><span class="header-section-number">8</span> MSE of Estimator</h1>
+<p>In this chapter we provide a preliminary review of the Mean Squared Error
+(MSE) of an estimator. This will allow us to have a more gentle introduction
+to the next chapter about the famous Bias-Variance tradeoff.</p>
+<div id="mse-of-an-estimator" class="section level2">
+<h2><span class="header-section-number">8.1</span> MSE of an Estimator</h2>
+<p>In order to discuss the bias-variance decomposition of a regression function and
+its expected MSE, we would like to first review the concept of the mean squared
+error of an estimator. Recall that <em>estimation</em> consists of
+providing an approximate value to the parameter of a population, using a (
+random) sample of observations drawn from such population.</p>
+<p>Say we have a population of <span class="math inline">\(n\)</span> objects and we are interested in describing them
+with some numeric characteristic <span class="math inline">\(\theta\)</span>. For example, our population may be
+formed by all students in some college, and we want to know their average
+height. We call this (theoretical) average the <em>parameter</em>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-51"></span>
+<img src="images/theory/population-parameter.png" alt="Population described by some parameter of interest." width="55%" />
 <p class="caption">
-Figure 2.1: Supervised and Unsupervised
+Figure 8.1: Population described by some parameter of interest.
+</p>
+</div>
+<p>To estimate the
+value of the parameter, we may draw a random sample of <span class="math inline">\(m &lt; n\)</span> students from the
+population and compute a statistic <span class="math inline">\(\hat{\theta}\)</span>. Ideally, we would use some
+statistic <span class="math inline">\(\hat{\theta}\)</span> that approximates well the parameter <span class="math inline">\(\theta\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-52"></span>
+<img src="images/theory/random-sample.png" alt="Random sample from a population" width="70%" />
+<p class="caption">
+Figure 8.2: Random sample from a population
+</p>
+</div>
+<p>In practice, this is the typical process that you would carry out:</p>
+<ol style="list-style-type: decimal">
+<li>Get a random sample from a population.</li>
+<li>Use the limited amount of data in the sample to estimate <span class="math inline">\(\theta\)</span> using some
+formula to compute <span class="math inline">\(\hat{\theta}\)</span>.</li>
+<li>Make a statement about how reliable of an estimator <span class="math inline">\(\hat{\theta}\)</span> is.</li>
+</ol>
+<p>Now, for illustration purposes, let’s do the following mental experiment.
+Pretend that you can draw multiple random samples, all of the same size <span class="math inline">\(m\)</span>,
+from the population.
+In fact, you should pretend that you can get an infinite number of samples.
+And suppose that for each sample you will compute a statistic <span class="math inline">\(\hat{\theta}\)</span>.
+A first random sample of size <span class="math inline">\(m\)</span> would result in <span class="math inline">\(\hat{\theta}_1\)</span>.
+A second random sample of size <span class="math inline">\(m\)</span> would result in <span class="math inline">\(\hat{\theta}_2\)</span>. And so on.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-53"></span>
+<img src="images/theory/sampling-estimators.png" alt="Various random samples of equal size and their statistics" width="70%" />
+<p class="caption">
+Figure 8.3: Various random samples of equal size and their statistics
+</p>
+</div>
+<p>A couple of important things to notice:</p>
+<ul>
+<li>An estimator is a random variable"
+<ul>
+<li>A first sample will result in <span class="math inline">\(\hat{\theta}_1\)</span></li>
+<li>A second sample will result in <span class="math inline">\(\hat{\theta}_2\)</span></li>
+<li>A third sample will result in <span class="math inline">\(\hat{\theta}_3\)</span></li>
+<li>and so on …</li>
+</ul></li>
+<li>Some samples will yield a <span class="math inline">\(\hat{\theta}_k\)</span> that overestimates <span class="math inline">\(\theta\)</span></li>
+<li>Other samples will yield a <span class="math inline">\(\hat{\theta}_k\)</span> that underestimates <span class="math inline">\(\theta\)</span></li>
+<li>Some samples will yield a <span class="math inline">\(\hat{\theta}_k\)</span> matching <span class="math inline">\(\theta\)</span></li>
+</ul>
+<p>In theory, we could get a very large number of samples, and visualize the
+distribution of <span class="math inline">\(\hat{\theta}\)</span>, like in the figure below:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-54"></span>
+<img src="images/theory/theta-hat-distribution1.png" alt="Distribution of an estimator" width="60%" />
+<p class="caption">
+Figure 8.4: Distribution of an estimator
+</p>
+</div>
+<p>As you would expect, some estimators will be close to the parameter <span class="math inline">\(\theta\)</span>,
+while others not so much.</p>
+<p>Under general assumptions, we can also
+assume that the estimator has expected value <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>, with
+finite variance <span class="math inline">\(var(\hat{\theta})\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-55"></span>
+<img src="images/theory/theta-hat-distribution2.png" alt="Distribution of an estimator" width="60%" />
+<p class="caption">
+Figure 8.5: Distribution of an estimator
+</p>
+</div>
+<p>An interesting question to consider is:</p>
+<p>In general, how much different—or similar—is <span class="math inline">\(\hat{\theta}\)</span> from <span class="math inline">\(\theta\)</span>?</p>
+<p>To be more concrete: on average, how close
+we expect the estimator to be from the parameter? To answer this question
+we can look for a measure to assess the typical distance of estimators from
+the parameter.</p>
+<p>This involves looking at the difference: <span class="math inline">\(\hat{\theta} - \theta\)</span>,
+which is commonly referred to as the <strong>estimation error</strong>:</p>
+<p><span class="math display">\[
+\text{estimation error} = \hat{\theta} - \theta
+\]</span></p>
+<p>We would like to measure the “size” of such difference. Notice that the estimation error is also a random variable:</p>
+<ul>
+<li>A first sample will result in an error <span class="math inline">\(\hat{\theta}_1 - \theta\)</span></li>
+<li>A second sample will result in an error <span class="math inline">\(\hat{\theta}_2 - \theta\)</span></li>
+<li>A third sample will result in an error <span class="math inline">\(\hat{\theta}_3 - \theta\)</span></li>
+<li>and so on …</li>
+</ul>
+<p>So how do we measure the “size” of the estimation errors? The typical way to
+quantify the amount of estimation error is by calculating the squared errors,
+and then averaging over all the possible values of the estimators.
+This is known as the <strong>Mean Squared Error</strong> (MSE) of <span class="math inline">\(\hat{\theta}\)</span>:</p>
+<p><span class="math display">\[
+\text{MSE}(\hat{\theta}) = \mathbb{E} [(\hat{\theta} - \theta)^2]
+\]</span></p>
+<p>MSE is the squared distance from our estimator <span class="math inline">\(\hat{\theta}\)</span> to the true value
+<span class="math inline">\(\theta\)</span>, averaged over all possible samples.</p>
+<p>It is convenient to regard the estimation error, <span class="math inline">\(\hat{\theta} - \theta\)</span>, with
+respect to <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>. In other words, the distance between <span class="math inline">\(\hat{\theta}\)</span>
+and <span class="math inline">\(\theta\)</span> can be expressed with respect
+to the expected value <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
+<img src="images/theory/theta-hat-distribution3.png" alt="Estimator, its mean, and the parameter" width="95%" />
+<p class="caption">
+Figure 8.6: Estimator, its mean, and the parameter
+</p>
+</div>
+<p>Let’s rewrite <span class="math inline">\((\hat{\theta} - \theta)^2\)</span> as <span class="math inline">\(( \hat{\theta} - \mathbb{E}(\hat{\theta}) + \mathbb{E}(\hat{\theta}) - \theta)^2\)</span>, and let <span class="math inline">\(\mathbb{E}(\hat{\theta}) = \mu_{\hat{\theta}}\)</span>.
+Then:</p>
+<p><span class="math display">\[\begin{align*}
+(\hat{\theta} - \theta)^2 &amp;= \left ( \hat{\theta} - \mathbb{E}(\hat{\theta}) + \mathbb{E}(\hat{\theta}) - \theta \right )^2 \\
+&amp;= ( \hat{\theta} - \mu_{\hat{\theta}} + \mu_{\hat{\theta}} - \theta )^2 \\
+&amp;= (\underbrace{\hat{\theta} - \mu_{\hat{\theta}}}_{a} + \underbrace{\mu_{\hat{\theta}} - \theta}_{b})^2 \\
+&amp;= a^2 + b^2 + 2ab \\
+\Longrightarrow \mathbb{E} \left [ (\hat{\theta} - \theta)^2 \right ] &amp;= \mathbb{E}[a^2 + b^2 + 2ab]
+\end{align*}\]</span></p>
+<p>We have that <span class="math inline">\(\text{MSE}(\hat{\theta}) = \mathbb{E} [(\hat{\theta} - \theta)^2]\)</span> can be decomposed as:</p>
+<p><span class="math display">\[\begin{align*}
+\mathbb{E} \left [ (\hat{\theta} - \theta)^2 \right ] &amp;= \mathbb{E}[a^2 + b^2 + 2ab] \\
+&amp;= \mathbb{E}(a^2) + \mathbb{E}(b^2) + 2\mathbb{E}(ab) \\
+&amp;= \mathbb{E} [ (\hat{\theta} - \mu_{\hat{\theta}})^2 ] +
+\mathbb{E} [ (\mu_{\hat{\theta}} - \theta)^2 ] + 2\mathbb{E}(ab)
+\end{align*}\]</span></p>
+<p>Notice that <span class="math inline">\(\mathbb{E}(ab)\)</span>:</p>
+<p><span class="math display">\[
+\mathbb{E}(ab) = \mathbb{E}[ (\hat{\theta} - \mu_{\hat{\theta}}) (\mu_{\hat{\theta}} - \theta) ] = 0
+\]</span></p>
+<p>Consequently</p>
+<p><span class="math display">\[\begin{align*}
+\text{MSE}(\hat{\theta}) &amp;= \mathbb{E} \left [ (\hat{\theta} - \theta)^2 \right ] \\
+&amp; \\
+&amp;= \mathbb{E} [ (\hat{\theta} - \mu_{\hat{\theta}})^2 ] +
+\mathbb{E} [ (\mu_{\hat{\theta}} - \theta)^2 ] \\
+&amp; \\
+&amp;= \mathbb{E} [(\hat{\theta} - \mu_{\hat{\theta}})^2] + 
+\mathbb{E} [ (\mu_{\hat{\theta}} - \theta) ]^2 \\
+&amp; \\
+&amp;= \underbrace{\mathbb{E} [(\hat{\theta} - \mu_{\hat{\theta}})^2]}_{\text{Variance}} + 
+(\underbrace{\mu_{\hat{\theta}} - \theta}_{\text{Bias}})^2 \\
+&amp; \\
+&amp;= \text{Var}(\hat{\theta}) + \text{Bias}^{2} (\hat{\theta})
+\end{align*}\]</span></p>
+<p>The MSE of an estimator can be decomposed in terms of Bias and Variance.</p>
+<ul>
+<li><p><strong>Bias</strong>, <span class="math inline">\(\mu_{\hat{\theta}} - \theta\)</span>, is the tendency of <span class="math inline">\(\hat{\theta}\)</span>
+to overestimate or underestimate <span class="math inline">\(\theta\)</span> over all possible samples.</p></li>
+<li><p><strong>Variance</strong>, <span class="math inline">\(\text{Var}(\hat{\theta})\)</span>, simply measures the average
+variability of the estimators around their mean <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>.</p></li>
+</ul>
+<div id="prototyipcal-cases-of-bias-and-variance" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Prototyipcal Cases of Bias and Variance</h3>
+<p>Depending on the type of estimator <span class="math inline">\(\hat{\theta}\)</span>, and the sample size <span class="math inline">\(m\)</span>,
+we can get statistics having different behaviors. The following diagram illustrates
+four classic scenarios contrasting low and high values for both the bias and
+the variance.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-57"></span>
+<img src="images/theory/bias-variance-targets.png" alt="Prototypical scenarios for Bias-Variance" width="70%" />
+<p class="caption">
+Figure 8.7: Prototypical scenarios for Bias-Variance
 </p>
 </div>
 
+</div>
 </div>
 </div>
             </section>
@@ -429,8 +354,8 @@ Figure 2.1: Supervised and Unsupervised
           </div>
         </div>
       </div>
-<a href="about.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="duality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="learning.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
