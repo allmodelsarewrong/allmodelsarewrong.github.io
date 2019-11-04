@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="ols.html"/>
-
+<link rel="next" href="learning.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -133,6 +133,18 @@
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
 </ul></li>
+<li class="part"><span><b>V Learning Concepts</b></span></li>
+<li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
+<li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -162,7 +174,7 @@ algorithm.</p>
 <div id="error-surface" class="section level2">
 <h2><span class="header-section-number">6.1</span> Error Surface</h2>
 <p>Consider again the error surface:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
 <img src="images/ols/error-surface.png" alt="Error Surface" width="70%" />
 <p class="caption">
 Figure 6.1: Error Surface
@@ -183,7 +195,7 @@ The iterative method that we will discuss in this chapter is called
 error surface. We then “move down” the surface to obtain a new vector
 <span class="math inline">\(\mathbf{w}^{(1)}\)</span>, closer to the minimizing point <span class="math inline">\(\mathbf{w}^{*}\)</span>.
 For illustrative purposes, consider a <span class="math inline">\(1-\)</span>dimensional error “surface”:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-43"></span>
 <img src="images/ols/one-dim-error-surface.png" alt="One dimensional error surface" width="70%" />
 <p class="caption">
 Figure 6.2: One dimensional error surface
@@ -239,7 +251,7 @@ For notational convenience, let us (temporarily) define
 <span class="math inline">\(\mathbf{u} : = \nabla E ( \mathbf{w}^{(s)} )\)</span></p>
 <p>With respect to the orientation of <span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>, we can consider
 three prototypical cases: <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are either antiparallel, parallel, or orthogonal.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44"></span>
 <img src="images/ols/three-prototypical-cases.png" alt="Three prototypical cases" width="70%" />
 <p class="caption">
 Figure 6.3: Three prototypical cases
@@ -311,13 +323,16 @@ the algorithm listed there also omits the unit-length condition.</p>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="ols.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="ols.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="duality.html"/>
-
+<link rel="next" href="ols.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -114,6 +114,37 @@
 <li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
 <li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
 </ul></li>
+<li class="part"><span><b>IV Linear Regression</b></span></li>
+<li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
+<li class="chapter" data-level="5.1" data-path="ols.html"><a href="ols.html#motivation"><i class="fa fa-check"></i><b>5.1</b> Motivation</a></li>
+<li class="chapter" data-level="5.2" data-path="ols.html"><a href="ols.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a></li>
+<li class="chapter" data-level="5.3" data-path="ols.html"><a href="ols.html#the-error-measure"><i class="fa fa-check"></i><b>5.3</b> The Error Measure</a></li>
+<li class="chapter" data-level="5.4" data-path="ols.html"><a href="ols.html#the-algorithm"><i class="fa fa-check"></i><b>5.4</b> The Algorithm</a></li>
+<li class="chapter" data-level="5.5" data-path="ols.html"><a href="ols.html#geometries-of-ols"><i class="fa fa-check"></i><b>5.5</b> Geometries of OLS</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="ols.html"><a href="ols.html#rows-perspective"><i class="fa fa-check"></i><b>5.5.1</b> Rows Perspective</a></li>
+<li class="chapter" data-level="5.5.2" data-path="ols.html"><a href="ols.html#columns-perspective"><i class="fa fa-check"></i><b>5.5.2</b> Columns Perspective</a></li>
+<li class="chapter" data-level="5.5.3" data-path="ols.html"><a href="ols.html#parameters-perspective"><i class="fa fa-check"></i><b>5.5.3</b> Parameters Perspective</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="gradient.html"><a href="gradient.html"><i class="fa fa-check"></i><b>6</b> Gradient Descent</a><ul>
+<li class="chapter" data-level="6.1" data-path="gradient.html"><a href="gradient.html#error-surface"><i class="fa fa-check"></i><b>6.1</b> Error Surface</a></li>
+<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.2.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
+</ul></li>
+<li class="part"><span><b>V Learning Concepts</b></span></li>
+<li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
+<li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -174,7 +205,7 @@ mentioned before, we think of the individuals as forming a cloud of points in a
 <span class="math inline">\(p\)</span>-dim space, and the variables forming a cloud of arrows in an <span class="math inline">\(n\)</span>-dim space.</p>
 <p>Pretend that you have some data in which its cloud of points has the shape of
 a mug, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
 <img src="images/pca/mug-data.png" alt="Cloud of points in the form of a mug" width="30%" />
 <p class="caption">
 Figure 4.1: Cloud of points in the form of a mug
@@ -186,7 +217,7 @@ a low-dimensional representation of this data?</p>
 <p>Luckily, the answer is: YES, we can!</p>
 <p>How? Well, the name of the game is <strong>projections</strong>: we can look for projections
 of the data into sub-spaces of lower dimension, like in the diagram below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
 <img src="images/pca/mug-projections.png" alt="Various projections onto subspaces" width="70%" />
 <p class="caption">
 Figure 4.2: Various projections onto subspaces
@@ -205,7 +236,7 @@ that most resembles the original object. Now, keep in mind that the resulting
 image in the low-dimensional space is not capturing the whole pattern. In other
 words, there is some loss of information. However, by chosing the right project,
 we hope to minimize such loss.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
 <img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="70%" />
 <p class="caption">
 Figure 4.3: The shape of the projection is similar to the original mug shape.
@@ -219,14 +250,14 @@ Figure 4.3: The shape of the projection is similar to the original mug shape.
 <span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
 <p>A principal component is a linear combination: <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>.
 The first PC is a linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
 <img src="images/pca/pca-path-diag1.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
 Figure 4.4: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>The second PC is another linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
 <img src="images/pca/pca-path-diag2.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
 Figure 4.5: PCs as linear combinations of X-variables
@@ -249,7 +280,7 @@ Figure 4.5: PCs as linear combinations of X-variables
 <span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
 vectors of the principal axes. The following figure shows a graphical
 representation of a PCA problem in diagram notation:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
 <img src="images/pca/pca-path-diag4.png" alt="PCs as linear combinations of X-variables" width="70%" />
 <p class="caption">
 Figure 4.6: PCs as linear combinations of X-variables
@@ -406,13 +437,16 @@ eigenvector.</p>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="duality.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="duality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

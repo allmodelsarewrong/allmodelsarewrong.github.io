@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="pca.html"/>
-
+<link rel="next" href="gradient.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -125,6 +125,25 @@
 <li class="chapter" data-level="5.5.2" data-path="ols.html"><a href="ols.html#columns-perspective"><i class="fa fa-check"></i><b>5.5.2</b> Columns Perspective</a></li>
 <li class="chapter" data-level="5.5.3" data-path="ols.html"><a href="ols.html#parameters-perspective"><i class="fa fa-check"></i><b>5.5.3</b> Parameters Perspective</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="gradient.html"><a href="gradient.html"><i class="fa fa-check"></i><b>6</b> Gradient Descent</a><ul>
+<li class="chapter" data-level="6.1" data-path="gradient.html"><a href="gradient.html#error-surface"><i class="fa fa-check"></i><b>6.1</b> Error Surface</a></li>
+<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.2.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
+</ul></li>
+<li class="part"><span><b>V Learning Concepts</b></span></li>
+<li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
+<li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
@@ -258,14 +277,14 @@ b_{p} \\
 \mathbf{\hat{y}} = \mathbf{Xb}
 \]</span></p>
 <p>In path diagram form, the linear model looks like this:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
 <img src="images/ols/ols-path-diagram-betas0.png" alt="Linear combination with constant term" width="40%" />
 <p class="caption">
 Figure 5.1: Linear combination with constant term
 </p>
 </div>
 <p>If we assume centered predictors then we don’t have to worry about the constant:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/ols/ols-path-diagram-betas1.png" alt="Linear combination without constant term" width="40%" />
 <p class="caption">
 Figure 5.2: Linear combination without constant term
@@ -339,7 +358,7 @@ We will discuss three geometric perspectives:</p>
 <ol style="list-style-type: decimal">
 <li><p>OLS from the individuals point of view (i.e. rows of the data matrix).</p></li>
 <li><p>OLS from the variables point of view (i.e. columns of the data matrix).</p></li>
-<li><p>OLS from the parameters point of view, and the overall error measure.</p></li>
+<li><p>OLS from the parameters point of view, and the error surface.</p></li>
 </ol>
 <div id="rows-perspective" class="section level3">
 <h3><span class="header-section-number">5.5.1</span> Rows Perspective</h3>
@@ -347,7 +366,7 @@ We will discuss three geometric perspectives:</p>
 <p>Consider a <span class="math inline">\((p + 1)\)</span>-dimensional space. For illustration purposes let’s assume that
 our data has just <span class="math inline">\(p=1\)</span> predictor. In other words, we have the response <span class="math inline">\(Y\)</span> and
 one predictor <span class="math inline">\(X\)</span>. We can depict individuals as points in this space:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
 <img src="images/ols/ols-geom-obs0.png" alt="Scatterplot of individuals" width="60%" />
 <p class="caption">
 Figure 5.3: Scatterplot of individuals
@@ -357,7 +376,7 @@ Figure 5.3: Scatterplot of individuals
 <span class="math inline">\(\hat{y}_{i} = b_0 + b_1 x_i\)</span>. In two dimensions, the fitted model corresponds
 to a line. In three dimensions it would correspond to a plane. And in higher
 dimensions this would corresponds to a hyperplane.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="images/ols/ols-geom-obs1.png" alt="Scatterplot with regression line" width="60%" />
 <p class="caption">
 Figure 5.4: Scatterplot with regression line
@@ -367,7 +386,7 @@ Figure 5.4: Scatterplot with regression line
 may be equal to the observed values. Other predicted values will be greater than
 the observed values. And some predicted values will be smaller than
 the observed values.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="images/ols/ols-geom-obs2.png" alt="Observed values and predicted values" width="60%" />
 <p class="caption">
 Figure 5.5: Observed values and predicted values
@@ -378,7 +397,7 @@ of lines (in general). So which line are we looking for? We want to obtain the
 line that minimizes the square of the errors <span class="math inline">\(e_i = \hat{y}_{i} - y_{i}\)</span>.
 In the figure below, these errors are represented by the vertical difference
 between the observed values <span class="math inline">\(y_i\)</span> and the predicted values <span class="math inline">\(\hat{y}_i\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
 <img src="images/ols/ols-geom-obs3.png" alt="OLS focuses on minimizing the squared errors" width="60%" />
 <p class="caption">
 Figure 5.6: OLS focuses on minimizing the squared errors
@@ -403,7 +422,7 @@ that minimize the squared norm of the residuals:</p>
 In this space, the <span class="math inline">\(X\)</span> variables will span some subspace <span class="math inline">\(\mathbb{S}_{X}\)</span>.
 This subspace is not supposed to contain the response—unless <span class="math inline">\(Y\)</span> happens to be
 a linear combination of <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
 <img src="images/ols/ols-geomvar1.png" alt="Features and Response view" width="70%" />
 <p class="caption">
 Figure 5.7: Features and Response view
@@ -412,7 +431,7 @@ Figure 5.7: Features and Response view
 <p>What are we looking for? We’re looking for a linear combination <span class="math inline">\(\mathbf{Xb}\)</span>.
 As you can tell, there’s an infinite number of linear combinations that can be
 formed with <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
 <img src="images/ols/ols-geomvar2.png" alt="Linear combination of features" width="70%" />
 <p class="caption">
 Figure 5.8: Linear combination of features
@@ -420,7 +439,7 @@ Figure 5.8: Linear combination of features
 </div>
 <p>The mix of features that we are interested in, <span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Xb}\)</span>,
 is the one that gives us the closest approximation to <span class="math inline">\(\mathbf{y}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
 <img src="images/ols/ols-geomvar3.png" alt="Linear combination to be as close as possible to response" width="70%" />
 <p class="caption">
 Figure 5.9: Linear combination to be as close as possible to response
@@ -457,7 +476,7 @@ E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} ( \underbrace{\mathbf{b^\mathsf{T}
 <p>Since <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is positive semidefinite, we know that
 <span class="math inline">\(\mathbf{b^\mathsf{T} X^\mathsf{T} Xb} \geq 0\)</span>. Furthermore, we know that
 (from vector calculus) it will be a paraboloid (in <span class="math inline">\((E, b_1, b_2)\)</span> space):</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
 <img src="images/ols/ols-paraboloid.png" alt="Paraboloid" width="30%" />
 <p class="caption">
 Figure 5.10: Paraboloid
@@ -479,8 +498,8 @@ the function. The point being; with positive semi-definite matrices, we
           </div>
         </div>
       </div>
-<a href="pca.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="pca.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gradient.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
