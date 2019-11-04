@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Linear Regression | All Models Are Wrong</title>
+  <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Linear Regression | All Models Are Wrong" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://allmodelsarewrong.github.io" />
+  
+  <meta property="og:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Linear Regression | All Models Are Wrong" />
+  
+  <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
+  
+
+<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+
+
+<meta name="date" content="2019-11-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pca.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Welcome</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+</ul></li>
+<li class="part"><span><b>II Intro</b></span></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#basic-notation"><i class="fa fa-check"></i><b>2.1</b> Basic Notation</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#about-statistical-learning"><i class="fa fa-check"></i><b>2.2</b> About Statistical Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="duality.html"><a href="duality.html"><i class="fa fa-check"></i><b>3</b> Geometric Duality</a><ul>
+<li class="chapter" data-level="3.1" data-path="duality.html"><a href="duality.html#rows-space"><i class="fa fa-check"></i><b>3.1</b> Rows Space</a></li>
+<li class="chapter" data-level="3.2" data-path="duality.html"><a href="duality.html#columns-space"><i class="fa fa-check"></i><b>3.2</b> Columns Space</a></li>
+<li class="chapter" data-level="3.3" data-path="duality.html"><a href="duality.html#cloud-of-individuals"><i class="fa fa-check"></i><b>3.3</b> Cloud of Individuals</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="duality.html"><a href="duality.html#average-individual"><i class="fa fa-check"></i><b>3.3.1</b> Average Individual</a></li>
+<li class="chapter" data-level="3.3.2" data-path="duality.html"><a href="duality.html#centered-data"><i class="fa fa-check"></i><b>3.3.2</b> Centered Data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="duality.html"><a href="duality.html#distance-between-individuals"><i class="fa fa-check"></i><b>3.3.3</b> Distance between individuals</a></li>
+<li class="chapter" data-level="3.3.4" data-path="duality.html"><a href="duality.html#distance-to-the-centroid"><i class="fa fa-check"></i><b>3.3.4</b> Distance to the centroid</a></li>
+<li class="chapter" data-level="3.3.5" data-path="duality.html"><a href="duality.html#measures-of-dispersion"><i class="fa fa-check"></i><b>3.3.5</b> Measures of Dispersion</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="duality.html"><a href="duality.html#cloud-of-variables"><i class="fa fa-check"></i><b>3.4</b> Cloud of Variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="duality.html"><a href="duality.html#mean-of-a-variable"><i class="fa fa-check"></i><b>3.4.1</b> Mean of a Variable</a></li>
+<li class="chapter" data-level="3.4.2" data-path="duality.html"><a href="duality.html#variance-of-a-variable"><i class="fa fa-check"></i><b>3.4.2</b> Variance of a Variable</a></li>
+<li class="chapter" data-level="3.4.3" data-path="duality.html"><a href="duality.html#variance-with-vector-notation"><i class="fa fa-check"></i><b>3.4.3</b> Variance with Vector Notation</a></li>
+<li class="chapter" data-level="3.4.4" data-path="duality.html"><a href="duality.html#standard-deviation-as-a-norm"><i class="fa fa-check"></i><b>3.4.4</b> Standard Deviation as a Norm</a></li>
+<li class="chapter" data-level="3.4.5" data-path="duality.html"><a href="duality.html#covariance"><i class="fa fa-check"></i><b>3.4.5</b> Covariance</a></li>
+<li class="chapter" data-level="3.4.6" data-path="duality.html"><a href="duality.html#correlation"><i class="fa fa-check"></i><b>3.4.6</b> Correlation</a></li>
+<li class="chapter" data-level="3.4.7" data-path="duality.html"><a href="duality.html#geometry-of-correlation"><i class="fa fa-check"></i><b>3.4.7</b> Geometry of Correlation</a></li>
+<li class="chapter" data-level="3.4.8" data-path="duality.html"><a href="duality.html#orthogonal-projections"><i class="fa fa-check"></i><b>3.4.8</b> Orthogonal Projections</a></li>
+<li class="chapter" data-level="3.4.9" data-path="duality.html"><a href="duality.html#the-mean-as-an-orthogonal-projection"><i class="fa fa-check"></i><b>3.4.9</b> The mean as an orthogonal projection</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
+<li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+</ul></li>
+<li class="part"><span><b>IV Linear Regression</b></span></li>
+<li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
+<li class="chapter" data-level="5.1" data-path="ols.html"><a href="ols.html#motivation"><i class="fa fa-check"></i><b>5.1</b> Motivation</a></li>
+<li class="chapter" data-level="5.2" data-path="ols.html"><a href="ols.html#the-model"><i class="fa fa-check"></i><b>5.2</b> The Model</a></li>
+<li class="chapter" data-level="5.3" data-path="ols.html"><a href="ols.html#the-error-measure"><i class="fa fa-check"></i><b>5.3</b> The Error Measure</a></li>
+<li class="chapter" data-level="5.4" data-path="ols.html"><a href="ols.html#the-algorithm"><i class="fa fa-check"></i><b>5.4</b> The Algorithm</a></li>
+<li class="chapter" data-level="5.5" data-path="ols.html"><a href="ols.html#geometries-of-ols"><i class="fa fa-check"></i><b>5.5</b> Geometries of OLS</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="ols.html"><a href="ols.html#rows-perspective"><i class="fa fa-check"></i><b>5.5.1</b> Rows Perspective</a></li>
+<li class="chapter" data-level="5.5.2" data-path="ols.html"><a href="ols.html#columns-perspective"><i class="fa fa-check"></i><b>5.5.2</b> Columns Perspective</a></li>
+<li class="chapter" data-level="5.5.3" data-path="ols.html"><a href="ols.html#parameters-perspective"><i class="fa fa-check"></i><b>5.5.3</b> Parameters Perspective</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ols" class="section level1">
+<h1><span class="header-section-number">5</span> Linear Regression</h1>
+<p>Before entering supervised learning territory, we want to discuss the general
+framework of linear regression. We will introduce this topic from a pure
+model fitting point of view. In other words, we will postpone the learning
+aspect (the prediction aspect) after the <strong>chapter of theory of learning</strong>.</p>
+<p>The reason to cover linear regression in this way is for us to have something
+to work with when we start talking about the theory of supervised learning.</p>
+<div id="motivation" class="section level2">
+<h2><span class="header-section-number">5.1</span> Motivation</h2>
+<p>Let’s consider the example about the data of course scores observed on students
+of a Statistical Learning class. We will assume that we have access to historical
+data for <span class="math inline">\(n\)</span> students on <span class="math inline">\(p\)</span> features or variables like scores on statistics,
+probability, linear algebra, multivariable calculus, and programming.
+Assume also that we have the scores on the course Statistical Learning, this is
+the variable that plays the role of response or outcome.</p>
+<p>For convenience purposes, let’s also assume that all the input variables <span class="math inline">\(X_j\)</span>
+and the response <span class="math inline">\(Y\)</span> are scores measured on a scale from 0 to 100. So we can
+treat them as quantitative variables.</p>
+<p>A student is planning to enroll in the Statistical Learning course. We know the
+student’s scores, but we obviously don’t know her score for SL. Here’s a question
+for you: what can we do to guesstimate her score?</p>
+<p>The student’s score is <span class="math inline">\(\mathbf{\vec{x}_0}\)</span>, but we don’t know the response value <span class="math inline">\(y_0 = ?\)</span></p>
+<p>A first approach to guestimate <span class="math inline">\(y_0\)</span> is to use the historical average <span class="math inline">\(\bar{y}\)</span>,
+that is: <span class="math inline">\(\hat{y}_0 = \bar{y}\)</span>.
+This is a good idea specially in the case when the only available information is
+the historical score records <span class="math inline">\(y_1, y_2, \dots, y_n\)</span>. In this case we are using
+<span class="math inline">\(\bar{y}\)</span> as the <em>typical</em> score (e.g. a measure of center) as a plausible
+guestimate for <span class="math inline">\(y_0\)</span>.</p>
+<p>Now, say we have not only <span class="math inline">\(Y\)</span> but also one feature <span class="math inline">\(X\)</span>. A “quick and dirty”
+approach to guestimate <span class="math inline">\(y_0\)</span> consists of looking at the scores <span class="math inline">\(y_i\)</span> of those
+historical records that happen to have <span class="math inline">\(x_i = x_0\)</span>. What does this correspond to?
+This is basically a conditional mean: <span class="math inline">\(\hat{y}_0 = \text{ave}(y_i|x_i = x_0)\)</span>.</p>
+<p>Of course, the previous strategy only makes sense when we have data points <span class="math inline">\(x_i\)</span>
+that are equal to <span class="math inline">\(x_0\)</span>. But what if none of the available <span class="math inline">\(x_i\)</span> values are
+equal to <span class="math inline">\(x_0\)</span>?</p>
+<p>Linear regression to the rescue.</p>
+</div>
+<div id="the-model" class="section level2">
+<h2><span class="header-section-number">5.2</span> The Model</h2>
+<p>A regression model: use one or more features <span class="math inline">\(X\)</span> to say something about <span class="math inline">\(Y\)</span>.
+A <strong>linear regression</strong> model tells us to combine our features in a linear
+way in order to approximate <span class="math inline">\(y\)</span></p>
+<p><span class="math display">\[
+\hat{Y} = b_0 + b_1 X
+\]</span></p>
+<p>In pointwise format, that is for a given individual <span class="math inline">\(i\)</span> we have:</p>
+<p><span class="math display">\[
+\hat{y}_i = b_0 + b_1 x_i
+\]</span></p>
+<p>In vector notation:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = b_0 + b_1 \mathbf{x}
+\]</span></p>
+<p>To simplify notation, sometimes we prefer to add an auxiliary constant feature
+in the form of a vector of 1’s with <span class="math inline">\(n\)</span> elements.</p>
+<p><span class="math display">\[
+\mathbf{X} = 
+\
+\begin{bmatrix} 
+1 &amp; x_{1} \\
+1 &amp; x_{2} \\
+\vdots &amp; \vdots \\
+1 &amp; x_{n} \\
+\end{bmatrix},
+\qquad
+\mathbf{\hat{y}} = 
+\begin{bmatrix} 
+\hat{y}_{1} \\
+\hat{y}_{2} \\
+\vdots \\
+\hat{y}_{n} \\
+\end{bmatrix},
+\qquad
+\mathbf{b} = 
+\begin{bmatrix} 
+b_{0} \\
+b_{1} \\
+\end{bmatrix}
+\]</span></p>
+<p>In the multidimensional case when we have <span class="math inline">\(p&gt;1\)</span> predictors:</p>
+<p><span class="math display">\[
+\mathbf{X} = 
+\
+\begin{bmatrix} 
+1 &amp; x_{11} &amp; \dots &amp; x_{1n} \\
+1 &amp; x_{12} &amp; \dots &amp; x_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_{1n} &amp; \dots &amp; x_{nn} \\
+\end{bmatrix},
+\qquad
+\mathbf{\hat{y}} = 
+\begin{bmatrix} 
+\hat{y}_{1} \\
+\hat{y}_{2} \\
+\vdots \\
+\hat{y}_{n} \\
+\end{bmatrix},
+\qquad
+\mathbf{b} = 
+\begin{bmatrix} 
+b_{0} \\
+b_{1} \\
+\vdots \\
+b_{p} \\
+\end{bmatrix}
+\]</span></p>
+<p>With the matrix of features, the response, and the coefficients we have:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{Xb}
+\]</span></p>
+<p>In path diagram form, the linear model looks like this:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="images/ols/ols-path-diagram-betas0.png" alt="Linear combination with constant term" width="40%" />
+<p class="caption">
+Figure 5.1: Linear combination with constant term
+</p>
+</div>
+<p>If we assume centered predictors then we don’t have to worry about the constant:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<img src="images/ols/ols-path-diagram-betas1.png" alt="Linear combination without constant term" width="40%" />
+<p class="caption">
+Figure 5.2: Linear combination without constant term
+</p>
+</div>
+<p>Obviously the question becomes: how do we obtain the vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>?</p>
+</div>
+<div id="the-error-measure" class="section level2">
+<h2><span class="header-section-number">5.3</span> The Error Measure</h2>
+<p>We would like to get <span class="math inline">\(\hat{y}_i\)</span> to be “as close as” possible to <span class="math inline">\(y_i\)</span>.
+This requires to come up with a measure of <em>closeness</em>. Among the various
+functions that we can use to measure the distance between <span class="math inline">\(\hat{y}_i\)</span> and
+<span class="math inline">\(y_i\)</span>, the most common one that is used in regression models is the
+squared distance:</p>
+<p><span class="math display">\[
+d^2(y_i, \hat{y}_i) = (y_i - \hat{y}_i)^2 = (\hat{y}_i - y_i)^2 
+\]</span></p>
+<p>Replacing <span class="math inline">\(\hat{y}_i\)</span> with <span class="math inline">\(\mathbf{b^\mathsf{T}\vec{x}_i}\)</span> we have:</p>
+<p><span class="math display">\[
+d^2(y_i, \hat{y}_i) = (\mathbf{b^\mathsf{T}\vec{x}_i} - y_i)^2
+\]</span></p>
+<p>Notice that <span class="math inline">\(d^2(y_i, \hat{y}_i)\)</span> is a pointwise error measure. But we need to define
+a global measure of error. This is typically done by adding all the pointwise
+error measures <span class="math inline">\(e_{i}^{2} = (\hat{y}_i - y_i)^2\)</span>. There are two flavors of
+overall error measures based on squared pointwise differences: (1) the sum of
+squared errors or <span class="math inline">\(\text{SSE}\)</span>, and (2) the mean squared error or <span class="math inline">\(\text{MSE}\)</span>.</p>
+<p><span class="math display">\[
+\text{overall error} = \sum_{i=1}^{n} \text{err}_i = \text{SSE}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\text{overall error} = \frac{1}{n} \sum_{i=1}^{n} \text{err}_i = \text{MSE}
+\]</span></p>
+<p>As you can tell, <span class="math inline">\(\text{SSE} = n \text{MSE}\)</span>, and viceversa, <span class="math inline">\(\text{MSE} = \text{SSE} / n\)</span></p>
+<p>Let’s consider the <span class="math inline">\(\text{MSE}\)</span> as the overall error function to be minimized
+(you could also take <span class="math inline">\(\text{SSE}\)</span> instead)</p>
+<p><span class="math display">\[
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (\mathbf{b^\mathsf{T}\vec{x}_i} - y_i)^2 = 
+(\mathbf{Xb} - \mathbf{y})^\mathsf{T} (\mathbf{Xb} - \mathbf{y})
+\]</span></p>
+</div>
+<div id="the-algorithm" class="section level2">
+<h2><span class="header-section-number">5.4</span> The Algorithm</h2>
+<p>We want to minimize the mean of squared errors. So we compute the derivative
+of <span class="math inline">\(\text{MSE}\)</span> with respect to <span class="math inline">\(\mathbf{b}\)</span>:</p>
+<p><span class="math display">\[
+\frac{\partial \text{MSE}(\mathbf{b})}{\partial \mathbf{b}} = \frac{\partial }{\partial \mathbf{b}} (\mathbf{b^\mathsf{T}X^\mathsf{T}Xb - 2 b^\mathsf{T}X^\mathsf{T}y + \mathbf{y^\mathsf{T}y}})
+\]</span></p>
+<p>which becomes:</p>
+<p><span class="math display">\[
+2 \mathbf{X^\mathsf{T}Xb} - 2 \mathbf{X^\mathsf{T}y}
+\]</span></p>
+<p>Equating to zero we get that:</p>
+<p><span class="math display">\[
+\mathbf{X^\mathsf{T}Xb} = \mathbf{X^\mathsf{T}y} \quad (\text{normal equations})
+\]</span></p>
+<p>These are the so-called <em>Normal</em> equations. It is a system of <span class="math inline">\(n\)</span> equations with
+<span class="math inline">\(p+1\)</span> unknowns.</p>
+<p>If the cross-product matrix <span class="math inline">\(\mathbf{X^\mathsf{T}X}\)</span> is invertible, which is not
+a minor assumption, then the
+vector of regression coefficients <span class="math inline">\(\mathbf{b}\)</span> that we are looking for is given by:</p>
+<p><span class="math display">\[
+\mathbf{b} = (\mathbf{X^\mathsf{T}X})^{-1} \mathbf{X^\mathsf{T}y}
+\]</span></p>
+</div>
+<div id="geometries-of-ols" class="section level2">
+<h2><span class="header-section-number">5.5</span> Geometries of OLS</h2>
+<p>Now that we’ve seen the algebra, it’s time to look at the geometric interpretation
+of all the action that is going on within linear regression via OLS.
+We will discuss three geometric perspectives:</p>
+<ol style="list-style-type: decimal">
+<li><p>OLS from the individuals point of view (i.e. rows of the data matrix).</p></li>
+<li><p>OLS from the variables point of view (i.e. columns of the data matrix).</p></li>
+<li><p>OLS from the parameters point of view, and the overall error measure.</p></li>
+</ol>
+<div id="rows-perspective" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Rows Perspective</h3>
+<p>This is probably the most popular perspective covered in most textbooks.</p>
+<p>Consider a <span class="math inline">\((p + 1)\)</span>-dimensional space. For illustration purposes let’s assume that
+our data has just <span class="math inline">\(p=1\)</span> predictor. In other words, we have the response <span class="math inline">\(Y\)</span> and
+one predictor <span class="math inline">\(X\)</span>. We can depict individuals as points in this space:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="images/ols/ols-geom-obs0.png" alt="Scatterplot of individuals" width="60%" />
+<p class="caption">
+Figure 5.3: Scatterplot of individuals
+</p>
+</div>
+<p>In linear regression, we want to predict <span class="math inline">\(y_i\)</span> by linearly mixing the inputs
+<span class="math inline">\(\hat{y}_{i} = b_0 + b_1 x_i\)</span>. In two dimensions, the fitted model corresponds
+to a line. In three dimensions it would correspond to a plane. And in higher
+dimensions this would corresponds to a hyperplane.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="images/ols/ols-geom-obs1.png" alt="Scatterplot with regression line" width="60%" />
+<p class="caption">
+Figure 5.4: Scatterplot with regression line
+</p>
+</div>
+<p>With a fitted line, we obtain predicted values <span class="math inline">\(\hat{y}_i\)</span>. Some predicted values
+may be equal to the observed values. Other predicted values will be greater than
+the observed values. And some predicted values will be smaller than
+the observed values.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="images/ols/ols-geom-obs2.png" alt="Observed values and predicted values" width="60%" />
+<p class="caption">
+Figure 5.5: Observed values and predicted values
+</p>
+</div>
+<p>As you can imagine, given a set of data points, you can fit an infinite number
+of lines (in general). So which line are we looking for? We want to obtain the
+line that minimizes the square of the errors <span class="math inline">\(e_i = \hat{y}_{i} - y_{i}\)</span>.
+In the figure below, these errors are represented by the vertical difference
+between the observed values <span class="math inline">\(y_i\)</span> and the predicted values <span class="math inline">\(\hat{y}_i\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="images/ols/ols-geom-obs3.png" alt="OLS focuses on minimizing the squared errors" width="60%" />
+<p class="caption">
+Figure 5.6: OLS focuses on minimizing the squared errors
+</p>
+</div>
+<p>Combining all residuals, we want to obtain parameters <span class="math inline">\(b_0, \dots, b_p\)</span>
+that minimize the squared norm of the residuals:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} e_{i}^{2} = \sum_{i=1}^{n} (\hat{y}_i - y_i)^2 = \sum_{i=1}^{n} (b_0 + b_1 x_i - y_i)^2
+\]</span></p>
+<p>In vector-matrix form we have:</p>
+<p><span class="math display">\[\begin{align*}
+\| \mathbf{e} \|^2 &amp;= \| \mathbf{\hat{y}} - \mathbf{y} \|^2 \\
+&amp;= \| \mathbf{Xb} - \mathbf{y} \|^2 \\
+&amp;= (\mathbf{Xb} - \mathbf{y})^\mathsf{T} (\mathbf{Xb} - \mathbf{y})
+\end{align*}\]</span></p>
+</div>
+<div id="columns-perspective" class="section level3">
+<h3><span class="header-section-number">5.5.2</span> Columns Perspective</h3>
+<p>This is less common than the rows perspective.</p>
+<p>Imagine variables in an <span class="math inline">\(n\)</span>-dimensional space, both the response and the predictors.
+In this space, the <span class="math inline">\(X\)</span> variables will span some subspace <span class="math inline">\(\mathbb{S}_{X}\)</span>.
+This subspace is not supposed to contain the response—unless <span class="math inline">\(Y\)</span> happens to be
+a linear combination of <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="images/ols/ols-geomvar1.png" alt="Features and Response view" width="70%" />
+<p class="caption">
+Figure 5.7: Features and Response view
+</p>
+</div>
+<p>What are we looking for? We’re looking for a linear combination <span class="math inline">\(\mathbf{Xb}\)</span>.
+As you can tell, there’s an infinite number of linear combinations that can be
+formed with <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="images/ols/ols-geomvar2.png" alt="Linear combination of features" width="70%" />
+<p class="caption">
+Figure 5.8: Linear combination of features
+</p>
+</div>
+<p>The mix of features that we are interested in, <span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Xb}\)</span>,
+is the one that gives us the closest approximation to <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="images/ols/ols-geomvar3.png" alt="Linear combination to be as close as possible to response" width="70%" />
+<p class="caption">
+Figure 5.9: Linear combination to be as close as possible to response
+</p>
+</div>
+<p>Now, what do we mean by <em>closest approximation</em>?
+How do we determine the closeness between <span class="math inline">\(\mathbf{\hat{y}}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>?
+By looking at the difference, which results in a vector
+<span class="math inline">\(\mathbf{e} = \mathbf{\hat{y}} - \mathbf{y}\)</span>. And then measuring the size
+or <em>norm</em> of this vector. Well, the squared norm to be precise. In other words,
+we want to obtain <span class="math inline">\(\mathbf{\hat{y}}\)</span> such that the squared norm <span class="math inline">\(\| \mathbf{e} \|^2\)</span>
+is as small as possible.</p>
+<p><span class="math display">\[
+\text{Minimize} \quad \| \mathbf{e} \|^2 = \| \mathbf{\hat{y}} - \mathbf{y} \|^2
+\]</span></p>
+</div>
+<div id="parameters-perspective" class="section level3">
+<h3><span class="header-section-number">5.5.3</span> Parameters Perspective</h3>
+<p>This is the least common perspective discussed in the literature that has
+to do with linear regression in general. However, it is not that uncommon
+within the Statistical Learning literature.</p>
+<p>We could also visualize the regression problem from the point of view of the
+parameters <span class="math inline">\(\mathbf{b}\)</span> and the error surface.
+For this picture, assume that we have only two predictors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.
+Recall that the Mean Squared Error (MSE) is:</p>
+<p><span class="math display">\[
+E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
+\]</span></p>
+<p>Now, from the point of view of <span class="math inline">\(\mathbf{b} = (b_1, b_2)\)</span>, we can classify the
+order of each term:</p>
+<p><span class="math display">\[
+E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} ( \underbrace{\mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b}}_{\text{Quadratic Form}} - \underbrace{ 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y}}_{\text{Linear}} + \underbrace{ \mathbf{y^\mathsf{T}y}}_{\text{Constant}} )
+\]</span></p>
+<p>Since <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is positive semidefinite, we know that
+<span class="math inline">\(\mathbf{b^\mathsf{T} X^\mathsf{T} Xb} \geq 0\)</span>. Furthermore, we know that
+(from vector calculus) it will be a paraboloid (in <span class="math inline">\((E, b_1, b_2)\)</span> space):</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="images/ols/ols-paraboloid.png" alt="Paraboloid" width="30%" />
+<p class="caption">
+Figure 5.10: Paraboloid
+</p>
+</div>
+<p>That is, it has a minimum value, and we are guaranteed the existence of
+<span class="math inline">\(\mathbf{b}^* = (b_1^{*}, b_2^{*})\)</span> s.t. <span class="math inline">\(\mathbf{b^\mathsf{T} X^\mathsf{T} X b}\)</span>
+is minimized. This is a powerful result!
+Consider, for example, a parabolic cylinder. Such a shape has no unique minimum;
+rather, it has an infinite number of points (all lying on a line) that minimize
+the function. The point being; with positive semi-definite matrices, we
+<strong>never</strong> have this latter case.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pca.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -174,8 +174,8 @@ mentioned before, we think of the individuals as forming a cloud of points in a
 <span class="math inline">\(p\)</span>-dim space, and the variables forming a cloud of arrows in an <span class="math inline">\(n\)</span>-dim space.</p>
 <p>Pretend that you have some data in which its cloud of points has the shape of
 a mug, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
-<img src="images/pca/mug-data.png" alt="Cloud of points in the form of a mug" width="40%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="images/pca/mug-data.png" alt="Cloud of points in the form of a mug" width="30%" />
 <p class="caption">
 Figure 4.1: Cloud of points in the form of a mug
 </p>
@@ -186,7 +186,7 @@ a low-dimensional representation of this data?</p>
 <p>Luckily, the answer is: YES, we can!</p>
 <p>How? Well, the name of the game is <strong>projections</strong>: we can look for projections
 of the data into sub-spaces of lower dimension, like in the diagram below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
 <img src="images/pca/mug-projections.png" alt="Various projections onto subspaces" width="70%" />
 <p class="caption">
 Figure 4.2: Various projections onto subspaces
@@ -205,8 +205,8 @@ that most resembles the original object. Now, keep in mind that the resulting
 image in the low-dimensional space is not capturing the whole pattern. In other
 words, there is some loss of information. However, by chosing the right project,
 we hope to minimize such loss.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
-<img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="50%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="70%" />
 <p class="caption">
 Figure 4.3: The shape of the projection is similar to the original mug shape.
 </p>
@@ -219,15 +219,15 @@ Figure 4.3: The shape of the projection is similar to the original mug shape.
 <span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
 <p>A principal component is a linear combination: <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>.
 The first PC is a linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
-<img src="images/pca/pca-path-diag1.png" alt="PCs as linear combinations of X-variables" width="50%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="images/pca/pca-path-diag1.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
 Figure 4.4: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>The second PC is another linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
-<img src="images/pca/pca-path-diag2.png" alt="PCs as linear combinations of X-variables" width="50%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="images/pca/pca-path-diag2.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
 Figure 4.5: PCs as linear combinations of X-variables
 </p>
@@ -235,10 +235,10 @@ Figure 4.5: PCs as linear combinations of X-variables
 <p>We want to compute the <strong>PCs as linear combinations</strong> of the original variables.</p>
 <p><span class="math display">\[ 
 \begin{array}{c}
-\mathbf{z_1} = v_{11} \mathbf{x_1} + \dots + v_{1p} \mathbf{x_p} \\
-\mathbf{z_2} = v_{21} \mathbf{x_1} + \dots + v_{2p} \mathbf{x_p} \\
+\mathbf{z_1} = v_{11} \mathbf{x_1} + \dots + v_{p1} \mathbf{x_p} \\
+\mathbf{z_2} = v_{12} \mathbf{x_1} + \dots + v_{p2} \mathbf{x_p} \\
 \vdots \\
-\mathbf{z_k} = v_{k1} \mathbf{x_1} + \dots + v_{kp} \mathbf{x_p} \\
+\mathbf{z_k} = v_{1k} \mathbf{x_1} + \dots + v_{pk} \mathbf{x_p} \\
 \end{array}
 \]</span></p>
 <p>Or in matrix notation:</p>
@@ -249,7 +249,7 @@ Figure 4.5: PCs as linear combinations of X-variables
 <span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
 vectors of the principal axes. The following figure shows a graphical
 representation of a PCA problem in diagram notation:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
 <img src="images/pca/pca-path-diag4.png" alt="PCs as linear combinations of X-variables" width="70%" />
 <p class="caption">
 Figure 4.6: PCs as linear combinations of X-variables
@@ -259,7 +259,7 @@ Figure 4.6: PCs as linear combinations of X-variables
 the Principal Components (PCs), that summarize the variation in data.
 The PCs are obtained as linear combinations (i.e. weighted sums) of the
 original variables. We look for PCs is in such a way that they have maximum
-variance, and being mutually uncorrelated.</p>
+variance, and being mutually orthogonal.</p>
 <div id="finding-principal-components" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Finding Principal Components</h3>
 <p>The way to find principal components is to construct them as weighted sums of
@@ -267,7 +267,7 @@ the original variables, looking to optimize some criterion and following some
 constraints. One way in which we can express the criterion is to require components
 <span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span> that capture most of the variation
 in the data <span class="math inline">\(\mathbf{X}\)</span>. “Capturing most of the variation,” implies looking
-for a vector <span class="math inline">\(\mathbf{v_j}\)</span> such that a component <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span>
+for a vector <span class="math inline">\(\mathbf{v_h}\)</span> such that a component <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span>
 has maximum variance:</p>
 <p><span class="math display">\[
 \max_{\mathbf{v_h}} \; var(\mathbf{z_h}) \quad \Rightarrow \quad \max_{\mathbf{v_h}} \; var(\mathbf{X v_h})
@@ -371,11 +371,11 @@ of the matrix <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T
 <p>Formally, PCA involves finding scores and loadings such that the data can be
 expressed as a product of two matrices:</p>
 <p><span class="math display">\[
-\underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \underset{k \times p}{\mathbf{V^\mathsf{T}}}
+\underset{n \times p}{\mathbf{X}} = \underset{n \times r}{\mathbf{Z}} \underset{r \times p}{\mathbf{V^\mathsf{T}}}
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{Z}\)</span> is the matrix of PCs or <em>scores</em>, and <span class="math inline">\(\mathbf{V}\)</span> is the
 matrix of <em>loadings</em>. We can obtain as many different eigenvalues as the rank of
-<span class="math inline">\(\mathbf{S}\)</span> denoted by <span class="math inline">\(k\)</span>. Ideally, we expect <span class="math inline">\(k\)</span> to be smaller than <span class="math inline">\(p\)</span>
+<span class="math inline">\(\mathbf{S}\)</span> denoted by <span class="math inline">\(r\)</span>. Ideally, we expect <span class="math inline">\(r\)</span> to be smaller than <span class="math inline">\(p\)</span>
 so we get a convenient data reduction. But usually we will only retain just a
 few PCs (i.e. <span class="math inline">\(k \ll p\)</span>) expecting not to lose too much information:</p>
 <p><span class="math display">\[
