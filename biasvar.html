@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8 MSE of Estimator | All Models Are Wrong</title>
+  <title>9 Bias-Variance Tradeoff | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8 MSE of Estimator | All Models Are Wrong" />
+  <meta property="og:title" content="9 Bias-Variance Tradeoff | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 MSE of Estimator | All Models Are Wrong" />
+  <meta name="twitter:title" content="9 Bias-Variance Tradeoff | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="learning.html"/>
-<link rel="next" href="biasvar.html"/>
+<link rel="prev" href="mse.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -179,183 +179,84 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="mse" class="section level1">
-<h1><span class="header-section-number">8</span> MSE of Estimator</h1>
-<p>In this chapter we provide a preliminary review of the Mean Squared Error
-(MSE) of an estimator. This will allow us to have a more gentle introduction
-to the next chapter about the famous Bias-Variance tradeoff.</p>
-<div id="mse-of-an-estimator" class="section level2">
-<h2><span class="header-section-number">8.1</span> MSE of an Estimator</h2>
-<p>In order to discuss the bias-variance decomposition of a regression function and
-its expected MSE, we would like to first review the concept of the mean squared
-error of an estimator. Recall that <em>estimation</em> consists of
-providing an approximate value to the parameter of a population, using a (
-random) sample of observations drawn from such population.</p>
-<p>Say we have a population of <span class="math inline">\(n\)</span> objects and we are interested in describing them
-with some numeric characteristic <span class="math inline">\(\theta\)</span>. For example, our population may be
-formed by all students in some college, and we want to know their average
-height. We call this (theoretical) average the <em>parameter</em>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-55"></span>
-<img src="images/theory/population-parameter.png" alt="Population described by some parameter of interest." width="55%" />
-<p class="caption">
-Figure 8.1: Population described by some parameter of interest.
-</p>
-</div>
-<p>To estimate the
-value of the parameter, we may draw a random sample of <span class="math inline">\(m &lt; n\)</span> students from the
-population and compute a statistic <span class="math inline">\(\hat{\theta}\)</span>. Ideally, we would use some
-statistic <span class="math inline">\(\hat{\theta}\)</span> that approximates well the parameter <span class="math inline">\(\theta\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
-<img src="images/theory/random-sample.png" alt="Random sample from a population" width="70%" />
-<p class="caption">
-Figure 8.2: Random sample from a population
-</p>
-</div>
-<p>In practice, this is the typical process that you would carry out:</p>
-<ol style="list-style-type: decimal">
-<li>Get a random sample from a population.</li>
-<li>Use the limited amount of data in the sample to estimate <span class="math inline">\(\theta\)</span> using some
-formula to compute <span class="math inline">\(\hat{\theta}\)</span>.</li>
-<li>Make a statement about how reliable of an estimator <span class="math inline">\(\hat{\theta}\)</span> is.</li>
-</ol>
-<p>Now, for illustration purposes, let’s do the following mental experiment.
-Pretend that you can draw multiple random samples, all of the same size <span class="math inline">\(m\)</span>,
-from the population.
-In fact, you should pretend that you can get an infinite number of samples.
-And suppose that for each sample you will compute a statistic <span class="math inline">\(\hat{\theta}\)</span>.
-A first random sample of size <span class="math inline">\(m\)</span> would result in <span class="math inline">\(\hat{\theta}_1\)</span>.
-A second random sample of size <span class="math inline">\(m\)</span> would result in <span class="math inline">\(\hat{\theta}_2\)</span>. And so on.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-57"></span>
-<img src="images/theory/sampling-estimators.png" alt="Various random samples of equal size and their statistics" width="70%" />
-<p class="caption">
-Figure 8.3: Various random samples of equal size and their statistics
-</p>
-</div>
-<p>A couple of important things to notice:</p>
-<ul>
-<li>An estimator is a random variable"
-<ul>
-<li>A first sample will result in <span class="math inline">\(\hat{\theta}_1\)</span></li>
-<li>A second sample will result in <span class="math inline">\(\hat{\theta}_2\)</span></li>
-<li>A third sample will result in <span class="math inline">\(\hat{\theta}_3\)</span></li>
-<li>and so on …</li>
-</ul></li>
-<li>Some samples will yield a <span class="math inline">\(\hat{\theta}_k\)</span> that overestimates <span class="math inline">\(\theta\)</span></li>
-<li>Other samples will yield a <span class="math inline">\(\hat{\theta}_k\)</span> that underestimates <span class="math inline">\(\theta\)</span></li>
-<li>Some samples will yield a <span class="math inline">\(\hat{\theta}_k\)</span> matching <span class="math inline">\(\theta\)</span></li>
-</ul>
-<p>In theory, we could get a very large number of samples, and visualize the
-distribution of <span class="math inline">\(\hat{\theta}\)</span>, like in the figure below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-58"></span>
-<img src="images/theory/theta-hat-distribution1.png" alt="Distribution of an estimator" width="60%" />
-<p class="caption">
-Figure 8.4: Distribution of an estimator
-</p>
-</div>
-<p>As you would expect, some estimators will be close to the parameter <span class="math inline">\(\theta\)</span>,
-while others not so much.</p>
-<p>Under general assumptions, we can also
-assume that the estimator has expected value <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>, with
-finite variance <span class="math inline">\(var(\hat{\theta})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
-<img src="images/theory/theta-hat-distribution2.png" alt="Distribution of an estimator" width="60%" />
-<p class="caption">
-Figure 8.5: Distribution of an estimator
-</p>
-</div>
-<p>An interesting question to consider is:</p>
-<p>In general, how much different—or similar—is <span class="math inline">\(\hat{\theta}\)</span> from <span class="math inline">\(\theta\)</span>?</p>
-<p>To be more concrete: on average, how close
-we expect the estimator to be from the parameter? To answer this question
-we can look for a measure to assess the typical distance of estimators from
-the parameter.</p>
-<p>This involves looking at the difference: <span class="math inline">\(\hat{\theta} - \theta\)</span>,
-which is commonly referred to as the <strong>estimation error</strong>:</p>
+<div id="biasvar" class="section level1">
+<h1><span class="header-section-number">9</span> Bias-Variance Tradeoff</h1>
+<p>In this chapter we discuss one of the theoretical dogmas of statistical
+learning: the famous Bias-Variance tradeoff.</p>
+<div id="bias-variance-tradeoff" class="section level2">
+<h2><span class="header-section-number">9.1</span> Bias-Variance Tradeoff</h2>
+<p>In the previous chapter we reviewed the concept of Mean Squared Error of a
+statistic (or estimator) <span class="math inline">\(\hat{\theta}\)</span>. As we saw, we can decompose
+<span class="math inline">\(\text{MSE}(\hat{\theta})\)</span> as the sum of two components: Bias-squared and Variance.</p>
 <p><span class="math display">\[
-\text{estimation error} = \hat{\theta} - \theta
+\text{MSE}(\hat{\theta}) = \text{Var}(\hat{\theta}) + \text{Bias}^{2} (\hat{\theta})
 \]</span></p>
-<p>We would like to measure the “size” of such difference. Notice that the estimation error is also a random variable:</p>
-<ul>
-<li>A first sample will result in an error <span class="math inline">\(\hat{\theta}_1 - \theta\)</span></li>
-<li>A second sample will result in an error <span class="math inline">\(\hat{\theta}_2 - \theta\)</span></li>
-<li>A third sample will result in an error <span class="math inline">\(\hat{\theta}_3 - \theta\)</span></li>
-<li>and so on …</li>
-</ul>
-<p>So how do we measure the “size” of the estimation errors? The typical way to
-quantify the amount of estimation error is by calculating the squared errors,
-and then averaging over all the possible values of the estimators.
-This is known as the <strong>Mean Squared Error</strong> (MSE) of <span class="math inline">\(\hat{\theta}\)</span>:</p>
-<p><span class="math display">\[
-\text{MSE}(\hat{\theta}) = \mathbb{E} [(\hat{\theta} - \theta)^2]
-\]</span></p>
-<p>MSE is the squared distance from our estimator <span class="math inline">\(\hat{\theta}\)</span> to the true value
-<span class="math inline">\(\theta\)</span>, averaged over all possible samples.</p>
-<p>It is convenient to regard the estimation error, <span class="math inline">\(\hat{\theta} - \theta\)</span>, with
-respect to <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>. In other words, the distance between <span class="math inline">\(\hat{\theta}\)</span>
-and <span class="math inline">\(\theta\)</span> can be expressed with respect
-to the expected value <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-60"></span>
-<img src="images/theory/theta-hat-distribution3.png" alt="Estimator, its mean, and the parameter" width="95%" />
+<p>In this chapter we extend this notion to the MSE of a regression model.</p>
+</div>
+<div id="motivation-example" class="section level2">
+<h2><span class="header-section-number">9.2</span> Motivation Example</h2>
+<p>Let’s start with a toy example. Consider a noiseless target function
+<span class="math inline">\(f(x) = sin(\pi x)\)</span>, with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>,
+like in the following picture:</p>
+<div class="figure" style="text-align: center">
+<img src="allmodelsarewrong_files/figure-html/plot_target-1.png" alt="Target function" width="70%" />
 <p class="caption">
-Figure 8.6: Estimator, its mean, and the parameter
+(#fig:plot_target)Target function
 </p>
 </div>
-<p>Let’s rewrite <span class="math inline">\((\hat{\theta} - \theta)^2\)</span> as <span class="math inline">\(( \hat{\theta} - \mathbb{E}(\hat{\theta}) + \mathbb{E}(\hat{\theta}) - \theta)^2\)</span>, and let <span class="math inline">\(\mathbb{E}(\hat{\theta}) = \mu_{\hat{\theta}}\)</span>.
-Then:</p>
-<p><span class="math display">\[\begin{align*}
-(\hat{\theta} - \theta)^2 &amp;= \left ( \hat{\theta} - \mathbb{E}(\hat{\theta}) + \mathbb{E}(\hat{\theta}) - \theta \right )^2 \\
-&amp;= ( \hat{\theta} - \mu_{\hat{\theta}} + \mu_{\hat{\theta}} - \theta )^2 \\
-&amp;= (\underbrace{\hat{\theta} - \mu_{\hat{\theta}}}_{a} + \underbrace{\mu_{\hat{\theta}} - \theta}_{b})^2 \\
-&amp;= a^2 + b^2 + 2ab \\
-\Longrightarrow \mathbb{E} \left [ (\hat{\theta} - \theta)^2 \right ] &amp;= \mathbb{E}[a^2 + b^2 + 2ab]
-\end{align*}\]</span></p>
-<p>We have that <span class="math inline">\(\text{MSE}(\hat{\theta}) = \mathbb{E} [(\hat{\theta} - \theta)^2]\)</span> can be decomposed as:</p>
-<p><span class="math display">\[\begin{align*}
-\mathbb{E} \left [ (\hat{\theta} - \theta)^2 \right ] &amp;= \mathbb{E}[a^2 + b^2 + 2ab] \\
-&amp;= \mathbb{E}(a^2) + \mathbb{E}(b^2) + 2\mathbb{E}(ab) \\
-&amp;= \mathbb{E} [ (\hat{\theta} - \mu_{\hat{\theta}})^2 ] +
-\mathbb{E} [ (\mu_{\hat{\theta}} - \theta)^2 ] + 2\mathbb{E}(ab)
-\end{align*}\]</span></p>
-<p>Notice that <span class="math inline">\(\mathbb{E}(ab)\)</span>:</p>
-<p><span class="math display">\[
-\mathbb{E}(ab) = \mathbb{E}[ (\hat{\theta} - \mu_{\hat{\theta}}) (\mu_{\hat{\theta}} - \theta) ] = 0
-\]</span></p>
-<p>Consequently</p>
-<p><span class="math display">\[\begin{align*}
-\text{MSE}(\hat{\theta}) &amp;= \mathbb{E} \left [ (\hat{\theta} - \theta)^2 \right ] \\
-&amp; \\
-&amp;= \mathbb{E} [ (\hat{\theta} - \mu_{\hat{\theta}})^2 ] +
-\mathbb{E} [ (\mu_{\hat{\theta}} - \theta)^2 ] \\
-&amp; \\
-&amp;= \mathbb{E} [(\hat{\theta} - \mu_{\hat{\theta}})^2] + 
-\mathbb{E} [ (\mu_{\hat{\theta}} - \theta) ]^2 \\
-&amp; \\
-&amp;= \underbrace{\mathbb{E} [(\hat{\theta} - \mu_{\hat{\theta}})^2]}_{\text{Variance}} + 
-(\underbrace{\mu_{\hat{\theta}} - \theta}_{\text{Bias}})^2 \\
-&amp; \\
-&amp;= \text{Var}(\hat{\theta}) + \text{Bias}^{2} (\hat{\theta})
-\end{align*}\]</span></p>
-<p>The MSE of an estimator can be decomposed in terms of Bias and Variance.</p>
+<div id="two-hypotheses" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Two Hypotheses</h3>
+<p>Let’s assume a learning scenario in which, given a data set of <span class="math inline">\(n\)</span> points, we
+fit the data using one of two models (see the <em>idealized</em> figure shown below):</p>
 <ul>
-<li><p><strong>Bias</strong>, <span class="math inline">\(\mu_{\hat{\theta}} - \theta\)</span>, is the tendency of <span class="math inline">\(\hat{\theta}\)</span>
-to overestimate or underestimate <span class="math inline">\(\theta\)</span> over all possible samples.</p></li>
-<li><p><strong>Variance</strong>, <span class="math inline">\(\text{Var}(\hat{\theta})\)</span>, simply measures the average
-variability of the estimators around their mean <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathcal{H}_0\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{H}_1\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b_0 + b_1 x\)</span></p></li>
 </ul>
-<div id="prototypical-cases-of-bias-and-variance" class="section level3">
-<h3><span class="header-section-number">8.1.1</span> Prototypical Cases of Bias and Variance</h3>
-<p>Depending on the type of estimator <span class="math inline">\(\hat{\theta}\)</span>, and the sample size <span class="math inline">\(m\)</span>,
-we can get statistics having different behaviors. The following diagram illustrates
-four classic scenarios contrasting low and high values for both the bias and
-the variance.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
-<img src="images/theory/bias-variance-targets.png" alt="Prototypical scenarios for Bias-Variance" width="70%" />
+<div class="figure" style="text-align: center">
+<img src="allmodelsarewrong_files/figure-html/plot_two_hypotheses-1.png" alt="Two Learning hypothesis models" width="85%" />
 <p class="caption">
-Figure 8.7: Prototypical scenarios for Bias-Variance
+(#fig:plot_two_hypotheses)Two Learning hypothesis models
 </p>
 </div>
+</div>
+</div>
+<div id="learning-from-two-points" class="section level2">
+<h2><span class="header-section-number">9.3</span> Learning from two points</h2>
+<p>In this case study, we will assume a data set of size <span class="math inline">\(n = 2\)</span>. That is, we sample <span class="math inline">\(x\)</span> uniformly in <span class="math inline">\([-1,1]\)</span> to generate a data set of two points <span class="math inline">\((x_1, y_1), (x_2, y_2)\)</span>; and fit the data using the two models <span class="math inline">\(\mathcal{H}_0\)</span> and <span class="math inline">\(\mathcal{H}_1\)</span>.</p>
+<p>For <span class="math inline">\(\mathcal{H}_0\)</span>, we choose the constant hypothesis that best fits the data (the horizontal line at the midpoint <span class="math inline">\(b = \frac{y_1 + y_2}{2}\)</span>).</p>
+<p>For <span class="math inline">\(\mathcal{H}_1\)</span>, we choose the line that passes through the two data points <span class="math inline">\((x_1, y_1)\)</span> and <span class="math inline">\((x_2, y_2)\)</span>.</p>
+<p>Here’s an example in R of two <span class="math inline">\(x\)</span>-points randomly sampled from a uniform distribution in the interval <span class="math inline">\([-1,1]\)</span>, and their corresponding <span class="math inline">\(y\)</span>-points:</p>
+<ul>
+<li><p><span class="math inline">\(p_1(x_1, y_1) = (0.0949158, 0.2937874)\)</span></p></li>
+<li><p><span class="math inline">\(p_2(x_2, y_2) = (0.4880941, 0.9993006)\)</span></p></li>
+</ul>
+<p>With the given points above, the two fitted models are:</p>
+<ul>
+<li><p><span class="math inline">\(h_0(x) = 0.646544\)</span></p></li>
+<li><p><span class="math inline">\(h_1(x) = 0.123472 + 1.794385 \hspace{1mm} x\)</span></p></li>
+</ul>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-66-1.png" width="85%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="bias-variance-derivation" class="section level2">
+<h2><span class="header-section-number">9.4</span> Bias-Variance Derivation</h2>
+<p>Given a data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(g(x)\)</span>, the
+expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_o\)</span>, over all
+possible training sets, is expressed as (assuming a noiseless target):</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}} \left [ \left( g^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] = 
+\underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (g^{(\mathcal{D})}(x_0) - \bar{g}(x_0) \right)^2 \right ]}_{\text{variance}} +
+\underbrace{\left [ (\bar{g}(x_0) - f(x_0))^2 \right ] }_{\text{bias}^2}
+\]</span></p>
+<p>The target function is represented by <span class="math inline">\(f(x)\)</span>, and the average hypothesis is
+represented by <span class="math inline">\(\bar{g}(x) = \mathbb{E}_{\mathcal{D}}[g^{\mathcal{D}} (x)]\)</span>.</p>
+<p>Now, when there is noise in the data we have that: <span class="math inline">\(y = f(x) + \epsilon\)</span>.
+If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
+the bias-variance decomposition becomes:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}} \left [ \left (g^{(\mathcal{D})}(x_o) - y_o \right)^2 \right ] = \text{bias}^2 + \text{var} + \sigma^2
+\]</span></p>
+<p>Notice that the above equation assumes that the squared error corresponds to just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
 
-</div>
 </div>
 </div>
             </section>
@@ -363,8 +264,8 @@ Figure 8.7: Prototypical scenarios for Bias-Variance
           </div>
         </div>
       </div>
-<a href="learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="biasvar.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mse.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
