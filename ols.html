@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-05" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,14 +105,15 @@
 <li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
 <li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
 <li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
-<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
-<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
-<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
-<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.3</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.3.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.3.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.3.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.3.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.3.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.3.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.3.4</b> Finding all PCs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
-<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.4</b> PCA Model</a></li>
+<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.5</b> Another Perspective</a></li>
 </ul></li>
 <li class="part"><span><b>IV Linear Regression</b></span></li>
 <li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
@@ -261,37 +262,37 @@ from Europe; and we are tasked with predicting their salary.</p>
 <p><strong>Scenario 1</strong>. Suppose we now have <strong>no</strong> information
 on this new player. How would we compute <span class="math inline">\(y_{0}\)</span> (i.e. the salary of this new
 player)? One possibility is to guestimate <span class="math inline">\(y_0\)</span> using the historical average
-salary of NBA players <span class="math inline">\(\bar{y}\)</span>. In other words, we would simply calculate:
+salary <span class="math inline">\(\bar{y}\)</span> of NBA players. In other words, we would simply calculate:
 <span class="math inline">\(\hat{y}_0 = \bar{y}\)</span>.
 In this case we are using <span class="math inline">\(\bar{y}\)</span> as the <em>typical</em> score (e.g. a measure of
 center) as a plausible guestimate for <span class="math inline">\(y_0\)</span>. We could also look at the median
 of the existing salaries, if we are concerned about outliers.</p>
 <p><strong>Scenario 2</strong>. Now, suppose we know that this new player will sign on to the
-LA Lakers. We could then use <span class="math inline">\(y_{0} = \text{avg}(\text{Laker&#39;s Salaries})\)</span>:
+LA Lakers. We could then use <span class="math inline">\(\hat{y}_0 = \text{avg}(\text{Laker&#39;s Salaries})\)</span>:
 that is, the average salary of all Laker’s players.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="images/ols/ols-avg-salary-team.png" alt="Average salary by team" width="70%" />
 <p class="caption">
 Figure 5.1: Average salary by team
 </p>
 </div>
-<p>Similarly, if we know this new player’s years of experience (e.g. 6 years),
-we would look at the average of salaries corresponding to players with the
-same level of experience.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
+<p><strong>Scenario 3</strong>. Similarly, if we know this new player’s years of experience
+(e.g. 6 years), we would look at the average of salaries corresponding to
+players with the same level of experience.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="images/ols/ols-avg-salary-experience.png" alt="Average salary by years of experience" width="70%" />
 <p class="caption">
 Figure 5.2: Average salary by years of experience
 </p>
 </div>
-<p>What do the two previous scenarios correspond to?
-In both examples, the prediction is basically a conditional mean:
+<p>What do the three previous scenarios correspond to?
+In all of these examples, the prediction is basically a conditional mean:
 <span class="math inline">\(\hat{y}_0 = \text{ave}(y_i|x_i = x_0)\)</span>.</p>
 <p>Of course, the previous strategy only makes sense when we have data points <span class="math inline">\(x_i\)</span>
 that are equal to <span class="math inline">\(x_0\)</span>. But what if none of the available <span class="math inline">\(x_i\)</span> values are
 equal to <span class="math inline">\(x_0\)</span>? We’ll talk about this later.</p>
-<p>Both hypothetical scenarios illustrate the core idea of regression: we predict
-using quantities of the form:</p>
+<p>The previous hypothetical scenarios illustrate the core idea of regression:
+we predict using quantities of the form:</p>
 <p><span class="math display">\[
 \mathbb{E}(y_i \mid x_{i1}^{*} , x_{i2}^{*}, \dots, x_{ip}^{*})
 \]</span></p>
@@ -373,7 +374,7 @@ b_{p} \\
 \mathbf{\hat{y}} = \mathbf{Xb}
 \]</span></p>
 <p>In path diagram form, the linear model looks like this:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
 <img src="images/ols/ols-path-diagram-betas0.png" alt="Linear combination with constant term" width="40%" />
 <p class="caption">
 Figure 5.3: Linear combination with constant term
@@ -381,7 +382,7 @@ Figure 5.3: Linear combination with constant term
 </div>
 <p>If we assume centered predictors then we don’t have to worry about the constant
 term:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
 <img src="images/ols/ols-path-diagram-betas1.png" alt="Linear combination without constant term" width="40%" />
 <p class="caption">
 Figure 5.4: Linear combination without constant term
@@ -480,7 +481,7 @@ We will discuss three geometric perspectives:</p>
 <p>Consider a <span class="math inline">\((p + 1)\)</span>-dimensional space. For illustration purposes let’s assume that
 our data has just <span class="math inline">\(p=1\)</span> predictor. In other words, we have the response <span class="math inline">\(Y\)</span> and
 one predictor <span class="math inline">\(X\)</span>. We can depict individuals as points in this space:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
 <img src="images/ols/ols-geom-obs0.png" alt="Scatterplot of individuals" width="60%" />
 <p class="caption">
 Figure 5.5: Scatterplot of individuals
@@ -490,8 +491,8 @@ Figure 5.5: Scatterplot of individuals
 <span class="math inline">\(\hat{y}_{i} = b_0 + b_1 x_i\)</span>. In two dimensions, the fitted model corresponds
 to a line. In three dimensions it would correspond to a plane. And in higher
 dimensions this would corresponds to a hyperplane.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
-<img src="images/ols/ols-geom-obs1.png" alt="Scatterplot with regression line" width="60%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<img src="images/ols/ols-geom-obs1.png" alt="Scatterplot with regression line" width="65%" />
 <p class="caption">
 Figure 5.6: Scatterplot with regression line
 </p>
@@ -500,8 +501,8 @@ Figure 5.6: Scatterplot with regression line
 may be equal to the observed values. Other predicted values will be greater than
 the observed values. And some predicted values will be smaller than
 the observed values.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
-<img src="images/ols/ols-geom-obs2.png" alt="Observed values and predicted values" width="60%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
+<img src="images/ols/ols-geom-obs2.png" alt="Observed values and predicted values" width="65%" />
 <p class="caption">
 Figure 5.7: Observed values and predicted values
 </p>
@@ -511,8 +512,8 @@ of lines (in general). So which line are we looking for? We want to obtain the
 line that minimizes the square of the errors <span class="math inline">\(e_i = \hat{y}_{i} - y_{i}\)</span>.
 In the figure below, these errors are represented by the vertical difference
 between the observed values <span class="math inline">\(y_i\)</span> and the predicted values <span class="math inline">\(\hat{y}_i\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
-<img src="images/ols/ols-geom-obs3.png" alt="OLS focuses on minimizing the squared errors" width="60%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-41"></span>
+<img src="images/ols/ols-geom-obs3.png" alt="OLS focuses on minimizing the squared errors" width="65%" />
 <p class="caption">
 Figure 5.8: OLS focuses on minimizing the squared errors
 </p>
@@ -536,7 +537,7 @@ that minimize the squared norm of the residuals:</p>
 In this space, the <span class="math inline">\(X\)</span> variables will span some subspace <span class="math inline">\(\mathbb{S}_{X}\)</span>.
 This subspace is not supposed to contain the response—unless <span class="math inline">\(Y\)</span> happens to be
 a linear combination of <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
 <img src="images/ols/ols-geomvar1.png" alt="Features and Response view" width="70%" />
 <p class="caption">
 Figure 5.9: Features and Response view
@@ -545,7 +546,7 @@ Figure 5.9: Features and Response view
 <p>What are we looking for? We’re looking for a linear combination <span class="math inline">\(\mathbf{Xb}\)</span>.
 As you can tell, there’s an infinite number of linear combinations that can be
 formed with <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-43"></span>
 <img src="images/ols/ols-geomvar2.png" alt="Linear combination of features" width="70%" />
 <p class="caption">
 Figure 5.10: Linear combination of features
@@ -553,7 +554,7 @@ Figure 5.10: Linear combination of features
 </div>
 <p>The mix of features that we are interested in, <span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Xb}\)</span>,
 is the one that gives us the closest approximation to <span class="math inline">\(\mathbf{y}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-41"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44"></span>
 <img src="images/ols/ols-geomvar3.png" alt="Linear combination to be as close as possible to response" width="70%" />
 <p class="caption">
 Figure 5.11: Linear combination to be as close as possible to response
@@ -572,13 +573,13 @@ is as small as possible.</p>
 </div>
 <div id="parameters-perspective" class="section level3">
 <h3><span class="header-section-number">5.6.3</span> Parameters Perspective</h3>
-<p>This is the least common perspective discussed in the literature that has
-to do with linear regression in general. However, it is not that uncommon
-within the Statistical Learning literature.</p>
 <p>We could also visualize the regression problem from the point of view of the
 parameters <span class="math inline">\(\mathbf{b}\)</span> and the error surface.
-For this picture, assume that we have only two predictors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</p>
-<p>Recall that the Mean Squared Error (MSE) is:</p>
+This is the least common perspective discussed in the literature that has
+to do with linear regression in general. However, it is not that uncommon
+within the Statistical Learning literature.</p>
+<p>For illustration purposes, assume that we have only two predictors <span class="math inline">\(X_1\)</span> and
+<span class="math inline">\(X_2\)</span>. Recall that the Mean Squared Error (MSE) is:</p>
 <p><span class="math display">\[
 E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
 \]</span></p>
@@ -589,8 +590,9 @@ E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} ( \underbrace{\mathbf{b^\mathsf{T}
 \]</span></p>
 <p>Since <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is positive semidefinite, we know that
 <span class="math inline">\(\mathbf{b^\mathsf{T} X^\mathsf{T} Xb} \geq 0\)</span>. Furthermore, we know that
-(from vector calculus) it will be a paraboloid (in <span class="math inline">\((E, b_1, b_2)\)</span> space):</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
+(from vector calculus) it will be a paraboloid (bowl-shaped surface) in the
+<span class="math inline">\((E, b_1, b_2)\)</span> space. The following diagram depicts this situation.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-45"></span>
 <img src="images/ols/ols-error-surface0.png" alt="Error Surface" width="60%" />
 <p class="caption">
 Figure 5.12: Error Surface
@@ -598,9 +600,9 @@ Figure 5.12: Error Surface
 </div>
 <p>Imagine that we get horizontal slices of the error surface. For any of those
 slices, we can project them onto the plane spanned by the parameters
-<span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. This is like a topographic map, with error contours on this
-plane. In general, those contours will be ellipses.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-43"></span>
+<span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. The resulting projections will be like a topographic map,
+with error contours on this plane. In general, those contours will be ellipses.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
 <img src="images/ols/ols-error-surface1.png" alt="Error Surface with slices, and their projections" width="60%" />
 <p class="caption">
 Figure 5.13: Error Surface with slices, and their projections
@@ -614,12 +616,14 @@ Consider, for example, a parabolic cylinder. Such a shape has no unique minimum;
 rather, it has an infinite number of points (all lying on a line) that minimize
 the function. The point being; with positive semi-definite matrices, we
 <strong>never</strong> have this latter case.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-47"></span>
 <img src="images/ols/ols-error-surface2.png" alt="Error Surface with contour errors and the minimum" width="60%" />
 <p class="caption">
 Figure 5.14: Error Surface with contour errors and the minimum
 </p>
 </div>
+<p>The minimum of the error surface occurs at the point <span class="math inline">\((b_{1}^{*}, b_{2}^{*})\)</span>.
+This is the precisely the OLS solution.</p>
 
 </div>
 </div>

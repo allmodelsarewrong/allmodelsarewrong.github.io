@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-05" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,14 +105,15 @@
 <li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
 <li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
 <li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
-<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
-<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
-<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
-<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.3</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.3.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.3.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.3.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.3.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.3.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.3.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.3.4</b> Finding all PCs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
-<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.4</b> PCA Model</a></li>
+<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.5</b> Another Perspective</a></li>
 </ul></li>
 <li class="part"><span><b>IV Linear Regression</b></span></li>
 <li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
@@ -225,9 +226,9 @@ a mug, like in the following diagram:</p>
 Figure 4.1: Cloud of points in the form of a mug
 </p>
 </div>
-<p>This mug is supposed be high-dimensional, and something that you are not supposed
-to ever see in real life. So the question is: Is there a way in which we can get
-a low-dimensional representation of this data?</p>
+<p>This mug is supposed to be high-dimensional, and something that you are not
+supposed to ever see in real life. So the question is: Is there a way in which
+we can get a low-dimensional representation of this data?</p>
 <p>Luckily, the answer is: YES, we can!</p>
 <p>How? Well, the name of the game is <strong>projections</strong>: we can look for projections
 of the data into sub-spaces of lower dimension, like in the diagram below.</p>
@@ -237,12 +238,15 @@ of the data into sub-spaces of lower dimension, like in the diagram below.</p>
 Figure 4.2: Various projections onto subspaces
 </p>
 </div>
-<p>Think of <em>projections</em> as taking photographs or x-rays of the mug. You can take a
-photo of the mug from different angles. For instance, a picture in which the lens
-of the camera lies on the top of the mug, or another picture in which the lens is
+<p>Think of <em>projections</em> as taking photographs or x-rays of the mug. You can take
+a photo of the mug from different angles. For instance, you can take a picture
+in which the lens
+of the camera is on the top of the mug, or another picture in which the lens is
 below the mug (from the bottom), and so on.</p>
-<p>If you were asked to take the “best” photograph of the mug, from what angle would
-you take such picture?</p>
+<p>If you have to take the “best” photograph of the mug, from what angle would
+you take such picture? To answer this question we need to be more precise
+about what do we mean by “best”. Here, we are talking about getting a picture
+in which the image of the mug is as similar as possible to the original object.</p>
 <p>As you can tell from the above figure, we have three candidate subspaces:
 <span class="math inline">\(\mathbb{H}_A\)</span>, <span class="math inline">\(\mathbb{H}_B\)</span>, and <span class="math inline">\(\mathbb{H}_C\)</span>. Among the three possible
 projections, subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the one that provides the best low
@@ -250,8 +254,8 @@ dimensional representation, in the sense that the projected silhouette is the
 most similar to the original mug shape. We can say that this “photo” is the one
 that most resembles the original object. Now, keep in mind that the resulting
 image in the low-dimensional space is not capturing the whole pattern. In other
-words, there is some loss of information. However, by chosing the right project,
-we hope to minimize such loss.</p>
+words, there is some loss of information. However, by chosing the right
+projection, we hope to minimize such loss.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
 <img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="70%" />
 <p class="caption">
@@ -259,24 +263,68 @@ Figure 4.3: The shape of the projection is similar to the original mug shape.
 </p>
 </div>
 </div>
+<div id="projections" class="section level2">
+<h2><span class="header-section-number">4.2</span> Projections</h2>
+<p>Following the idea of projections, let’s now discuss with more detail this
+concept, and its implications.</p>
+<p>Pretend that we zoom in to see some of the individuals of the cloud of points
+that form the mug (see figure below). Keep in mind that these data points are
+in a <span class="math inline">\(p\)</span>-dimensional space, which will also have its centroid (i.e. average
+individual). Because our goal is to look for a low-dimensional represention,
+we can start by considering a one-dimensional space, that is, some axis.
+In the diagram below this dimension is depicted with the orange line, labeled
+as <em>axis k</em>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
+<img src="images/pca/pca-scalar-projection0.png" alt="Set of individuals in p-dim space." width="70%" />
+<p class="caption">
+Figure 4.4: Set of individuals in p-dim space.
+</p>
+</div>
+<p>At the end of the day, we want to project the individuals onto this axis.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<img src="images/pca/pca-scalar-projection1.png" alt="Projections onto some dimension (k-axis)" width="70%" />
+<p class="caption">
+Figure 4.5: Projections onto some dimension (k-axis)
+</p>
+</div>
+<p>Let’s focus on a specific individual, for example the <span class="math inline">\(i\)</span>-th individual.
+The projection of <span class="math inline">\(\mathbf{x_i}\)</span> onto the dimension <span class="math inline">\(k\)</span>, can be seen from the
+point of view of the centroid. The orthogonal projection of <span class="math inline">\(i\)</span> onto <span class="math inline">\(k\)</span> is:</p>
+<p><span class="math display">\[
+proj_{u} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T} u}}{\mathbf{u^\mathsf{T}u}} \mathbf{u}
+\]</span></p>
+<p>The scalar projection</p>
+<p><span class="math display">\[
+comp_{u} (\mathbf{x_i} )= \frac{\mathbf{x_{i}^\mathsf{T}u}}{\|\mathbf{u}\|} = z_{ik}
+\]</span></p>
+<p>We are not interested in the orthogonal projection, but just in the scalar
+projection. In other words, we just want to obtain the coordinate of the
+<span class="math inline">\(i\)</span>-th individual along this axis.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<img src="images/pca/pca-scalar-projection2.png" alt="Scalar projection of i-th individual onto dimension k" width="70%" />
+<p class="caption">
+Figure 4.6: Scalar projection of i-th individual onto dimension k
+</p>
+</div>
+</div>
 <div id="pca-idea" class="section level2">
-<h2><span class="header-section-number">4.2</span> PCA Idea</h2>
+<h2><span class="header-section-number">4.3</span> PCA Idea</h2>
 <p>The overall idea behind PCA is the following. Given a set of <span class="math inline">\(p\)</span> variables
 <span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>, we want to obtain new <span class="math inline">\(k\)</span> variables
 <span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
 <p>A principal component is a linear combination: <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>.
 The first PC is a linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
 <img src="images/pca/pca-path-diag1.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
-Figure 4.4: PCs as linear combinations of X-variables
+Figure 4.7: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>The second PC is another linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
 <img src="images/pca/pca-path-diag2.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
-Figure 4.5: PCs as linear combinations of X-variables
+Figure 4.8: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>We want to compute the <strong>PCs as linear combinations</strong> of the original variables.</p>
@@ -296,10 +344,10 @@ Figure 4.5: PCs as linear combinations of X-variables
 <span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
 vectors of the principal axes. The following figure shows a graphical
 representation of a PCA problem in diagram notation:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/pca/pca-path-diag4.png" alt="PCs as linear combinations of X-variables" width="70%" />
 <p class="caption">
-Figure 4.6: PCs as linear combinations of X-variables
+Figure 4.9: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>We look to transform the original variables into a smaller set of new variables,
@@ -308,7 +356,7 @@ The PCs are obtained as linear combinations (i.e. weighted sums) of the
 original variables. We look for PCs is in such a way that they have maximum
 variance, and being mutually orthogonal.</p>
 <div id="finding-principal-components" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> Finding Principal Components</h3>
+<h3><span class="header-section-number">4.3.1</span> Finding Principal Components</h3>
 <p>The way to find principal components is to construct them as weighted sums of
 the original variables, looking to optimize some criterion and following some
 constraints. One way in which we can express the criterion is to require components
@@ -345,7 +393,7 @@ we impose the restriction <span class="math inline">\(\mathbf{z_h}\)</span> to b
 <span class="math inline">\(\mathbf{z_{h}^\mathsf{T} z_l} = 0; (h \neq l)\)</span>.</p>
 </div>
 <div id="finding-the-first-pc" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> Finding the first PC</h3>
+<h3><span class="header-section-number">4.3.2</span> Finding the first PC</h3>
 <p>In order to get the first principal component <span class="math inline">\(\mathbf{z_1} = \mathbf{X v_1}\)</span>,
 we need to find <span class="math inline">\(\mathbf{v_1}\)</span> such that:</p>
 <p><span class="math display">\[
@@ -369,7 +417,7 @@ using the <strong>Lagrangian multiplier</strong> method. Using Lagrange multipli
 and <span class="math inline">\(\mathbf{v_1}\)</span> is the corresponding eigenvector.</p>
 </div>
 <div id="finding-the-second-pc" class="section level3">
-<h3><span class="header-section-number">4.2.3</span> Finding the second PC</h3>
+<h3><span class="header-section-number">4.3.3</span> Finding the second PC</h3>
 <p>In order to find the second principal component <span class="math inline">\(\mathbf{z_2} = \mathbf{X v_2}\)</span>,
 we need to find <span class="math inline">\(\mathbf{v_2}\)</span> such that</p>
 <p><span class="math display">\[
@@ -386,7 +434,7 @@ Applying the Lagrange multipliers, it can be shown that the desired
 is the corresponding eigenvector.</p>
 </div>
 <div id="finding-all-pcs" class="section level3">
-<h3><span class="header-section-number">4.2.4</span> Finding all PCs</h3>
+<h3><span class="header-section-number">4.3.4</span> Finding all PCs</h3>
 <p>All PCs can be found simultaneously by <strong>diagonalizing</strong> <span class="math inline">\(\mathbf{S}\)</span>.
 Diagonalizing <span class="math inline">\(\mathbf{S}\)</span> involves expressing it as the product:</p>
 <p><span class="math display">\[ 
@@ -414,7 +462,7 @@ of the matrix <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T
 </div>
 </div>
 <div id="pca-model" class="section level2">
-<h2><span class="header-section-number">4.3</span> PCA Model</h2>
+<h2><span class="header-section-number">4.4</span> PCA Model</h2>
 <p>Formally, PCA involves finding scores and loadings such that the data can be
 expressed as a product of two matrices:</p>
 <p><span class="math display">\[
@@ -431,7 +479,7 @@ few PCs (i.e. <span class="math inline">\(k \ll p\)</span>) expecting not to lo
 <p>The previous expression means that just a few PCs will <em>optimally</em> summarize the main structure of the data</p>
 </div>
 <div id="another-perspective" class="section level2">
-<h2><span class="header-section-number">4.4</span> Another Perspective</h2>
+<h2><span class="header-section-number">4.5</span> Another Perspective</h2>
 <p>Finding <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span> with maximum variance has another
 important property that it is not always mentioned in multivariate textbooks
 but that we find worth mentioning. <span class="math inline">\(\mathbf{z_h}\)</span> is such that</p>

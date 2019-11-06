@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-05" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,14 +105,15 @@
 <li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
 <li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
 <li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
-<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
-<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
-<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
-<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.3</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.3.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.3.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.3.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.3.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.3.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.3.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.3.4</b> Finding all PCs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
-<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.4</b> PCA Model</a></li>
+<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.5</b> Another Perspective</a></li>
 </ul></li>
 <li class="part"><span><b>IV Linear Regression</b></span></li>
 <li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
@@ -195,7 +196,7 @@ random) sample of observations drawn from such population.</p>
 with some numeric characteristic <span class="math inline">\(\theta\)</span>. For example, our population may be
 formed by all students in some college, and we want to know their average
 height. We call this (theoretical) average the <em>parameter</em>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-55"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-58"></span>
 <img src="images/theory/population-parameter.png" alt="Population described by some parameter of interest." width="55%" />
 <p class="caption">
 Figure 8.1: Population described by some parameter of interest.
@@ -205,7 +206,7 @@ Figure 8.1: Population described by some parameter of interest.
 value of the parameter, we may draw a random sample of <span class="math inline">\(m &lt; n\)</span> students from the
 population and compute a statistic <span class="math inline">\(\hat{\theta}\)</span>. Ideally, we would use some
 statistic <span class="math inline">\(\hat{\theta}\)</span> that approximates well the parameter <span class="math inline">\(\theta\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
 <img src="images/theory/random-sample.png" alt="Random sample from a population" width="70%" />
 <p class="caption">
 Figure 8.2: Random sample from a population
@@ -225,7 +226,7 @@ In fact, you should pretend that you can get an infinite number of samples.
 And suppose that for each sample you will compute a statistic <span class="math inline">\(\hat{\theta}\)</span>.
 A first random sample of size <span class="math inline">\(m\)</span> would result in <span class="math inline">\(\hat{\theta}_1\)</span>.
 A second random sample of size <span class="math inline">\(m\)</span> would result in <span class="math inline">\(\hat{\theta}_2\)</span>. And so on.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-57"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-60"></span>
 <img src="images/theory/sampling-estimators.png" alt="Various random samples of equal size and their statistics" width="70%" />
 <p class="caption">
 Figure 8.3: Various random samples of equal size and their statistics
@@ -246,7 +247,7 @@ Figure 8.3: Various random samples of equal size and their statistics
 </ul>
 <p>In theory, we could get a very large number of samples, and visualize the
 distribution of <span class="math inline">\(\hat{\theta}\)</span>, like in the figure below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-58"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
 <img src="images/theory/theta-hat-distribution1.png" alt="Distribution of an estimator" width="60%" />
 <p class="caption">
 Figure 8.4: Distribution of an estimator
@@ -257,7 +258,7 @@ while others not so much.</p>
 <p>Under general assumptions, we can also
 assume that the estimator has expected value <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>, with
 finite variance <span class="math inline">\(var(\hat{\theta})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-62"></span>
 <img src="images/theory/theta-hat-distribution2.png" alt="Distribution of an estimator" width="60%" />
 <p class="caption">
 Figure 8.5: Distribution of an estimator
@@ -294,7 +295,7 @@ This is known as the <strong>Mean Squared Error</strong> (MSE) of <span class="m
 respect to <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>. In other words, the distance between <span class="math inline">\(\hat{\theta}\)</span>
 and <span class="math inline">\(\theta\)</span> can be expressed with respect
 to the expected value <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-60"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-63"></span>
 <img src="images/theory/theta-hat-distribution3.png" alt="Estimator, its mean, and the parameter" width="95%" />
 <p class="caption">
 Figure 8.6: Estimator, its mean, and the parameter
@@ -348,7 +349,7 @@ variability of the estimators around their mean <span class="math inline">\(\mat
 we can get statistics having different behaviors. The following diagram illustrates
 four classic scenarios contrasting low and high values for both the bias and
 the variance.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-64"></span>
 <img src="images/theory/bias-variance-targets.png" alt="Prototypical scenarios for Bias-Variance" width="70%" />
 <p class="caption">
 Figure 8.7: Prototypical scenarios for Bias-Variance

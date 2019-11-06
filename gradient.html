@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-05" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,14 +105,15 @@
 <li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
 <li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
 <li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
-<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
-<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
-<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
-<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.3</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.3.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.3.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.3.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.3.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.3.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.3.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.3.4</b> Finding all PCs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
-<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.4</b> PCA Model</a></li>
+<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.5</b> Another Perspective</a></li>
 </ul></li>
 <li class="part"><span><b>IV Linear Regression</b></span></li>
 <li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
@@ -188,7 +189,7 @@ algorithm.</p>
 <div id="error-surface" class="section level2">
 <h2><span class="header-section-number">6.1</span> Error Surface</h2>
 <p>Consider again the error surface:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-49"></span>
 <img src="images/ols/error-surface.png" alt="Error Surface" width="70%" />
 <p class="caption">
 Figure 6.1: Error Surface
@@ -209,7 +210,7 @@ The iterative method that we will discuss in this chapter is called
 error surface. We then “move down” the surface to obtain a new vector
 <span class="math inline">\(\mathbf{w}^{(1)}\)</span>, closer to the minimizing point <span class="math inline">\(\mathbf{w}^{*}\)</span>.
 For illustrative purposes, consider a <span class="math inline">\(1-\)</span>dimensional error “surface”:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-47"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-50"></span>
 <img src="images/ols/one-dim-error-surface.png" alt="One dimensional error surface" width="70%" />
 <p class="caption">
 Figure 6.2: One dimensional error surface
@@ -265,7 +266,7 @@ For notational convenience, let us (temporarily) define
 <span class="math inline">\(\mathbf{u} : = \nabla E ( \mathbf{w}^{(s)} )\)</span></p>
 <p>With respect to the orientation of <span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>, we can consider
 three prototypical cases: <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are either antiparallel, parallel, or orthogonal.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-48"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-51"></span>
 <img src="images/ols/three-prototypical-cases.png" alt="Three prototypical cases" width="70%" />
 <p class="caption">
 Figure 6.3: Three prototypical cases

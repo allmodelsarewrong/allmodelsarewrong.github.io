@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-05" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,14 +105,15 @@
 <li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
 <li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
 <li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
-<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.2</b> PCA Idea</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.2.1</b> Finding Principal Components</a></li>
-<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.2.2</b> Finding the first PC</a></li>
-<li class="chapter" data-level="4.2.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.2.3</b> Finding the second PC</a></li>
-<li class="chapter" data-level="4.2.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.2.4</b> Finding all PCs</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.3</b> PCA Idea</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.3.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.3.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.3.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.3.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.3.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.3.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.3.4</b> Finding all PCs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.3</b> PCA Model</a></li>
-<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.4</b> Another Perspective</a></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.4</b> PCA Model</a></li>
+<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.5</b> Another Perspective</a></li>
 </ul></li>
 <li class="part"><span><b>IV Linear Regression</b></span></li>
 <li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
@@ -218,7 +219,7 @@ player/individual).<br />
 From this data, we wish to obtain a hypothesis model <span class="math inline">\(\widehat{f}: \mathcal{X} \to \mathcal{Y}\)</span> that is an approximation to the unknown function <span class="math inline">\(f\)</span>.
 We can sketch these basic ideas in a sort of “mental map”
 We will refer to this picture as the “diagram for unsupervised learning”.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-50"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-53"></span>
 <img src="images/theory/learning-diag0.png" alt="Supervised Learning Diagram (ver 1)" width="70%" />
 <p class="caption">
 Figure 7.1: Supervised Learning Diagram (ver 1)
@@ -328,7 +329,7 @@ function. However, the most common ones are:</p>
 <p>In the machine learning literature, these individual errors are formally
 known as <strong>loss functions</strong>.</p>
 <p>Let’s update our Machine Learning Map to include error measures:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-51"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-54"></span>
 <img src="images/theory/learning-diag1.png" alt="Supervised Learning Diagram (ver 2)" width="80%" />
 <p class="caption">
 Figure 7.2: Supervised Learning Diagram (ver 2)
@@ -360,7 +361,7 @@ second condition by invoking our distributional assumption <span class="math inl
 Using our assumption, we can cite various theorems to assert that the second
 result indeed holds true. We will later find ways to estimate
 <span class="math inline">\(E_{\mathrm{out}}(\widehat{f})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-52"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-55"></span>
 <img src="images/theory/learning-diag2.png" alt="Supervised Learning Diagram (ver 3)" width="80%" />
 <p class="caption">
 Figure 7.3: Supervised Learning Diagram (ver 3)
@@ -382,7 +383,7 @@ consider some <strong>target distribution</strong> <span class="math inline">\(P
 we can think of our data as forming a joint probability distribution
 <span class="math inline">\(Prob(\mathbf{x}, y)\)</span>. That is because
 <span class="math inline">\(P(\mathbf{x}, y) = P(\mathbf{x}) P(y \mid \mathbf{x})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-53"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
 <img src="images/theory/learning-diag3.png" alt="Supervised Learning Diagram (ver 4)" width="80%" />
 <p class="caption">
 Figure 7.4: Supervised Learning Diagram (ver 4)
