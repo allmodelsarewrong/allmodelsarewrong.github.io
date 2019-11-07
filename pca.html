@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-06" />
+<meta name="date" content="2019-11-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -105,15 +105,22 @@
 <li class="part"><span><b>III Unsupervised I: PCA</b></span></li>
 <li class="chapter" data-level="4" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>4</b> Principal Components Analysis</a><ul>
 <li class="chapter" data-level="4.1" data-path="pca.html"><a href="pca.html#low-dimensional-representations"><i class="fa fa-check"></i><b>4.1</b> Low-dimensional Representations</a></li>
-<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a></li>
-<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#pca-idea"><i class="fa fa-check"></i><b>4.3</b> PCA Idea</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.3.1</b> Finding Principal Components</a></li>
-<li class="chapter" data-level="4.3.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.3.2</b> Finding the first PC</a></li>
-<li class="chapter" data-level="4.3.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.3.3</b> Finding the second PC</a></li>
-<li class="chapter" data-level="4.3.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.3.4</b> Finding all PCs</a></li>
+<li class="chapter" data-level="4.2" data-path="pca.html"><a href="pca.html#projections"><i class="fa fa-check"></i><b>4.2</b> Projections</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="pca.html"><a href="pca.html#vector-and-scalar-projections"><i class="fa fa-check"></i><b>4.2.1</b> Vector and Scalar Projections</a></li>
+<li class="chapter" data-level="4.2.2" data-path="pca.html"><a href="pca.html#projected-inertia"><i class="fa fa-check"></i><b>4.2.2</b> Projected Inertia</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#pca-model"><i class="fa fa-check"></i><b>4.4</b> PCA Model</a></li>
-<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#another-perspective"><i class="fa fa-check"></i><b>4.5</b> Another Perspective</a></li>
+<li class="chapter" data-level="4.3" data-path="pca.html"><a href="pca.html#maximization-problem"><i class="fa fa-check"></i><b>4.3</b> Maximization Problem</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="pca.html"><a href="pca.html#eigenvectors-of-mathbfs"><i class="fa fa-check"></i><b>4.3.1</b> Eigenvectors of <span class="math inline">\(\mathbf{S}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pca.html"><a href="pca.html#another-perspective-of-pca"><i class="fa fa-check"></i><b>4.4</b> Another Perspective of PCA</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pca.html"><a href="pca.html#finding-principal-components"><i class="fa fa-check"></i><b>4.4.1</b> Finding Principal Components</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pca.html"><a href="pca.html#finding-the-first-pc"><i class="fa fa-check"></i><b>4.4.2</b> Finding the first PC</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pca.html"><a href="pca.html#finding-the-second-pc"><i class="fa fa-check"></i><b>4.4.3</b> Finding the second PC</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pca.html"><a href="pca.html#finding-all-pcs"><i class="fa fa-check"></i><b>4.4.4</b> Finding all PCs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="pca.html"><a href="pca.html#data-decomposition-model"><i class="fa fa-check"></i><b>4.5</b> Data Decomposition Model</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="pca.html"><a href="pca.html#alternative-approaches"><i class="fa fa-check"></i><b>4.5.1</b> Alternative Approaches</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>IV Linear Regression</b></span></li>
 <li class="chapter" data-level="5" data-path="ols.html"><a href="ols.html"><i class="fa fa-check"></i><b>5</b> Linear Regression</a><ul>
@@ -251,17 +258,18 @@ in which the image of the mug is as similar as possible to the original object.<
 <span class="math inline">\(\mathbb{H}_A\)</span>, <span class="math inline">\(\mathbb{H}_B\)</span>, and <span class="math inline">\(\mathbb{H}_C\)</span>. Among the three possible
 projections, subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the one that provides the best low
 dimensional representation, in the sense that the projected silhouette is the
-most similar to the original mug shape. We can say that this “photo” is the one
-that most resembles the original object. Now, keep in mind that the resulting
-image in the low-dimensional space is not capturing the whole pattern. In other
-words, there is some loss of information. However, by chosing the right
-projection, we hope to minimize such loss.</p>
+most similar to the original mug shape.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
 <img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="70%" />
 <p class="caption">
 Figure 4.3: The shape of the projection is similar to the original mug shape.
 </p>
 </div>
+<p>We can say that the “photo” from projecting onto subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the
+one that most resembles the original object. Now, keep in mind that the resulting
+image in the low-dimensional space is not capturing the whole pattern. In other
+words, there is some loss of information. However, by chosing the right
+projection, we hope to minimize such loss.</p>
 </div>
 <div id="projections" class="section level2">
 <h2><span class="header-section-number">4.2</span> Projections</h2>
@@ -270,61 +278,240 @@ concept, and its implications.</p>
 <p>Pretend that we zoom in to see some of the individuals of the cloud of points
 that form the mug (see figure below). Keep in mind that these data points are
 in a <span class="math inline">\(p\)</span>-dimensional space, which will also have its centroid (i.e. average
-individual). Because our goal is to look for a low-dimensional represention,
-we can start by considering a one-dimensional space, that is, some axis.
-In the diagram below this dimension is depicted with the orange line, labeled
-as <em>axis k</em>.</p>
+individual).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
-<img src="images/pca/pca-scalar-projection0.png" alt="Set of individuals in p-dim space." width="70%" />
+<img src="images/pca/pca-scalar-projection0.png" alt="Set of individuals in p-dim space." width="55%" />
 <p class="caption">
 Figure 4.4: Set of individuals in p-dim space.
 </p>
 </div>
-<p>At the end of the day, we want to project the individuals onto this axis.</p>
+<p>Because our goal is to look for a low-dimensional represention,
+we can start by considering a one-dimensional space, that is, some axis.
+In the above diagram (as well as the one below) this dimension is depicted with
+the yellow line, labeled as <span class="math inline">\(dim_{\mathbf{v}}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
-<img src="images/pca/pca-scalar-projection1.png" alt="Projections onto some dimension (k-axis)" width="70%" />
+<img src="images/pca/pca-scalar-projection1.png" alt="Set of individuals in p-dim space." width="70%" />
 <p class="caption">
-Figure 4.5: Projections onto some dimension (k-axis)
+Figure 4.5: Set of individuals in p-dim space.
 </p>
 </div>
-<p>Let’s focus on a specific individual, for example the <span class="math inline">\(i\)</span>-th individual.
-The projection of <span class="math inline">\(\mathbf{x_i}\)</span> onto the dimension <span class="math inline">\(k\)</span>, can be seen from the
-point of view of the centroid. The orthogonal projection of <span class="math inline">\(i\)</span> onto <span class="math inline">\(k\)</span> is:</p>
-<p><span class="math display">\[
-proj_{u} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T} u}}{\mathbf{u^\mathsf{T}u}} \mathbf{u}
-\]</span></p>
-<p>The scalar projection</p>
-<p><span class="math display">\[
-comp_{u} (\mathbf{x_i} )= \frac{\mathbf{x_{i}^\mathsf{T}u}}{\|\mathbf{u}\|} = z_{ik}
-\]</span></p>
-<p>We are not interested in the orthogonal projection, but just in the scalar
-projection. In other words, we just want to obtain the coordinate of the
-<span class="math inline">\(i\)</span>-th individual along this axis.</p>
+<p>We should note that we don’t really manipulate <span class="math inline">\(dim_{\mathbf{v}}\)</span> directly.
+Instead, what we manipulate is a vector <span class="math inline">\(\mathbf{v}\)</span> along this dimension.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
-<img src="images/pca/pca-scalar-projection2.png" alt="Scalar projection of i-th individual onto dimension k" width="70%" />
+<img src="images/pca/pca-scalar-projection2.png" alt="Dimension spanned by vector v" width="70%" />
 <p class="caption">
-Figure 4.6: Scalar projection of i-th individual onto dimension k
+Figure 4.6: Dimension spanned by vector v
 </p>
 </div>
+<p>At the end of the day, we want to project the individuals onto this dimension.
+In particular, the type of projections that we are interested in are orthogonal
+projections.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
+<img src="images/pca/pca-scalar-projection3.png" alt="Projections onto one dimension" width="70%" />
+<p class="caption">
+Figure 4.7: Projections onto one dimension
+</p>
 </div>
-<div id="pca-idea" class="section level2">
-<h2><span class="header-section-number">4.3</span> PCA Idea</h2>
+<div id="vector-and-scalar-projections" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Vector and Scalar Projections</h3>
+<p>Let’s consider a specific individual, for example the <span class="math inline">\(i\)</span>-th individual.
+And let’s take the centroid as the origin of the cloud of points. In this way,
+the dimension that we are looking for has to pass thorugh the centroid of this
+cloud. Obtaining the orthogonal projection of the <span class="math inline">\(i\)</span>-th individual
+onto the dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span> involves projecting <span class="math inline">\(\mathbf{x_i}\)</span> onto
+<span class="math inline">\(\mathbf{v}\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
+<img src="images/pca/pca-scalar-projection4.png" alt="Projection of an individual onto one dimension" width="70%" />
+<p class="caption">
+Figure 4.8: Projection of an individual onto one dimension
+</p>
+</div>
+<p>Recall that an orthogonal projection can be split into two types of projections:
+(1) the vector projection, and (2) the scalar projection.</p>
+<p>The <strong>vector projection</strong> of <span class="math inline">\(\mathbf{x_i}\)</span> onto the <span class="math inline">\(\mathbf{v}\)</span>
+is defined as:</p>
+<p><span class="math display">\[
+proj_{\mathbf{v}} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T} v}}{\mathbf{v^\mathsf{T}v}} \hspace{1mm} \mathbf{v} = \mathbf{\hat{v}}
+\]</span></p>
+<p>The <strong>scalar projection</strong> of <span class="math inline">\(\mathbf{x_i}\)</span> onto <span class="math inline">\(\mathbf{v}\)</span>
+is defined as:</p>
+<p><span class="math display">\[
+comp_{\mathbf{v}} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T}v}}{\|\mathbf{v}\|} = z_{ik}
+\]</span></p>
+<p>The following diagram displays both types of projections:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
+<img src="images/pca/pca-scalar-projection5.png" alt="Scalar and vector projections of i-th individual onto vector v" width="70%" />
+<p class="caption">
+Figure 4.9: Scalar and vector projections of i-th individual onto vector v
+</p>
+</div>
+<p>We are not really interested in obtaining the vector projection
+<span class="math inline">\(proj_{\mathbf{v}} (\mathbf{x_i})\)</span>. Instead, what we care about is the scalar
+projection <span class="math inline">\(comp_{\mathbf{v}} (\mathbf{x_i})\)</span>. In other words, we just want to
+obtain the coordinate of the <span class="math inline">\(i\)</span>-th individual along this axis.</p>
+</div>
+<div id="projected-inertia" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Projected Inertia</h3>
+<p>As we said before, our goal is to find the angle that gives us the “best”
+photo of the mug (i.e. cloud of points). This can be translated as finding a
+subspace in which the distances between the points is most similar to those on
+the actual mug.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
+<img src="images/pca/pca-projection-goal.png" alt="Projection Goal" width="90%" />
+<p class="caption">
+Figure 4.10: Projection Goal
+</p>
+</div>
+<p>Now, we need to define what we mean by “similar” distances in <span class="math inline">\(\mathbb{H}\)</span>. Consider the overall dispersion of our original system (the one with all <span class="math inline">\(p\)</span>
+dimensions): <span class="math inline">\(\sum_{j} \sum_{\ell} d^2 (i, \ell)\)</span>. This is a fixed number;
+and we cannot change it. However, we can try fine-tune our subset <span class="math inline">\(\mathbb{H}\)</span>
+such that
+<span class="math inline">\(\sum_{j} \sum_{\ell} d^2 (i, \ell) \approx \sum_{i} \sum_{\ell} d_H^2(i, \ell)\)</span>.</p>
+<p><span class="math display">\[ 
+\sum_{j} \sum_{\ell} d^2 (i, \ell) = \ 2n \sum_i d^2 (i, g)
+\]</span></p>
+<p>However, it will be easier to simply consider the <em>inertia</em> of the system
+(as opposed to the overall dispersion).</p>
+<p><span class="math display">\[
+2n \sum_i d^2 (i, g) \  \to  \ \frac{1}{n} \sum_{i=1}^{n} d^2 (i, g)
+\]</span></p>
+<p>In mathematical terms, finding the subspace <span class="math inline">\(\mathbb{H}\)</span> that gives us “similar”
+distances to those of the original space corresponds to maximizing the
+projected inertia:</p>
+<p><span class="math display">\[
+\max_{\mathbb{H}} \left\{ \frac{1}{n} \sum_{i=1}^{n} d_{\mathbb{H}}^2 (i, g) \right\}
+\]</span></p>
+<p>Now, as we discuss before, the simplest subspace will be one dimension,
+that is, we consider the case where <span class="math inline">\(\mathbb{H} \subseteq \mathbb{R}^1\)</span>.
+So the first approach is to project our data points onto a vector <span class="math inline">\(\mathbf{v}\)</span>.
+Hence, the projected inertia becomes:</p>
+<p><span class="math display">\[
+\frac{1}{n} \sum_{i=1}^{n} d_\mathbb{H}^2 (i, g) = \frac{1}{n} \sum_{i=1}^{n} \left( \mathbf{x_i}^\mathsf{T} \mathbf{v}  \right)^2 = \frac{1}{n} \sum_{i=1}^{n} z_i^2
+\]</span></p>
+<p>and our maximization problem becomes</p>
+<p><span class="math display">\[
+\max_{\mathbf{v}} \left\{ \frac{1}{n} \sum_{i=1}^{n} \left( \mathbf{x_i}^\mathsf{T}  \mathbf{v}  \right)^2   \right\} \quad \mathrm{s.t.} \quad \mathbf{v}^\mathsf{T} \mathbf{v} = 1
+\]</span></p>
+<p>For convenience, we add the restriction that <span class="math inline">\(\mathbf{v}\)</span> is a unit-vector
+(vector of unit norm). Why do we need the constraint? If we didn’t have the
+constraint, we could always find a <span class="math inline">\(\mathbf{v}\)</span> that obtains higher inertia,
+and things would explode. Furthermore, as we will see in the next sectoin,
+this helps in the algebra we will use when we actually perform the maximization.</p>
+</div>
+</div>
+<div id="maximization-problem" class="section level2">
+<h2><span class="header-section-number">4.3</span> Maximization Problem</h2>
+<p>We now need to compute the projected Inertia. Since we have projected onto a
+line spanned by <span class="math inline">\(\mathbf{v}\)</span>, the projected inertia <span class="math inline">\(I_{\mathbb{H}}\)</span> will simply
+be the variance of the projected data points:</p>
+<p><span class="math display">\[
+I_{\mathbb{H}} = \frac{1}{n} \sum_{i=1}^{n} d_\mathbb{H}^2(i, 0) = \frac{1}{n} \sum_{i=1}^{n} z_i^2
+\]</span></p>
+<p>(note that <span class="math inline">\(g = 0\)</span> since we are assuming our data is mean-centered).
+We can simplify notation as follows:</p>
+<p><span class="math display">\[
+\mathbf{z} := \begin{pmatrix} z_1 \\ z_2 \\ \vdots \\ z_n \\ \end{pmatrix} \ \Longrightarrow \ I_\mathbb{H} = \frac{1}{n} \mathbf{z}^\mathsf{T} \mathbf{z} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v}
+\]</span></p>
+<p>Hence, the maximization problem becomes</p>
+<p><span class="math display">\[
+\max_{\mathbf{v}} \left\{ \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} \right\} \qquad \text{s.t.} \qquad \mathbf{v}^\mathsf{T} \mathbf{v} = 1
+\]</span></p>
+<p>To solve this maximization problem, we utilize the method of
+Lagrange Multipliers:</p>
+<p><span class="math display">\[
+\mathcal{L} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - \lambda \left( \mathbf{v}^\mathsf{T} \mathbf{v}  - 1 \right)
+\]</span></p>
+<p>Calculating the derivative of <span class="math inline">\(mathcal{L}\)</span> with respect to <span class="math inline">\(mathbf{v}\)</span>:</p>
+<p><span class="math display">\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = 0 \ \Rightarrow \ \underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \ \Rightarrow \ \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
+\]</span></p>
+<p>That is, we obtain the equation <span class="math inline">\(\mathbf{S} \mathbf{v} = \lambda \mathbf{v}\)</span>
+where <span class="math inline">\(\mathbf{S} \in \mathbb{R}^{p \times p}\)</span> is symmetric.
+This means that <span class="math inline">\(\mathbf{v}\)</span> is an eigenvector (with eigenvalue <span class="math inline">\(\lambda\)</span>)
+of <span class="math inline">\(\mathbf{S}\)</span>.</p>
+<div id="eigenvectors-of-mathbfs" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Eigenvectors of <span class="math inline">\(\mathbf{S}\)</span></h3>
+<p>Assume that <span class="math inline">\(\mathbf{X}\)</span> has full rank (i.e. <span class="math inline">\(\mathrm{rank}(\mathbf{X}) = p\)</span>).
+We then obtain <span class="math inline">\(p\)</span> eigenvectors, which together form the matrix <span class="math inline">\(\mathbf{V}\)</span>:</p>
+<p><span class="math display">\[
+\mathbf{V} = \begin{bmatrix} \mathbf{v_1} &amp; \mathbf{v_2} &amp; \dots &amp; \mathbf{v_k} &amp; \dots &amp; \mathbf{v_p} \\ \end{bmatrix}
+\]</span></p>
+<p>We can also obtain <span class="math inline">\(\mathbf{\Lambda}_{p \times p} := \mathrm{diag}\left\{ \lambda_i \right\}_{i=1}^{n}\)</span>
+(i.e. the matrix of eigenvalues): that is,</p>
+<p><span class="math display">\[
+\mathbf{\Lambda} = \begin{bmatrix} \lambda_1 &amp; 0 &amp; \dots &amp; 0 \\ 0 &amp; \lambda_2 &amp; \dots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \dots &amp; \lambda_p \\ \end{bmatrix}
+\]</span></p>
+<p>Finally, we can also obtain the matrix <span class="math inline">\(\mathbf{Z}_{n \times p}\)</span> which is the
+matrix consisting of the vectors <span class="math inline">\(\mathbf{z_i}\)</span>:</p>
+<p><span class="math display">\[
+\mathbf{Z} = \begin{bmatrix} \mathbf{z_1} &amp; \mathbf{z_2} &amp; \dots &amp; \mathbf{z_k} &amp; \dots &amp; \mathbf{z_p} \\ \end{bmatrix}
+\]</span></p>
+<ul>
+<li><p>The matrix <span class="math inline">\(\mathbf{V}\)</span> consists of the <strong>loadings</strong></p></li>
+<li><p>The matrix <span class="math inline">\(\mathbf{Z}\)</span> contains the <strong>principal components</strong> (PC’s),
+also known as <strong>scores</strong>.</p></li>
+</ul>
+<p>Let us examine the <span class="math inline">\(k\)</span>th principal component <span class="math inline">\(\mathbf{z_k}\)</span>:</p>
+<p><span class="math display">\[
+\mathbf{z_k} = \mathbf{X v_k} = v_{k1} \mathbf{x_1} + v_{k2} \mathbf{x_2} + \dots + v_{kp} \mathbf{x_p}
+\]</span></p>
+<p>(where <span class="math inline">\(\mathbf{x_k}\)</span> denotes columns of <span class="math inline">\(\mathbf{X}\)</span>). Note that
+<span class="math inline">\(\mathrm{mean}(\mathbf{z_k}) = 0\)</span>; since we are assuming that the data is
+mean-centered, we have that <span class="math inline">\(\mathrm{mean}(\mathbf{x_1}) = 0\)</span>.
+What about variance?</p>
+<p><span class="math display">\[\begin{align*}
+Var(\mathbf{z_k}) &amp; = \frac{1}{n} \mathbf{z_{k}^\mathsf{T}} \mathbf{z_k} \\
+&amp;  = \frac{1}{n}\left( \mathbf{X} \mathbf{v_k} \right)^{\mathsf{T}} \left( \mathbf{X} \mathbf{v_k} \right) \\
+&amp; = \frac{1}{n} \mathbf{v_{k}^\mathsf{T}} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v_k} \\
+&amp; = \mathbf{v_k}^\mathsf{T} \mathbf{S} \mathbf{v_k} \\
+&amp; = \mathbf{v_k}^\mathsf{T} \left( \lambda_k \mathbf{v_k} \right) = \lambda_k \left( \mathbf{v_k}^\mathsf{T} \mathbf{v_k} \right) \\
+&amp; = \lambda_k 
+\end{align*}\]</span></p>
+<p>Hence, we obtain the following interesting result: the <span class="math inline">\(k\)</span>-th eigenvalue of <span class="math inline">\(\mathbf{S}\)</span> is simply the variance of the <span class="math inline">\(k\)</span>-th principal component.</p>
+<p>If <span class="math inline">\(\mathbf{X}\)</span> is mean centered, then
+<span class="math inline">\(\mathbf{S} = \frac{1}{n} \mathbf{X^\mathsf{T} X}\)</span> is nothing but the
+variance-covariance matrix of our data. If <span class="math inline">\(\mathbf{X}\)</span> is <em>standardized</em>
+(i.e. mean-centered and scaled by the variance), then <span class="math inline">\(\mathbf{S}\)</span> becomes the
+correlation matrix.</p>
+<p>In summary:</p>
+<ul>
+<li><p><span class="math inline">\(\mathrm{mean}(\mathbf{z_k}) = 0\)</span></p></li>
+<li><p><span class="math inline">\(Var(\mathbf{z_k}) = \lambda_k\)</span></p></li>
+<li><p><span class="math inline">\(\mathrm{sd}(\mathbf{z_k}) = \sqrt{\lambda_k}\)</span></p></li>
+</ul>
+<p>We have the following fact (the proof is omitted, and may be assigned as
+homework or as a test question):</p>
+<p><span class="math display">\[
+I = \frac{1}{n} \sum_{i=1}^{n} d^2(i, g) = \sum_{k} \lambda_k = \mathrm{tr}\left( \frac{1}{n} \mathbf{X^\mathsf{T} X} \right)
+\]</span></p>
+<ul>
+<li><p>The dimensions that we find in our analysis (through <span class="math inline">\(\mathbf{v_k}\)</span>)
+relates directly to <span class="math inline">\(\mathbf{z_k}\)</span>.</p></li>
+<li><p><span class="math inline">\(\sum_{k=1}^{p} \lambda_k\)</span> relates directly to the total amount of variability
+of our data.</p></li>
+</ul>
+<p><strong>Remark</strong>: The principal components capture different parts of the variability
+of the full data.</p>
+</div>
+</div>
+<div id="another-perspective-of-pca" class="section level2">
+<h2><span class="header-section-number">4.4</span> Another Perspective of PCA</h2>
 <p>The overall idea behind PCA is the following. Given a set of <span class="math inline">\(p\)</span> variables
 <span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>, we want to obtain new <span class="math inline">\(k\)</span> variables
 <span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
 <p>A principal component is a linear combination: <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>.
 The first PC is a linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="images/pca/pca-path-diag1.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
-Figure 4.7: PCs as linear combinations of X-variables
+Figure 4.11: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>The second PC is another linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="images/pca/pca-path-diag2.png" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
-Figure 4.8: PCs as linear combinations of X-variables
+Figure 4.12: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>We want to compute the <strong>PCs as linear combinations</strong> of the original variables.</p>
@@ -344,10 +531,10 @@ Figure 4.8: PCs as linear combinations of X-variables
 <span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
 vectors of the principal axes. The following figure shows a graphical
 representation of a PCA problem in diagram notation:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
 <img src="images/pca/pca-path-diag4.png" alt="PCs as linear combinations of X-variables" width="70%" />
 <p class="caption">
-Figure 4.9: PCs as linear combinations of X-variables
+Figure 4.13: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>We look to transform the original variables into a smaller set of new variables,
@@ -356,7 +543,7 @@ The PCs are obtained as linear combinations (i.e. weighted sums) of the
 original variables. We look for PCs is in such a way that they have maximum
 variance, and being mutually orthogonal.</p>
 <div id="finding-principal-components" class="section level3">
-<h3><span class="header-section-number">4.3.1</span> Finding Principal Components</h3>
+<h3><span class="header-section-number">4.4.1</span> Finding Principal Components</h3>
 <p>The way to find principal components is to construct them as weighted sums of
 the original variables, looking to optimize some criterion and following some
 constraints. One way in which we can express the criterion is to require components
@@ -393,7 +580,7 @@ we impose the restriction <span class="math inline">\(\mathbf{z_h}\)</span> to b
 <span class="math inline">\(\mathbf{z_{h}^\mathsf{T} z_l} = 0; (h \neq l)\)</span>.</p>
 </div>
 <div id="finding-the-first-pc" class="section level3">
-<h3><span class="header-section-number">4.3.2</span> Finding the first PC</h3>
+<h3><span class="header-section-number">4.4.2</span> Finding the first PC</h3>
 <p>In order to get the first principal component <span class="math inline">\(\mathbf{z_1} = \mathbf{X v_1}\)</span>,
 we need to find <span class="math inline">\(\mathbf{v_1}\)</span> such that:</p>
 <p><span class="math display">\[
@@ -417,7 +604,7 @@ using the <strong>Lagrangian multiplier</strong> method. Using Lagrange multipli
 and <span class="math inline">\(\mathbf{v_1}\)</span> is the corresponding eigenvector.</p>
 </div>
 <div id="finding-the-second-pc" class="section level3">
-<h3><span class="header-section-number">4.3.3</span> Finding the second PC</h3>
+<h3><span class="header-section-number">4.4.3</span> Finding the second PC</h3>
 <p>In order to find the second principal component <span class="math inline">\(\mathbf{z_2} = \mathbf{X v_2}\)</span>,
 we need to find <span class="math inline">\(\mathbf{v_2}\)</span> such that</p>
 <p><span class="math display">\[
@@ -434,7 +621,7 @@ Applying the Lagrange multipliers, it can be shown that the desired
 is the corresponding eigenvector.</p>
 </div>
 <div id="finding-all-pcs" class="section level3">
-<h3><span class="header-section-number">4.3.4</span> Finding all PCs</h3>
+<h3><span class="header-section-number">4.4.4</span> Finding all PCs</h3>
 <p>All PCs can be found simultaneously by <strong>diagonalizing</strong> <span class="math inline">\(\mathbf{S}\)</span>.
 Diagonalizing <span class="math inline">\(\mathbf{S}\)</span> involves expressing it as the product:</p>
 <p><span class="math display">\[ 
@@ -461,8 +648,8 @@ A <span class="math inline">\(p \times p\)</span> symmetric matrix <span class="
 of the matrix <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T}X}\)</span></p>
 </div>
 </div>
-<div id="pca-model" class="section level2">
-<h2><span class="header-section-number">4.4</span> PCA Model</h2>
+<div id="data-decomposition-model" class="section level2">
+<h2><span class="header-section-number">4.5</span> Data Decomposition Model</h2>
 <p>Formally, PCA involves finding scores and loadings such that the data can be
 expressed as a product of two matrices:</p>
 <p><span class="math display">\[
@@ -477,9 +664,8 @@ few PCs (i.e. <span class="math inline">\(k \ll p\)</span>) expecting not to lo
 \underset{n \times p}{\mathbf{X}} \approx \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times p}{\mathbf{V^\mathsf{T}}} + \text{Residual}
 \]</span></p>
 <p>The previous expression means that just a few PCs will <em>optimally</em> summarize the main structure of the data</p>
-</div>
-<div id="another-perspective" class="section level2">
-<h2><span class="header-section-number">4.5</span> Another Perspective</h2>
+<div id="alternative-approaches" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Alternative Approaches</h3>
 <p>Finding <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span> with maximum variance has another
 important property that it is not always mentioned in multivariate textbooks
 but that we find worth mentioning. <span class="math inline">\(\mathbf{z_h}\)</span> is such that</p>
@@ -499,6 +685,7 @@ relations and see PCA from a regression-like model perspective:</p>
 <p>Notice that the regression coefficient is the <span class="math inline">\(j\)</span>-th element of the <span class="math inline">\(h\)</span>-th
 eigenvector.</p>
 
+</div>
 </div>
 </div>
 
