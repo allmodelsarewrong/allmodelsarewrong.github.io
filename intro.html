@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-07" />
+<meta name="date" content="2019-11-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -78,7 +78,6 @@
 <li class="part"><span><b>II Intro</b></span></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#basic-notation"><i class="fa fa-check"></i><b>2.1</b> Basic Notation</a></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#about-statistical-learning"><i class="fa fa-check"></i><b>2.2</b> About Statistical Learning</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="duality.html"><a href="duality.html"><i class="fa fa-check"></i><b>3</b> Geometric Duality</a><ul>
 <li class="chapter" data-level="3.1" data-path="duality.html"><a href="duality.html#rows-space"><i class="fa fa-check"></i><b>3.1</b> Rows Space</a></li>
@@ -189,72 +188,101 @@
             <section class="normal" id="section-">
 <div id="intro" class="section level1">
 <h1><span class="header-section-number">2</span> Introduction</h1>
-<p>Picture a data set containing scores of several course for college students.
+<p>Picture a data set containing scores of several courses for college students.
 For example, courses like matrix algebra, multivariable calculus,
-statistics, and probability. And say we also have historical data about a course in Statistical
-Learning. In particular we have final scores measured on a scale from 0 to 100,
-we also have final grades (letter grade scale), as well as a third interesting
-variable “Pass - Non-Pass” indicating whether the student passed statistical learning.
+statistics, and probability. And say we also have historical data about a course
+in Statistical Learning. In particular we have final scores measured on a scale
+from 0 to 100, we also have final grades (in letter grade scale), as well as a
+third interesting variable “Pass - Non-Pass” indicating whether the student
+passed statistical learning.
 Some data like that fits perfectly well in a tabular format. The rows contain
 the records for a bunch of students, and the columns refer to the variables.</p>
 <table>
 <thead>
 <tr class="header">
-<th>Math 54</th>
-<th>Math 55</th>
-<th>Stat 135</th>
-<th>Stat 134</th>
-<th>Stat 154</th>
-<th>Grade</th>
-<th>P/NP</th>
+<th align="center">Student</th>
+<th align="center">Math 54</th>
+<th align="center">Stat 135</th>
+<th align="center">Stat 134</th>
+<th align="center">Stat 154</th>
+<th align="center">Grade</th>
+<th align="center">P/NP</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(x_{11}\)</span></td>
-<td><span class="math inline">\(x_{12}\)</span></td>
-<td><span class="math inline">\(x_{13}\)</span></td>
-<td><span class="math inline">\(x_{14}\)</span></td>
-<td><span class="math inline">\(x_{15}\)</span></td>
-<td><span class="math inline">\(y_{15}\)</span></td>
-<td><span class="math inline">\(y_{16}\)</span></td>
+<td align="center">1</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center">92</td>
+<td align="center">A</td>
+<td align="center">P</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(x_{21}\)</span></td>
-<td><span class="math inline">\(x_{22}\)</span></td>
-<td><span class="math inline">\(x_{23}\)</span></td>
-<td><span class="math inline">\(x_{24}\)</span></td>
-<td><span class="math inline">\(x_{25}\)</span></td>
-<td><span class="math inline">\(y_{15}\)</span></td>
-<td><span class="math inline">\(y_{16}\)</span></td>
+<td align="center">2</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center">85</td>
+<td align="center">B</td>
+<td align="center">P</td>
 </tr>
 <tr class="odd">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
+<td align="center">3</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center">40</td>
+<td align="center">F</td>
+<td align="center">NP</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(x_{n1}\)</span></td>
-<td><span class="math inline">\(x_{n2}\)</span></td>
-<td><span class="math inline">\(x_{n3}\)</span></td>
-<td><span class="math inline">\(x_{n4}\)</span></td>
-<td><span class="math inline">\(x_{n5}\)</span></td>
-<td><span class="math inline">\(y_{n5}\)</span></td>
-<td><span class="math inline">\(y_{n6}\)</span></td>
+<td align="center">New</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center">?</td>
+<td align="center">?</td>
+<td align="center">?</td>
 </tr>
 </tbody>
 </table>
 <p>Suppose that, based on this historical data, we wish to predict the score of a
-new student (whose Math 54, Math 55, and Stat 135 grades are known) in Stat 154.</p>
-<p>To do so, we would fit some sort of model to our data; i.e. we would perform
-regression. This is a form of supervised learning, since our model is trained
+new student (whose Math 54, and Stat 135 grades are known) in Stat 154.
+To do so, we would fit some sort of model to our data; i.e. we would perform
+regression. This is a form of <strong>supervised learning</strong>, since our model is trained
 using known inputs (i.e. Math 54, Math 55, and Stat 135 grades) as well as
 known responses (i.e. the Stat 154 grades of the previous students).</p>
+<p>Likewise, we may be interested in studying the data not from a prediction
+oriented perspective but from a purely exploratory perspective. For example,
+maybe we want to investigate what is the relationship between the courses
+Math 54, Stat 135, and Stat 134; that is: explore the relationship between
+the features. Or maybe we want to study the resemblance among individuals
+and see what kind of students have similar scores, or if there are “natural”
+groups of individuals based on their features. Both of these tasks are examples
+of <strong>unsupervised learning</strong>. We use the information in the data to discover
+patterns, without focusing on any single variable as a target response.</p>
+<p>In summary, we will focus on two types of learning paradigms:</p>
 <p><strong>Unsupervised Learning</strong>: where we have inputs, but not response variables.</p>
+<p><strong>Supervised Learning</strong>: where we have inputs, and one (or more) response variable(s).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="images/introduction/intro-learning-paradigms.png" alt="Inputs and outputs in supervised and unsupervised learning" width="85%" />
+<p class="caption">
+Figure 2.1: Inputs and outputs in supervised and unsupervised learning
+</p>
+</div>
+<p>By the way, there are other types of Learning paradigms (e.g. deep learning,
+reinforcement learning), but we won’t discuss them in this book.</p>
+<p>To visualize the different types of learning, the different types of variables,
+and the methodology associated with each combination of learning/data types,
+we can use the following graphic:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="images/introduction/four_corners.png" alt="Supervised and Unsupervised Corners" width="80%" />
+<p class="caption">
+Figure 2.2: Supervised and Unsupervised Corners
+</p>
+</div>
 <div id="basic-notation" class="section level2">
 <h2><span class="header-section-number">2.1</span> Basic Notation</h2>
 <p>In this book we are going to use a fair amount of math notation. Becoming familiar
@@ -286,15 +314,18 @@ examples that refer to—or denote a connection with—individuals.</p>
 <p>In turn, we will always use the letter <span class="math inline">\(j\)</span> to conveyed association with variables.
 For instance, <span class="math inline">\(x_j\)</span>, <span class="math inline">\(\mathbf{x_j}\)</span>, and <span class="math inline">\(\alpha_j\)</span> are examples that refer
 to—or denote a connection with—variables.</p>
-<p>For better or for worse, we’ve made the decision to represent row vectors and column
-vectors with the same notation: as bold lower case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and
-<span class="math inline">\(\mathbf{x_j}\)</span>. Because of the risk of confusing a row vector with a column vector,
-sometimes we will use the arrow notation for row vectors: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
+<p>For better or for worse, we’ve made the decision to represent both the rows
+and the columns of a matrix as vectors using the same notation: as bold lower
+case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and <span class="math inline">\(\mathbf{x_j}\)</span>. Because we know that
+there’s a risk of confusing a vector that corresponds to a row with a vector
+that corresponds to a column, sometimes we will use the arrow notation for
+row vectors: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
 <p>So, going back to the above data matrix <span class="math inline">\(\mathbf{X}\)</span>, we can represent the first
 variable as a vector <span class="math inline">\(\mathbf{x_1} = (x_{11}, x_{21}, \dots, x_{n1})\)</span>.
 Likewise, we can represent the first individual with the vector
 <span class="math inline">\(\mathbf{\vec{x}_1} = (x_{11}, x_{12}, \dots, x_{1n})\)</span>.</p>
-<p>Here’s a reference table with the notation and symbols used throughout the book</p>
+<p>Here’s a reference table with the most common symbols and notation used
+throughout the book.</p>
 <table>
 <thead>
 <tr class="header">
@@ -371,7 +402,8 @@ Likewise, we can represent the first individual with the vector
 </table>
 <p>By the way, there are many more symbols that will appear in later chapters.
 But for now these are the fundamental ones.</p>
-<p>Common operators</p>
+<p>Likewise, the table below contains some of the most common operators that we
+will use in subsequent chapters:</p>
 <table>
 <thead>
 <tr class="header">
@@ -426,18 +458,6 @@ But for now these are the fundamental ones.</p>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="about-statistical-learning" class="section level2">
-<h2><span class="header-section-number">2.2</span> About Statistical Learning</h2>
-<p>We will focus on supervised learning as well as unsupervised learning.
-We won’t discuss more recent fields of deep learning and reinforcement learning.</p>
-<p>To visualize the different types of learning, the different types of variables, and the methodology associated with each combination of learning/data types, we can use the following graphic:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="images/introduction/four_corners.png" alt="Supervised and Unsupervised" width="80%" />
-<p class="caption">
-Figure 2.1: Supervised and Unsupervised
-</p>
-</div>
 
 </div>
 </div>
