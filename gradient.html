@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-08" />
+<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,70 @@
 
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -66,14 +130,14 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>by G. Sanchez & E. Marzban</small></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Welcome</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
-<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
 <li class="part"><span><b>II Intro</b></span></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
@@ -136,22 +200,25 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="gradient.html"><a href="gradient.html"><i class="fa fa-check"></i><b>6</b> Gradient Descent</a><ul>
 <li class="chapter" data-level="6.1" data-path="gradient.html"><a href="gradient.html#error-surface"><i class="fa fa-check"></i><b>6.1</b> Error Surface</a></li>
-<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.2.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
+<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a></li>
+<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
 </ul></li>
 <li class="part"><span><b>V Learning Concepts</b></span></li>
 <li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
 <li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
-<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
-<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
-<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
-<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
-<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#kinds-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Kinds of Predictions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.2.1</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2.2</b> Two Types of Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>7.3</b> Two Types of Errors</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.3.1</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.3.2</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.3.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.4</b> Noisy Targets</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="mse.html"><a href="mse.html"><i class="fa fa-check"></i><b>8</b> MSE of Estimator</a><ul>
 <li class="chapter" data-level="8.1" data-path="mse.html"><a href="mse.html#mse-of-an-estimator"><i class="fa fa-check"></i><b>8.1</b> MSE of an Estimator</a><ul>
@@ -164,7 +231,53 @@
 <li class="chapter" data-level="9.2.1" data-path="biasvar.html"><a href="biasvar.html#two-hypotheses"><i class="fa fa-check"></i><b>9.2.1</b> Two Hypotheses</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
-<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a></li>
+<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
+<li class="chapter" data-level="10.2" data-path="validation.html"><a href="validation.html#holdout-method"><i class="fa fa-check"></i><b>10.2</b> Holdout Method</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="validation.html"><a href="validation.html#rationale-behind-holdout-method"><i class="fa fa-check"></i><b>10.2.1</b> Rationale Behind Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="validation.html"><a href="validation.html#repeated-holdout-method"><i class="fa fa-check"></i><b>10.3</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="10.4" data-path="validation.html"><a href="validation.html#bootstrap-method"><i class="fa fa-check"></i><b>10.4</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="10.5" data-path="validation.html"><a href="validation.html#model-selection"><i class="fa fa-check"></i><b>10.5</b> Model Selection</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="validation.html"><a href="validation.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.5.1</b> Three-way Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="validation.html"><a href="validation.html#cross-validation"><i class="fa fa-check"></i><b>10.6</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="validation.html"><a href="validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.6.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Regularization</b></span></li>
+<li class="chapter" data-level="11" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>11</b> Regularization Techniques</a><ul>
+<li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
+<li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="12.2" data-path="pcr.html"><a href="pcr.html#the-pcr-model"><i class="fa fa-check"></i><b>12.2</b> The PCR Model</a></li>
+<li class="chapter" data-level="12.3" data-path="pcr.html"><a href="pcr.html#how-does-pcr-work"><i class="fa fa-check"></i><b>12.3</b> How does PCR work?</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>12.3.1</b> Transition Formula</a></li>
+<li class="chapter" data-level="12.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>12.3.2</b> Size of Coefficients</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>13</b> Partial Least Squares Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>13.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="13.2" data-path="pls.html"><a href="pls.html#the-plsr-model"><i class="fa fa-check"></i><b>13.2</b> The PLSR Model</a></li>
+<li class="chapter" data-level="13.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>13.3</b> How does PLSR work?</a></li>
+<li class="chapter" data-level="13.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>13.4</b> PLSR Algorithm</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>13.4.1</b> PLS Solution with original variables</a></li>
+<li class="chapter" data-level="13.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>13.4.2</b> Size of Coefficients</a></li>
+<li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
@@ -188,159 +301,237 @@
             <section class="normal" id="section-">
 <div id="gradient" class="section level1">
 <h1><span class="header-section-number">6</span> Gradient Descent</h1>
-<p>Before moving to the next part of the book that deals with the theory of learning,
+<p>Before moving to the next part of the book which deals with the theory of learning,
 we want to introduce a very popular optimization technique that is commonly
 used in many statistical learning methods: the famous <strong>gradient descent</strong>
 algorithm.</p>
 <div id="error-surface" class="section level2">
 <h2><span class="header-section-number">6.1</span> Error Surface</h2>
-<p>Consider again the error surface:</p>
+<p>Consider the overall error measure of a linear regression problem, for example
+the mean squared error (MSE)—or if you prefer the sum of squared errors (SSE).</p>
+<p><span class="math display">\[
+E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
+\]</span></p>
+<p>As we saw in the <a href="ols.html#ols">previous chapter</a>, we can look at such error measure
+from the perspective of the parameters (i.e. the regression coefficients).
+From this perspective, we denote this error function as <span class="math inline">\(E(\mathbf{b})\)</span>,
+making explicit its dependency on the vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>.</p>
+<p><span class="math display">\[
+E(\mathbf{b}) = \frac{1}{n} ( \underbrace{\mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b}}_{\text{Quadratic Form}} - \underbrace{ 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y}}_{\text{Linear}} + \underbrace{ \mathbf{y^\mathsf{T}y}}_{\text{Constant}} )
+\]</span></p>
+<p>As you can tell, <span class="math inline">\(E(\mathbf{b})\)</span> is a quadratic function with respect to
+<span class="math inline">\(\mathbf{b}\)</span>. Moreover, <span class="math inline">\(E(\mathbf{b})\)</span> is a positive semidefinite quadratic
+form which implies that it is a <strong>convex</strong> function.</p>
+<p>What does this all mean?</p>
+<p>For illustration purposes, let’s consider again a linear regression with two
+inputs <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and assume that there is no constant term. In this case,
+the error function <span class="math inline">\(E(\mathbf{b})\)</span> will generate a convex error surface with the
+shape of a bowl:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-54"></span>
-<img src="images/ols/error-surface.png" alt="Error Surface" width="70%" />
+<img src="images/ols/ols-error-surface0.svg" alt="Error Surface" width="70%" />
 <p class="caption">
 Figure 6.1: Error Surface
 </p>
 </div>
-<p>We previously saw that the vector <span class="math inline">\(\mathbf{w}^{*}\)</span> that minimizes the error surface
-is exactly our OLS estimate for <span class="math inline">\(\mathbf{w}\)</span>, our vector of regression coefficients.
-In the previous chapter, we used direct methods (i.e. computing the derivative of the
-error function and setting it equal to <span class="math inline">\(\mathbf{0}\)</span>) to find this minimum point.</p>
+<p>In general, with a convex error function, we know that there is a minimum,<br />
+and the challenge is to find such value.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-55"></span>
+<img src="images/ols/ols-error-surface2.svg" alt="Error Surface" width="70%" />
+<p class="caption">
+Figure 6.2: Error Surface
+</p>
+</div>
+<p>With OLS we can use direct methods to obtain the minimum. All we need to do is
+to compute the derivative of the error function, set it equal to zero,
+and find this minimum point <span class="math inline">\(\mathbf{\overset{*}{b}}\)</span>. Assuming that the matrix
+<span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is invertible, the OLS minimum is easily calculated as:
+<span class="math inline">\(\mathbf{b} = (\mathbf{X^\mathsf{T}X})^{-1} \mathbf{X^\mathsf{T} y}\)</span>.</p>
 <p>Interestingly, we can also use iterative methods to compute this minimum.
 The iterative method that we will discuss in this chapter is called
 <strong>gradient descent</strong>.</p>
 </div>
 <div id="idea-of-gradient-descent" class="section level2">
 <h2><span class="header-section-number">6.2</span> Idea of Gradient Descent</h2>
-<p>The main idea of gradient descent is as follows: we start with an arbitrary point
-<span class="math inline">\(\mathbf{w}^{(0)} = ( w_0^{(0)}, w_1^{(0)}, \dots, w_p^{(0)} )\)</span> somewhere on the
-error surface. We then “move down” the surface to obtain a new vector
-<span class="math inline">\(\mathbf{w}^{(1)}\)</span>, closer to the minimizing point <span class="math inline">\(\mathbf{w}^{*}\)</span>.
-For illustrative purposes, consider a <span class="math inline">\(1-\)</span>dimensional error “surface”:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-55"></span>
-<img src="images/ols/one-dim-error-surface.png" alt="One dimensional error surface" width="70%" />
+<p>The main idea of gradient descent is as follows: we start with an arbitrary
+point <span class="math inline">\(\mathbf{b}^{(0)} = ( b_1^{(0)}, b_2^{(0)} )\)</span>, and we evaluate the
+error function at this point: <span class="math inline">\(E(\mathbf{b}^{(0)})\)</span>. This gives us a location
+somewhere on the error surface.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
+<img src="images/ols/gradient-error-surface1.svg" alt="Starting position on error surface" width="70%" />
 <p class="caption">
-Figure 6.2: One dimensional error surface
+Figure 6.3: Starting position on error surface
 </p>
 </div>
-<p>What do we mean by “moving down?” Well, mathematically, this means we generate
-the new vector <span class="math inline">\(\mathbf{w}^{(1)}\)</span> using</p>
+<p>We then get a new vector <span class="math inline">\(\mathbf{b}^{(1)}\)</span> in a way that we “move down” the
+surface to obtain a new position <span class="math inline">\(E(\mathbf{b}^{(1)})\)</span>:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-57"></span>
+<img src="images/ols/gradient-error-surface2.svg" alt="Begin to move down on error surface" width="70%" />
+<p class="caption">
+Figure 6.4: Begin to move down on error surface
+</p>
+</div>
+<p>We keep “moving down” the surface, obtaining subsequent new vectors
+<span class="math inline">\(\mathbf{b}^{(s)}\)</span> that result in an error <span class="math inline">\(E(\mathbf{b}^{(s)})\)</span> that is closer
+to the minimum of <span class="math inline">\(E(\mathbf{b})\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-58"></span>
+<img src="images/ols/gradient-error-surface3.svg" alt="Keep moving down on error surface" width="70%" />
+<p class="caption">
+Figure 6.5: Keep moving down on error surface
+</p>
+</div>
+<p>Eventually, we should get very, very close to the minimizing point, and
+ideally, arrive at the minimum <span class="math inline">\(\mathbf{\overset{*}{b}}\)</span>.</p>
+<p>One important thing to always keep in mind when dealing with minimization
+(and maximization) problems is that, in practice, we don’t get to see the
+surface. Instead, we only have local information at the current point we
+evaluate the error function.</p>
+<p>Here’s a useful metaphor: Imagine that you are on the top a mountain
+(or some similar landscape) and your goal is to get to the bottom of the valley.
+The issue is that it is a foggy day (or night), and the visibility conditions
+are so poor that you only get to see/feel what is very near you
+(a couple of inches around you). What would you do to get to the bottom of the
+valley? Well, you start touching your surroundings trying to feel in which
+direction the slope of the terrain goes down. The key is to identify the
+direction in which the slope gives you the steepest descent. This is the
+conceptual idea behind optimization algorithms like gradient descent.</p>
+</div>
+<div id="moving-down-an-error-surface" class="section level2">
+<h2><span class="header-section-number">6.3</span> Moving Down an Error Surface</h2>
+<p>What do we mean by “moving down the error surface”? Well, mathematically, this
+means we generate the new vector <span class="math inline">\(\mathbf{b}^{(1)}\)</span> using the following formula:</p>
 <p><span class="math display">\[
-\mathbf{w}^{(1)} = \mathbf{w}^{(0)} + \alpha \mathbf{v}
+\mathbf{b}^{(1)} = \mathbf{b}^{(0)} + \alpha \mathbf{v}
 \]</span></p>
-<p>We call <span class="math inline">\(\alpha\)</span> the <strong>step size</strong> (intuitively, <span class="math inline">\(\alpha\)</span> tells us how far down
-the surface we are moving) and we set <span class="math inline">\(\mathbf{v}\)</span> to be a <strong>unit</strong> vector,
-in some direction. We will discuss how to find the direction of <span class="math inline">\(\mathbf{v}\)</span>
-in a little bit. Right now let’s just focus on generating new vectors in this
-manner:</p>
+<p>As you can tell, in addition to the values of parameter vectors <span class="math inline">\(\mathbf{b}^{(0)}\)</span>
+and <span class="math inline">\(\mathbf{b}^{(1)}\)</span>, we have two extra ingredients: <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\mathbf{v}\)</span>.</p>
+<p>We call <span class="math inline">\(\alpha\)</span> the <strong>step size</strong>. Intuitively, <span class="math inline">\(\alpha\)</span> tells us how far down
+the surface we are moving. In turn, <span class="math inline">\(\mathbf{v}\)</span> is the vector indicating the
+direction in which we need to move. Because we are interested in this direction,
+we can simply consider <span class="math inline">\(\mathbf{v}\)</span> to be a <strong>unit</strong> vector. We will discuss
+how to find the direction of <span class="math inline">\(\mathbf{v}\)</span> in a little bit. Right now let’s just
+focus on generating new vectors in this manner:</p>
 <p><span class="math display">\[\begin{align*}
-\mathbf{w}^{(2)} &amp; = \mathbf{w}^{(1)} + \alpha \mathbf{v}^{(1)} \\ 
-\mathbf{w}^{(3)} &amp; = \mathbf{w}^{(2)} + \alpha \mathbf{v}^{(2)} \\ 
+\mathbf{b}^{(2)} &amp; = \mathbf{b}^{(1)} + \alpha \mathbf{v}^{(1)} \\ 
+\mathbf{b}^{(3)} &amp; = \mathbf{b}^{(2)} + \alpha \mathbf{v}^{(2)} \\ 
 \vdots &amp; \hspace{10mm} \vdots \\
-\mathbf{w}^{(s+1)} &amp; = \mathbf{w}^{(s)} + \alpha \mathbf{v}^{(s)}
+\mathbf{b}^{(s+1)} &amp; = \mathbf{b}^{(s)} + \alpha \mathbf{v}^{(s)}
 \end{align*}\]</span></p>
-<p>Note that we are assuming a constant step size; that is, note that <span class="math inline">\(\alpha\)</span> remains
-the same at each iteration. There are more sophisticated versions of gradient
-descent that allow a <em>variable</em> step size, however we will not consider that case.
-As we can see in the <span class="math inline">\(1-\)</span>D example above, the direction in which we travel will
-change at each step of the process. We will also see this mathematically in the
-next subsection.</p>
+<p>Note that we are assuming a constant step size <span class="math inline">\(\alpha\)</span>; that is, note that
+<span class="math inline">\(\alpha\)</span> remains the same at each iteration. We should say that there are more
+sophisticated versions of gradient descent that allow a <em>variable</em> step size,
+however we will not consider that case.
+As we can see in the series of figures above, the direction in which we travel
+will change at each step of the process. We will also see this mathematically
+in the next subsection.</p>
 <div id="the-direction-of-mathbfv" class="section level3">
-<h3><span class="header-section-number">6.2.1</span> The direction of <span class="math inline">\(\mathbf{v}\)</span></h3>
+<h3><span class="header-section-number">6.3.1</span> The direction of <span class="math inline">\(\mathbf{v}\)</span></h3>
 <p>How do we find the direction of <span class="math inline">\(\mathbf{v}\)</span>? Consider the gradient of our error
 function. The gradient always points in the direction of steepest <em>ascent</em>
 (i.e. largest positive change). Hence, we want to travel in the exact opposite
 direction of the gradient.</p>
 <p>Let’s “prove” this mathematically. In terms of the error function itself, what
-does it mean for our vectors <span class="math inline">\(\mathbf{w}^{(s+1)}\)</span> to be “getting closer” to the
-minimizing point? Well, it means that the error at point <span class="math inline">\(\mathbf{w}^{(s+1)}\)</span>
-is less than the error at point <span class="math inline">\(\mathbf{w}^{(s)}\)</span>. Hence, we examine the
-difference between the errors at these two points:</p>
+does it mean for our vectors <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span> to be “getting closer” to the
+minimizing point? Well, it means that the error at point <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span>
+is less than the error at point <span class="math inline">\(\mathbf{b}^{(s)}\)</span>. Hence, we examine
+<span class="math inline">\(\Delta E_{\mathbf{b}}\)</span>, the difference between the errors at these two points:</p>
 <p><span class="math display">\[\begin{align*} 
-\Delta E_{\mathbf{w}}  &amp; := E\left( \mathbf{w}^{(s + 1)} \right) - E\left( \mathbf{w}^{(s)} \right) \\
-&amp; = E \left( \mathbf{w}^{(s)} + \alpha \mathbf{v} \right) - E\left( \mathbf{w}^{(s)} \right) 
+\Delta E_{\mathbf{b}}  &amp; := E\big( \mathbf{b}^{(s + 1)} \big) - E\big( \mathbf{b}^{(s)} \big) \\
+&amp; = E \big( \mathbf{b}^{(s)} + \alpha \mathbf{v} \big) - E\big( \mathbf{b}^{(s)} \big) 
 \end{align*}\]</span></p>
-<p>In order for our vector <span class="math inline">\(\mathbf{w}^{(s+1)}\)</span> to be closer to the minimizing
-point that <span class="math inline">\(\mathbf{w}^{(s)}\)</span>, we want this quantity to be as negative as possible.
+<p>In order for our vector <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span> to be closer to the minimizing
+point that <span class="math inline">\(\mathbf{b}^{(s)}\)</span>, we want this quantity to be as negative as possible.
 To find the <span class="math inline">\(\mathbf{v}\)</span> that makes this true, we need to use a trick:
-Taylor Expand <span class="math inline">\(E(\mathbf{w}^{(s)} + \alpha \mathbf{v})\)</span>. Doing so, we obtain:</p>
+Taylor Expand <span class="math inline">\(E(\mathbf{b}^{(s)} + \alpha \mathbf{v})\)</span>. Doing so, we obtain:</p>
 <p><span class="math display">\[\begin{align*}
-\Delta E_{\mathbf{w}} &amp; = E\left( \mathbf{w}^{(s)} \right) + \nabla E\left( \mathbf{w}^{(s)} \right)^{\mathsf{T}} \left(\alpha \mathbf{v} \right) + O \left( \alpha^2 \right) - E\left( \mathbf{w}^{(s)} \right) \\
-&amp; = \alpha \nabla E \left( \mathbf{w}^{(s)} \right)^{\mathsf{T}} \mathbf{v} + O(\alpha^2) 
+\Delta E_{\mathbf{b}} &amp;= E\big( \mathbf{b}^{(s)} \big) + \nabla E\big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \big(\alpha \mathbf{v} \big) + O \big( \alpha^2 \big) - E\big( \mathbf{b}^{(s)} \big) \\
+&amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2) 
 \end{align*}\]</span></p>
-<p>Hence, we must examine <span class="math inline">\([ \nabla E(\mathbf{w}^{(s)})]^{\mathsf{T}} \mathbf{v}\)</span>.
+<p>Hence, we must examine the term of the inner product between the gradient and
+the unit vector <span class="math inline">\(\mathbf{v}\)</span>, that is:
+<span class="math inline">\([ \nabla E(\mathbf{b}^{(s)})]^{\mathsf{T}} \mathbf{v}\)</span>.
 For notational convenience, let us (temporarily) define
-<span class="math inline">\(\mathbf{u} : = \nabla E ( \mathbf{w}^{(s)} )\)</span></p>
+<span class="math inline">\(\mathbf{u} : = \nabla E ( \mathbf{b}^{(s)} )\)</span>. In this way, we need to examine
+the inner product: <span class="math inline">\(\mathbf{u^\mathsf{T}v}\)</span>.</p>
 <p>With respect to the orientation of <span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>, we can consider
 three prototypical cases: <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are either antiparallel, parallel, or orthogonal.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
-<img src="images/ols/three-prototypical-cases.png" alt="Three prototypical cases" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
+<img src="images/ols/three-prototypical-cases.png" alt="Three prototypical cases" width="80%" />
 <p class="caption">
-Figure 6.3: Three prototypical cases
+Figure 6.6: Three prototypical cases
 </p>
 </div>
-<p>When <span class="math inline">\(\mathbf{u} \parallel \mathbf{v}\)</span> (i.e. the second case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T}\mathbf{v} = \| \mathbf{u} \|\)</span>.
-When <span class="math inline">\(\mathbf{u} \not\parallel \mathbf{v}\)</span> (i.e. the first case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T} = - \| \mathbf{u} \|\)</span>.
-And, of course, if <span class="math inline">\(\mathbf{u} \perp \mathbf{v}\)</span> then
-<span class="math inline">\(\mathbf{u}^\mathsf{T} \mathbf{v} = 0\)</span>.
-Therefore, in any of the three cases, we have that</p>
+<ul>
+<li><p>When both vectors are parallel, <span class="math inline">\(\mathbf{u} \parallel \mathbf{v}\)</span> (i.e. the
+second case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T}\mathbf{v} = \| \mathbf{u} \|\)</span>.</p></li>
+<li><p>When both vectors are antiparallel, <span class="math inline">\(\mathbf{u} \not\parallel \mathbf{v}\)</span>
+(i.e. the first case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T} = - \| \mathbf{u} \|\)</span>.</p></li>
+<li><p>When both vectors are orthogonal, <span class="math inline">\(\mathbf{u} \perp \mathbf{v}\)</span>, then
+<span class="math inline">\(\mathbf{u}^\mathsf{T} \mathbf{v} = 0\)</span>.</p></li>
+</ul>
+<p>Therefore, in any of the three cases, we have that</p>
 <p><span class="math display">\[
 \mathbf{u}^\mathsf{T} \mathbf{v} \geq - \left\| \mathbf{u} \right\|
 \]</span></p>
-<p>Hence, recalling that <span class="math inline">\(\mathbf{u} := \nabla E(\mathbf{w}^{(s)})\)</span>, we can plug
+<p>Hence, recalling that <span class="math inline">\(\mathbf{u} := \nabla E(\mathbf{b}^{(s)})\)</span>, we can plug
 this result into our error computation to obtain:</p>
 <p><span class="math display">\[\begin{align*} 
-\Delta E_{\mathbf{w}}  &amp; = \alpha \nabla E \left( \mathbf{w}^{(s)} \right)^{\mathsf{T}} \mathbf{v} + O(\alpha^2)  \\
-&amp; \geq - \alpha \left\| \nabla E\left( \mathbf{w}^{(s)} \right) \right\|  \mathbf{v}
+\Delta E_{\mathbf{b}}  &amp; := E\big( \mathbf{b}^{(s + 1)} \big) - E\big( \mathbf{b}^{(s)} \big) \\
+&amp; = E \big( \mathbf{b}^{(s)} + \alpha \mathbf{v} \big) - E\big( \mathbf{b}^{(s)} \big) \\
+&amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2)  \\
+&amp; \geq - \alpha \left\| \nabla E\big( \mathbf{b}^{(s)} \big) \right\|  \mathbf{v}
 \end{align*}\]</span></p>
-<p>Thus, to make <span class="math inline">\(\Delta E_{\mathbf{w}}\)</span> as negative as possible, we should take
-<span class="math inline">\(\mathbf{v}\)</span> parallel to <span class="math inline">\(( - \| \nabla E(\mathbf{w}^{(s)}) \| )\)</span>.</p>
+<p>Thus, to make <span class="math inline">\(\Delta E_{\mathbf{b}}\)</span> as negative as possible, we should take
+<span class="math inline">\(\mathbf{v}\)</span> parallel to <span class="math inline">\(( - \| \nabla E(\mathbf{b}^{(s)}) \| )\)</span>.</p>
 <p><strong>The Moral:</strong> We want the following:</p>
 <p><span class="math display">\[
-\mathbf{v} = - \frac{\nabla E(\mathbf{w}^{(s)}) }{\left\| \nabla E(\mathbf{w}^{(s)})  \right\| }
+\mathbf{v} = - \frac{\nabla E(\mathbf{b}^{(s)}) }{\left\| \nabla E(\mathbf{b}^{(s)})  \right\| }
 \]</span></p>
 <p>which means we want to move in the direction opposite to that of the gradient.
 Keep in mind that we divided by the norm because we previously defined
-<span class="math inline">\(\mathbf{v}\)</span> to be a <strong>unit} vector</strong>.</p>
+<span class="math inline">\(\mathbf{v}\)</span> to be a <strong>unit vector</strong>.</p>
 <p>This also reveals the meaning behind the name <strong>gradient descent</strong>; we are
 <em>descending</em> in the direction opposite to the <em>gradient</em> of the error function.</p>
 </div>
 </div>
 <div id="gradient-descent-and-our-model" class="section level2">
-<h2><span class="header-section-number">6.3</span> Gradient Descent and our Model</h2>
-<p>Before we posit the full algorithm for gradient descent in the context of regression,
+<h2><span class="header-section-number">6.4</span> Gradient Descent and our Model</h2>
+<p>Before we present the full algorithm for gradient descent in the context of regression,
 let us investigate the actual gradient further. Since we have a formula for
-<span class="math inline">\(E_{\mathbf{w}}\)</span>, we can find a closed form for its gradient:</p>
+<span class="math inline">\(E(\mathbf{b})\)</span>, we can find a closed form for its gradient
+<span class="math inline">\(\nabla E(\mathbf{b})\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
-E(\mathbf{w}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{w} \right)^{\mathsf{T}} \left( \mathbf{y} - \mathbf{X} \mathbf{w} \right) \\
+E(\mathbf{b}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \right)^{\mathsf{T}} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \right) \\
 \\
-&amp; = \frac{1}{n} \left( \mathbf{w}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{w} - 2 \mathbf{w}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{y} + \mathbf{y}^\mathsf{T} \mathbf{y} \right) \\
+&amp; = \frac{1}{n} \left( \mathbf{b}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{b}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{y} + \mathbf{y}^\mathsf{T} \mathbf{y} \right) \\
 \\
-\nabla E \left( \mathbf{w} \right) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{w} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) 
+\nabla E(\mathbf{b}) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) 
 \end{align*}\]</span></p>
 <p>This was from the columns point of view; we can also find a different formula
 from the row’s perspective:</p>
 <p><span class="math display">\[\begin{align*}
-E(\mathbf{w}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{w}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right) \\
-&amp; = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - w_0 x_{i0} - w_1 x_{i1} - \dots - w_{j} x_{ij} - \dots - w_{p} x_{ip} \right)^2 \\
-\frac{\partial}{\partial w_j} E(\mathbf{w}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - w_0 x_{i0} - w_1 x_{i1} - \dots - w_{j} x_{ij} - \dots - w_{p} x_{ip} \right) x_{ij} \\
-\frac{\partial}{\partial w_j} E(\mathbf{w}^{(0)}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - w_0 x_{i0} - w_1 x_{i1} - \dots - w_{j} x_{ij} - \dots - w_{p} x_{ip} \right) x_{ij} \\
-&amp; = - \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[ \mathbf{w}^{(0)} \right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij} 
+E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right) \\
+&amp; = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right)^2 \\
+\frac{\partial}{\partial b_j} E(\mathbf{b}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
+\frac{\partial}{\partial b_j} E(\mathbf{b}^{(0)}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
+&amp; = - \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[ \mathbf{b}^{(0)} \right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij} 
 \end{align*}\]</span></p>
 <p>This will be a better formula to use in our iterative algorithm, posited below.</p>
 <div id="algorithm" class="section level4 unnumbered">
 <h4>Algorithm</h4>
-<p>Initialize a vector <span class="math inline">\(\mathbf{w}^{(0)} = \left( w_{0}^{(0)}, w_{1}^{(0)}, \dots, w_{p}^{(0)} \right)\)</span></p>
+<p>Initialize a vector <span class="math inline">\(\mathbf{b}^{(0)} = \left( b_{0}^{(0)}, b_{1}^{(0)}, \dots, b_{p}^{(0)} \right)\)</span></p>
 <p>Repeat the following over <span class="math inline">\(s\)</span> (starting with <span class="math inline">\(s = 0\)</span>), until convergence:</p>
-<p><span class="math inline">\(w_{j}^{(s+1)}:= w_{j}^{(s)} + \alpha \cdot \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[\mathbf{w}^{(s)}\right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij}\)</span> for all <span class="math inline">\(j = 0, \dots, p\)</span> simultaneously. In more compact notation,</p>
+<p><span class="math inline">\(b_{j}^{(s+1)}:= b_{j}^{(s)} + \alpha \cdot \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[\mathbf{b}^{(s)}\right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij}\)</span> for all <span class="math inline">\(j = 0, \dots, p\)</span> simultaneously.</p>
+<p>In more compact notation,</p>
 <p><span class="math display">\[
-w_{j}^{(s+1)} = w_{j}^{(s)} + \alpha \cdot \frac{\partial }{\partial w_j} E(\mathbf{w}^{(s)})
+b_{j}^{(s+1)} = b_{j}^{(s)} + \alpha \cdot \frac{\partial }{\partial b_j} E(\mathbf{b}^{(s)})
 \]</span></p>
-<p>Store these elements in the vector <span class="math inline">\(\mathbf{w}^{(s+1)} = \left( w_{0}^{(s+1)} , w_{1}^{(s+1)} , \dots, w_{p}^{(s+1)} \right)\)</span></p>
-<p>When there is little change between <span class="math inline">\(\mathbf{w}^{(k + 1)}\)</span> and <span class="math inline">\(\mathbf{w}^{(k)}\)</span>
+<p>Store these elements in the vector <span class="math inline">\(\mathbf{b}^{(s+1)} = \left( b_{0}^{(s+1)} , b_{1}^{(s+1)} , \dots, b_{p}^{(s+1)} \right)\)</span></p>
+<p>When there is little change between <span class="math inline">\(\mathbf{b}^{(k + 1)}\)</span> and <span class="math inline">\(\mathbf{b}^{(k)}\)</span>
 (for some integer <span class="math inline">\(k\)</span>), the algorithm will have converged and
-<span class="math inline">\(\mathbf{w}^{*} = \mathbf{w}^{(k+1)}\)</span>.</p>
+<span class="math inline">\(\mathbf{b}^{*} = \mathbf{b}^{(k+1)}\)</span>.</p>
 <p>Note that in the algorithm, we have dropped the condition that <span class="math inline">\(\mathbf{v}\)</span> is
-a unit vector. Indeed, if you look on the Wikipedia page for “Gradient Descent,”
+a unit vector. Indeed, if you look on the Wikipedia page for
+<a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a>,
 the algorithm listed there also omits the unit-length condition.</p>
 
 </div>

@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-08" />
+<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="mse.html"/>
-
+<link rel="next" href="validation.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,6 +52,70 @@
 
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -66,14 +130,14 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>by G. Sanchez & E. Marzban</small></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Welcome</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
-<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
 <li class="part"><span><b>II Intro</b></span></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
@@ -136,22 +200,25 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="gradient.html"><a href="gradient.html"><i class="fa fa-check"></i><b>6</b> Gradient Descent</a><ul>
 <li class="chapter" data-level="6.1" data-path="gradient.html"><a href="gradient.html#error-surface"><i class="fa fa-check"></i><b>6.1</b> Error Surface</a></li>
-<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.2.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
+<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a></li>
+<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
 </ul></li>
 <li class="part"><span><b>V Learning Concepts</b></span></li>
 <li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
 <li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
-<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
-<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
-<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
-<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
-<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#kinds-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Kinds of Predictions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.2.1</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2.2</b> Two Types of Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>7.3</b> Two Types of Errors</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.3.1</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.3.2</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.3.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.4</b> Noisy Targets</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="mse.html"><a href="mse.html"><i class="fa fa-check"></i><b>8</b> MSE of Estimator</a><ul>
 <li class="chapter" data-level="8.1" data-path="mse.html"><a href="mse.html#mse-of-an-estimator"><i class="fa fa-check"></i><b>8.1</b> MSE of an Estimator</a><ul>
@@ -164,7 +231,53 @@
 <li class="chapter" data-level="9.2.1" data-path="biasvar.html"><a href="biasvar.html#two-hypotheses"><i class="fa fa-check"></i><b>9.2.1</b> Two Hypotheses</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
-<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a></li>
+<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
+<li class="chapter" data-level="10.2" data-path="validation.html"><a href="validation.html#holdout-method"><i class="fa fa-check"></i><b>10.2</b> Holdout Method</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="validation.html"><a href="validation.html#rationale-behind-holdout-method"><i class="fa fa-check"></i><b>10.2.1</b> Rationale Behind Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="validation.html"><a href="validation.html#repeated-holdout-method"><i class="fa fa-check"></i><b>10.3</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="10.4" data-path="validation.html"><a href="validation.html#bootstrap-method"><i class="fa fa-check"></i><b>10.4</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="10.5" data-path="validation.html"><a href="validation.html#model-selection"><i class="fa fa-check"></i><b>10.5</b> Model Selection</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="validation.html"><a href="validation.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.5.1</b> Three-way Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="validation.html"><a href="validation.html#cross-validation"><i class="fa fa-check"></i><b>10.6</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="validation.html"><a href="validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.6.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Regularization</b></span></li>
+<li class="chapter" data-level="11" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>11</b> Regularization Techniques</a><ul>
+<li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
+<li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="12.2" data-path="pcr.html"><a href="pcr.html#the-pcr-model"><i class="fa fa-check"></i><b>12.2</b> The PCR Model</a></li>
+<li class="chapter" data-level="12.3" data-path="pcr.html"><a href="pcr.html#how-does-pcr-work"><i class="fa fa-check"></i><b>12.3</b> How does PCR work?</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>12.3.1</b> Transition Formula</a></li>
+<li class="chapter" data-level="12.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>12.3.2</b> Size of Coefficients</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>13</b> Partial Least Squares Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>13.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="13.2" data-path="pls.html"><a href="pls.html#the-plsr-model"><i class="fa fa-check"></i><b>13.2</b> The PLSR Model</a></li>
+<li class="chapter" data-level="13.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>13.3</b> How does PLSR work?</a></li>
+<li class="chapter" data-level="13.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>13.4</b> PLSR Algorithm</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>13.4.1</b> PLS Solution with original variables</a></li>
+<li class="chapter" data-level="13.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>13.4.2</b> Size of Coefficients</a></li>
+<li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
@@ -242,28 +355,112 @@ fit the data using one of two models (see the <em>idealized</em> figure shown be
 <li><p><span class="math inline">\(h_0(x) = 0.646544\)</span></p></li>
 <li><p><span class="math inline">\(h_1(x) = 0.123472 + 1.794385 \hspace{1mm} x\)</span></p></li>
 </ul>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-74-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-77-1.png" width="85%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="bias-variance-derivation" class="section level2">
 <h2><span class="header-section-number">9.4</span> Bias-Variance Derivation</h2>
-<p>Given a data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(g(x)\)</span>, the
+<p>Bias-Variance (BV) depends on MSE, and is typically discussed within the
+confines of regression. BV is a good <em>theoretical</em> device; i.e. we can never
+compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in which case
+we wouldn’t really need Statistical Learning in the first place!)</p>
+<p>Given a data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>, the
 expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_o\)</span>, over all
-possible training sets, is expressed as (assuming a noiseless target):</p>
+possible training sets, is expressed as:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left( g^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] = 
-\underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (g^{(\mathcal{D})}(x_0) - \bar{g}(x_0) \right)^2 \right ]}_{\text{variance}} +
-\underbrace{\left [ (\bar{g}(x_0) - f(x_0))^2 \right ] }_{\text{bias}^2}
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
 \]</span></p>
-<p>The target function is represented by <span class="math inline">\(f(x)\)</span>, and the average hypothesis is
-represented by <span class="math inline">\(\bar{g}(x) = \mathbb{E}_{\mathcal{D}}[g^{\mathcal{D}} (x)]\)</span>.</p>
+<p>Assume the target <span class="math inline">\(f(x)\)</span> is noiseless. Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> plays the
+role of <span class="math inline">\(\hat{\theta}\)</span> and <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>. Hence, we need
+to introduce
+<span class="math inline">\(\bar{h} := \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right]\)</span>;
+i.e. the “average hypothesis”. Then:</p>
+<p><span class="math display">\[\begin{align*}
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] &amp;= 
+\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} + \bar{h} - f(x_0) \right)^2 \right ] \\
+&amp;= \mathbb{E}_{\mathcal{D}} \Big [ \Big (\underbrace{h^{(\mathcal{D})}(x_0) - \bar{h}}_{a} + \underbrace{\bar{h} - f(x_0)}_{b} \Big)^2 \Big ] \\
+&amp;= \mathbb{E}_{\mathcal{D}} \left [ (a + b)^2 \right ] \\
+&amp;= \mathbb{E}_{\mathcal{D}} \left [ a^2 + 2ab + b^2 \right ] \\
+&amp;= \mathbb{E}_{\mathcal{D}} [a^2] + \mathbb{E}_{\mathcal{D}} [b^2] + \mathbb{E}_{\mathcal{D}} [2ab] \\
+\end{align*}\]</span></p>
+<p>Let’s examine the first two terms:</p>
+<ul>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} \right)^2 \right ] = \text{variance} \left( h(x_0) \right)\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} \left [ \left (\bar{h} - f(x_0) \right)^2 \right ] = \text{Bias}^2 \left( h(x_0) \right)\)</span></p></li>
+</ul>
+<p>Now, what about the cross-term: <span class="math inline">\(\mathbb{E}_{\mathcal{D}} [2ab]\)</span>?</p>
+<p><span class="math display">\[\begin{align*}
+\mathbb{E}_{\mathcal{D}} \left[ 2 \left( h^{(\mathcal{D})}(x_0) - \bar{h} \right)  \left( \bar{h} - f(x_0)  \right) \right] &amp; \propto \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] - \bar{h} \\
+&amp; = \bar{g} - \bar{g} = 0 
+\end{align*}\]</span></p>
+<p>Hence, under the assumption of noiseless <span class="math inline">\(f\)</span>, we have that the
+expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
+possible training sets, is expressed as:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] = 
+\underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} +
+\underbrace{\left [ (\bar{h}(x_0) - f(x_0))^2 \right ] }_{\text{bias}^2}
+\]</span></p>
+<div id="noisy-target" class="section level3">
+<h3><span class="header-section-number">9.4.1</span> Noisy Target</h3>
 <p>Now, when there is noise in the data we have that: <span class="math inline">\(y = f(x) + \epsilon\)</span>.
 If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
 the bias-variance decomposition becomes:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left (g^{(\mathcal{D})}(x_o) - y_o \right)^2 \right ] = \text{bias}^2 + \text{var} + \sigma^2
+\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_o) - y_o \right)^2 \right ] = \text{bias}^2 + \text{var} + \sigma^2
 \]</span></p>
-<p>Notice that the above equation assumes that the squared error corresponds to just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
+<p>Notice that the above equation assumes that the squared error corresponds to
+just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
+</div>
+<div id="types-of-theoretical-mses" class="section level3">
+<h3><span class="header-section-number">9.4.2</span> Types of Theoretical MSEs</h3>
+<p>Keep in mind that there are different flavors of (theoretical) MSE:</p>
+<ul>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \left( h(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \mathbb{E}_\mathcal{D} \left\{ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right\} \right]\)</span></p></li>
+</ul>
+</div>
+</div>
+<div id="the-tradeoff" class="section level2">
+<h2><span class="header-section-number">9.5</span> The Tradeoff</h2>
+<p>We finish this chapter with a brief discussion of the so-called bias-variance
+tradeoff.</p>
+<div id="bias" class="section level4 unnumbered">
+<h4>Bias</h4>
+<p>Let’s first focus on the bias, <span class="math inline">\(\bar{h} - f(x)\)</span>. The average <span class="math inline">\(\bar{h}\)</span> comes
+from a class of hypotheses (e.g. constant models, linear models, etc.) In other
+words, <span class="math inline">\(\bar{h}\)</span> is a prototypical example of a certain class of hypotheses.
+The bias term thus can be interpreted as a measure of how well a particlar type
+of hypothesis <span class="math inline">\(\mathcal{H}\)</span> (e.g. constant model, linear model, quadratic model, etc.)
+approximates the target function <span class="math inline">\(f\)</span>.</p>
+</div>
+<div id="variance" class="section level4 unnumbered">
+<h4>Variance</h4>
+<p>Let’s focus on the variance,
+<span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ (h^{(\mathcal{D})}(x) - \bar{g} )^2 \right ]\)</span>.
+This is a measure of how close a particular <span class="math inline">\(h^{(\mathcal{D})}(x)\)</span> can get to
+the average functional form <span class="math inline">\(\bar{h}\)</span>. Put ir in other terms, how precise is
+our particular function compared to the average function?</p>
+</div>
+<div id="tradeoff" class="section level4 unnumbered">
+<h4>Tradeoff</h4>
+<p>Ideally, a model should have small variance <em>and</em> small bias. But, of course,
+there is a tradeoff between these two (hence the Bias-Variance tradeoff).
+That is, decreasing bias tends to result in increases variance, and vice-versa.</p>
+<p>To decrease bias, a model has to be more flexible/complex. How complex?
+In theory, to decrease bias, one needs “insider” information. That is, to truly
+decrease bias, we need some information on the form of <span class="math inline">\(f\)</span>. Hence, it is nearly
+impossible to decrease bias. We therefore put our efforts towards decreasing
+variance.</p>
+<p>One way to decrease variance would be to add more training data. However, there
+is a price to pay: we will have less test data.</p>
+<p>We could reduce the dimensions of our data (i.e. play with lower-rank data
+matrices through, for example, PCA).</p>
+<p>We could also apply regularization. At its core, this notion relates to making
+the size of a model’s parameters small. Consequently, there is a reduction in
+the variance of a model.</p>
 
+</div>
 </div>
 </div>
             </section>
@@ -271,8 +468,8 @@ the bias-variance decomposition becomes:</p>
           </div>
         </div>
       </div>
-<a href="mse.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="mse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

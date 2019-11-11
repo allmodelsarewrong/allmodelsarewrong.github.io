@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-08" />
+<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,70 @@
 
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -66,14 +130,14 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>by G. Sanchez & E. Marzban</small></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Welcome</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
-<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
 <li class="part"><span><b>II Intro</b></span></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
@@ -136,22 +200,25 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="gradient.html"><a href="gradient.html"><i class="fa fa-check"></i><b>6</b> Gradient Descent</a><ul>
 <li class="chapter" data-level="6.1" data-path="gradient.html"><a href="gradient.html#error-surface"><i class="fa fa-check"></i><b>6.1</b> Error Surface</a></li>
-<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.2.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
+<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a></li>
+<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
 </ul></li>
 <li class="part"><span><b>V Learning Concepts</b></span></li>
 <li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
 <li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
-<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
-<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
-<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
-<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
-<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#kinds-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Kinds of Predictions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.2.1</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2.2</b> Two Types of Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>7.3</b> Two Types of Errors</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.3.1</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.3.2</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.3.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.4</b> Noisy Targets</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="mse.html"><a href="mse.html"><i class="fa fa-check"></i><b>8</b> MSE of Estimator</a><ul>
 <li class="chapter" data-level="8.1" data-path="mse.html"><a href="mse.html#mse-of-an-estimator"><i class="fa fa-check"></i><b>8.1</b> MSE of an Estimator</a><ul>
@@ -164,7 +231,53 @@
 <li class="chapter" data-level="9.2.1" data-path="biasvar.html"><a href="biasvar.html#two-hypotheses"><i class="fa fa-check"></i><b>9.2.1</b> Two Hypotheses</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
-<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a></li>
+<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
+<li class="chapter" data-level="10.2" data-path="validation.html"><a href="validation.html#holdout-method"><i class="fa fa-check"></i><b>10.2</b> Holdout Method</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="validation.html"><a href="validation.html#rationale-behind-holdout-method"><i class="fa fa-check"></i><b>10.2.1</b> Rationale Behind Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="validation.html"><a href="validation.html#repeated-holdout-method"><i class="fa fa-check"></i><b>10.3</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="10.4" data-path="validation.html"><a href="validation.html#bootstrap-method"><i class="fa fa-check"></i><b>10.4</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="10.5" data-path="validation.html"><a href="validation.html#model-selection"><i class="fa fa-check"></i><b>10.5</b> Model Selection</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="validation.html"><a href="validation.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.5.1</b> Three-way Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="validation.html"><a href="validation.html#cross-validation"><i class="fa fa-check"></i><b>10.6</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="validation.html"><a href="validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.6.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Regularization</b></span></li>
+<li class="chapter" data-level="11" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>11</b> Regularization Techniques</a><ul>
+<li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
+<li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="12.2" data-path="pcr.html"><a href="pcr.html#the-pcr-model"><i class="fa fa-check"></i><b>12.2</b> The PCR Model</a></li>
+<li class="chapter" data-level="12.3" data-path="pcr.html"><a href="pcr.html#how-does-pcr-work"><i class="fa fa-check"></i><b>12.3</b> How does PCR work?</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>12.3.1</b> Transition Formula</a></li>
+<li class="chapter" data-level="12.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>12.3.2</b> Size of Coefficients</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>13</b> Partial Least Squares Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>13.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="13.2" data-path="pls.html"><a href="pls.html#the-plsr-model"><i class="fa fa-check"></i><b>13.2</b> The PLSR Model</a></li>
+<li class="chapter" data-level="13.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>13.3</b> How does PLSR work?</a></li>
+<li class="chapter" data-level="13.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>13.4</b> PLSR Algorithm</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>13.4.1</b> PLS Solution with original variables</a></li>
+<li class="chapter" data-level="13.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>13.4.2</b> Size of Coefficients</a></li>
+<li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
@@ -188,8 +301,10 @@
             <section class="normal" id="section-">
 <div id="duality" class="section level1">
 <h1><span class="header-section-number">3</span> Geometric Duality</h1>
-<p>The way we like to introduce you to the statistical learning world, is by
-talking and thinking about data in a geometric sense.</p>
+<p>Before discussing unsupervised as well as supervised learning methods,
+we prefer to give you a prelude by
+talking and thinking about data in a geometric sense. This chapter will set
+the stage for most of the topics covered in later chapters.</p>
 <p>Let’s suppose we have some data in the form of a data matrix. For convenience
 purposes, let’s also suppose that all variables are measured in a real-value scale.
 Obviously not all data is expressed or even encoded numerically. You may have
@@ -204,7 +319,7 @@ these perspectives, let me use the following diagram of a data matrix <span clas
 with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(p\)</span> columns, with <span class="math inline">\(x_{ij}\)</span> representing the element in the <span class="math inline">\(i\)</span>-th
 row and <span class="math inline">\(j\)</span>-th column.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="images/duality/data-perspectives.png" alt="Duality of a data matrix" width="70%" />
+<img src="images/duality/data-perspectives.svg" alt="Duality of a data matrix" width="70%" />
 <p class="caption">
 Figure 3.1: Duality of a data matrix
 </p>
@@ -220,7 +335,7 @@ same coin.</p>
 <p>We know that human vision is limited to three-dimensions, but pretend that you had superpowers that let you visualize a space with any number of dimensions.</p>
 <p>Because each row of the data matrix has <span class="math inline">\(p\)</span> elements, we can regard individuals as objects that live in a <span class="math inline">\(p\)</span>-dimensional space. For visualization purposes, think of each variable as playing the role of a dimension associated to a given axis in this space; likewise, consider each of the <span class="math inline">\(n\)</span> individuals as being depicted as a point (or particle) in such space, like in the following diagram:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="images/duality/rows-space.png" alt="Rows space" width="85%" />
+<img src="images/duality/rows-space.svg" alt="Rows space" width="85%" />
 <p class="caption">
 Figure 3.2: Rows space
 </p>
@@ -231,7 +346,7 @@ Figure 3.2: Rows space
 <h2><span class="header-section-number">3.2</span> Columns Space</h2>
 <p>We can do the same visual exercise with the columns of a data matrix. Since each variable has <span class="math inline">\(n\)</span> elements, we can regard the set of <span class="math inline">\(p\)</span> variables as objects that live in an <span class="math inline">\(n\)</span>-dimensional space. However, instead of representing each variable with a dot, it’s better to graphically represent them with an arrow (or vector). Why? Because of two reasons: one is to distinguish them from the individuals (dots). But more important, because the esential thing with a variable is not really its magnitude (and therefore its position) but its direction. Often, as part of the preprocessing steps we apply transformations on variables that change their scales (e.g. shrinking them, or stretching them) without modifying their directions.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
-<img src="images/duality/columns-space.png" alt="Columns space" width="85%" />
+<img src="images/duality/columns-space.svg" alt="Columns space" width="85%" />
 <p class="caption">
 Figure 3.3: Columns space
 </p>
@@ -254,7 +369,7 @@ rows and columns of a data matrix from the lens of geometry.
 We are assuming in general that the rows have to do with <span class="math inline">\(n\)</span> individuals that
 lie in a <span class="math inline">\(p\)</span>-dimensional space.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
-<img src="images/duality/cloud-obs-centering0.png" alt="Cloud of points" width="55%" />
+<img src="images/duality/cloud-obs-centering0.svg" alt="Cloud of points" width="55%" />
 <p class="caption">
 Figure 3.4: Cloud of points
 </p>
@@ -266,14 +381,14 @@ Figure 3.4: Cloud of points
 <p>We can ask about the typical or average individual.</p>
 <p>If you only have one variable, then all the individual points lie in a one-dimensional space, which is basically a line:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="images/duality/mean-number-line.png" alt="Points in one dimension" width="30%" />
+<img src="images/duality/mean-number-line.svg" alt="Points in one dimension" width="30%" />
 <p class="caption">
 Figure 3.5: Points in one dimension
 </p>
 </div>
 <p>In this case, the average individual is simply the average of the values, which geometrically corresponds to the balancing point:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
-<img src="images/duality/mean-balancing.png" alt="Average individual" width="70%" />
+<img src="images/duality/mean-balancing.svg" alt="Average individual" width="70%" />
 <p class="caption">
 Figure 3.6: Average individual
 </p>
@@ -288,7 +403,7 @@ Figure 3.6: Average individual
 \]</span></p>
 <p>What about the multivariate case? It turns out that we can also ask about the average individual of a cloud of points, like in the following figure:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
-<img src="images/duality/cloud-obs-centering1.png" alt="Cloud of points with centroid (i.e. average individual)" width="55%" />
+<img src="images/duality/cloud-obs-centering1.svg" alt="Cloud of points with centroid (i.e. average individual)" width="55%" />
 <p class="caption">
 Figure 3.7: Cloud of points with centroid (i.e. average individual)
 </p>
@@ -309,7 +424,7 @@ of transformation involves a shif of the axes in the <span class="math inline">\
 Algebraically, this transformation corresponds to expresing the values of
 each variable in terms of deviations from their means.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
-<img src="images/duality/cloud-obs-centering2.png" alt="Cloud of points of mean-centered data" width="55%" />
+<img src="images/duality/cloud-obs-centering2.svg" alt="Cloud of points of mean-centered data" width="55%" />
 <p class="caption">
 Figure 3.8: Cloud of points of mean-centered data
 </p>
@@ -319,20 +434,20 @@ Figure 3.8: Cloud of points of mean-centered data
 <h3><span class="header-section-number">3.3.3</span> Distance between individuals</h3>
 <p>Another common operation that we may be interested in is the distance between two individuals. Obviously the notion of distance is not unique, since you can choose different types of distance measures. Perhaps the most comon type of distance is the (squared) Euclidean distance. Unless otherwise mentioned, this will be the default distance used in this book.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
-<img src="images/duality/cloud-obs-distance.png" alt="Distance between two individuals" width="55%" />
+<img src="images/duality/cloud-obs-distance.svg" alt="Distance between two individuals" width="55%" />
 <p class="caption">
 Figure 3.9: Distance between two individuals
 </p>
 </div>
-<p>If you have one variable <span class="math inline">\(X\)</span>, then the squared distance <span class="math inline">\(d^2(i,l)\)</span> between two individuals <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_l\)</span> is:</p>
+<p>If you have one variable <span class="math inline">\(X\)</span>, then the squared distance <span class="math inline">\(d^2(i,\ell)\)</span> between two individuals <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_\ell\)</span> is:</p>
 <p><span class="math display">\[
-d^2(i,l) = (x_i - x_l)^2
+d^2(i,\ell) = (x_i - x_\ell)^2
 \]</span></p>
 <p>In general, with <span class="math inline">\(p\)</span> variables, the squared distance between the <span class="math inline">\(i\)</span>-th individual
-and the <span class="math inline">\(l\)</span>-th individual is:</p>
+and the <span class="math inline">\(\ell\)</span>-th individual is:</p>
 <p><span class="math display">\[\begin{align*}
-d^2(i,l) &amp;= (x_{i1} - x_{l1})^2 + (x_{i2} - x_{l2})^2 + \dots + (x_{ip} - x_{lp})^2 \\
-&amp;= (\mathbf{\vec{x}_i} - \mathbf{\vec{x}_l})^\mathsf{T} (\mathbf{\vec{x}_i} - \mathbf{\vec{x}_l})
+d^2(i,\ell) &amp;= (x_{i1} - x_{\ell 1})^2 + (x_{i2} - x_{\ell 2})^2 + \dots + (x_{ip} - x_{\ell p})^2 \\
+&amp;= (\mathbf{\vec{x}_i} - \mathbf{\vec{x}_\ell})^\mathsf{T} (\mathbf{\vec{x}_i} - \mathbf{\vec{x}_\ell})
 \end{align*}\]</span></p>
 </div>
 <div id="distance-to-the-centroid" class="section level3">
@@ -363,7 +478,7 @@ d^2(a,b) + d^2(b,a) + d^2(a,c) + d^2(c,a) + d^2(b,c) + d^2(c,b)
 distances. We will give the generic name of <strong>Overall Dispersion</strong> to the sum
 of all squared pairwise distances:</p>
 <p><span class="math display">\[
-\text{overall dispersion} = \sum_{i=1}^{n} \sum_{l=1}^{n} d^2(i,l)
+\text{overall dispersion} = \sum_{i=1}^{n} \sum_{\ell=1}^{n} d^2(i,\ell)
 \]</span></p>
 </div>
 <div id="inertia" class="section level4 unnumbered">
@@ -371,7 +486,7 @@ of all squared pairwise distances:</p>
 <p>Another measure of scatter among individuals can be computed by adding the
 distances between all individuals and the centroid.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
-<img src="images/duality/cloud-inertia.png" alt="Inertia" width="55%" />
+<img src="images/duality/cloud-inertia.svg" alt="Inertia" width="55%" />
 <p class="caption">
 Figure 3.10: Inertia
 </p>
@@ -411,7 +526,7 @@ which gives the typical squared distance around the centroid.</p>
 <p>Interestingly, the <em>overall dispersion</em> and the <em>inertia</em> are connected through
 the following relation:</p>
 <p><span class="math display">\[\begin{align*}
-\text{overall dispersion} &amp;= \sum_{i=1}^{n} \sum_{l=1}^{n} d^2(i,l) \\
+\text{overall dispersion} &amp;= \sum_{i=1}^{n} \sum_{\ell=1}^{n} d^2(i,\ell) \\
 &amp;= 2n \sum_{i=1}^{n} d^2(i,g) \\
 &amp;= (2n^2) \text{Inertia}
 \end{align*}\]</span></p>
@@ -454,7 +569,7 @@ generalize the concept of an “average” as a <em>weighted aggregation of info
 For example, if we denote the weight of the <span class="math inline">\(i\)</span>-th individual as <span class="math inline">\(w_i\)</span>, then the
 average can be expressed as:</p>
 <p><span class="math display">\[
-\bar{x} = w_1 x_1 + w_2 x_2 + \dots + w_n x_n = \sum_{i=1}^{n} w_i x_i
+\bar{x} = w_1 x_1 + w_2 x_2 + \dots + w_n x_n = \sum_{i=1}^{n} w_i x_i = \mathbf{w^\mathsf{T} x}
 \]</span></p>
 </div>
 <div id="variance-of-a-variable" class="section level3">
@@ -598,7 +713,7 @@ cor(\mathbf{x}, \mathbf{y}) = \frac{cov(\mathbf{x}, \mathbf{y})}{\sqrt{var(\math
 \]</span></p>
 <p>Assuming that <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> are mean-centered, we can express the correlation as:</p>
 <p><span class="math display">\[
-cor(\mathbf{x, y}) = \frac{\mathbf{x^{\mathsf{T}} y}}{\|\mathbf{x}\| \|\mathbf{y}\|}
+cor(\mathbf{x, y}) = \frac{\mathbf{x^{\mathsf{T}} y}}{\|\mathbf{x}\| \hspace{1mm} \|\mathbf{y}\|}
 \]</span></p>
 <p>As it turns out, the norm of a mean-centered variable <span class="math inline">\(\mathbf{x}\)</span> is
 proportional to the square root of its variance (or standard deviation):</p>
@@ -651,7 +766,7 @@ Figure 3.11: Two vectors in a 2-dimensional space
 \]</span></p>
 <p>where <span class="math inline">\(cos(\theta_{x,y})\)</span> is the angle between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>. Rearranging the terms in the previous equation we get that:</p>
 <p><span class="math display">\[
-cos(\theta_{x,y}) = \frac{\mathbf{x^\mathsf{T} y}}{\|\mathbf{x}\| \|\mathbf{y}\|} = cor(\mathbf{x, y}) 
+cos(\theta_{x,y}) = \frac{\mathbf{x^\mathsf{T} y}}{\|\mathbf{x}\| \hspace{1mm} \|\mathbf{y}\|} = cor(\mathbf{x, y}) 
 \]</span></p>
 <p>which means that the correlation between mean-centered vectors <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> turns out to be the cosine of the angle between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>.</p>
 </div>
@@ -666,7 +781,7 @@ an asymmetric type of association since we seek to say something about the
 variability of one variable, say <span class="math inline">\(\mathbf{y}\)</span>, in terms of the variability of
 <span class="math inline">\(\mathbf{x}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-19"></span>
-<img src="images/duality/vector-projection0.png" alt="Two vectors in n-dimensional space" width="60%" />
+<img src="images/duality/vector-projection0.svg" alt="Two vectors in n-dimensional space" width="60%" />
 <p class="caption">
 Figure 3.12: Two vectors in n-dimensional space
 </p>
@@ -680,7 +795,7 @@ means finding a scalar <span class="math inline">\(b\)</span> such that:</p>
 <p>The common approach to get <span class="math inline">\(\mathbf{\hat{y}}\)</span> in some optimal way is by
 minimizing the square difference between <span class="math inline">\(\mathbf{y}\)</span> and <span class="math inline">\(\mathbf{\hat{y}}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
-<img src="images/duality/vector-projection1.png" alt="Orthogonal projection of y onto x" width="60%" />
+<img src="images/duality/vector-projection1.svg" alt="Orthogonal projection of y onto x" width="60%" />
 <p class="caption">
 Figure 3.13: Orthogonal projection of y onto x
 </p>
@@ -710,7 +825,7 @@ a variable <span class="math inline">\(X = (x_1, \dots, x_n)\)</span>, can be th
 in an <span class="math inline">\(n\)</span>-dimensional space. Furthermore, let’s also consider the constant
 vector <span class="math inline">\(\mathbf{1}\)</span> of size <span class="math inline">\(n\)</span>. Here’s a conceptual diagram for this situation:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-21"></span>
-<img src="images/duality/mean-projection0.png" alt="Two vectors in n-dimensional space" width="60%" />
+<img src="images/duality/mean-projection0.svg" alt="Two vectors in n-dimensional space" width="60%" />
 <p class="caption">
 Figure 3.14: Two vectors in n-dimensional space
 </p>
@@ -718,7 +833,7 @@ Figure 3.14: Two vectors in n-dimensional space
 <p>Out of curiosity, what happens when we ask about the orthogonal projection of
 <span class="math inline">\(\mathbf{x}\)</span> onto <span class="math inline">\(\mathbf{1}\)</span>? Something like in the following picture:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
-<img src="images/duality/mean-projection1.png" alt="Orthogonal projection of vector x onto constant vector 1" width="60%" />
+<img src="images/duality/mean-projection1.svg" alt="Orthogonal projection of vector x onto constant vector 1" width="60%" />
 <p class="caption">
 Figure 3.15: Orthogonal projection of vector x onto constant vector 1
 </p>
@@ -741,15 +856,15 @@ multiplying <span class="math inline">\(\mathbf{1}\)</span> by some number <span
 \]</span></p>
 <p>This is better appreciated in the following figure.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
-<img src="images/duality/mean-projection2.png" alt="Mean of x as length of its projection onto constant vector 1" width="60%" />
+<img src="images/duality/mean-projection2.svg" alt="Mean of x and its relation with the projection onto constant vector 1" width="60%" />
 <p class="caption">
-Figure 3.16: Mean of x as length of its projection onto constant vector 1
+Figure 3.16: Mean of x and its relation with the projection onto constant vector 1
 </p>
 </div>
 <p>What this tells us is that the mean of the variable <span class="math inline">\(X\)</span>, denoted by <span class="math inline">\(\bar{x}\)</span>,
 has a very interesting geometric interpretation. As you can tell, <span class="math inline">\(\bar{x}\)</span> is
-the length of the projected vector <span class="math inline">\(\mathbf{\hat{x}}\)</span>. Or in more formal terms,
-<span class="math inline">\(\bar{x}\)</span> is the scalar projection of <span class="math inline">\(\mathbf{x}\)</span> onto <span class="math inline">\(\mathbf{1}\)</span>.</p>
+the scalar by which you would multiply <span class="math inline">\(\mathbf{1}\)</span> in order to obtain the
+vector projection <span class="math inline">\(\mathbf{\hat{x}}\)</span>.</p>
 
 </div>
 </div>

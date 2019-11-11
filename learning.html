@@ -24,7 +24,7 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-08" />
+<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,70 @@
 
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -66,14 +130,14 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><b>All Models Are Wrong (CSL)</b><br>by G. Sanchez & E. Marzban</a></li>
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>by G. Sanchez & E. Marzban</small></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Welcome</b></span></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About this book</a><ul>
-<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="1.2" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i><b>1.2</b> Acknowledgements</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#prerequisites"><i class="fa fa-check"></i>Prerequisites</a></li>
+<li class="chapter" data-level="" data-path="about.html"><a href="about.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
 </ul></li>
 <li class="part"><span><b>II Intro</b></span></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
@@ -136,22 +200,25 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="gradient.html"><a href="gradient.html"><i class="fa fa-check"></i><b>6</b> Gradient Descent</a><ul>
 <li class="chapter" data-level="6.1" data-path="gradient.html"><a href="gradient.html#error-surface"><i class="fa fa-check"></i><b>6.1</b> Error Surface</a></li>
-<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.2.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
+<li class="chapter" data-level="6.2" data-path="gradient.html"><a href="gradient.html#idea-of-gradient-descent"><i class="fa fa-check"></i><b>6.2</b> Idea of Gradient Descent</a></li>
+<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.3</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
 </ul></li>
 <li class="part"><span><b>V Learning Concepts</b></span></li>
 <li class="chapter" data-level="7" data-path="learning.html"><a href="learning.html"><i class="fa fa-check"></i><b>7</b> Theoretical Framework</a><ul>
 <li class="chapter" data-level="7.1" data-path="learning.html"><a href="learning.html#mental-map"><i class="fa fa-check"></i><b>7.1</b> Mental Map</a></li>
-<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Two Types of Predictions</a></li>
-<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.3</b> Two Types of Data</a></li>
-<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#types-of-errors"><i class="fa fa-check"></i><b>7.4</b> Types of Errors</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.4.1</b> Overall Errors</a></li>
-<li class="chapter" data-level="7.4.2" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.4.2</b> Individual Errors</a></li>
-<li class="chapter" data-level="7.4.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.4.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="7.2" data-path="learning.html"><a href="learning.html#kinds-of-predictions"><i class="fa fa-check"></i><b>7.2</b> Kinds of Predictions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="learning.html"><a href="learning.html#two-types-of-data"><i class="fa fa-check"></i><b>7.2.1</b> Two Types of Data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="learning.html"><a href="learning.html#two-types-of-predictions"><i class="fa fa-check"></i><b>7.2.2</b> Two Types of Predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.5</b> Noisy Targets</a></li>
+<li class="chapter" data-level="7.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>7.3</b> Two Types of Errors</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>7.3.1</b> Individual Errors</a></li>
+<li class="chapter" data-level="7.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>7.3.2</b> Overall Errors</a></li>
+<li class="chapter" data-level="7.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>7.3.3</b> Auxiliary Technicality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>7.4</b> Noisy Targets</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="mse.html"><a href="mse.html"><i class="fa fa-check"></i><b>8</b> MSE of Estimator</a><ul>
 <li class="chapter" data-level="8.1" data-path="mse.html"><a href="mse.html#mse-of-an-estimator"><i class="fa fa-check"></i><b>8.1</b> MSE of an Estimator</a><ul>
@@ -164,7 +231,53 @@
 <li class="chapter" data-level="9.2.1" data-path="biasvar.html"><a href="biasvar.html#two-hypotheses"><i class="fa fa-check"></i><b>9.2.1</b> Two Hypotheses</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
-<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a></li>
+<li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
+<li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
+<li class="chapter" data-level="10.2" data-path="validation.html"><a href="validation.html#holdout-method"><i class="fa fa-check"></i><b>10.2</b> Holdout Method</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="validation.html"><a href="validation.html#rationale-behind-holdout-method"><i class="fa fa-check"></i><b>10.2.1</b> Rationale Behind Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="validation.html"><a href="validation.html#repeated-holdout-method"><i class="fa fa-check"></i><b>10.3</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="10.4" data-path="validation.html"><a href="validation.html#bootstrap-method"><i class="fa fa-check"></i><b>10.4</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="10.5" data-path="validation.html"><a href="validation.html#model-selection"><i class="fa fa-check"></i><b>10.5</b> Model Selection</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="validation.html"><a href="validation.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.5.1</b> Three-way Holdout Method</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="validation.html"><a href="validation.html#cross-validation"><i class="fa fa-check"></i><b>10.6</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="validation.html"><a href="validation.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>10.6.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Regularization</b></span></li>
+<li class="chapter" data-level="11" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>11</b> Regularization Techniques</a><ul>
+<li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
+<li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="12.2" data-path="pcr.html"><a href="pcr.html#the-pcr-model"><i class="fa fa-check"></i><b>12.2</b> The PCR Model</a></li>
+<li class="chapter" data-level="12.3" data-path="pcr.html"><a href="pcr.html#how-does-pcr-work"><i class="fa fa-check"></i><b>12.3</b> How does PCR work?</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>12.3.1</b> Transition Formula</a></li>
+<li class="chapter" data-level="12.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>12.3.2</b> Size of Coefficients</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>13</b> Partial Least Squares Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>13.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="13.2" data-path="pls.html"><a href="pls.html#the-plsr-model"><i class="fa fa-check"></i><b>13.2</b> The PLSR Model</a></li>
+<li class="chapter" data-level="13.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>13.3</b> How does PLSR work?</a></li>
+<li class="chapter" data-level="13.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>13.4</b> PLSR Algorithm</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>13.4.1</b> PLS Solution with original variables</a></li>
+<li class="chapter" data-level="13.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>13.4.2</b> Size of Coefficients</a></li>
+<li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
@@ -191,16 +304,9 @@
 <p>Finally we have arrived to the part of the book in which we provide a
 framework for the theory of learning. Well, to be more precise, the framework
 is really about the theory of <em>supervised</em> learning.</p>
-<p>At the end on the day, in supervised learning, we want a “good” model.
-What does “good” model mean?
-It means that we want to estimate a model <span class="math inline">\(\hat{f}\)</span> that
-gives “good” predictions. What do we mean by “good” predictions? Loosely
-speaking, it means that we want to obtain “accurate” predictions. Before
-clarifying the notion of accurate predictions, let’s discuss first the concept
-of predictions.</p>
 <p>Keep in mind that most of what will be covered in this chapter is highly
 theoretical. It has to do with the concepts and principles that ideally we
-expect to have in a <em>perfect world</em>. Having said, the real world, more often
+expect to find in a <em>perfect world</em>. Having said, the real world, more often
 than not, is far from being ideal. So we will also need to discuss what to do
 in practice to overcome the idealistic limitations of our theoretical assumptions.</p>
 <div id="mental-map" class="section level2">
@@ -219,41 +325,82 @@ our computations.</p>
 some sort of mythical creature, like a unicorn (or your preferred creature).
 We are trying to find this elusive guy.</p>
 <p>More generally, we have a dataset
-<span class="math inline">\(\mathcal{D}: \{ (\mathbf{x_1}, y_1), ( \mathbf{x_2}, y_2), \dots, (\mathbf{x_n}, y_n) \}\)</span>
-(where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for the <span class="math inline">\(i\)</span>-th
-player/individual).<br />
+<span class="math inline">\(\mathcal{D}: (\mathbf{x_1}, y_1), ( \mathbf{x_2}, y_2), \dots, (\mathbf{x_n}, y_n)\)</span>,
+where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for the <span class="math inline">\(i\)</span>-th
+player/individual.<br />
 From this data, we wish to obtain a hypothesis model <span class="math inline">\(\widehat{f}: \mathcal{X} \to \mathcal{Y}\)</span> that is an approximation to the unknown function <span class="math inline">\(f\)</span>.
-We can sketch these basic ideas in a sort of “mental map”
-We will refer to this picture as the “diagram for unsupervised learning”.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-58"></span>
-<img src="images/theory/learning-diag0.png" alt="Supervised Learning Diagram (ver 1)" width="70%" />
+We can sketch these basic ideas in a sort of “mental map”.
+We will refer to this picture as the “diagram for supervised learning”.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
+<img src="images/theory/learning-diag0.svg" alt="Supervised Learning Diagram (ver 1)" width="85%" />
 <p class="caption">
 Figure 7.1: Supervised Learning Diagram (ver 1)
 </p>
 </div>
-<p>The use of orange clouds around certain concepts is intentional; those concepts
-appearing in orange are more intangible than those appearing in black.
-For instance, we never really “discover” the function <span class="math inline">\(f\)</span> in its entirety;
-rather, we just find a good enough approximation to it. As we modify our map,
-we will encounter more orange concepts as well of highly theoretical nature.</p>
-<p>The goal of supervised learning is to find a “good” model <span class="math inline">\(\widehat{f}\)</span>.
-What is a “good” model? Well, a “good” model is a model that gives “good”
-(or accurate) predictions. What do we mean by “accurate?” Well, let’s not get
-too bogged down with details here.</p>
-<p>The magic word here is <strong>predictions</strong>. There are two kinds of predictions:
-(1) predictions <span class="math inline">\(\hat{y}_i\)</span> of observed/seen
-values <span class="math inline">\(x_i\)</span>, and (2) predicitons <span class="math inline">\(\hat{y}_0\)</span> of unobserved/unseed values <span class="math inline">\(x_0\)</span>.</p>
+<p>Here’s how to read this diagram. We are using orange clouds around those concepts
+that are more intangible than those appearing within rectangular or oval
+shapes. One of these clouds is the unknown target function <span class="math inline">\(f\)</span>, which as its
+name indicates it is <strong>unknown</strong>. This implies that we never really “discover”
+the function <span class="math inline">\(f\)</span> in its entirety; rather, we just find a good enough
+approximation to it by estimating <span class="math inline">\(\widehat{f}\)</span>. Now, as you can tell from the
+mental map, the other orange clound has to do with precisely this idea of
+<em>good approximation</em>: <span class="math inline">\(\widehat{f} \approx f\)</span>. It is also theoretical because of
+what we just said: that we don’t know <span class="math inline">\(f\)</span>. We should let you know that as we
+modify our diagram, we will encounter more orange concepts as well of highly
+theoretical nature.</p>
+<p>Now let’s turn our attention to the blue rectangular elements. One of them
+is the data set <span class="math inline">\(\mathcal{D}\)</span> which is influenced by the unknown target function.
+The other blue rectangle has to do with a set of candidate models <span class="math inline">\(\mathcal{H}\)</span>,
+which is sometimes referred to as the <em>hypothesis set</em>. Both the data set and
+the set of models are tangible ingredients. Moreover, the set of candidate
+models is totally under out control. We get to dedice what type of models
+we want try out (e.g. linear model, polynomial models, non-parametric models).</p>
+<p>Then we go to the yellow oval shape which right now is simply labeled as the
+<em>learning algorithm</em> <span class="math inline">\(\mathcal{A}\)</span>. This corresponds to the set of instructions
+and steps to be carried out when learning from data. It is also the stage of
+the diagram in which most computations take place.</p>
+<p>Finally, we arrive at the yellow rectangle containing the final model
+<span class="math inline">\(\widehat{f}\)</span>. This is supposed to be the selected model by the learning
+algorithm from the set of hypothesis models. Ideally, this model is the one
+that provides a good approximation for the target function <span class="math inline">\(f\)</span>.</p>
+<p>Going back to the holy grail of supervised learning, our goal is to find a
+model <span class="math inline">\(\widehat{f}\)</span> that gives “good” or accurate predictions. Before discussing
+what exactly do we mean by “accurate?”, we first need to talk about predictions.</p>
 </div>
-<div id="two-types-of-predictions" class="section level2">
-<h2><span class="header-section-number">7.2</span> Two Types of Predictions</h2>
+<div id="kinds-of-predictions" class="section level2">
+<h2><span class="header-section-number">7.2</span> Kinds of Predictions</h2>
+<p>What is the ultimate goal in supervised learning? Quick answer, we want a
+“good” model. What does “good” model mean? Simply put, it means that we want to
+estimate an unknown model <span class="math inline">\(f\)</span> with some model <span class="math inline">\(\widehat{f}\)</span> that gives “good”
+predictions. What do we mean by “good” predictions? Loosely speaking, it means
+that we want to obtain “accurate” predictions. Before clarifying the notion of
+<em>accurate predictions</em>, let’s discuss first the concept of predictions.</p>
 <p>Think of a simple linear regression model (e.g. with one predictor). Having a
-fitted model <span class="math inline">\(\hat{f}(x)\)</span>, we can use it to make two types of predictions.
-On one hand, for an observed point <span class="math inline">\(x_i\)</span>, we can compute <span class="math inline">\(\hat{y}_i = \hat{f}(x_i)\)</span>.
-By observed point we mean that <span class="math inline">\(x_i\)</span> was part of the data used to find <span class="math inline">\(\hat{f}()\)</span>.
-On the other hand, we can also compute <span class="math inline">\(\hat{y}_0 = \hat{f}(x_0)\)</span> for a point
-<span class="math inline">\(x_0\)</span> what was not part of the data used when deriving <span class="math inline">\(\hat{f}()\)</span>.</p>
-<p>The two types of predictions refer to: (1) predictions <span class="math inline">\(\hat{y}_i\)</span> of observed/seen
-values <span class="math inline">\(x_i\)</span>, and (2) predicitons <span class="math inline">\(\hat{y}_0\)</span> of unobserved/unseed values <span class="math inline">\(x_0\)</span>.</p>
+fitted model <span class="math inline">\(\widehat{f}(x)\)</span>, we can use it to make two types of predictions.
+On one hand, for an observed point <span class="math inline">\(x_i\)</span>, we can compute <span class="math inline">\(\hat{y}_i = \widehat{f}(x_i)\)</span>.
+By observed point we mean that <span class="math inline">\(x_i\)</span> was part of the data used to find <span class="math inline">\(\widehat{f}\)</span>.
+On the other hand, we can also compute <span class="math inline">\(\hat{y}_0 = \widehat{f}(x_0)\)</span> for a point
+<span class="math inline">\(x_0\)</span> what was not part of the data used when deriving <span class="math inline">\(\widehat{f}\)</span>.</p>
+<div id="two-types-of-data" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Two Types of Data</h3>
+<p>The two distinct types of predictions involve two slightly different kinds of
+data. The data points <span class="math inline">\(x_i\)</span> that we use to fit a model is what we call training
+or learning data. The data points <span class="math inline">\(x_0\)</span> that we use to assess the performance
+of a model are points NOT supposed to be part of the training set.</p>
+<p>This implies that, at least in theory, we need two kinds of data sets:</p>
+<ul>
+<li><p><strong>In-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{in}\)</span>, used to fit a model</p></li>
+<li><p><strong>Out-of-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{out}\)</span>, used to measure the
+predictive quality of a model</p></li>
+</ul>
+</div>
+<div id="two-types-of-predictions" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Two Types of Predictions</h3>
+<p>In other words, we have two types of predictions:</p>
+<ol style="list-style-type: decimal">
+<li><p>predictions <span class="math inline">\(\hat{y}_i\)</span> of observed/seen values <span class="math inline">\(x_i\)</span></p></li>
+<li><p>predicitons <span class="math inline">\(\hat{y}_0\)</span> of unobserved/unseed values <span class="math inline">\(x_0\)</span></p></li>
+</ol>
 <p>Each type of prediction is associated with a certain behavioral feature of a
 model. The predictions of observed data, <span class="math inline">\(\hat{y}_i\)</span>, have to do with the
 memorizing aspect (apparent error, resubstitution error). The predictions of
@@ -264,56 +411,75 @@ its own right. However, from the supervised learning standpoint, it is the
 second type of predictions that we are ultimately interested in. That is,
 we want to find models that are able to give predictions <span class="math inline">\(\hat{y}_0\)</span> as
 accurate as possible for the real value <span class="math inline">\(y_0\)</span>.</p>
-<p>Don’t get me wrong. Having good predictions <span class="math inline">\(\hat{y}_i\)</span> is important and desirable.
-And to a large extent, it is a necessary condition for a good model. However,
-it is not a sufficient condition. It is not enough to fit the observed data well,
-in order to get a good predictive model. Sometimes, you can have perfect fit
-of the observed data, but a terrible performance for unobserved values <span class="math inline">\(x_0\)</span>.</p>
-<p>Simply put, in supervised learning we want models with a good generalization
-ability.</p>
+<p>Don’t get us wrong. Having good predictions <span class="math inline">\(\hat{y}_i\)</span> of observed values
+is important and desirable. And to a large extent, it is a necessary condition
+for a good model. However, it is not a sufficient condition. It is not enough
+to fit the observed data well,
+in order to get a good predictive model. Sometimes, you can perfectly fit
+the observed data, but have a terrible performance for unobserved values <span class="math inline">\(x_0\)</span>.</p>
 </div>
-<div id="two-types-of-data" class="section level2">
-<h2><span class="header-section-number">7.3</span> Two Types of Data</h2>
-<p>As you can tell from the previous section, we care about two distinct types of
-predictions, which in turn involve two slightly different kinds of data.
-The data points <span class="math inline">\(x_i\)</span> that we use to fit a model is what we call training
-or learning data. The data points <span class="math inline">\(x_0\)</span> that we use to assess the performance
-of a model are points NOT supposed to be part of the training set.</p>
-<p>This implies that, at least in theory, we need two finds of data sets:</p>
+</div>
+<div id="two-types-of-errors" class="section level2">
+<h2><span class="header-section-number">7.3</span> Two Types of Errors</h2>
+<p>In theory, we are dealing with two types of predictions, each of which is
+associated to certain types of data points.</p>
+<p>Because we are interested in obtaining models that give accurate predictions,
+we need a way to measure the accuracy of such predictions. At the conceptual
+level we need some mechanism to quantify how different the fitted model is
+from the target function <span class="math inline">\(f\)</span>:</p>
+<p><span class="math display">\[
+\widehat{f} \text{ -vs- } f
+\]</span></p>
+<p>It would be nice to have some measure of how much discrepancy exists between
+the estimated model and the target model. This means that we need a function
+that summarizes, somehow, the total amount of error. We will denote such term as
+an <em>Overall Measure of Error</em>:</p>
+<p><span class="math display">\[
+\text{Overall Measure of Error:} \quad E(\widehat{f},f) 
+\]</span></p>
+<p>The typical way in which an overall measure of error is defined is in terms
+of individual or pointwise errors <span class="math inline">\(err_i(\hat{y}_i, y_i)\)</span> that quantify the
+difference between an observed value <span class="math inline">\(y_i\)</span> and its predicted value <span class="math inline">\(\hat{y}_i\)</span>.
+As a matter of fact, most overall errors focus on the addition of the pointwise
+errors:</p>
+<p><span class="math display">\[
+E(\widehat{f},f) = \text{measure} \left( \sum err_i(\hat{y}_i, y_i) \right )
+\]</span></p>
+<p>Unless otherwise said, in this book we will use the mean sum of errors as the
+default overall error measure:</p>
+<p><span class="math display">\[
+E(\widehat{f},f) = \frac{1}{n} \left( \sum_i err_i (\hat{y}_i, y_i) \right)
+\]</span></p>
+<div id="individual-errors" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Individual Errors</h3>
+<p>What form does the individual error function, <span class="math inline">\(err()\)</span>, take? In theory, they can
+take any form you want. This means that you can invent your own individual error
+function. However, the most common ones are:</p>
 <ul>
-<li><p><strong>In-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{in}\)</span>, used to fit a model</p></li>
-<li><p><strong>Out-of-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{out}\)</span>, used to measure the
-predictive quality of a model</p></li>
+<li><p><strong>squared error</strong>: <span class="math inline">\(\quad err(\widehat{f}, f) = \left( \hat{y}_i - y_i \right)^2\)</span></p></li>
+<li><p><strong>absolute error</strong>: <span class="math inline">\(\quad err(\widehat{f}, f) = \left| \hat{y}_i - y_i \right|\)</span></p></li>
+<li><p><strong>misclassification error</strong>: <span class="math inline">\(\quad err(\widehat{f}, f) = [\![ \hat{y}_i \neq y_i ]\!]\)</span></p></li>
 </ul>
+<p>In the machine learning literature, these individual errors are formally
+known as <strong>loss functions</strong>.</p>
 </div>
-<div id="types-of-errors" class="section level2">
-<h2><span class="header-section-number">7.4</span> Types of Errors</h2>
-<p>Given that we’ll have, at least theoretically, two types of data, it shouldn’t
-be a surprise that we will also need separate types of errors for each kind
-of data.</p>
-<p>Correspondingly, we will have (at least in theory) two kinds of errors:</p>
+<div id="overall-errors" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> Overall Errors</h3>
+<p>As you can imagine, there are actually two types of overall error measures,
+based on the type of data that is used to assess the individual errors:</p>
 <ul>
 <li><p><strong>In-sample Error</strong>, denoted <span class="math inline">\(E_{in}\)</span></p></li>
 <li><p><strong>Out-of-sample Error</strong>, denoted <span class="math inline">\(E_{out}\)</span></p></li>
 </ul>
-<div id="overall-errors" class="section level3">
-<h3><span class="header-section-number">7.4.1</span> Overall Errors</h3>
-<p>Both errors are <strong>overall measures of error</strong>. This means that we need a function
-that summarizes, somehow, the total amount of error. Most overall error measures
-are based on the sum of individual errors:</p>
+<p>The in-sample error is the average of pointwise errors from data points of the
+in-sample data <span class="math inline">\(D_{in}\)</span>:</p>
 <p><span class="math display">\[
-E(\hat{f},f) = \text{measure} \left( \sum err_i (\hat{y}, y) \right)
-\]</span></p>
-<p>Unless otherwise said, in this book we will use the mean sum of errors are the
-default overall error measure. The in-sample error is the average of pointwise
-errors:</p>
-<p><span class="math display">\[
-E_{in} (\hat{f}, f) = \frac{1}{n} \sum_{i} err_i
+E_{in} (\widehat{f}, f) = \frac{1}{n} \sum_{i} err_i
 \]</span></p>
 <p>The out-of-sample error is the theoretical mean, or expected value, of the
 pointwise errors:</p>
 <p><span class="math display">\[
-E_{out} (\hat{f}, f) = \mathbb{E}_{\mathcal{X}} \left[ err \left( \hat{f}(x), f(x) \right) \right]
+E_{out} (\widehat{f}, f) = \mathbb{E}_{\mathcal{X}} \left[ err \left( \widehat{f}(x), f(x) \right) \right]
 \]</span></p>
 <p>The expectation is taken over the input space <span class="math inline">\(\mathcal{X}\)</span>.
 The point <span class="math inline">\(x\)</span> denotes a general data point in such space <span class="math inline">\(\mathcal{X}\)</span>.
@@ -321,29 +487,16 @@ Notice the theoretical nature of <span class="math inline">\(E_{out}\)</span>. I
 be able to compute this quantity.</p>
 <p>In the machine learning literature, these overall measures of error are formally
 known as <strong>cost functions</strong> or <strong>risks</strong>.</p>
-</div>
-<div id="individual-errors" class="section level3">
-<h3><span class="header-section-number">7.4.2</span> Individual Errors</h3>
-<p>What form does the individual error function, <span class="math inline">\(err()\)</span>, take? In theory, they can
-take any form you want. This means that you can invent your own individual error
-function. However, the most common ones are:</p>
-<ul>
-<li><p><strong>squared error</strong>: <span class="math inline">\(\quad err(\hat{f}, f) = \left( \hat{y}_i - y_i \right)^2\)</span></p></li>
-<li><p><strong>absolute error</strong>: <span class="math inline">\(\quad err(\hat{f}, f) = \left| \hat{y}_i - y_i \right|\)</span></p></li>
-<li><p><strong>misclassification error</strong>: <span class="math inline">\(\quad err(\hat{f}, f) = [\![ \hat{y}_i \neq y_i ]\!]\)</span></p></li>
-</ul>
-<p>In the machine learning literature, these individual errors are formally
-known as <strong>loss functions</strong>.</p>
-<p>Let’s update our Machine Learning Map to include error measures:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
-<img src="images/theory/learning-diag1.png" alt="Supervised Learning Diagram (ver 2)" width="80%" />
+<p>Let’s update our supervised learning diagram to include error measures:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-62"></span>
+<img src="images/theory/learning-diag1.svg" alt="Supervised Learning Diagram (ver 2)" width="85%" />
 <p class="caption">
 Figure 7.2: Supervised Learning Diagram (ver 2)
 </p>
 </div>
 </div>
 <div id="auxiliary-technicality" class="section level3">
-<h3><span class="header-section-number">7.4.3</span> Auxiliary Technicality</h3>
+<h3><span class="header-section-number">7.3.3</span> Auxiliary Technicality</h3>
 <p>We need to assume some probability distribution <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>. That is,
 we assume our vectors <span class="math inline">\(\mathbf{x_1}, \dots, \mathbf{x_n}\)</span> are independent
 identically distributed (i.i.d.) samples from this distribution <span class="math inline">\(P\)</span>.
@@ -367,8 +520,8 @@ second condition by invoking our distributional assumption <span class="math inl
 Using our assumption, we can cite various theorems to assert that the second
 result indeed holds true. We will later find ways to estimate
 <span class="math inline">\(E_{\mathrm{out}}(\widehat{f})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-60"></span>
-<img src="images/theory/learning-diag2.png" alt="Supervised Learning Diagram (ver 3)" width="80%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-63"></span>
+<img src="images/theory/learning-diag2.svg" alt="Supervised Learning Diagram (ver 3)" width="85%" />
 <p class="caption">
 Figure 7.3: Supervised Learning Diagram (ver 3)
 </p>
@@ -376,7 +529,7 @@ Figure 7.3: Supervised Learning Diagram (ver 3)
 </div>
 </div>
 <div id="noisy-targets" class="section level2">
-<h2><span class="header-section-number">7.5</span> Noisy Targets</h2>
+<h2><span class="header-section-number">7.4</span> Noisy Targets</h2>
 <p>In practice, our function won’t necessarily be a nice (or smooth) function.
 Rather, there will be some <strong>noise</strong>. Hence, instead of saying <span class="math inline">\(y = f(x)\)</span> where
 <span class="math inline">\(f : \mathcal{X} \to \mathcal{Y}\)</span>, a better statement might be something
@@ -385,17 +538,17 @@ for example, we could have multiple inputs mapping to the same output
 (which cannot happen if <span class="math inline">\(f\)</span> is a proper “function”). That is, we may have two
 individuals with the exact same inputs <span class="math inline">\(\mathbf{x_A} = \mathbf{x_B}\)</span> but with
 different response variables <span class="math inline">\(y_A \neq y_B\)</span>. Instead, it makes more sense to
-consider some <strong>target distribution</strong> <span class="math inline">\(Prob(y \mid x)\)</span>. In this way,
+consider some <strong>target distribution</strong> <span class="math inline">\(P(y \mid x)\)</span>. In this way,
 we can think of our data as forming a joint probability distribution
-<span class="math inline">\(Prob(\mathbf{x}, y)\)</span>. That is because
+<span class="math inline">\(P(\mathbf{x}, y)\)</span>. That is because
 <span class="math inline">\(P(\mathbf{x}, y) = P(\mathbf{x}) P(y \mid \mathbf{x})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
-<img src="images/theory/learning-diag3.png" alt="Supervised Learning Diagram (ver 4)" width="80%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-64"></span>
+<img src="images/theory/learning-diag3.svg" alt="Supervised Learning Diagram (ver 4)" width="85%" />
 <p class="caption">
 Figure 7.4: Supervised Learning Diagram (ver 4)
 </p>
 </div>
-<p>In machine learning, we want to learn the conditional distribution
+<p>In supervised learning, we want to learn the conditional distribution
 <span class="math inline">\(P(y \mid \mathbf{x})\)</span>. Again, we can think of this probability as
 <span class="math inline">\(y = f() + \text{noise}\)</span>. Also, sometimes the Hypothesis Sets and Learning
 Algorithm boxes are combined into one, called the <strong>Learning Model</strong>.</p>
