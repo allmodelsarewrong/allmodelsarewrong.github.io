@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Geometric Duality | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Geometric Duality | All Models Are Wrong" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,6 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -279,6 +278,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>14</b> Ridge Regression</a></li>
+<li class="part"><span><b>VII Classification</b></span></li>
+<li class="chapter" data-level="15" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>15</b> Classification Methods</a></li>
+<li class="chapter" data-level="16" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>16</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="16.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>16.1</b> Motivation</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>16.1.1</b> First Approach: Fitting a Line</a></li>
+<li class="chapter" data-level="16.1.2" data-path="logistic.html"><a href="logistic.html#secodn-approach-harsh-thresholding"><i class="fa fa-check"></i><b>16.1.2</b> Secodn Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="16.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>16.1.3</b> Third Approach: Conditional Means</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>16.2</b> Logistic Regression Model</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>16.2.1</b> The Criterion Being Optimized</a></li>
+<li class="chapter" data-level="16.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>16.2.2</b> Another Way to Solve Logistic Regression</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -309,7 +322,8 @@ the stage for most of the topics covered in later chapters.</p>
 purposes, let’s also suppose that all variables are measured in a real-value scale.
 Obviously not all data is expressed or even encoded numerically. You may have
 categorical or symbolic data. But for this illustration, let’s assume that any
-categorical and symbolic data has already been transformed into a numeric scale.</p>
+categorical and symbolic data has already been transformed into a numeric scale
+(e.g. dummy indicators, optimal scaling).</p>
 <p>It’s very enlightening to think of a data matrix as viewed from the glass of
 Geometry. The key idea is to think of the data in a matrix as elements living
 in a multidimensional space. Actually, we can regard a data matrix from two
@@ -324,7 +338,9 @@ row and <span class="math inline">\(j\)</span>-th column.</p>
 Figure 3.1: Duality of a data matrix
 </p>
 </div>
-<p>When we look at a data matrix from the <em>columns</em> perpective what we are doing is focusing on the <span class="math inline">\(p\)</span> variables. In a similar way, when looking at a data matrix from its <em>rows</em> perspective, we are focusing on the <span class="math inline">\(n\)</span> individuals.
+<p>When we look at a data matrix from the <em>columns</em> perpective what we are doing is
+focusing on the <span class="math inline">\(p\)</span> variables. In a similar way, when looking at a data matrix
+from its <em>rows</em> perspective, we are focusing on the <span class="math inline">\(n\)</span> individuals.
 Like a coin, though, this matrix has two sides: a rows side, and a columns side.
 That is, we could look at the data from the rows point of view, or the columns
 point of view. These two views are (of course) not completely independent.
@@ -332,19 +348,36 @@ This double perspective or <strong>duality</strong> for short, is like the two s
 same coin.</p>
 <div id="rows-space" class="section level2">
 <h2><span class="header-section-number">3.1</span> Rows Space</h2>
-<p>We know that human vision is limited to three-dimensions, but pretend that you had superpowers that let you visualize a space with any number of dimensions.</p>
-<p>Because each row of the data matrix has <span class="math inline">\(p\)</span> elements, we can regard individuals as objects that live in a <span class="math inline">\(p\)</span>-dimensional space. For visualization purposes, think of each variable as playing the role of a dimension associated to a given axis in this space; likewise, consider each of the <span class="math inline">\(n\)</span> individuals as being depicted as a point (or particle) in such space, like in the following diagram:</p>
+<p>We know that human vision is limited to three-dimensions, but pretend that you
+had superpowers that let you visualize a space with any number of dimensions.</p>
+<p>Because each row of the data matrix has <span class="math inline">\(p\)</span> elements, we can regard individuals
+as objects that live in a <span class="math inline">\(p\)</span>-dimensional space. For visualization purposes,
+think of each variable as playing the role of a dimension associated to a given
+axis in this space; likewise, consider each of the <span class="math inline">\(n\)</span> individuals as being
+depicted as a point (or particle) in such space, like in the following diagram:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
 <img src="images/duality/rows-space.svg" alt="Rows space" width="85%" />
 <p class="caption">
 Figure 3.2: Rows space
 </p>
 </div>
-<p>In the figure above, even though I’m showing only three axes, you should pretend that you are visualizing a <span class="math inline">\(p\)</span>-dimensional space (imaging that there are <span class="math inline">\(p\)</span> axes). Each point in this space corresponds to a single individual, and they all form what you can call a <em>cloud of points</em>.</p>
+<p>In the figure above, even though I’m showing only three axes, you should pretend
+that you are visualizing a <span class="math inline">\(p\)</span>-dimensional space (imaging that there are <span class="math inline">\(p\)</span> axes).
+Each point in this space corresponds to a single individual, and they all form
+what we can call a <em>cloud of points</em>.</p>
 </div>
 <div id="columns-space" class="section level2">
 <h2><span class="header-section-number">3.2</span> Columns Space</h2>
-<p>We can do the same visual exercise with the columns of a data matrix. Since each variable has <span class="math inline">\(n\)</span> elements, we can regard the set of <span class="math inline">\(p\)</span> variables as objects that live in an <span class="math inline">\(n\)</span>-dimensional space. However, instead of representing each variable with a dot, it’s better to graphically represent them with an arrow (or vector). Why? Because of two reasons: one is to distinguish them from the individuals (dots). But more important, because the esential thing with a variable is not really its magnitude (and therefore its position) but its direction. Often, as part of the preprocessing steps we apply transformations on variables that change their scales (e.g. shrinking them, or stretching them) without modifying their directions.</p>
+<p>We can do the same visual exercise with the columns of a data matrix. Since each
+variable has <span class="math inline">\(n\)</span> elements, we can regard the set of <span class="math inline">\(p\)</span> variables as objects
+that live in an <span class="math inline">\(n\)</span>-dimensional space. However, instead of representing each
+variable with a dot, it’s better to graphically represent them with an arrow
+(or vector). Why? Because of two reasons: one is to distinguish them from the
+individuals (dots). But more important, because the esential thing with a variable
+is not really its magnitude (and therefore its position) but its direction.
+Often, as part of the preprocessing steps we apply transformations on variables
+that change their scales (e.g. shrinking them, or stretching them) without
+modifying their directions.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
 <img src="images/duality/columns-space.svg" alt="Columns space" width="85%" />
 <p class="caption">
@@ -374,19 +407,21 @@ lie in a <span class="math inline">\(p\)</span>-dimensional space.</p>
 Figure 3.4: Cloud of points
 </p>
 </div>
-<p>Let’s start describing a set of common operations that we can apply on the individuals
-(living in a <span class="math inline">\(p\)</span>-dimensional space).</p>
+<p>Let’s start describing a set of common operations that we can apply on the
+individuals (living in a <span class="math inline">\(p\)</span>-dimensional space).</p>
 <div id="average-individual" class="section level3">
 <h3><span class="header-section-number">3.3.1</span> Average Individual</h3>
 <p>We can ask about the typical or average individual.</p>
-<p>If you only have one variable, then all the individual points lie in a one-dimensional space, which is basically a line:</p>
+<p>If you only have one variable, then all the individual points lie in a
+one-dimensional space, which is basically a line:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
 <img src="images/duality/mean-number-line.svg" alt="Points in one dimension" width="30%" />
 <p class="caption">
 Figure 3.5: Points in one dimension
 </p>
 </div>
-<p>In this case, the average individual is simply the average of the values, which geometrically corresponds to the balancing point:</p>
+<p>In this case, the average individual is simply the average of the values, which
+geometrically corresponds to the balancing point:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="images/duality/mean-balancing.svg" alt="Average individual" width="70%" />
 <p class="caption">
@@ -397,11 +432,13 @@ Figure 3.6: Average individual
 <p><span class="math display">\[
 \bar{x} = \frac{x_1 + \dots + x_n}{n} = \frac{1}{n} \sum_{i=1}^{n} x_i
 \]</span></p>
-<p>In vector notation, the average can be calculated with an inner product between <span class="math inline">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span>, and a constant vector of <span class="math inline">\(n\)</span>-ones <span class="math inline">\(\mathbf{1}\)</span>:</p>
+<p>In vector notation, the average can be calculated with an inner product between
+<span class="math inline">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span>, and a constant vector of <span class="math inline">\(n\)</span>-ones <span class="math inline">\(\mathbf{1}\)</span>:</p>
 <p><span class="math display">\[
 \bar{x} = \mathbf{x^\mathsf{T}1}
 \]</span></p>
-<p>What about the multivariate case? It turns out that we can also ask about the average individual of a cloud of points, like in the following figure:</p>
+<p>What about the multivariate case? It turns out that we can also ask about the
+average individual of a cloud of points, like in the following figure:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
 <img src="images/duality/cloud-obs-centering1.svg" alt="Cloud of points with centroid (i.e. average individual)" width="55%" />
 <p class="caption">
@@ -414,7 +451,8 @@ containing as coordiantes the averages of all the variables:</p>
 \mathbf{\vec{g}} = (\bar{x}_1, \bar{x}_2, \dots, \bar{x}_j)
 \]</span></p>
 <p>where <span class="math inline">\(\bar{x}_j\)</span> is the average of the <span class="math inline">\(j\)</span>-th variable.</p>
-<p>This average individual <span class="math inline">\(\mathbf{\vec{g}}\)</span> is also known as the <strong>centroid</strong>, <em>barycenter</em>, or <em>center of gravity</em> of the cloud of points.</p>
+<p>This average individual <span class="math inline">\(\mathbf{\vec{g}}\)</span> is also known as the <strong>centroid</strong>,
+<em>barycenter</em>, or <em>center of gravity</em> of the cloud of points.</p>
 </div>
 <div id="centered-data" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Centered Data</h3>
@@ -432,14 +470,19 @@ Figure 3.8: Cloud of points of mean-centered data
 </div>
 <div id="distance-between-individuals" class="section level3">
 <h3><span class="header-section-number">3.3.3</span> Distance between individuals</h3>
-<p>Another common operation that we may be interested in is the distance between two individuals. Obviously the notion of distance is not unique, since you can choose different types of distance measures. Perhaps the most comon type of distance is the (squared) Euclidean distance. Unless otherwise mentioned, this will be the default distance used in this book.</p>
+<p>Another common operation that we may be interested in is the distance between
+two individuals. Obviously the notion of distance is not unique, since you can
+choose different types of distance measures. Perhaps the most comon type of
+distance is the (squared) Euclidean distance. Unless otherwise mentioned, this
+will be the default distance used in this book.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
 <img src="images/duality/cloud-obs-distance.svg" alt="Distance between two individuals" width="55%" />
 <p class="caption">
 Figure 3.9: Distance between two individuals
 </p>
 </div>
-<p>If you have one variable <span class="math inline">\(X\)</span>, then the squared distance <span class="math inline">\(d^2(i,\ell)\)</span> between two individuals <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_\ell\)</span> is:</p>
+<p>If you have one variable <span class="math inline">\(X\)</span>, then the squared distance <span class="math inline">\(d^2(i,\ell)\)</span> between
+two individuals <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_\ell\)</span> is:</p>
 <p><span class="math display">\[
 d^2(i,\ell) = (x_i - x_\ell)^2
 \]</span></p>
@@ -511,7 +554,8 @@ when <span class="math inline">\(\mathbf{X}\)</span> is simply a column vector</
 <p><span class="math display">\[
 (x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \dots + (x_n - \bar{x})^2 = \sum_{i=1}^{n} (x_i - \bar{x})^2
 \]</span></p>
-<p>Does the above formula look familiar? What if we take the average of the squared distances:</p>
+<p>Does the above formula look familiar? What if we take the average of the squared
+distances:</p>
 <p><span class="math display">\[
 \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 = \frac{(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \dots + (x_n - \bar{x})^2}{n}
 \]</span></p>
@@ -897,12 +941,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -914,6 +957,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

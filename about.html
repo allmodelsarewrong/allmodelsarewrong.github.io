@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 About this book | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 About this book | All Models Are Wrong" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,6 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -279,6 +278,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>14</b> Ridge Regression</a></li>
+<li class="part"><span><b>VII Classification</b></span></li>
+<li class="chapter" data-level="15" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>15</b> Classification Methods</a></li>
+<li class="chapter" data-level="16" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>16</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="16.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>16.1</b> Motivation</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>16.1.1</b> First Approach: Fitting a Line</a></li>
+<li class="chapter" data-level="16.1.2" data-path="logistic.html"><a href="logistic.html#secodn-approach-harsh-thresholding"><i class="fa fa-check"></i><b>16.1.2</b> Secodn Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="16.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>16.1.3</b> Third Approach: Conditional Means</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>16.2</b> Logistic Regression Model</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>16.2.1</b> The Criterion Being Optimized</a></li>
+<li class="chapter" data-level="16.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>16.2.2</b> Another Way to Solve Logistic Regression</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -344,6 +357,12 @@ or more courses on the following subjects:</p>
 <p>Many thanks to the UC Berkeley students, and teaching staff, of
 <em>Stat 154 Modern Statistical Prediction and Machine Learning</em>
 (Fall 2017, Spring 2018, Fall 2019).</p>
+<p>In particular, thank you to Jin Kweon, and Jiyoon Jeong for catching
+many typos in the first iteration of the course slides.</p>
+<p>Also, thanks to Anita Silver, Joyce Yip, Jingwei Guan, Skylar Liang,
+and Raymond Chang for being amazing and committed note takers.</p>
+<p>Likewise, thanks to Johnny Hong, Omid Shams Solari, Ryan Theisen, and
+Frank Qiu, for their collaboration as TAs.</p>
 
 </div>
 </div>
@@ -375,12 +394,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -392,6 +410,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Bias-Variance Tradeoff | All Models Are Wrong</title>
+  <title>16 Logistic Regression | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Bias-Variance Tradeoff | All Models Are Wrong" />
+  <meta property="og:title" content="16 Logistic Regression | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Bias-Variance Tradeoff | All Models Are Wrong" />
+  <meta name="twitter:title" content="16 Logistic Regression | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="mse.html"/>
-<link rel="next" href="validation.html"/>
+<link rel="prev" href="classif.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -312,166 +312,283 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="biasvar" class="section level1">
-<h1><span class="header-section-number">9</span> Bias-Variance Tradeoff</h1>
-<p>In this chapter we discuss one of the theoretical dogmas of statistical
-learning: the famous Bias-Variance tradeoff.</p>
-<div id="bias-variance-tradeoff" class="section level2">
-<h2><span class="header-section-number">9.1</span> Bias-Variance Tradeoff</h2>
-<p>In the previous chapter we reviewed the concept of Mean Squared Error of a
-statistic (or estimator) <span class="math inline">\(\hat{\theta}\)</span>. As we saw, we can decompose
-<span class="math inline">\(\text{MSE}(\hat{\theta})\)</span> as the sum of two components: Bias-squared and Variance.</p>
+<div id="logistic" class="section level1">
+<h1><span class="header-section-number">16</span> Logistic Regression</h1>
+<p>So far we’ve been dealing with predicting a quantitative response, using mostly
+linear models. But what about predicting a qualitative or categorical response?
+We now turn our attention to predicting a discrete (aka categorical) response.</p>
+<p>To have a gentle transition from regression models into classification models,
+we’ll start with the famous logistic regression.</p>
+<div id="motivation-1" class="section level2">
+<h2><span class="header-section-number">16.1</span> Motivation</h2>
+<p>Let’s consider a classic example: predicting heart attack. The data consists of
+a number of individuals (patients) with some medical variables.</p>
+<p>Consider the following (very famous) example, found in Hosmer and Lemeshow
+(edition from 2000) in which we wish to predict coronary heart disease (<em>chd</em>).
+The data is relatively small (<span class="math inline">\(n = 100\)</span> patients), and we start with considering
+only one predictor: <span class="math inline">\(age\)</span>.</p>
+<pre><code>#&gt;   age chd
+#&gt; 1  20   0
+#&gt; 2  23   0
+#&gt; 3  24   0
+#&gt; 4  25   0
+#&gt; 5  25   1
+#&gt; 6  26   0</code></pre>
+<p>For illustration purposes, let’s consider the response <span class="math inline">\(\mathbf{y}\)</span> and only one predictor <span class="math inline">\(\mathbf{x}\)</span>. If we graph a scatterplot we get:</p>
+<p><img src="allmodelsarewrong_files/figure-html/chd_scatter3-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
+<p>With respect to the x-axis, we have values ranging from small x’s to large x’s.
+In contrast, the response is a binary response, so there are only 0’s or 1’s. As you can tell, the distribution of points does not seem to uniform along the x-axis. Moreover, for a given response value, say <span class="math inline">\(y_i = 0\)</span> there are more small values <span class="math inline">\(x\)</span> than large ones. And viceversa, for <span class="math inline">\(y_i = 1\)</span>, there are more large values <span class="math inline">\(x\)</span> than small ones.</p>
+<p>In other words, we can see that (in general) younger people are less likely to
+have CHD than older people. Hence, there seems to be some information about
+<em>chd</em> in <em>age</em>. The goal is to fit a model that predicts <em>chd</em> from <em>age</em>:</p>
 <p><span class="math display">\[
-\text{MSE}(\hat{\theta}) = \text{Var}(\hat{\theta}) + \text{Bias}^{2} (\hat{\theta})
+\text{chd} = f(\text{age}) + \varepsilon
 \]</span></p>
-<p>In this chapter we extend this notion to the MSE of a regression model.</p>
+<div id="first-approach-fitting-a-line" class="section level3">
+<h3><span class="header-section-number">16.1.1</span> First Approach: Fitting a Line</h3>
+<p>As a naive first approach, we could try to fit a linear model:
+$ = b_0 + b_1  =  $ where:</p>
+<p><span class="math display">\[
+\mathbf{X} = 
+\begin{pmatrix} 
+1 &amp; x_1 \\ 
+1 &amp; x_2 \\ 
+\vdots &amp; \vdots \\ 
+1 &amp; x_n \\ 
+\end{pmatrix}; \hspace{5mm} 
+\mathbf{b} = 
+\begin{pmatrix} 
+b_0 \\ b_1 \\ 
+\end{pmatrix}
+\]</span></p>
+<p>So let’s see what happens if we use least squares to fit such line.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="logistic.html#cb32-1"></a><span class="co"># fit line</span></span>
+<span id="cb32-2"><a href="logistic.html#cb32-2"></a>reg =<span class="st"> </span><span class="kw">lm</span>(chd <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> dat)</span>
+<span id="cb32-3"><a href="logistic.html#cb32-3"></a><span class="kw">summary</span>(reg)</span>
+<span id="cb32-4"><a href="logistic.html#cb32-4"></a><span class="co">#&gt; </span></span>
+<span id="cb32-5"><a href="logistic.html#cb32-5"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb32-6"><a href="logistic.html#cb32-6"></a><span class="co">#&gt; lm(formula = chd ~ age, data = dat)</span></span>
+<span id="cb32-7"><a href="logistic.html#cb32-7"></a><span class="co">#&gt; </span></span>
+<span id="cb32-8"><a href="logistic.html#cb32-8"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb32-9"><a href="logistic.html#cb32-9"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb32-10"><a href="logistic.html#cb32-10"></a><span class="co">#&gt; -0.85793 -0.33992 -0.07274  0.31656  0.99269 </span></span>
+<span id="cb32-11"><a href="logistic.html#cb32-11"></a><span class="co">#&gt; </span></span>
+<span id="cb32-12"><a href="logistic.html#cb32-12"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb32-13"><a href="logistic.html#cb32-13"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb32-14"><a href="logistic.html#cb32-14"></a><span class="co">#&gt; (Intercept) -0.537960   0.168809  -3.187  0.00193 ** </span></span>
+<span id="cb32-15"><a href="logistic.html#cb32-15"></a><span class="co">#&gt; age          0.021811   0.003679   5.929 4.57e-08 ***</span></span>
+<span id="cb32-16"><a href="logistic.html#cb32-16"></a><span class="co">#&gt; ---</span></span>
+<span id="cb32-17"><a href="logistic.html#cb32-17"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb32-18"><a href="logistic.html#cb32-18"></a><span class="co">#&gt; </span></span>
+<span id="cb32-19"><a href="logistic.html#cb32-19"></a><span class="co">#&gt; Residual standard error: 0.429 on 98 degrees of freedom</span></span>
+<span id="cb32-20"><a href="logistic.html#cb32-20"></a><span class="co">#&gt; Multiple R-squared:  0.264,  Adjusted R-squared:  0.2565 </span></span>
+<span id="cb32-21"><a href="logistic.html#cb32-21"></a><span class="co">#&gt; F-statistic: 35.15 on 1 and 98 DF,  p-value: 4.575e-08</span></span></code></pre></div>
+<p>There seems to be some sort of positive relation between <em>age</em> and <em>chd</em>. To
+better see this, let’s take a look at the scatterplot, and see how the fitted
+line looks like:</p>
+<p><img src="allmodelsarewrong_files/figure-html/chd_reg_line-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
+<p>This model yields a very awkward fit, with a couple of issues going on.
+For one thing, the line, and consequently the predicted values <span class="math inline">\(\hat{y}_i\)</span>,
+extend beyond the range <span class="math inline">\([0,1]\)</span>. Think about it: we could obtain fitted values
+<span class="math inline">\(\hat{y}_i\)</span> taking any number between 0 and 1 (which, in this context, makes no
+sense). We could also get negative predicted values, or even predicted values
+greater than 1! On the other hand, if we examine the residuals, then things don’t look great for the linear regression.</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-135-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>So, we need a way to fix these problems.</p>
 </div>
-<div id="motivation-example" class="section level2">
-<h2><span class="header-section-number">9.2</span> Motivation Example</h2>
-<p>Let’s start with a toy example. Consider a noiseless target function
-<span class="math inline">\(f(x) = sin(\pi x)\)</span>, with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>,
-like in the following picture:</p>
-<div class="figure" style="text-align: center">
-<img src="allmodelsarewrong_files/figure-html/plot_target-1.png" alt="Target function" width="70%" />
+<div id="secodn-approach-harsh-thresholding" class="section level3">
+<h3><span class="header-section-number">16.1.2</span> Secodn Approach: Harsh Thresholding</h3>
+<p>One idea to try to solve the issues from the regression line would be to set
+some threshold <span class="math inline">\(c\)</span> (for example, <span class="math inline">\(c = 0.5\)</span>) and look at how the signal compares
+to it, which will allow us to create a decision rule. That is, for a given
+<em>age</em> value <span class="math inline">\(x_0\)</span>, compare its predicted value to the threshold.
+If <span class="math inline">\(\hat{y}_0 \geq 0.5\)</span>, classify it as “1,” otherwise classify it as “0.”</p>
+<p><span class="math display">\[
+\hat{y}_i =
+\begin{cases}
+1 \quad \text{if} &amp; b_0 + b_1 x_i \geq c \\
+0 \quad \text{if} &amp; b_0 + b_1 x_i &lt; c
+\end{cases}
+\]</span></p>
+<p>We can further arrange the terms above: <span class="math inline">\(\hat{f}(x_i) = b_0 + b_1 x_i - c\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\hat{f}(x_i) &amp;= b_0 + b_1 x_i - c \\
+&amp;= b_{0}^{&#39;} + b_1 x_i, \qquad b_{0}^{&#39;} = b_0 - c 
+\end{align*}\]</span></p>
+<p>By paying attention to the sign of the signal, we can transform our fitted model into: <span class="math inline">\(\text{sign}(\mathbf{b^\mathsf{T}x})\)</span>.</p>
+<p><span class="math display">\[
+\hat{y}_i =
+\begin{cases}
+1 \quad \text{if} &amp; \text{sign}(b_{0}^{&#39;} + b_1 x_i) \geq 0 \\
+0 \quad \text{if} &amp; \text{sign}(b_{0}^{&#39;} + b_1 x_i) &lt; 0
+\end{cases}
+\]</span></p>
+<p>This transformation imposes a harsh threshold on the signal. Notice that the signal is still linear but we apply a non-linear transformation <span class="math inline">\(\phi(x) = \text{sign}(x)\)</span>.</p>
+<p><strong>Insert image of harsh threshold</strong></p>
+<p>I like to think about this transformation is a quick fix. It’s definitely not something to be proud of, but you could use it to get the job done—although in a quick-dirty fashion.</p>
+</div>
+<div id="third-approach-conditional-means" class="section level3">
+<h3><span class="header-section-number">16.1.3</span> Third Approach: Conditional Means</h3>
+<p>Using a sign-transformation allows us to overcome some of the limitations of the
+linear regression model, but it’s far from ideal.</p>
+<p>An alternative approach involves calculating conditional means. How does that work?
+The idea is very simple and clever. Say you are looking at patients <span class="math inline">\(x = 24\)</span>
+years old, and you count the relative frequency of chd cases. In other words,
+you count the proportion of chd cases among individuals 24 years old. This is
+nothing else than computing the conditional mean: <span class="math inline">\(avg(y_i | x_i = 24)\)</span>.</p>
+<p>Following this idea, we could compute all conditional means for all age values:
+<span class="math inline">\((\bar{y}|x_i = 25), (\bar{y}|x_i = 26), \dots, (\bar{y}|x_i = 69)\)</span>.</p>
+<pre><code>#&gt; age_group
+#&gt; 20-29 30-34 35-39 40-44 45-49 50-54 55-59 60-69 
+#&gt;    10    15    12    15    13     8    17    10</code></pre>
+<p>Now that we have age by groups, we can get the proportion of
+coronary heart disease cases in each age group</p>
+<pre><code>#&gt; # A tibble: 8 x 3
+#&gt;   age_group count_chd prop_chd
+#&gt;   &lt;fct&gt;         &lt;int&gt;    &lt;dbl&gt;
+#&gt; 1 20-29            10    0.1  
+#&gt; 2 30-34            15    0.133
+#&gt; 3 35-39            12    0.25 
+#&gt; 4 40-44            15    0.333
+#&gt; 5 45-49            13    0.462
+#&gt; 6 50-54             8    0.625
+#&gt; 7 55-59            17    0.765
+#&gt; 8 60-69            10    0.8</code></pre>
+<p>And then graph these averages on the scatterplot, connecting the dots with a
+line:</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-138-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Sometimes, however, you may not have data points for a specific <span class="math inline">\(x\)</span>-value. So instead we can use groups of ages. For example, say we define a first group of ages to be 24 - 29 years. The corresponding average will be: <span class="math inline">\(avg(y_i | x_i = \text{group}_1)\)</span></p>
+<p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>. Which is exactly the <strong>regression function</strong>.</p>
+<p>By connecting the averages, we get an interesting sigmoid pattern</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-139-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>This pattern can be approximated by some mathematical functions, the most popular being the so-called <strong>logistic</strong> function:</p>
+<p><span class="math display">\[
+\text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
+\]</span></p>
+<p><img src="allmodelsarewrong_files/figure-html/logistic-curves-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Sometimes you may also find the logistic equation in an alternative form:</p>
+<p><span class="math display">\[\begin{align*}
+f(x) &amp;= \frac{e^{\beta_0 + \beta_1 x}}{1 + e^{\beta_0 + \beta_1 x}} \\
+&amp;= \frac{1}{\frac{1 + e^{\beta_0 + \beta_1 x}}{e^{\beta_0 + \beta_1 x}}} \\
+&amp;= \frac{1}{\frac{1}{e^{\beta_0 + \beta_1 x}} + 1} \\
+&amp;= \frac{1}{1 + e^{-(\beta_0 + \beta_1 x})}
+\end{align*}\]</span></p>
+<p>Since probability values range inside <span class="math inline">\([0,1]\)</span>, instead of using a line to try to approximate these values, we should use a more adequate curve. This is the reason why sigmoid-like curves, such as the logistic function, are preferred for this purpose.</p>
+</div>
+</div>
+<div id="logistic-regression-model" class="section level2">
+<h2><span class="header-section-number">16.2</span> Logistic Regression Model</h2>
+<p>We consider the following model:</p>
+<p><span class="math display">\[
+Prob(y \mid x; \mathbf{b}) = f(x)
+\]</span></p>
+<p>We don’t get to observe the true probability; rather, we observe the noisy target
+<span class="math inline">\(y_i\)</span>, <em>generated/affected</em> by the probability <span class="math inline">\(f(x)\)</span>. How will we model the
+probability? We would ideally like a mathematical function that looks like the
+sigmoid shape from the toy example above; that is, use a <strong>sigmoid</strong> function.
+The most famous function—and the function we will use—is the
+<strong>logistic function</strong> defined in the previous section</p>
+<p><span class="math display">\[
+\text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
+\]</span></p>
+<p>In other words, we have the following model:</p>
+<p><span class="math display">\[
+Prob(y _i \mid \mathbf{X} ; \boldsymbol{\beta} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{1 + e^{\mathbf{b^\mathsf{T} x_i}}}
+\]</span>
+where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for individual <span class="math inline">\(i\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
+<img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="70%" />
 <p class="caption">
-(#fig:plot_target)Target function
+Figure 16.1: Regression Model Diagram
 </p>
 </div>
-<div id="two-hypotheses" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> Two Hypotheses</h3>
-<p>Let’s assume a learning scenario in which, given a data set of <span class="math inline">\(n\)</span> points, we
-fit the data using one of two models (see the <em>idealized</em> figure shown below):</p>
-<ul>
-<li><p><span class="math inline">\(\mathcal{H}_0\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b\)</span></p></li>
-<li><p><span class="math inline">\(\mathcal{H}_1\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b_0 + b_1 x\)</span></p></li>
-</ul>
-<div class="figure" style="text-align: center">
-<img src="allmodelsarewrong_files/figure-html/plot_two_hypotheses-1.png" alt="Two Learning hypothesis models" width="85%" />
-<p class="caption">
-(#fig:plot_two_hypotheses)Two Learning hypothesis models
-</p>
-</div>
-</div>
-</div>
-<div id="learning-from-two-points" class="section level2">
-<h2><span class="header-section-number">9.3</span> Learning from two points</h2>
-<p>In this case study, we will assume a data set of size <span class="math inline">\(n = 2\)</span>. That is, we sample <span class="math inline">\(x\)</span> uniformly in <span class="math inline">\([-1,1]\)</span> to generate a data set of two points <span class="math inline">\((x_1, y_1), (x_2, y_2)\)</span>; and fit the data using the two models <span class="math inline">\(\mathcal{H}_0\)</span> and <span class="math inline">\(\mathcal{H}_1\)</span>.</p>
-<p>For <span class="math inline">\(\mathcal{H}_0\)</span>, we choose the constant hypothesis that best fits the data (the horizontal line at the midpoint <span class="math inline">\(b = \frac{y_1 + y_2}{2}\)</span>).</p>
-<p>For <span class="math inline">\(\mathcal{H}_1\)</span>, we choose the line that passes through the two data points <span class="math inline">\((x_1, y_1)\)</span> and <span class="math inline">\((x_2, y_2)\)</span>.</p>
-<p>Here’s an example in R of two <span class="math inline">\(x\)</span>-points randomly sampled from a uniform distribution in the interval <span class="math inline">\([-1,1]\)</span>, and their corresponding <span class="math inline">\(y\)</span>-points:</p>
-<ul>
-<li><p><span class="math inline">\(p_1(x_1, y_1) = (0.0949158, 0.2937874)\)</span></p></li>
-<li><p><span class="math inline">\(p_2(x_2, y_2) = (0.4880941, 0.9993006)\)</span></p></li>
-</ul>
-<p>With the given points above, the two fitted models are:</p>
-<ul>
-<li><p><span class="math inline">\(h_0(x) = 0.646544\)</span></p></li>
-<li><p><span class="math inline">\(h_1(x) = 0.123472 + 1.794385 \hspace{1mm} x\)</span></p></li>
-</ul>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-77-1.png" width="85%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="bias-variance-derivation" class="section level2">
-<h2><span class="header-section-number">9.4</span> Bias-Variance Derivation</h2>
-<p>Bias-Variance (BV) depends on MSE, and is typically discussed within the
-confines of regression. BV is a good <em>theoretical</em> device; i.e. we can never
-compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in which case
-we wouldn’t really need Statistical Learning in the first place!)</p>
-<p>Given a data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>, the
-expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_o\)</span>, over all
-possible training sets, is expressed as:</p>
+<p>Hence we have:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
+Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = \begin{cases} h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 1 - h(\mathbf{x_i}) &amp; \to y_i = 0 \\ \end{cases}
 \]</span></p>
-<p>Assume the target <span class="math inline">\(f(x)\)</span> is noiseless. Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> plays the
-role of <span class="math inline">\(\hat{\theta}\)</span> and <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>. Hence, we need
-to introduce
-<span class="math inline">\(\bar{h} := \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right]\)</span>;
-i.e. the “average hypothesis”. Then:</p>
+<p>where <span class="math inline">\(h\)</span> denotes the logistic function.</p>
+<div id="the-criterion-being-optimized" class="section level3">
+<h3><span class="header-section-number">16.2.1</span> The Criterion Being Optimized</h3>
+<p>We will not be using the MSE as our error measure (since doing so would make no
+sense in this particular context). Instead, we will use an “error” based on
+Maximum Likelihood Estimation. In order to do so, we must assume that our model
+is true; that is, that <span class="math inline">\(h(x) = f(x)\)</span>; given that assumption, we ask “how likely
+is it that we observe the data we already observed (i.e. <span class="math inline">\(y_i\)</span>)?”</p>
+<p>We start with the likelihood function <span class="math inline">\(L(\mathbf{b})\)</span>. Note that <span class="math inline">\(L\)</span> <em>implicitly</em>
+also depends on <span class="math inline">\(\mathbf{X}\)</span>, and also compute the log-likelihood
+<span class="math inline">\(\ell(\mathbf{b})\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
-\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] &amp;= 
-\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} + \bar{h} - f(x_0) \right)^2 \right ] \\
-&amp;= \mathbb{E}_{\mathcal{D}} \Big [ \Big (\underbrace{h^{(\mathcal{D})}(x_0) - \bar{h}}_{a} + \underbrace{\bar{h} - f(x_0)}_{b} \Big)^2 \Big ] \\
-&amp;= \mathbb{E}_{\mathcal{D}} \left [ (a + b)^2 \right ] \\
-&amp;= \mathbb{E}_{\mathcal{D}} \left [ a^2 + 2ab + b^2 \right ] \\
-&amp;= \mathbb{E}_{\mathcal{D}} [a^2] + \mathbb{E}_{\mathcal{D}} [b^2] + \mathbb{E}_{\mathcal{D}} [2ab] \\
+Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \\
+&amp; = \prod_{i=1}^{n} h(\mathbf{b^\mathsf{T} x_i})^{y_i} \left[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) \right]^{1 - y_i} \\
+\ell(\mathbf{b}) := \ln[L(\mathbf{b}) ]&amp; = \sum_{i=1}^{n} \ln\left[ P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \right] \\
+&amp; = \sum_{i=1}^{n} \left\{ y_i \ln[h(\mathbf{b^\mathsf{T} x_i})] + (1 - y_i) \ln[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) ]  \right\} \\
+&amp; = \sum_{i=1}^{n} \left[ y_i \ln\left( \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } } \right) + (1 - y_i) \ln \left( 1 -  \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } }  \right) \right] \\
+&amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{b^\mathsf{T} x_i} - \ln \left( 1 + e ^{\mathbf{b^\mathsf{T} x_i} } \right) \right] 
 \end{align*}\]</span></p>
-<p>Let’s examine the first two terms:</p>
-<ul>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} \right)^2 \right ] = \text{variance} \left( h(x_0) \right)\)</span></p></li>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} \left [ \left (\bar{h} - f(x_0) \right)^2 \right ] = \text{Bias}^2 \left( h(x_0) \right)\)</span></p></li>
-</ul>
-<p>Now, what about the cross-term: <span class="math inline">\(\mathbb{E}_{\mathcal{D}} [2ab]\)</span>?</p>
+<p>Now, here is the bad news: differentiating and setting equal to 0 yields and
+equation for which no closed-form solution exists. To find the maximum likelihood
+estimate of <span class="math inline">\(\mathbf{b}\)</span>, we require an iterative method: for example, the <strong>Newton-Raphson method</strong>, or <strong>gradient ascent</strong>.</p>
 <p><span class="math display">\[\begin{align*}
-\mathbb{E}_{\mathcal{D}} \left[ 2 \left( h^{(\mathcal{D})}(x_0) - \bar{h} \right)  \left( \bar{h} - f(x_0)  \right) \right] &amp; \propto \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] - \bar{h} \\
-&amp; = \bar{g} - \bar{g} = 0 
+\nabla \ell(\mathbf{b}) &amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{x_i} - \left( \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } } \right) \mathbf{x_i} \right] \\
+&amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{x_i} - \phi(\mathbf{b^\mathsf{T} x_i} ) \mathbf{x_i}  \right]  \\
+&amp; = \sum_{i=1}^{n} \left[ y_i - \phi(\mathbf{b^\mathsf{T} x_i} )  \right] \mathbf{x_i} 
 \end{align*}\]</span></p>
-<p>Hence, under the assumption of noiseless <span class="math inline">\(f\)</span>, we have that the
-expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
-possible training sets, is expressed as:</p>
+<p>Hence, in gradient ascent, we would use:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] = 
-\underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} +
-\underbrace{\left [ (\bar{h}(x_0) - f(x_0))^2 \right ] }_{\text{bias}^2}
+\mathbf{b}^{(s + 1)} = \mathbf{b}^{(s)} + \alpha \nabla \ell(\mathbf{b}^{(s)})
 \]</span></p>
-<div id="noisy-target" class="section level3">
-<h3><span class="header-section-number">9.4.1</span> Noisy Target</h3>
-<p>Now, when there is noise in the data we have that: <span class="math inline">\(y = f(x) + \epsilon\)</span>.
-If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
-the bias-variance decomposition becomes:</p>
-<p><span class="math display">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_o) - y_o \right)^2 \right ] = \text{bias}^2 + \text{var} + \sigma^2
-\]</span></p>
-<p>Notice that the above equation assumes that the squared error corresponds to
-just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
 </div>
-<div id="types-of-theoretical-mses" class="section level3">
-<h3><span class="header-section-number">9.4.2</span> Types of Theoretical MSEs</h3>
-<p>Keep in mind that there are different flavors of (theoretical) MSE:</p>
+<div id="another-way-to-solve-logistic-regression" class="section level3">
+<h3><span class="header-section-number">16.2.2</span> Another Way to Solve Logistic Regression</h3>
+<p>The overall picture stills stands:</p>
+<p><img src="images/logistic/logistic-pathdiag1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Now, however, we change our probability expression a bit:</p>
+<p><span class="math display">\[
+Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = \begin{cases} h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 1 - h(\mathbf{x_i}) &amp; \to y_i = -1 \\ \end{cases}
+\]</span></p>
+<p>We also need a new way of combining these expression (like we did inside the
+likelihood expression). They key observation is to note the following:
+<span class="math inline">\(h(-s) = 1 - h(s)\)</span>. With this, we begin computing the likelihood:</p>
+<p><span class="math display">\[\begin{align*}
+Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \\
+&amp; = \prod_{i=1}^{n} \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right) \\
+\ell(\mathbf{b}) : = \ln[L(\mathbf{\beta})] &amp; = \sum_{i=1}^{n} \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right] \\
+&amp; \Rightarrow \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right] }_{\text{logit}}
+\end{align*}\]</span></p>
+<p>In other words, we can perform the following <strong>minimization</strong> problem:</p>
+<p><span class="math display">\[\begin{align*}
+&amp; \min_{\mathbf{b}} \left\{ - \frac{1}{n} \sum_{i=1}^{n}  \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right]   \right\} \  \Leftrightarrow  \ \boxed{  \min_{\mathbf{b}} \left\{ \underbrace{ \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left( 1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } \right) }_{\text{pointwise error}} }_{E_{in}(\mathbf{b})} \right\}  }
+\end{align*}\]</span></p>
+<p>The product <span class="math inline">\(y_i \mathbf{b^\mathsf{T} x_i} =: y_i \mathbf{s}\)</span>
+(where <span class="math inline">\(\mathbf{s}\)</span> represents “signal”) can be understood using the following
+table:</p>
+<p>We can think of the term <span class="math inline">\(\mathbf{b^\mathsf{T} x_i}\)</span> as a numeric value ranging
+from “very small” to “very large”. A small signal means that the probability
+<span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be small. Conversely, a large signal
+means that <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be large.
+In turn, the term <span class="math inline">\(y_i\)</span> can be either <span class="math inline">\(-1\)</span> or <span class="math inline">\(+1\)</span>.</p>
+<p>If we have a correct prediction, we would expect a small probability
+<span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> to agree with <span class="math inline">\(y_i = -1\)</span>. Likewise, we would
+also expect a large probability <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> to agree with
+<span class="math inline">\(y_i = +1\)</span>.</p>
+<p>In turn, if we have an incorrect prediction, we would expect a small probability
+<span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> to mismatch <span class="math inline">\(y_i = +1\)</span>. Likewise, we would
+also expect a large probability <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> to disagree
+with an observed <span class="math inline">\(y_i = -1\)</span>.</p>
 <ul>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \left( h(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
-<li><p><span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \mathbb{E}_\mathcal{D} \left\{ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right\} \right]\)</span></p></li>
+<li><p>With agreements, <span class="math inline">\(e^{-y_i \mathbf{b^\mathsf{T} x_i} }\)</span> will be small, and
+will consequently give you a small error.</p></li>
+<li><p>With disagreements, <span class="math inline">\(e^{-y_i \mathbf{b^\mathsf{T} x_i} }\)</span> will be large, and
+will consequently give you a large error.</p></li>
 </ul>
-</div>
-</div>
-<div id="the-tradeoff" class="section level2">
-<h2><span class="header-section-number">9.5</span> The Tradeoff</h2>
-<p>We finish this chapter with a brief discussion of the so-called bias-variance
-tradeoff.</p>
-<div id="bias" class="section level4 unnumbered">
-<h4>Bias</h4>
-<p>Let’s first focus on the bias, <span class="math inline">\(\bar{h} - f(x)\)</span>. The average <span class="math inline">\(\bar{h}\)</span> comes
-from a class of hypotheses (e.g. constant models, linear models, etc.) In other
-words, <span class="math inline">\(\bar{h}\)</span> is a prototypical example of a certain class of hypotheses.
-The bias term thus can be interpreted as a measure of how well a particlar type
-of hypothesis <span class="math inline">\(\mathcal{H}\)</span> (e.g. constant model, linear model, quadratic model, etc.)
-approximates the target function <span class="math inline">\(f\)</span>.</p>
-</div>
-<div id="variance" class="section level4 unnumbered">
-<h4>Variance</h4>
-<p>Let’s focus on the variance,
-<span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ (h^{(\mathcal{D})}(x) - \bar{g} )^2 \right ]\)</span>.
-This is a measure of how close a particular <span class="math inline">\(h^{(\mathcal{D})}(x)\)</span> can get to
-the average functional form <span class="math inline">\(\bar{h}\)</span>. Put ir in other terms, how precise is
-our particular function compared to the average function?</p>
-</div>
-<div id="tradeoff" class="section level4 unnumbered">
-<h4>Tradeoff</h4>
-<p>Ideally, a model should have small variance <em>and</em> small bias. But, of course,
-there is a tradeoff between these two (hence the Bias-Variance tradeoff).
-That is, decreasing bias tends to result in increases variance, and vice-versa.</p>
-<p>To decrease bias, a model has to be more flexible/complex. How complex?
-In theory, to decrease bias, one needs “insider” information. That is, to truly
-decrease bias, we need some information on the form of <span class="math inline">\(f\)</span>. Hence, it is nearly
-impossible to decrease bias. We therefore put our efforts towards decreasing
-variance.</p>
-<p>One way to decrease variance would be to add more training data. However, there
-is a price to pay: we will have less test data.</p>
-<p>We could reduce the dimensions of our data (i.e. play with lower-rank data
-matrices through, for example, PCA).</p>
-<p>We could also apply regularization. At its core, this notion relates to making
-the size of a model’s parameters small. Consequently, there is a reduction in
-the variance of a model.</p>
+<p>We will also refer to our <span class="math inline">\(E_{in}(\mathbf{b})\)</span> quantity as the
+<strong>mean cross-entropy error</strong>. Technically it isn’t a “cross-entropy” measure in
+the classification sense, however we will ignore that technicality for now.
+We find:</p>
+<p><span class="math display">\[
+\nabla E_{in}(\mathbf{b}) = - \frac{1}{n} \sum_{i=1}^{n} \left( \frac{1}{1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } }  \right) y_i \mathbf{x_i}
+\]</span></p>
+<p>and we would use <a href="gradient.html#gradient">gradient descent</a> to compute the minimum.</p>
 
 </div>
 </div>
@@ -481,8 +598,8 @@ the variance of a model.</p>
           </div>
         </div>
       </div>
-<a href="mse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="classif.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>12 Principal Components Regression | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="12 Principal Components Regression | All Models Are Wrong" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,6 @@
 <meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
 
 
-<meta name="date" content="2019-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -279,6 +278,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>13.4.3</b> Some Properties</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>14</b> Ridge Regression</a></li>
+<li class="part"><span><b>VII Classification</b></span></li>
+<li class="chapter" data-level="15" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>15</b> Classification Methods</a></li>
+<li class="chapter" data-level="16" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>16</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="16.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>16.1</b> Motivation</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>16.1.1</b> First Approach: Fitting a Line</a></li>
+<li class="chapter" data-level="16.1.2" data-path="logistic.html"><a href="logistic.html#secodn-approach-harsh-thresholding"><i class="fa fa-check"></i><b>16.1.2</b> Secodn Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="16.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>16.1.3</b> Third Approach: Conditional Means</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>16.2</b> Logistic Regression Model</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>16.2.1</b> The Criterion Being Optimized</a></li>
+<li class="chapter" data-level="16.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>16.2.2</b> Another Way to Solve Logistic Regression</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -311,7 +324,7 @@ using records from <em>Kiplinger’s Personal Finance</em>. You can find more in
 about this data in the following url:</p>
 <p><a href="http://jse.amstat.org/datasets/04cars.txt" class="uri">http://jse.amstat.org/datasets/04cars.txt</a></p>
 <p>The data file, <code>cars2004.csv</code>, is available in the following github repository:</p>
-<p><a href="https://github.com/allmodelsarewrong/datasets" class="uri">https://github.com/allmodelsarewrong/datasets</a></p>
+<p><a href="https://github.com/allmodelsarewrong/data" class="uri">https://github.com/allmodelsarewrong/data</a></p>
 <p>The data set consists of
 10 variables measured on 385 cars. Here’s what
 the first six rows (and ten columns) look like:</p>
@@ -360,6 +373,7 @@ variables:</p>
 #&gt; length                                                             0.752</code></pre>
 <p>And let’s also take a look at the circle of correlations, from the output of
 a PCA on the entire data set:</p>
+<pre><code>#&gt; Error in text.default(cars_pca$var$coord[1, 1], cars_pca$var$coord[1, : plot.new has not been called yet</code></pre>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-97-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Computing the OLS solution for the regression model of <code>price</code> onto the
 other nine predictors we obtain:</p>
@@ -534,15 +548,15 @@ equations in terms of the original input variables:</p>
 #&gt; width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
 <p>Obviously, if you keep all components, you aren’t changing anything: you’re
 spending the same amount of money as you were in regular least-squares regression.</p>
-<pre><code>#&gt;     engine        cyl         hp   city_mpg    hwy_mpg     weight 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 
-#&gt;      wheel     length      width 
-#&gt; -4937.8106   446.9752 -2141.8196</code></pre>
+<pre><code>#&gt;     engine        cyl         hp   city_mpg    hwy_mpg     weight      wheel 
+#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
+#&gt;     length      width 
+#&gt;   446.9752 -2141.8196</code></pre>
 <p>compare with the regression coefficients of OLS:</p>
-<pre><code>#&gt;    Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 
-#&gt;     Xwheel    Xlength     Xwidth 
-#&gt; -4937.8106   446.9752 -2141.8196</code></pre>
+<pre><code>#&gt;    Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight     Xwheel 
+#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
+#&gt;    Xlength     Xwidth 
+#&gt;   446.9752 -2141.8196</code></pre>
 <p>The idea is to keep only a few components. Hence, the goal is to find <span class="math inline">\(k\)</span>
 principal components (with <span class="math inline">\(k \ll p\)</span>; <span class="math inline">\(k\)</span> is called the <strong>tuning parameter</strong>
 or the <strong>hyperparameter</strong>). How do we determine <span class="math inline">\(k\)</span>?
@@ -558,7 +572,7 @@ grow as we add more and more PCs into the regression equation:</p>
 <h4>Remarks</h4>
 <p>The catch: those PC’s you choose to keep may not be good predictors of
 <span class="math inline">\(\mathbf{y}\)</span>. That is, there is a chance that some of those PC’s you discarded
-actually captured a good amount of the signal. Unfortunately, there is no way
+actually capture a fair amount of the signal. Unfortunately, there is no way
 of knowing this in a real-life setting. Partial Least Squares was developed
 as a cure for this, which is the topic of the <a href="pls.html#pls">next chapter</a>.</p>
 
@@ -591,12 +605,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -608,6 +621,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
