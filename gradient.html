@@ -322,15 +322,17 @@ algorithm.</p>
 <h2><span class="header-section-number">6.1</span> Error Surface</h2>
 <p>Consider the overall error measure of a linear regression problem, for example
 the mean squared error (MSE)—or if you prefer the sum of squared errors (SSE).</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:302-1">\[
 E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
+\tag{6.1}
 \]</span></p>
 <p>As we saw in the <a href="ols.html#ols">previous chapter</a>, we can look at such error measure
 from the perspective of the parameters (i.e. the regression coefficients).
 From this perspective, we denote this error function as <span class="math inline">\(E(\mathbf{b})\)</span>,
 making explicit its dependency on the vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>.</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:302-2">\[
 E(\mathbf{b}) = \frac{1}{n} ( \underbrace{\mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b}}_{\text{Quadratic Form}} - \underbrace{ 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y}}_{\text{Linear}} + \underbrace{ \mathbf{y^\mathsf{T}y}}_{\text{Constant}} )
+\tag{6.2}
 \]</span></p>
 <p>As you can tell, <span class="math inline">\(E(\mathbf{b})\)</span> is a quadratic function with respect to
 <span class="math inline">\(\mathbf{b}\)</span>. Moreover, <span class="math inline">\(E(\mathbf{b})\)</span> is a positive semidefinite quadratic
@@ -355,20 +357,21 @@ Figure 6.2: Error Surface
 </p>
 </div>
 <p>With OLS we can use direct methods to obtain the minimum. All we need to do is
-to compute the derivative of the error function, set it equal to zero,
-and find this minimum point <span class="math inline">\(\mathbf{\overset{*}{b}}\)</span>. Assuming that the matrix
-<span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is invertible, the OLS minimum is easily calculated as:
+to compute the derivative of the error function <span class="math inline">\(E(\mathbf{b}\)</span>), set it equal
+to zero, and find this minimum point <span class="math inline">\(\mathbf{\overset{*}{b}}\)</span>.
+As you know, assuming that the matrix <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is invertible,
+the OLS minimum is easily calculated as:
 <span class="math inline">\(\mathbf{b} = (\mathbf{X^\mathsf{T}X})^{-1} \mathbf{X^\mathsf{T} y}\)</span>.</p>
 <p>Interestingly, we can also use iterative methods to compute this minimum.
-The iterative method that we will discuss in this chapter is called
+The iterative method that we will discuss here is called
 <strong>gradient descent</strong>.</p>
 </div>
 <div id="idea-of-gradient-descent" class="section level2">
 <h2><span class="header-section-number">6.2</span> Idea of Gradient Descent</h2>
 <p>The main idea of gradient descent is as follows: we start with an arbitrary
-point <span class="math inline">\(\mathbf{b}^{(0)} = ( b_1^{(0)}, b_2^{(0)} )\)</span>, and we evaluate the
-error function at this point: <span class="math inline">\(E(\mathbf{b}^{(0)})\)</span>. This gives us a location
-somewhere on the error surface.</p>
+point <span class="math inline">\(\mathbf{b}^{(0)} = ( b_1^{(0)}, b_2^{(0)} )\)</span> of model parameters,
+and we evaluate the error function at this point: <span class="math inline">\(E(\mathbf{b}^{(0)})\)</span>.
+This gives us a location somewhere on the error surface. See figure below.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-56"></span>
 <img src="images/ols/gradient-error-surface1.svg" alt="Starting position on error surface" width="70%" />
 <p class="caption">
@@ -383,9 +386,9 @@ surface to obtain a new position <span class="math inline">\(E(\mathbf{b}^{(1)})
 Figure 6.4: Begin to move down on error surface
 </p>
 </div>
-<p>We keep “moving down” the surface, obtaining subsequent new vectors
-<span class="math inline">\(\mathbf{b}^{(s)}\)</span> that result in an error <span class="math inline">\(E(\mathbf{b}^{(s)})\)</span> that is closer
-to the minimum of <span class="math inline">\(E(\mathbf{b})\)</span>.</p>
+<p>We keep “moving down” the surface, obtaining at each step <span class="math inline">\(s\)</span> subsequent new
+vectors <span class="math inline">\(\mathbf{b}^{(s)}\)</span> that result in an error <span class="math inline">\(E(\mathbf{b}^{(s)})\)</span> that
+is closer to the minimum of <span class="math inline">\(E(\mathbf{b})\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-58"></span>
 <img src="images/ols/gradient-error-surface3.svg" alt="Keep moving down on error surface" width="70%" />
 <p class="caption">
@@ -411,19 +414,22 @@ conceptual idea behind optimization algorithms like gradient descent.</p>
 <div id="moving-down-an-error-surface" class="section level2">
 <h2><span class="header-section-number">6.3</span> Moving Down an Error Surface</h2>
 <p>What do we mean by “moving down the error surface”? Well, mathematically, this
-means we generate the new vector <span class="math inline">\(\mathbf{b}^{(1)}\)</span> using the following formula:</p>
-<p><span class="math display">\[
+means we generate the new vector <span class="math inline">\(\mathbf{b}^{(1)}\)</span> from the initial point
+<span class="math inline">\(\mathbf{b}^{(0)}\)</span>, using the following formula:</p>
+<p><span class="math display" id="eq:302-3">\[
 \mathbf{b}^{(1)} = \mathbf{b}^{(0)} + \alpha \mathbf{v}
+\tag{6.3}
 \]</span></p>
 <p>As you can tell, in addition to the values of parameter vectors <span class="math inline">\(\mathbf{b}^{(0)}\)</span>
 and <span class="math inline">\(\mathbf{b}^{(1)}\)</span>, we have two extra ingredients: <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\mathbf{v}\)</span>.</p>
 <p>We call <span class="math inline">\(\alpha\)</span> the <strong>step size</strong>. Intuitively, <span class="math inline">\(\alpha\)</span> tells us how far down
 the surface we are moving. In turn, <span class="math inline">\(\mathbf{v}\)</span> is the vector indicating the
 direction in which we need to move. Because we are interested in this direction,
-we can simply consider <span class="math inline">\(\mathbf{v}\)</span> to be a <strong>unit</strong> vector. We will discuss
+we can simply consider <span class="math inline">\(\mathbf{v}\)</span> to be a <strong>unit vector</strong>. We will discuss
 how to find the direction of <span class="math inline">\(\mathbf{v}\)</span> in a little bit. Right now let’s just
 focus on generating new vectors in this manner:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:302-4">\[\begin{align*}
+\tag{6.4}
 \mathbf{b}^{(2)} &amp; = \mathbf{b}^{(1)} + \alpha \mathbf{v}^{(1)} \\ 
 \mathbf{b}^{(3)} &amp; = \mathbf{b}^{(2)} + \alpha \mathbf{v}^{(2)} \\ 
 \vdots &amp; \hspace{10mm} \vdots \\
@@ -447,17 +453,19 @@ does it mean for our vectors <span class="math inline">\(\mathbf{b}^{(s+1)}\)</s
 minimizing point? Well, it means that the error at point <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span>
 is less than the error at point <span class="math inline">\(\mathbf{b}^{(s)}\)</span>. Hence, we examine
 <span class="math inline">\(\Delta E_{\mathbf{b}}\)</span>, the difference between the errors at these two points:</p>
-<p><span class="math display">\[\begin{align*} 
+<p><span class="math display" id="eq:302-5">\[\begin{align*} 
 \Delta E_{\mathbf{b}}  &amp; := E\big( \mathbf{b}^{(s + 1)} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = E \big( \mathbf{b}^{(s)} + \alpha \mathbf{v} \big) - E\big( \mathbf{b}^{(s)} \big) 
+\tag{6.5}
 \end{align*}\]</span></p>
 <p>In order for our vector <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span> to be closer to the minimizing
 point that <span class="math inline">\(\mathbf{b}^{(s)}\)</span>, we want this quantity to be as negative as possible.
 To find the <span class="math inline">\(\mathbf{v}\)</span> that makes this true, we need to use a trick:
 Taylor Expand <span class="math inline">\(E(\mathbf{b}^{(s)} + \alpha \mathbf{v})\)</span>. Doing so, we obtain:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:302-6">\[\begin{align*}
 \Delta E_{\mathbf{b}} &amp;= E\big( \mathbf{b}^{(s)} \big) + \nabla E\big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \big(\alpha \mathbf{v} \big) + O \big( \alpha^2 \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2) 
+\tag{6.6}
 \end{align*}\]</span></p>
 <p>Hence, we must examine the term of the inner product between the gradient and
 the unit vector <span class="math inline">\(\mathbf{v}\)</span>, that is:
@@ -475,29 +483,33 @@ Figure 6.6: Three prototypical cases
 </div>
 <ul>
 <li><p>When both vectors are parallel, <span class="math inline">\(\mathbf{u} \parallel \mathbf{v}\)</span> (i.e. the
-second case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T}\mathbf{v} = \| \mathbf{u} \|\)</span>.</p></li>
+second case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T}\mathbf{v} = \| \mathbf{u} \|\)</span>.
+Recall that we are assuming <span class="math inline">\(\mathbf{v}\)</span> to be a unit vector.</p></li>
 <li><p>When both vectors are antiparallel, <span class="math inline">\(\mathbf{u} \not\parallel \mathbf{v}\)</span>
 (i.e. the first case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T} = - \| \mathbf{u} \|\)</span>.</p></li>
 <li><p>When both vectors are orthogonal, <span class="math inline">\(\mathbf{u} \perp \mathbf{v}\)</span>, then
 <span class="math inline">\(\mathbf{u}^\mathsf{T} \mathbf{v} = 0\)</span>.</p></li>
 </ul>
 <p>Therefore, in any of the three cases, we have that</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:302-7">\[
 \mathbf{u}^\mathsf{T} \mathbf{v} \geq - \left\| \mathbf{u} \right\|
+\tag{6.7}
 \]</span></p>
 <p>Hence, recalling that <span class="math inline">\(\mathbf{u} := \nabla E(\mathbf{b}^{(s)})\)</span>, we can plug
 this result into our error computation to obtain:</p>
-<p><span class="math display">\[\begin{align*} 
+<p><span class="math display" id="eq:302-8">\[\begin{align*} 
 \Delta E_{\mathbf{b}}  &amp; := E\big( \mathbf{b}^{(s + 1)} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = E \big( \mathbf{b}^{(s)} + \alpha \mathbf{v} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2)  \\
 &amp; \geq - \alpha \left\| \nabla E\big( \mathbf{b}^{(s)} \big) \right\|  \mathbf{v}
+\tag{6.8}
 \end{align*}\]</span></p>
 <p>Thus, to make <span class="math inline">\(\Delta E_{\mathbf{b}}\)</span> as negative as possible, we should take
 <span class="math inline">\(\mathbf{v}\)</span> parallel to <span class="math inline">\(( - \| \nabla E(\mathbf{b}^{(s)}) \| )\)</span>.</p>
 <p><strong>The Moral:</strong> We want the following:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:302-9">\[
 \mathbf{v} = - \frac{\nabla E(\mathbf{b}^{(s)}) }{\left\| \nabla E(\mathbf{b}^{(s)})  \right\| }
+\tag{6.9}
 \]</span></p>
 <p>which means we want to move in the direction opposite to that of the gradient.
 Keep in mind that we divided by the norm because we previously defined
@@ -512,21 +524,23 @@ Keep in mind that we divided by the norm because we previously defined
 let us investigate the actual gradient further. Since we have a formula for
 <span class="math inline">\(E(\mathbf{b})\)</span>, we can find a closed form for its gradient
 <span class="math inline">\(\nabla E(\mathbf{b})\)</span>:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:302-10">\[\begin{align*}
 E(\mathbf{b}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \right)^{\mathsf{T}} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \right) \\
 \\
 &amp; = \frac{1}{n} \left( \mathbf{b}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{b}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{y} + \mathbf{y}^\mathsf{T} \mathbf{y} \right) \\
 \\
 \nabla E(\mathbf{b}) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) 
+\tag{6.10}
 \end{align*}\]</span></p>
 <p>This was from the columns point of view; we can also find a different formula
 from the row’s perspective:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:302-11">\[\begin{align*}
 E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right) \\
 &amp; = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right)^2 \\
 \frac{\partial}{\partial b_j} E(\mathbf{b}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
 \frac{\partial}{\partial b_j} E(\mathbf{b}^{(0)}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
 &amp; = - \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[ \mathbf{b}^{(0)} \right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij} 
+\tag{6.11}
 \end{align*}\]</span></p>
 <p>This will be a better formula to use in our iterative algorithm, posited below.</p>
 <div id="algorithm" class="section level4 unnumbered">

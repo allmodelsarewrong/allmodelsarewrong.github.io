@@ -317,14 +317,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this part of the book we will talk about the notion of regularization
 (what is regularization, what is the purpose of regularization, what
 approaches are used for regularization) all of this within the context of
-linear models.</p>
-<p>If you look at the dictionary definition of the term <em>regularization</em> you
-should find something like this:</p>
+linear models. However, keep in mind that you can also use regularization
+in non-linear contexts.</p>
+<p>So what is regularization? If you look at the dictionary definition of the term
+<em>regularization</em> you should find something like this:</p>
 <blockquote>
 <p><strong>regularization</strong>; the act of bringing to uniformity; make (something) regular</p>
 </blockquote>
-<p>What is regularization? Simply put: Making things regular. In the context of regression,
-this means reducing the variability (and therefore the size) of the vector of
+<p>Simply put: regularization has to do with “making things regular”.</p>
+<p>But what about <em>regularization</em> in the context of supervised learning? What are
+the “irregular” things that need to be made “regular”? In order to answer this
+question, we will first motivate the discussion by sWe will answer this
+questions by discussing the effects of having predictors with high multicollinearity.</p>
+<p>means reducing the variability
+(and therefore the size) of the vector of
 predicted coefficients. What we have seen is that if there is multicollinearity,
 some of the elements of <span class="math inline">\(\mathbf{b}_{\text{ols}}\)</span> will have high variance.
 In other words, <span class="math inline">\(\| \mathbf{b}_{\text{ols}} \|_{\ell_p}\)</span> will be very large

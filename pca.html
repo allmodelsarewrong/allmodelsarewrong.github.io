@@ -546,7 +546,7 @@ Lagrange Multipliers:</p>
 <p><span class="math display">\[
 \mathcal{L} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - \lambda \left( \mathbf{v}^\mathsf{T} \mathbf{v}  - 1 \right)
 \]</span></p>
-<p>Calculating the derivative of <span class="math inline">\(mathcal{L}\)</span> with respect to <span class="math inline">\(mathbf{v}\)</span>:</p>
+<p>Calculating the derivative of <span class="math inline">\(\mathcal{L}\)</span> with respect to <span class="math inline">\(\mathbf{v}\)</span>:</p>
 <p><span class="math display">\[
 \frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = 0 \ \Rightarrow \ \underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \ \Rightarrow \ \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
 \]</span></p>
@@ -621,11 +621,11 @@ of the full data.</p>
 </div>
 <div id="another-perspective-of-pca" class="section level2">
 <h2><span class="header-section-number">4.4</span> Another Perspective of PCA</h2>
-<p>The overall idea behind PCA is the following. Given a set of <span class="math inline">\(p\)</span> variables
+<p>Let us present another way to approach PCA. Given a set of <span class="math inline">\(p\)</span> variables
 <span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>, we want to obtain new <span class="math inline">\(k\)</span> variables
 <span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
-<p>A principal component is a linear combination: <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>.
-The first PC is a linear mix:</p>
+<p>A principal component is a linear combination of the <span class="math inline">\(p\)</span> variables:
+<span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>. The first PC is a linear mix:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="images/pca/pca-path-diag1.svg" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
@@ -800,7 +800,7 @@ but that we find worth mentioning. <span class="math inline">\(\mathbf{z_h}\)</s
 <p>What this expression implies is that principal components <span class="math inline">\(\mathbf{z_h}\)</span> are
 computed to be the <em>best</em> representants in terms of maximizing the sum of
 squared correlations with the variables
-<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_j}\)</span>.
+<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>.
 Interestingly, you can think of PCs as predictors
 of the variables in <span class="math inline">\(\mathbf{X}\)</span>. Under this perspective, we can reverse the
 relations and see PCA from a regression-like model perspective:</p>
