@@ -546,14 +546,16 @@ Lagrange Multipliers:</p>
 <p><span class="math display">\[
 \mathcal{L} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - \lambda \left( \mathbf{v}^\mathsf{T} \mathbf{v}  - 1 \right)
 \]</span></p>
-<p>Calculating the derivative of <span class="math inline">\(\mathcal{L}\)</span> with respect to <span class="math inline">\(\mathbf{v}\)</span>:</p>
+<p>Calculating the derivative of the lagrangian <span class="math inline">\(\mathcal{L}\)</span> with respect to
+<span class="math inline">\(\mathbf{v}\)</span>, and equating to zero we get:</p>
 <p><span class="math display">\[
-\frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = 0 \ \Rightarrow \ \underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \ \Rightarrow \ \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
+\frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = \mathbf{0} \ \Rightarrow \ \underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \ \Rightarrow \ \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
 \]</span></p>
 <p>That is, we obtain the equation <span class="math inline">\(\mathbf{S} \mathbf{v} = \lambda \mathbf{v}\)</span>
 where <span class="math inline">\(\mathbf{S} \in \mathbb{R}^{p \times p}\)</span> is symmetric.
 This means that <span class="math inline">\(\mathbf{v}\)</span> is an eigenvector (with eigenvalue <span class="math inline">\(\lambda\)</span>)
-of <span class="math inline">\(\mathbf{S}\)</span>.</p>
+of <span class="math inline">\(\mathbf{S}\)</span>. Moreover, <span class="math inline">\(\lambda\)</span> is the value of the projected inertia
+<span class="math inline">\(I_\mathbb{H}\)</span>—which is the thing that we want to maximize.</p>
 <div id="eigenvectors-of-mathbfs" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> Eigenvectors of <span class="math inline">\(\mathbf{S}\)</span></h3>
 <p>Assume that <span class="math inline">\(\mathbf{X}\)</span> has full rank (i.e. <span class="math inline">\(\mathrm{rank}(\mathbf{X}) = p\)</span>).
