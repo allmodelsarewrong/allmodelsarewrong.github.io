@@ -317,7 +317,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Before entering supervised learning territory, we want to discuss the general
 framework of linear regression. We will introduce this topic from a pure
 model-fitting point of view. In other words, we will postpone the learning
-aspect (the prediction aspect) after the <strong>chapter of theory of learning</strong>.</p>
+aspect (the prediction of new data) after the
+<a href="learning.html#learning"><strong>chapter of theory of learning</strong></a>.</p>
 <p>The reason to cover linear regression in this way is for us to have something
 to work with when we start talking about the theory of supervised learning.</p>
 <div id="motivation" class="section level2">
@@ -326,7 +327,7 @@ to work with when we start talking about the theory of supervised learning.</p>
 to use this data to predict the salary of NBA players, in terms of certain
 variables like player’s team, player’s height, player’s weight,
 player’s position, player’s years of professional experience,
-player’s number of 2pts, player’ number of 3 points, number of blocks, etc.
+player’s number of 2pts, player’s number of 3 points, number of blocks, etc.
 Of course, we need information on the salaries of some current NBA player’s:</p>
 <table>
 <thead>
@@ -377,7 +378,7 @@ Of course, we need information on the salaries of some current NBA player’s:</
 <p>As usual, we use the symbol <span class="math inline">\(\mathbf{x_i}\)</span> to denote the vector of measurements
 of player <span class="math inline">\(i\)</span>’s statistics (e.g. height, weight, etc.); in turn, the salary
 of the <span class="math inline">\(i\)</span>-th player is represented with <span class="math inline">\(y_i\)</span>.</p>
-<p>Ideally, there exists some function <span class="math inline">\(f : \mathcal{X} \to \mathcal{y}\)</span>
+<p>Ideally, we assume the existance of some function <span class="math inline">\(f : \mathcal{X} \to \mathcal{y}\)</span>
 (i.e. a function that takes values from <span class="math inline">\(\mathcal{X}\)</span> space and maps them to a
 single value <span class="math inline">\(y\)</span>). We will refer to this function the ideal “formula” for salary.
 Here we are using the word <em>formula</em> in a very lose sense, and not necessarily
@@ -388,20 +389,29 @@ good approximation of the (unknown) function <span class="math inline">\(f\)</sp
 </div>
 <div id="the-ideaintuition-of-regression" class="section level2">
 <h2><span class="header-section-number">5.2</span> The Idea/Intuition of Regression</h2>
-<p>Consider again the NBA dataset, and again let <span class="math inline">\(y_i\)</span> denote the salary for the
-<span class="math inline">\(i\)</span>-th player (ignoring inflation). Say we now have a new prospective player
-from Europe; and we are tasked with predicting their salary.</p>
+<p>Let’s go back to our example with NBA players. Recall that <span class="math inline">\(y_i\)</span> denotes the
+salary for the <span class="math inline">\(i\)</span>-th player. For simplicity’s sake let’s not worry about
+inflation. Say we now have a new prospective player from Europe; and we are
+tasked with predicting their salary denoted by <span class="math inline">\(y_0\)</span>. Let’s review a couple of
+scenarios to get a high-level intuition for this task.</p>
 <p><strong>Scenario 1</strong>. Suppose we have <strong>no</strong> information
 on this new player. How would we compute <span class="math inline">\(y_{0}\)</span> (i.e. the salary of this new
 player)? One possibility is to guesstimate <span class="math inline">\(y_0\)</span> using the historical average
 salary <span class="math inline">\(\bar{y}\)</span> of NBA players. In other words, we would simply calculate:
 <span class="math inline">\(\hat{y}_0 = \bar{y}\)</span>.
 In this case we are using <span class="math inline">\(\bar{y}\)</span> as the <em>typical</em> score (e.g. a measure of
-center) as a plausible guestimate for <span class="math inline">\(y_0\)</span>. We could also look at the median
-of the existing salaries, if we are concerned about outliers.</p>
+center) as a plausible guesstimate for <span class="math inline">\(y_0\)</span>. We could also look at the median
+of the existing salaries, if we are concerned about outliers or some skewed
+distribution of salaries.</p>
 <p><strong>Scenario 2</strong>. Now, suppose we know that this new player will sign on to the
-LA Lakers. We could then use <span class="math inline">\(\hat{y}_0 = \text{avg}(\text{Laker&#39;s Salaries})\)</span>:
-that is, the average salary of all Laker’s players.</p>
+LA Lakers. Compared to scenario 1, we now have a new bit of information since
+we know which team will hire this player. Therefor, we can use this fact to
+have a more educated guess for <span class="math inline">\(y_0\)</span>. How? Instead of using the salaries of all
+playes, we can focus on the salaries of Laker’s players. We could then use
+<span class="math inline">\(\hat{y}_0 = \text{avg}(\text{Laker&#39;s Salaries})\)</span>:
+that is, the average salary of all Laker’s players. It is reasonable that
+<span class="math inline">\(\hat{y}_0\)</span> is “closer” to the average salary of Laker’s than to the overall
+average salary of all NBA players.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
 <img src="images/ols/ols-avg-salary-team.svg" alt="Average salary by team" width="70%" />
 <p class="caption">
@@ -424,7 +434,9 @@ In all of these examples, the prediction is basically a conditional mean:
 that are equal to <span class="math inline">\(x_0\)</span>. But what if none of the available <span class="math inline">\(x_i\)</span> values are
 equal to <span class="math inline">\(x_0\)</span>? We’ll talk about this later.</p>
 <p>The previous hypothetical scenarios illustrate the core idea of regression:
-we predict using quantities of the form:</p>
+we predict using quantities of the form <span class="math inline">\(\text{ave}(y_i|x_i = x_0)\)</span> which can
+be formalized—under some assumptions—into the notion of conditional
+expectations of the form:</p>
 <p><span class="math display">\[
 \mathbb{E}(y_i \mid x_{i1}^{*} , x_{i2}^{*}, \dots, x_{ip}^{*})
 \]</span></p>
@@ -434,9 +446,9 @@ regression function is nothing more than a conditional expectation!</p>
 </div>
 <div id="the-linear-regression-model" class="section level2">
 <h2><span class="header-section-number">5.3</span> The Linear Regression Model</h2>
-<p>A regression model: use one or more features <span class="math inline">\(X\)</span> to say something about the
-reponse <span class="math inline">\(Y\)</span>. A <strong>linear regression</strong> model tells us to combine our features in
-a linear way in order to approximate the response:</p>
+<p>In a regression model we use one or more features <span class="math inline">\(X\)</span> to say something about the
+reponse <span class="math inline">\(Y\)</span>. In turn, a <strong>linear regression</strong> model tells us to combine our
+features in a <strong>linear</strong> way in order to approximate the response:</p>
 <p><span class="math display" id="eq:301-1">\[
 \hat{Y} = b_0 + b_1 X
 \tag{5.1}
