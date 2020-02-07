@@ -318,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 framework of linear regression. We will introduce this topic from a pure
 model-fitting point of view. In other words, we will postpone the learning
 aspect (the prediction of new data) after the
-<a href="learning.html#learning"><strong>chapter of theory of learning</strong></a>.</p>
+<a href="learning.html#learning">chapter of theory of learning</a>.</p>
 <p>The reason to cover linear regression in this way is for us to have something
 to work with when we start talking about the theory of supervised learning.</p>
 <div id="motivation" class="section level2">
@@ -405,7 +405,7 @@ of the existing salaries, if we are concerned about outliers or some skewed
 distribution of salaries.</p>
 <p><strong>Scenario 2</strong>. Now, suppose we know that this new player will sign on to the
 LA Lakers. Compared to scenario 1, we now have a new bit of information since
-we know which team will hire this player. Therefor, we can use this fact to
+we know which team will hire this player. Therefore, we can use this fact to
 have a more educated guess for <span class="math inline">\(y_0\)</span>. How? Instead of using the salaries of all
 playes, we can focus on the salaries of Laker’s players. We could then use
 <span class="math inline">\(\hat{y}_0 = \text{avg}(\text{Laker&#39;s Salaries})\)</span>:
@@ -527,8 +527,8 @@ b_{p} \\
 Figure 5.3: Linear combination with constant term
 </p>
 </div>
-<p>If we assume centered predictors then we don’t have to worry about the constant
-term:</p>
+<p>If we assume that the predictors and the response are mean-centered, then we
+don’t have to worry about the constant term:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
 <img src="images/ols/ols-path-diagram-betas1.svg" alt="Linear combination without constant term" width="40%" />
 <p class="caption">
@@ -575,11 +575,15 @@ function to be minimized (you could also take <span class="math inline">\(\text{
 algebra, it’s easy to see that:</p>
 <p><span class="math display" id="eq:301-8">\[\begin{align}
 \text{MSE} &amp;= \frac{1}{n} \sum_{i=1}^{n} e_{i}^{2} \\
+&amp;= \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)^2 \\
 &amp;= \frac{1}{n} \sum_{i=1}^{n} (\mathbf{b^\mathsf{T}\vec{x}_i} - y_i)^2 \\
 &amp;= \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^\mathsf{T} (\mathbf{Xb} - \mathbf{y}) \\
-&amp;= \frac{1}{n} \| \mathbf{Xb} - \mathbf{y} \|^2
+&amp;= \frac{1}{n} \| \mathbf{Xb} - \mathbf{y} \|^2 \\
+&amp;= \frac{1}{n} \| \mathbf{\hat{y}} - \mathbf{y} \|^2
 \tag{5.8}
 \end{align}\]</span></p>
+<p>As you can tell, the Mean Squared Error <span class="math inline">\(\text{MSE}\)</span> is proportional to the
+squared norm of the difference vector <span class="math inline">\(\mathbf{e} = \mathbf{\hat{y}} - \mathbf{y}\)</span>.</p>
 </div>
 <div id="the-least-squares-algorithm" class="section level2">
 <h2><span class="header-section-number">5.5</span> The Least Squares Algorithm</h2>
