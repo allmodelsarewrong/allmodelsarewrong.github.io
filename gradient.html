@@ -461,20 +461,24 @@ is less than the error at point <span class="math inline">\(\mathbf{b}^{(s)}\)</
 <p>In order for our vector <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span> to be closer to the minimizing
 point that <span class="math inline">\(\mathbf{b}^{(s)}\)</span>, we want this quantity to be as negative as possible.
 To find the <span class="math inline">\(\mathbf{v}\)</span> that makes this true, we need to use a trick:
-Taylor Expand <span class="math inline">\(E(\mathbf{b}^{(s)} + \alpha \mathbf{v})\)</span>. Doing so, we obtain:</p>
+get the Taylor series expansion of <span class="math inline">\(E(\mathbf{b}^{(s)} + \alpha \mathbf{v})\)</span>. Doing so, we obtain:</p>
 <p><span class="math display" id="eq:302-6">\[\begin{align*}
 \Delta E_{\mathbf{b}} &amp;= E\big( \mathbf{b}^{(s)} \big) + \nabla E\big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \big(\alpha \mathbf{v} \big) + O \big( \alpha^2 \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2) 
 \tag{6.6}
 \end{align*}\]</span></p>
-<p>Hence, we must examine the term of the inner product between the gradient and
+<p>where <span class="math inline">\(O(\alpha^2)\)</span> denotes those terms of order 2 or greater in the series expansion.</p>
+<p>We will focus our attention on the series expansion of just one term, and ignore
+the higher order terms comprised by <span class="math inline">\(O(\alpha^2)\)</span>. In other words, we will
+focus on the term:
+<span class="math inline">\(\alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v}\)</span>.
+Notice that this term involves the inner product between the gradient and
 the unit vector <span class="math inline">\(\mathbf{v}\)</span>, that is:
-<span class="math inline">\([ \nabla E(\mathbf{b}^{(s)})]^{\mathsf{T}} \mathbf{v}\)</span>.
-For notational convenience, let us (temporarily) define
+<span class="math inline">\([ \nabla E(\mathbf{b}^{(s)})]^{\mathsf{T}} \mathbf{v}\)</span>.</p>
+<p>For notational convenience, let us (temporarily) define
 <span class="math inline">\(\mathbf{u} : = \nabla E ( \mathbf{b}^{(s)} )\)</span>. In this way, we need to examine
-the inner product: <span class="math inline">\(\mathbf{u^\mathsf{T}v}\)</span>.</p>
-<p>With respect to the orientation of <span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>, we can consider
-three prototypical cases: <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are either antiparallel, parallel, or orthogonal.</p>
+the inner product: <span class="math inline">\(\mathbf{u^\mathsf{T}v}\)</span>.
+We can consider three prototypical cases with respect to the orientation of <span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>: either antiparallel, parallel, or orthogonal.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
 <img src="images/ols/three-prototypical-cases.png" alt="Three prototypical cases" width="80%" />
 <p class="caption">
@@ -486,7 +490,7 @@ Figure 6.6: Three prototypical cases
 second case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T}\mathbf{v} = \| \mathbf{u} \|\)</span>.
 Recall that we are assuming <span class="math inline">\(\mathbf{v}\)</span> to be a unit vector.</p></li>
 <li><p>When both vectors are antiparallel, <span class="math inline">\(\mathbf{u} \not\parallel \mathbf{v}\)</span>
-(i.e. the first case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T} = - \| \mathbf{u} \|\)</span>.</p></li>
+(i.e. the first case above), then <span class="math inline">\(\mathbf{u}^\mathsf{T} \mathbf{v} = - \| \mathbf{u} \|\)</span>.</p></li>
 <li><p>When both vectors are orthogonal, <span class="math inline">\(\mathbf{u} \perp \mathbf{v}\)</span>, then
 <span class="math inline">\(\mathbf{u}^\mathsf{T} \mathbf{v} = 0\)</span>.</p></li>
 </ul>
@@ -495,17 +499,19 @@ Recall that we are assuming <span class="math inline">\(\mathbf{v}\)</span> to b
 \mathbf{u}^\mathsf{T} \mathbf{v} \geq - \left\| \mathbf{u} \right\|
 \tag{6.7}
 \]</span></p>
+<p>This means that the least we can get is <span class="math inline">\(- \left\| \mathbf{u} \right\|\)</span>, which
+occurs when <span class="math inline">\(\mathbf{v}\)</span> is in the opposite direction of <span class="math inline">\(\mathbf{u}\)</span>.</p>
 <p>Hence, recalling that <span class="math inline">\(\mathbf{u} := \nabla E(\mathbf{b}^{(s)})\)</span>, we can plug
 this result into our error computation to obtain:</p>
 <p><span class="math display" id="eq:302-8">\[\begin{align*} 
 \Delta E_{\mathbf{b}}  &amp; := E\big( \mathbf{b}^{(s + 1)} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = E \big( \mathbf{b}^{(s)} + \alpha \mathbf{v} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2)  \\
-&amp; \geq - \alpha \left\| \nabla E\big( \mathbf{b}^{(s)} \big) \right\|  \mathbf{v}
+&amp; \geq - \alpha \left\| \nabla E\big( \mathbf{b}^{(s)} \big) \right\|
 \tag{6.8}
 \end{align*}\]</span></p>
 <p>Thus, to make <span class="math inline">\(\Delta E_{\mathbf{b}}\)</span> as negative as possible, we should take
-<span class="math inline">\(\mathbf{v}\)</span> parallel to <span class="math inline">\(( - \| \nabla E(\mathbf{b}^{(s)}) \| )\)</span>.</p>
+<span class="math inline">\(\mathbf{v}\)</span> parallel to the opposite direction of the gradient.</p>
 <p><strong>The Moral:</strong> We want the following:</p>
 <p><span class="math display" id="eq:302-9">\[
 \mathbf{v} = - \frac{\nabla E(\mathbf{b}^{(s)}) }{\left\| \nabla E(\mathbf{b}^{(s)})  \right\| }
@@ -533,7 +539,7 @@ E(\mathbf{b}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \rig
 \tag{6.10}
 \end{align*}\]</span></p>
 <p>This was from the columns point of view; we can also find a different formula
-from the row’s perspective:</p>
+from the row’s perspective in pointwise notation:</p>
 <p><span class="math display" id="eq:302-11">\[\begin{align*}
 E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right) \\
 &amp; = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right)^2 \\
@@ -542,7 +548,7 @@ E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\math
 &amp; = - \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[ \mathbf{b}^{(0)} \right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij} 
 \tag{6.11}
 \end{align*}\]</span></p>
-<p>This will be a better formula to use in our iterative algorithm, posited below.</p>
+<p>This will be a better formula to use in our iterative algorithm, described below.</p>
 <div id="algorithm" class="section level4 unnumbered">
 <h4>Algorithm</h4>
 <p>Initialize a vector <span class="math inline">\(\mathbf{b}^{(0)} = \left( b_{0}^{(0)}, b_{1}^{(0)}, \dots, b_{p}^{(0)} \right)\)</span></p>
