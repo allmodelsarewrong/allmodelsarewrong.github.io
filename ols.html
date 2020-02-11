@@ -609,12 +609,12 @@ squared norm of the difference vector <span class="math inline">\(\mathbf{e} = \
 <p>We want to minimize the mean of squared errors. So we compute the derivative
 of <span class="math inline">\(\text{MSE}\)</span> with respect to <span class="math inline">\(\mathbf{b}\)</span>:</p>
 <p><span class="math display" id="eq:301-9">\[
-\frac{\partial }{\partial \mathbf{b}}\text{MSE}(\mathbf{b}) = \frac{\partial }{\partial \mathbf{b}} (\mathbf{b^\mathsf{T}X^\mathsf{T}Xb - 2 b^\mathsf{T}X^\mathsf{T}y + \mathbf{y^\mathsf{T}y}})
+\frac{\partial }{\partial \mathbf{b}}\text{MSE}(\mathbf{b}) = \frac{\partial }{\partial \mathbf{b}} \left (\frac{1}{n} \mathbf{b^\mathsf{T}X^\mathsf{T}Xb} - \frac{2}{n} \mathbf{b^\mathsf{T}X^\mathsf{T}y} + \frac{1}{n} \mathbf{y^\mathsf{T}y} \right)
 \tag{5.9}
 \]</span></p>
 <p>which becomes:</p>
 <p><span class="math display" id="eq:301-10">\[
-2 \mathbf{X^\mathsf{T}Xb} - 2 \mathbf{X^\mathsf{T}y}
+\frac{2}{n} \mathbf{X^\mathsf{T}Xb} - \frac{2}{n} \mathbf{X^\mathsf{T}y}
 \tag{5.10}
 \]</span></p>
 <p>Equating to zero we get that:</p>
