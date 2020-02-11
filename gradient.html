@@ -292,6 +292,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>16.2.2</b> Another Way to Solve Logistic Regression</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>VIII Clustering</b></span></li>
+<li class="chapter" data-level="17" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>17</b> Clustering</a><ul>
+<li class="chapter" data-level="17.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>17.1</b> About Clustering</a><ul>
+<li class="chapter" data-level="17.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>17.1.1</b> Types of Clustering</a></li>
+<li class="chapter" data-level="17.1.2" data-path="clustering.html"><a href="clustering.html#hard-clustering"><i class="fa fa-check"></i><b>17.1.2</b> Hard Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="clustering.html"><a href="clustering.html#dispersion-measures"><i class="fa fa-check"></i><b>17.2</b> Dispersion Measures</a></li>
+<li class="chapter" data-level="17.3" data-path="clustering.html"><a href="clustering.html#complexity-in-clustering"><i class="fa fa-check"></i><b>17.3</b> Complexity in Clustering</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -321,7 +330,7 @@ algorithm.</p>
 <div id="error-surface" class="section level2">
 <h2><span class="header-section-number">6.1</span> Error Surface</h2>
 <p>Consider the overall error measure of a linear regression problem, for example
-the mean squared error (MSE)—or if you prefer the sum of squared errors (SSE).</p>
+the mean squared error (<span class="math inline">\(\text{MSE}\)</span>)—or if you prefer the sum of squared errors, which is simply <span class="math inline">\(\text{SSE} = n \text{MSE}\)</span>).</p>
 <p><span class="math display" id="eq:302-1">\[
 E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
 \tag{6.1}
