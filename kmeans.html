@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7 Theoretical Framework | All Models Are Wrong</title>
+  <title>18 K-Means | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7 Theoretical Framework | All Models Are Wrong" />
+  <meta property="og:title" content="18 K-Means | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7 Theoretical Framework | All Models Are Wrong" />
+  <meta name="twitter:title" content="18 K-Means | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="gradient.html"/>
-<link rel="next" href="mse.html"/>
+<link rel="prev" href="clustering.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -331,260 +331,194 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learning" class="section level1">
-<h1><span class="header-section-number">7</span> Theoretical Framework</h1>
-<p>Finally we have arrived to the part of the book in which we provide a
-framework for the theory of learning. Well, to be more precise, the framework
-is really about the theory of <em>supervised</em> learning.</p>
-<p>Keep in mind that most of what will be covered in this chapter is highly
-theoretical. It has to do with the concepts and principles that ideally we
-expect to find in a <em>perfect world</em>. Having said, the real world, more often
-than not, is far from being ideal. So we will also need to discuss what to do
-in practice to overcome the idealistic limitations of our theoretical assumptions.</p>
-<div id="mental-map" class="section level2">
-<h2><span class="header-section-number">7.1</span> Mental Map</h2>
-<p>So far, we have seen an example of Unsupervised Learning (PCA), as well as one
-method of Supervised Learning (regression). Now, we begin discussing learning
-ideas at an abstract level.</p>
-<p>Let’s return to our example of predicting NBA players’ salaries. We have a
-series of <em>inputs</em>: height, weight, 2PTS, 3PTS, fouls, etc. From these inputs,
-we obtain an <em>output</em>: the salary of a player. We also have a <em>target function</em>
-<span class="math inline">\(f : \mathcal{X} \to \mathcal{Y}\)</span>. (i.e. a function mapping from the column spaces
-of <span class="math inline">\(\mathbf{X}\)</span> to the output space <span class="math inline">\(\mathbf{y}\)</span>).
-Keep in mind that this function is an <em>ideal</em>, and remains unknown throughout
-our computations.</p>
-<p>Here’s a metaphor that we like to use. Pretend that the target function is
-some sort of mythical creature, like a unicorn (or your preferred creature).
-We are trying to find this elusive guy.</p>
-<p>More generally, we have a dataset
-<span class="math inline">\(\mathcal{D}: (\mathbf{x_1}, y_1), ( \mathbf{x_2}, y_2), \dots, (\mathbf{x_n}, y_n)\)</span>,
-where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for the <span class="math inline">\(i\)</span>-th
-player/individual.<br />
-From this data, we wish to obtain a hypothesis model <span class="math inline">\(\widehat{f}: \mathcal{X} \to \mathcal{Y}\)</span> that is an approximation to the unknown function <span class="math inline">\(f\)</span>.
-We can sketch these basic ideas in a sort of “mental map”.
-We will refer to this picture as the “diagram for supervised learning”.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
-<img src="images/theory/learning-diag0.svg" alt="Supervised Learning Diagram (ver 1)" width="85%" />
+<div id="kmeans" class="section level1">
+<h1><span class="header-section-number">18</span> K-Means</h1>
+<p>With partitioning methods, two clusters are always separated; and the
+number of clusters is generally defined a priori. The main methods are:</p>
+<ul>
+<li><span class="math inline">\(K\)</span>-means</li>
+<li><span class="math inline">\(K\)</span>-medoids</li>
+<li><span class="math inline">\(K\)</span>-prototypes</li>
+<li>Methods based on a concept of density</li>
+<li>Kohonen networks (or maps)</li>
+</ul>
+<div id="toy-example-1" class="section level2">
+<h2><span class="header-section-number">18.1</span> Toy Example</h2>
+<p>Imagine we are in <span class="math inline">\(\mathbb{R}^n\)</span> (or <span class="math inline">\(\mathbb{R}^p\)</span>, depending on if we are
+looking at things from the individuals perspective or variables perspective).
+For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-159"></span>
+<img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
 <p class="caption">
-Figure 7.1: Supervised Learning Diagram (ver 1)
+Figure 18.1: Toy data set
 </p>
 </div>
-<p>Here’s how to read this diagram. We are using orange clouds around those concepts
-that are more intangible than those appearing within rectangular or oval
-shapes. One of these clouds is the unknown target function <span class="math inline">\(f\)</span>, which as its
-name indicates it is <strong>unknown</strong>. This implies that we never really “discover”
-the function <span class="math inline">\(f\)</span> in its entirety; rather, we just find a good enough
-approximation to it by estimating <span class="math inline">\(\widehat{f}\)</span>. Now, as you can tell from the
-mental map, the other orange clound has to do with precisely this idea of
-<em>good approximation</em>: <span class="math inline">\(\widehat{f} \approx f\)</span>. It is also theoretical because of
-what we just said: that we don’t know <span class="math inline">\(f\)</span>. We should let you know that as we
-modify our diagram, we will encounter more orange concepts as well of highly
-theoretical nature.</p>
-<p>Now let’s turn our attention to the blue rectangular elements. One of them
-is the data set <span class="math inline">\(\mathcal{D}\)</span> which is influenced by the unknown target function.
-The other blue rectangle has to do with a set of candidate models <span class="math inline">\(\mathcal{H}\)</span>,
-which is sometimes referred to as the <em>hypothesis set</em>. Both the data set and
-the set of models are tangible ingredients. Moreover, the set of candidate
-models is totally under out control. We get to dedice what type of models
-we want try out (e.g. linear model, polynomial models, non-parametric models).</p>
-<p>Then we go to the yellow oval shape which right now is simply labeled as the
-<em>learning algorithm</em> <span class="math inline">\(\mathcal{A}\)</span>. This corresponds to the set of instructions
-and steps to be carried out when learning from data. It is also the stage of
-the diagram in which most computations take place.</p>
-<p>Finally, we arrive at the yellow rectangle containing the final model
-<span class="math inline">\(\widehat{f}\)</span>. This is supposed to be the selected model by the learning
-algorithm from the set of hypothesis models. Ideally, this model is the one
-that provides a good approximation for the target function <span class="math inline">\(f\)</span>.</p>
-<p>Going back to the holy grail of supervised learning, our goal is to find a
-model <span class="math inline">\(\widehat{f}\)</span> that gives “good” or accurate predictions. Before discussing
-what exactly do we mean by “accurate?”, we first need to talk about predictions.</p>
+<p>We start by initializing two centroids <span class="math inline">\(\mathbf{g_1}\)</span> and <span class="math inline">\(\mathbf{g_2}\)</span>.
+Typically, the way centroids are initialized is by randomly selecting two
+objects. Sometimes, however, a more “educated” initialization may be possible
+when we have additional information about where the cluster may be located.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-160"></span>
+<img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
+<p class="caption">
+Figure 18.2: Arbitrary centroids
+</p>
 </div>
-<div id="kinds-of-predictions" class="section level2">
-<h2><span class="header-section-number">7.2</span> Kinds of Predictions</h2>
-<p>What is the ultimate goal in supervised learning? Quick answer, we want a
-“good” model. What does “good” model mean? Simply put, it means that we want to
-estimate an unknown model <span class="math inline">\(f\)</span> with some model <span class="math inline">\(\widehat{f}\)</span> that gives “good”
-predictions. What do we mean by “good” predictions? Loosely speaking, it means
-that we want to obtain “accurate” predictions. Before clarifying the notion of
-<em>accurate predictions</em>, let’s discuss first the concept of predictions.</p>
-<p>Think of a simple linear regression model (e.g. with one predictor). Having a
-fitted model <span class="math inline">\(\widehat{f}(x)\)</span>, we can use it to make two types of predictions.
-On one hand, for an observed point <span class="math inline">\(x_i\)</span>, we can compute <span class="math inline">\(\hat{y}_i = \widehat{f}(x_i)\)</span>.
-By observed point we mean that <span class="math inline">\(x_i\)</span> was part of the data used to find <span class="math inline">\(\widehat{f}\)</span>.
-On the other hand, we can also compute <span class="math inline">\(\hat{y}_0 = \widehat{f}(x_0)\)</span> for a point
-<span class="math inline">\(x_0\)</span> what was not part of the data used when deriving <span class="math inline">\(\widehat{f}\)</span>.</p>
-<div id="two-types-of-data" class="section level3">
-<h3><span class="header-section-number">7.2.1</span> Two Types of Data</h3>
-<p>The two distinct types of predictions involve two slightly different kinds of
-data. The data points <span class="math inline">\(x_i\)</span> that we use to fit a model is what we call training
-or learning data. The data points <span class="math inline">\(x_0\)</span> that we use to assess the performance
-of a model are points NOT supposed to be part of the training set.</p>
-<p>This implies that, at least in theory, we need two kinds of data sets:</p>
-<ul>
-<li><p><strong>In-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{in}\)</span>, used to fit a model</p></li>
-<li><p><strong>Out-of-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{out}\)</span>, used to measure the
-predictive quality of a model</p></li>
-</ul>
+<p>Given a new data point, we compute the distances from this point to the two
+centroids, and classify the point to the cluster to which the closest centroid
+belongs.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-161"></span>
+<img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
+<p class="caption">
+Figure 18.3: Distance of an object to both centroids
+</p>
 </div>
-<div id="two-types-of-predictions" class="section level3">
-<h3><span class="header-section-number">7.2.2</span> Two Types of Predictions</h3>
-<p>In other words, we have two types of predictions:</p>
+<p>The distances of all objects to the centroids are computed as well, and the
+objects get assigned to the group of the closest centroid.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
+<img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
+<p class="caption">
+Figure 18.4: Assigning objects to closest centroid
+</p>
+</div>
+<p>Now, with this new grouped data, we have to recompute the centroids:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-163"></span>
+<img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
+<p class="caption">
+Figure 18.5: Update centroids
+</p>
+</div>
+<p>We repeat this procedure, that is, calculate distances of all objects to the
+centroids, and re-assigning objects to clusters.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-164"></span>
+<img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
+<p class="caption">
+Figure 18.6: Reassigning objects
+</p>
+</div>
+<p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-165"></span>
+<img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
+<p class="caption">
+Figure 18.7: Recalculate centroids
+</p>
+</div>
+<p>After enough iterations, the centroids will not move too much between each
+iteration. At this point we will say the algorithm as converged, and we stop
+(and the resulting clusters will be the ones we use).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-166"></span>
+<img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
+<p class="caption">
+Figure 18.8: Rinse and repeat until convergence
+</p>
+</div>
+<p>Is this algorithm stable, in the sense that if we repeat this 10 times will be
+obtain the same final clusters each time? The answer is “no.” The good news is
+that we are guaranteed convergence. The bad news is that we may arrive at a
+different final clustering. There is actually another good news, which is that
+this algorithm converges quite rapidly! (The complexity is <span class="math inline">\(n \cdot k\)</span>).</p>
+</div>
+<div id="what-does-k-means-do" class="section level2">
+<h2><span class="header-section-number">18.2</span> What does K-means do?</h2>
+<p>Consider the <span class="math inline">\(s\)</span>-th step of the algorithm:</p>
+<p><span class="math display">\[
+\textbf{s-th step}, \quad \textbf{s} \rightarrow \textbf{s+1}, \quad \textbf{then s+1}
+\]</span></p>
+<p>Specifically, let us focus on the intermediate step, when step <span class="math inline">\(s\)</span> goes to step
+<span class="math inline">\(s+1\)</span>. In other words, the centroids have moved but we have not reassigned
+points. At step <span class="math inline">\(s\)</span> we would compute <span class="math inline">\(\mathrm{WSSD}_1\)</span> and <span class="math inline">\(\mathrm{WSSD}_2\)</span> which,
+if we are using the Euclidean norm, becomes</p>
+<p><span class="math display" id="eq:802-1">\[
+\mathrm{WSSD}^{(s)} =  \sum_{i \in C_1^{(s)}} d^2(i, g_1^{(s)})  +  \sum_{i \in C_2^{(s)}} d^2(i, g_2^{(s)})
+\tag{18.1}
+\]</span></p>
+<p>At the end of the <span class="math inline">\(s\)</span>-th step, we update centroids, obtaining <span class="math inline">\(g_{1}^{(s + 1)}\)</span> and
+<span class="math inline">\(g_{2}^{(s + 1)}\)</span>. These are the centroids used during the assignment of step <span class="math inline">\(s+1\)</span>.
+Notice that there is an intermediate step, with new centroids, but objects
+clustered according to <span class="math inline">\(C^{(s)}_1\)</span> and <span class="math inline">\(C^{(s)}_2\)</span>. Technically, we can compute
+within-group dispersions during this intermediate step, given by:</p>
+<p><span class="math display" id="eq:802-2">\[
+\mathrm{WSSD}^{(s \to s+1)} =    \sum_{i \in C_1^{(s)}} d^2(i, g_1^{(s + 1)})  +  \sum_{i \in C_2^{(s)}} d^2(i, g_1^{(s + 1)})
+\tag{18.2}
+\]</span></p>
+<p>At the end of step <span class="math inline">\(s+1\)</span>, objects are clustered under new configurations
+<span class="math inline">\(C^{(s+1)}_1\)</span> and <span class="math inline">\(C^{(s+1)}_2\)</span>. Likewise, the within-group dispersions at the
+end of step <span class="math inline">\(s+1\)</span> become:</p>
+<p><span class="math display" id="eq:802-3">\[
+\mathrm{WSSD}^{(s+1)}  =  \sum_{i \in C_1^{(s + 1)}} d^2(i, g_1^{(s + 1)})  +  \sum_{i \in C_2^{(s + 1)}} d^2(i, g_1^{(s + 1)})
+\tag{18.3}
+\]</span></p>
+<p>It can be proved that these three dispersions are in order of smallest to largest
+(i.e. the intermediate is bigger than the <span class="math inline">\(s\)</span>-th step, the <span class="math inline">\(s+1\)</span>-th step is larger
+than the intermediate). In other words,</p>
+<p><span class="math display" id="eq:802-4">\[
+\mathrm{WSSD}^{(s)} \geq \mathrm{WSSD}^{(s \to s+1)}  \geq \mathrm{WSSD}^{(s+1)}
+\tag{18.4}
+\]</span></p>
+</div>
+<div id="k-means-algorithms" class="section level2">
+<h2><span class="header-section-number">18.3</span> K-Means Algorithms</h2>
+<p>In <span class="math inline">\(K\)</span>-means clustering, we must first define the number of clusters we want
+(for example, <span class="math inline">\(K = 3\)</span> clusters).</p>
 <ol style="list-style-type: decimal">
-<li><p>predictions <span class="math inline">\(\hat{y}_i\)</span> of observed/seen values <span class="math inline">\(x_i\)</span></p></li>
-<li><p>predicitons <span class="math inline">\(\hat{y}_0\)</span> of unobserved/unseed values <span class="math inline">\(x_0\)</span></p></li>
+<li><p>Define <span class="math inline">\(K\)</span>, the number of clusters we want (for example, <span class="math inline">\(K = 3\)</span>).</p></li>
+<li><p>Initialize <span class="math inline">\(K\)</span> random centroids.</p></li>
 </ol>
-<p>Each type of prediction is associated with a certain behavioral feature of a
-model. The predictions of observed data, <span class="math inline">\(\hat{y}_i\)</span>, have to do with the
-memorizing aspect (apparent error, resubstitution error). The predictions of
-unobserved data, <span class="math inline">\(\hat{y}_0\)</span>, have to do with the generalization aspect
-(generalization error, prediction error).</p>
-<p>Both kinds of predictions are important, and each of them is interesting in
-its own right. However, from the supervised learning standpoint, it is the
-second type of predictions that we are ultimately interested in. That is,
-we want to find models that are able to give predictions <span class="math inline">\(\hat{y}_0\)</span> as
-accurate as possible for the real value <span class="math inline">\(y_0\)</span>.</p>
-<p>Don’t get us wrong. Having good predictions <span class="math inline">\(\hat{y}_i\)</span> of observed values
-is important and desirable. And to a large extent, it is a necessary condition
-for a good model. However, it is not a sufficient condition. It is not enough
-to fit the observed data well,
-in order to get a good predictive model. Sometimes, you can perfectly fit
-the observed data, but have a terrible performance for unobserved values <span class="math inline">\(x_0\)</span>.</p>
+<div id="classic-version" class="section level3">
+<h3><span class="header-section-number">18.3.1</span> Classic Version</h3>
+<p>The original <span class="math inline">\(K\)</span>-means algorithm was proposed by MacQueen in 1967, and is as
+follows:</p>
+<ol start="0" style="list-style-type: decimal">
+<li><p>Define <span class="math inline">\(K\)</span>, the number of clusters we want.</p></li>
+<li><p>Start with <span class="math inline">\(K\)</span> random centroids.</p></li>
+<li><p>Start examining a particular individual object, and assign it to the group of the closest centroid.</p></li>
+<li><p>Recompute the centroid for this assigned cluster.</p></li>
+<li><p>Assign the next object to the group of the closest centroid.</p></li>
+<li><p>Recompute the centroid for this assigned cluster.</p></li>
+<li><p>Repeat this procedure until all objects have been assigned.</p></li>
+</ol>
+<p>Note that this algorithm proceeds object-by-object, re-computing centroids after
+each object has been assigned. That is, if we have <span class="math inline">\(n\)</span> objects, we will
+recompute our centroid <span class="math inline">\(n\)</span> times.</p>
 </div>
-</div>
-<div id="two-types-of-errors" class="section level2">
-<h2><span class="header-section-number">7.3</span> Two Types of Errors</h2>
-<p>In theory, we are dealing with two types of predictions, each of which is
-associated to certain types of data points.</p>
-<p>Because we are interested in obtaining models that give accurate predictions,
-we need a way to measure the accuracy of such predictions. At the conceptual
-level we need some mechanism to quantify how different the fitted model is
-from the target function <span class="math inline">\(f\)</span>:</p>
-<p><span class="math display">\[
-\widehat{f} \text{ -vs- } f
-\]</span></p>
-<p>It would be nice to have some measure of how much discrepancy exists between
-the estimated model and the target model. This means that we need a function
-that summarizes, somehow, the total amount of error. We will denote such term as
-an <em>Overall Measure of Error</em>:</p>
-<p><span class="math display">\[
-\text{Overall Measure of Error:} \quad E(\widehat{f},f) 
-\]</span></p>
-<p>The typical way in which an overall measure of error is defined is in terms
-of individual or pointwise errors <span class="math inline">\(err_i(\hat{y}_i, y_i)\)</span> that quantify the
-difference between an observed value <span class="math inline">\(y_i\)</span> and its predicted value <span class="math inline">\(\hat{y}_i\)</span>.
-As a matter of fact, most overall errors focus on the addition of the pointwise
-errors:</p>
-<p><span class="math display">\[
-E(\widehat{f},f) = \text{measure} \left( \sum err_i(\hat{y}_i, y_i) \right )
-\]</span></p>
-<p>Unless otherwise said, in this book we will use the mean sum of errors as the
-default overall error measure:</p>
-<p><span class="math display">\[
-E(\widehat{f},f) = \frac{1}{n} \left( \sum_i err_i (\hat{y}_i, y_i) \right)
-\]</span></p>
-<div id="individual-errors" class="section level3">
-<h3><span class="header-section-number">7.3.1</span> Individual Errors</h3>
-<p>What form does the individual error function, <span class="math inline">\(err()\)</span>, take? In theory, they can
-take any form you want. This means that you can invent your own individual error
-function. However, the most common ones are:</p>
+<div id="moving-centers-algorithm" class="section level3">
+<h3><span class="header-section-number">18.3.2</span> Moving Centers Algorithm</h3>
+<p>This version of <span class="math inline">\(K\)</span>-means was proposed by Forgy in 1965, and is as follows:</p>
+<ol start="0" style="list-style-type: decimal">
+<li><p>Define <span class="math inline">\(K\)</span>, the number of clusters we want.</p></li>
+<li><p>Start with <span class="math inline">\(K\)</span> random centroids.</p></li>
+<li><p>Assign each object to the nearest centroid, <em>without</em> updating the centroids until all objects have been assigned.</p></li>
+<li><p>Now, recalculate the centroids.</p></li>
+<li><p>Repeat steps (2) and (3) until convergence.</p></li>
+</ol>
+<p>Of course, this algorithm requires some criterion to define “convergence.”
+Some stopping mechanisms could be:</p>
 <ul>
-<li><p><strong>squared error</strong>: <span class="math inline">\(\quad err(\widehat{f}, f) = \left( \hat{y}_i - y_i \right)^2\)</span></p></li>
-<li><p><strong>absolute error</strong>: <span class="math inline">\(\quad err(\widehat{f}, f) = \left| \hat{y}_i - y_i \right|\)</span></p></li>
-<li><p><strong>misclassification error</strong>: <span class="math inline">\(\quad err(\widehat{f}, f) = [\![ \hat{y}_i \neq y_i ]\!]\)</span></p></li>
+<li><p>Stop when <span class="math inline">\(\mathrm{WSSD}^{(s)}\)</span> is equal (or roughly equal to) <span class="math inline">\(\mathrm{WSSD}^{(s + 1)}\)</span>.</p></li>
+<li><p>Assign a maximum number of iterations (e.g. we stop the algorithm after 10 iterations).</p></li>
 </ul>
-<p>In the machine learning literature, these individual errors are formally
-known as <strong>loss functions</strong>.</p>
+<p>This algorithm is the most popular out of the other two discussed.</p>
 </div>
-<div id="overall-errors" class="section level3">
-<h3><span class="header-section-number">7.3.2</span> Overall Errors</h3>
-<p>As you can imagine, there are actually two types of overall error measures,
-based on the type of data that is used to assess the individual errors:</p>
-<ul>
-<li><p><strong>In-sample Error</strong>, denoted <span class="math inline">\(E_{in}\)</span></p></li>
-<li><p><strong>Out-of-sample Error</strong>, denoted <span class="math inline">\(E_{out}\)</span></p></li>
-</ul>
-<p>The in-sample error is the average of pointwise errors from data points of the
-in-sample data <span class="math inline">\(D_{in}\)</span>:</p>
-<p><span class="math display">\[
-E_{in} (\widehat{f}, f) = \frac{1}{n} \sum_{i} err_i
-\]</span></p>
-<p>The out-of-sample error is the theoretical mean, or expected value, of the
-pointwise errors:</p>
-<p><span class="math display">\[
-E_{out} (\widehat{f}, f) = \mathbb{E}_{\mathcal{X}} \left[ err \left( \widehat{f}(x), f(x) \right) \right]
-\]</span></p>
-<p>The expectation is taken over the input space <span class="math inline">\(\mathcal{X}\)</span>.
-The point <span class="math inline">\(x\)</span> denotes a general data point in such space <span class="math inline">\(\mathcal{X}\)</span>.
-Notice the theoretical nature of <span class="math inline">\(E_{out}\)</span>. In practice, you will never, never,
-be able to compute this quantity.</p>
-<p>In the machine learning literature, these overall measures of error are formally
-known as <strong>cost functions</strong> or <strong>risks</strong>.</p>
-<p>Let’s update our supervised learning diagram to include error measures:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-62"></span>
-<img src="images/theory/learning-diag1.svg" alt="Supervised Learning Diagram (ver 2)" width="85%" />
-<p class="caption">
-Figure 7.2: Supervised Learning Diagram (ver 2)
-</p>
+<div id="dynamic-clouds" class="section level3">
+<h3><span class="header-section-number">18.3.3</span> Dynamic Clouds</h3>
+<p>This algorithm was proposed by Diday in 1971, and is as follows:</p>
+<ol start="0" style="list-style-type: decimal">
+<li><p>Instead of centroids, we work with “kernels” (i.e. a group of objects; that is, we no longer consider individual points (centroids) but rather groups of objects).</p></li>
+<li><p>Repeat the steps from the other algorithms.</p></li>
+</ol>
 </div>
-</div>
-<div id="auxiliary-technicality" class="section level3">
-<h3><span class="header-section-number">7.3.3</span> Auxiliary Technicality</h3>
-<p>We need to assume some probability distribution <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>. That is,
-we assume our vectors <span class="math inline">\(\mathbf{x_1}, \dots, \mathbf{x_n}\)</span> are independent
-identically distributed (i.i.d.) samples from this distribution <span class="math inline">\(P\)</span>.
-(Exactly what distribution you pick - normal, chi-squared, <span class="math inline">\(t\)</span>, etc. - is, for the moment, irrelevant).</p>
-<p>Recall that out-of-sample data is highly theoretical; we will never be able to
-obtain it in its entirety. The best we can do is obtain a subset of the
-out-of-sample data (the test data), and estimate the rest of the data.
-Our imposition of a distributional structure on <span class="math inline">\(\mathcal{X}\)</span> enables us to link the
-in-sample error with the out-of-sample data.</p>
-<p>Recall that our ultimate goal is to get a good function <span class="math inline">\(\widehat{f} \approx f\)</span>.
-What do we mean by the symbol “<span class="math inline">\(\approx\)</span>”? Technically speaking, we want
-<span class="math inline">\(E_{\mathrm{out}}(\widehat{f}) \approx 0\)</span>. If this is the case, we can safely
-say that our model has been successfully trained. However, we can never check
-if this is the case, since we don’t have access to <span class="math inline">\(E_{\mathrm{out}}\)</span>.</p>
-<p>To solve this, we break our goal into two sub-goals:</p>
-<p><span class="math display">\[
-E_{\mathrm{out}} (\widehat{f}) \approx 0 \ \Rightarrow \begin{cases} E_{\mathrm{in}}(\widehat{f}) \approx 0  &amp; \text{practical result} \\ E_{\mathrm{out}}(\widehat{f}) \approx E_{\mathrm{in}}(\widehat{f}) &amp;  \text{technical/theoretical result}  \\ \end{cases}
-\]</span></p>
-<p>The first condition is easy to check. How do we check the second? We check the
-second condition by invoking our distributional assumption <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>.
-Using our assumption, we can cite various theorems to assert that the second
-result indeed holds true. We will later find ways to estimate
-<span class="math inline">\(E_{\mathrm{out}}(\widehat{f})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-63"></span>
-<img src="images/theory/learning-diag2.svg" alt="Supervised Learning Diagram (ver 3)" width="85%" />
-<p class="caption">
-Figure 7.3: Supervised Learning Diagram (ver 3)
-</p>
-</div>
-</div>
-</div>
-<div id="noisy-targets" class="section level2">
-<h2><span class="header-section-number">7.4</span> Noisy Targets</h2>
-<p>In practice, our function won’t necessarily be a nice (or smooth) function.
-Rather, there will be some <strong>noise</strong>. Hence, instead of saying <span class="math inline">\(y = f(x)\)</span> where
-<span class="math inline">\(f : \mathcal{X} \to \mathcal{Y}\)</span>, a better statement might be something
-like <span class="math inline">\(y = f(x) + \varepsilon\)</span>. But even this notation has some flaws;
-for example, we could have multiple inputs mapping to the same output
-(which cannot happen if <span class="math inline">\(f\)</span> is a proper “function”). That is, we may have two
-individuals with the exact same inputs <span class="math inline">\(\mathbf{x_A} = \mathbf{x_B}\)</span> but with
-different response variables <span class="math inline">\(y_A \neq y_B\)</span>. Instead, it makes more sense to
-consider some <strong>target distribution</strong> <span class="math inline">\(P(y \mid x)\)</span>. In this way,
-we can think of our data as forming a joint probability distribution
-<span class="math inline">\(P(\mathbf{x}, y)\)</span>. That is because
-<span class="math inline">\(P(\mathbf{x}, y) = P(\mathbf{x}) P(y \mid \mathbf{x})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-64"></span>
-<img src="images/theory/learning-diag3.svg" alt="Supervised Learning Diagram (ver 4)" width="85%" />
-<p class="caption">
-Figure 7.4: Supervised Learning Diagram (ver 4)
-</p>
-</div>
-<p>In supervised learning, we want to learn the conditional distribution
-<span class="math inline">\(P(y \mid \mathbf{x})\)</span>. Again, we can think of this probability as
-<span class="math inline">\(y = f() + \text{noise}\)</span>. Also, sometimes the Hypothesis Sets and Learning
-Algorithm boxes are combined into one, called the <strong>Learning Model</strong>.</p>
+<div id="choosing-k" class="section level3">
+<h3><span class="header-section-number">18.3.4</span> Choosing <span class="math inline">\(k\)</span></h3>
+<p>How many groups should be pick? Well, the answer is highly dependent on our
+initial centroids. The algorithm will always converge at local minima, but there
+is no guarantee it will arrive at the global minimum. One idea is to run
+<span class="math inline">\(K\)</span>-means multiple times, to get a sense of how stable our data is.</p>
+<p>Note that cross-validation <strong>cannot</strong> be used to determine <span class="math inline">\(K^*\)</span>, the optimal
+number of clusters. For an explanation of why this is, see pages 518-9 in
+<a href="https://web.stanford.edu/~hastie/ElemStatLearn/">ESL</a>.</p>
+<p>There is another proposal on how to choose a “good” number of clusters, but it
+involves hierarchical clustering, the topic of the next chapter.</p>
 
+</div>
 </div>
 </div>
             </section>
@@ -592,8 +526,8 @@ Algorithm boxes are combined into one, called the <strong>Learning Model</strong
           </div>
         </div>
       </div>
-<a href="gradient.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="mse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="clustering.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
