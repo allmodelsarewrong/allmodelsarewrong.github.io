@@ -575,12 +575,12 @@ W_{blue} = \frac{0.25}{2} + \frac{0.10 + 0.17 + 0.25}{3} = 0.30
 <p>Smaller <span class="math inline">\(W\)</span> is better. This suggests that, to find the partition with smallest
 <span class="math inline">\(W\)</span>, we would require trying all possible assignments of the <span class="math inline">\(n\)</span> objects into
 <span class="math inline">\(K\)</span> groups. So why don’t we just directly find the clustering
-partition <span class="math inline">\(C\)</span> that minimizes <span class="math inline">\(W\)</span>? The problem is that this would only work for
+partition <span class="math inline">\(C\)</span> that minimizes <span class="math inline">\(W\)</span>?</p>
+<p>The problem is that this would only work for
 a small number of individuals, and a small number of partitions. Unfortunately,
 the computation cost increases <em>drastically</em> as we add more clusters and more
-data points. To see this, consider four variables <span class="math inline">\(a, b, c\)</span> and <span class="math inline">\(d\)</span>. Suppose
-we are interested in partitions that produce two clusters: what are all the
-possibilities?</p>
+data points. To see this, consider four objects <span class="math inline">\(a, b, c\)</span> and <span class="math inline">\(d\)</span>. Suppose
+we are interested in partitions that produce clusters of different sizes.</p>
 <p>The possible (non-overlapping) partitions for <span class="math inline">\(n = 4\)</span> objects are:</p>
 <ul>
 <li><p>1 partition with 1 cluster:
@@ -594,29 +594,11 @@ possibilities?</p>
 </ul>
 <p>If we wanted only one cluster, we have only <span class="math inline">\((abcd)\)</span>. If we wanted 4 clusters,
 we would have <span class="math inline">\(\{(a), (b), (c), (d)\}\)</span>.</p>
-<p>How many possible assignments of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(K\)</span> groups?</p>
+<p>In general, how many possible assignments of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(K\)</span> groups?</p>
 <p>The number of possible assignments of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(K\)</span> groups is given by:</p>
 <p><span class="math display">\[
 A(n, K) = \frac{1}{K!} \sum_{k=1}^{K} (-1)^{(K-k)} \binom{K}{k} k^n
 \]</span></p>
-<p>Note that:</p>
-<ul>
-<li><span class="math inline">\(A(10, 4) = 34105\)</span>, and</li>
-<li><span class="math inline">\(A(25, 4) \approx 5 \times 10^{13} \dots\)</span> huge!.</li>
-</ul>
-<p>Let’s see another view of the complexity of a clustering problem. Consider a
-data set of four objects: <span class="math inline">\(\{a, b, c, d\}\)</span>. The possible
-(non-overlapping) partitions for <span class="math inline">\(n = 4\)</span> objects are:</p>
-<ul>
-<li><p>1 partition with 1 cluster:
-<span class="math inline">\((abcd)\)</span></p></li>
-<li><p>7 partitions with 2 clusters:
-<span class="math inline">\((ab,cd), (ac,bd), (ad,bc), (a,bcd), (b,acd), (c,abd) (d,abc)\)</span></p></li>
-<li><p>6 partitions with 3 clusters:
-<span class="math inline">\((a,b,cd), (a,c,bd), (a,d,bc), (b,c,ad), (b,d,ac), (c,d,ab)\)</span></p></li>
-<li><p>1 partition with 4 clusters:
-<span class="math inline">\((a,b,c,d)\)</span></p></li>
-</ul>
 <p>With four objects, we could form clusters of sizes 1, 2, 3, and 4.
 Their corresponding number of assignments are:</p>
 <ul>
@@ -625,13 +607,18 @@ Their corresponding number of assignments are:</p>
 <li><span class="math inline">\(A(4, 3) = 6\)</span></li>
 <li><span class="math inline">\(A(4, 4) = 1\)</span></li>
 </ul>
-<p>Hence, the different number of (non-overlapping) partitions for different
-cluster sizes is:</p>
+<p>Note that:</p>
+<ul>
+<li><span class="math inline">\(A(10, 4) = 34105\)</span>, and</li>
+<li><span class="math inline">\(A(25, 4) \approx 5 \times 10^{13} \dots\)</span> huge!.</li>
+</ul>
+<p>Hence, with our toy data set of four objects <span class="math inline">\(a, b, c\)</span> and <span class="math inline">\(d\)</span>, the different
+number of (non-overlapping) partitions for different cluster sizes is:</p>
 <p><span class="math display">\[
 A(4, 1) + A(4, 2) + A(4, 3) + A(4, 4) = 15
 \]</span></p>
-<p>The number of (non-overlapping) partitions for <span class="math inline">\(n\)</span> objects is the
-so-called <strong>Bell</strong> number <span class="math inline">\(B_n\)</span>:</p>
+<p>It turns out that the number of (non-overlapping) partitions for <span class="math inline">\(n\)</span> objects is
+the so-called <strong>Bell</strong> number <span class="math inline">\(B_n\)</span>:</p>
 <p><span class="math display">\[
 B_n = \frac{1}{e} \sum_{k=1}^{\infty} \frac{k^n}{k!}
 \]</span></p>
