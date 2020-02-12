@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Principal Components Regression | All Models Are Wrong</title>
+  <title>18 Canonical Discriminant Analysis | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Principal Components Regression | All Models Are Wrong" />
+  <meta property="og:title" content="18 Canonical Discriminant Analysis | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Principal Components Regression | All Models Are Wrong" />
+  <meta name="twitter:title" content="18 Canonical Discriminant Analysis | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="regular.html"/>
-<link rel="next" href="pls.html"/>
+<link rel="prev" href="discrim.html"/>
+<link rel="next" href="clustering.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -354,281 +354,211 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pcr" class="section level1">
-<h1><span class="header-section-number">12</span> Principal Components Regression</h1>
-<p>The first dimension reduction method that we will describe to regularize a model
-is Principal Components Regression (PCR).</p>
-<div id="motivation-example-1" class="section level2">
-<h2><span class="header-section-number">12.1</span> Motivation Example</h2>
-<p>To introduce PCR we are going to use a subset of the “2004 New Car and Truck Data”
-curated by <a href="https://www.sdsmt.edu/Directories/Personnel/Johnson,-Roger/">Roger W. Johnson</a>
-using records from <em>Kiplinger’s Personal Finance</em>. You can find more information
-about this data in the following url:</p>
-<p><a href="http://jse.amstat.org/datasets/04cars.txt" class="uri">http://jse.amstat.org/datasets/04cars.txt</a></p>
-<p>The data file, <code>cars2004.csv</code>, is available in the following github repository:</p>
-<p><a href="https://github.com/allmodelsarewrong/data" class="uri">https://github.com/allmodelsarewrong/data</a></p>
-<p>The data set consists of
-10 variables measured on 385 cars. Here’s what
-the first six rows (and ten columns) look like:</p>
-<pre><code>#&gt;                               price engine cyl  hp city_mpg
-#&gt; Acura 3.5 RL 4dr              43755    3.5   6 225       18
-#&gt; Acura 3.5 RL w/Navigation 4dr 46100    3.5   6 225       18
-#&gt; Acura MDX                     36945    3.5   6 265       17
-#&gt; Acura NSX coupe 2dr manual S  89765    3.2   6 290       17
-#&gt; Acura RSX Type S 2dr          23820    2.0   4 200       24
-#&gt; Acura TL 4dr                  33195    3.2   6 270       20
-#&gt;                               hwy_mpg weight wheel length width
-#&gt; Acura 3.5 RL 4dr                   24   3880   115    197    72
-#&gt; Acura 3.5 RL w/Navigation 4dr      24   3893   115    197    72
-#&gt; Acura MDX                          23   4451   106    189    77
-#&gt; Acura NSX coupe 2dr manual S       24   3153   100    174    71
-#&gt; Acura RSX Type S 2dr               31   2778   101    172    68
-#&gt; Acura TL 4dr                       28   3575   108    186    72</code></pre>
-<p>In this example we take the variable <code>price</code> as the response, and the rest of
-the columns as input or predictor variables:</p>
+<div id="cda" class="section level1">
+<h1><span class="header-section-number">18</span> Canonical Discriminant Analysis</h1>
+<p>We can formulate the classfication problem in a geometric way. We seek to find
+the linear combination of the predictors such that the
+between-class variance is maximized relative to the within-class variance.
+In other words, we want to find the combination of the predictors that gives
+maximum separation between the centroids of the data while at the same time
+minimizing the variation within each class of data.</p>
+<p>In this geometric approach, we have two aspects:</p>
 <ul>
-<li><code>engine</code></li>
-<li><code>cyl</code></li>
-<li><code>hp</code></li>
-<li><code>city_mpg</code></li>
-<li><code>hw_mpg</code></li>
-<li><code>weight</code></li>
-<li><code>wheel</code></li>
-<li><code>length</code></li>
-<li><code>width</code></li>
+<li><p><strong>Semi-supervised</strong>: How to find a representation of the objects which provides the best separation
+between groups (description emphasis)?</p></li>
+<li><p><strong>Supervised</strong>: How to find the rules for assigning the objects to their groups
+(prediction emphasis)?</p></li>
 </ul>
-<p>The regression model is:</p>
-<p><span class="math display">\[
-\texttt{price} = b_0 + b_1 \texttt{cyl} + b_2 \texttt{hp} + \dots + b_9 \texttt{width} + \boldsymbol{\varepsilon}
-\]</span></p>
-<p>For exploration purposes, let’s examine the matrix of correlations among all
-variables:</p>
-<pre><code>#&gt;          engine   cyl    hp city_mpg hwy_mpg weight  wheel length  width
-#&gt; price       0.6 0.654 0.836   -0.485  -0.469  0.476  0.204  0.210  0.314
-#&gt; engine          0.912 0.778   -0.706  -0.708  0.812  0.631  0.624  0.727
-#&gt; cyl                   0.792   -0.670  -0.664  0.731  0.553  0.547  0.621
-#&gt; hp                            -0.672  -0.652  0.631  0.396  0.381  0.500
-#&gt; city_mpg                               0.941 -0.736 -0.481 -0.468 -0.590
-#&gt; hwy_mpg                                      -0.789 -0.455 -0.390 -0.585
-#&gt; weight                                               0.751  0.653  0.808
-#&gt; wheel                                                       0.867  0.760
-#&gt; length                                                             0.752</code></pre>
-<p>And let’s also take a look at the circle of correlations, from the output of
-a PCA on the entire data set:</p>
-<pre><code>#&gt; Error in text.default(cars_pca$var$coord[1, 1], cars_pca$var$coord[1, : plot.new has not been called yet</code></pre>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-97-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Computing the OLS solution for the regression model of <code>price</code> onto the
-other nine predictors we obtain:</p>
-<pre><code>#&gt;               Estimate  Std. Error  t value   Pr(&gt;|t|)
-#&gt; (Intercept)  32536.025   17777.488   1.8302  6.802e-02
-#&gt; engine       -3273.053    1542.595  -2.1218  3.451e-02
-#&gt; cyl           2520.927     896.202   2.8129  5.168e-03
-#&gt; hp             246.595      13.201  18.6797  1.621e-55
-#&gt; city_mpg      -229.987     332.824  -0.6910  4.900e-01
-#&gt; hwy_mpg        979.967     345.558   2.8359  4.817e-03
-#&gt; weight           9.937       2.045   4.8584  1.741e-06
-#&gt; wheel         -695.392     172.896  -4.0220  6.980e-05
-#&gt; length          33.690      89.660   0.3758  7.073e-01
-#&gt; width         -635.382     306.344  -2.0741  3.875e-02</code></pre>
-<p>Out of curiosity, let’s compare the correlations and the coefficients:</p>
-<pre><code>#&gt;           correlation  coefficient
-#&gt; engine      0.5997873  -3273.05304
-#&gt; cyl         0.6544123   2520.92691
-#&gt; hp          0.8360930    246.59496
-#&gt; city_mpg   -0.4854130   -229.98735
-#&gt; hwy_mpg    -0.4694315    979.96656
-#&gt; weight      0.4760867      9.93652
-#&gt; wheel       0.2035464   -695.39157
-#&gt; length      0.2096682     33.69009
-#&gt; width       0.3135383   -635.38224</code></pre>
-<p>As you can tell from the above output, some correlation signs don’t match
-the signs of their corresponding regression coefficients. For example,
-<code>engine</code> is positively correlated with <code>price</code> but it turns out to have a
-negative regression coefficient. Or look at <code>hwy_mpg</code> which is negatively
-correlated with <code>price</code> but it has a positive regression coefficient.</p>
-</div>
-<div id="the-pcr-model" class="section level2">
-<h2><span class="header-section-number">12.2</span> The PCR Model</h2>
-<p>In PCR, we seek principal components <span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>,
-linear combinations of the inputs: <span class="math inline">\(\mathbf{z_k} = \mathbf{Xv_k}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-100"></span>
-<img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
+<p>For sake of illustration, let’s consider three classes in 2-dimensional space</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-166"></span>
+<img src="images/discrim/discrim_axes1.svg" alt="Three classes in 2-dim space" width="50%" />
 <p class="caption">
-Figure 12.1: PCs as linear combinations of input variables
+Figure 18.1: Three classes in 2-dim space
 </p>
 </div>
-<p>If we retain all principal components, then we know that we can factorize the
-input matrix <span class="math inline">\(\mathbf{X}\)</span> as:</p>
-<p><span class="math display">\[
-\mathbf{X} = \mathbf{Z V^\mathsf{T}}
-\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(\mathbf{Z}\)</span> is the matrix of principal components</li>
-<li><span class="math inline">\(\mathbf{V}\)</span> is the matrix of loadings</li>
-</ul>
-<p>If we only keep a subset of <span class="math inline">\(k &lt; p\)</span> PCs, then we have a decomposition of the
-data matrix into a <em>signal</em> part captured by <span class="math inline">\(k\)</span> components, and a <em>residual</em>
-or noise part:</p>
-<span class="math display">\[
-\underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times k}{\mathbf{V^\mathsf{T}}} + \underset{n \times k}{\mathbf{E}}
-\]</span>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101"></span>
-<img src="images/pcr/pcr-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
+<p>We look for the best representation separating the classes. One option is to
+consider the axis associated with the predictor <span class="math inline">\(X_1\)</span>, that is, the horizontal
+axis in the figure below:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-167"></span>
+<img src="images/discrim/discrim_axes2.svg" alt="Axis $X_1$ separates class 1 from groups 2 and 3" width="50%" />
 <p class="caption">
-Figure 12.2: Matrix diagram for inputs
+Figure 18.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 from groups 2 and 3
 </p>
 </div>
-<p>The idea is to use the components <span class="math inline">\(\mathbf{Z}\)</span> as predictors of <span class="math inline">\(\mathbf{y}\)</span>.
-More specifically, the idea is to fit a linear regression in order to find
-coefficients <span class="math inline">\(\mathbf{b}\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{y} = \mathbf{Zb} + \mathbf{e}
-\]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-102"></span>
-<img src="images/pcr/pcr-response-model.svg" alt="Matrix diagram for response" width="50%" />
+<p>If we project the individuals onto this axis <span class="math inline">\(X_1\)</span>, class 1 is well separated from
+classes 2 and 3. However, class 2 is largely confouded with class 3.</p>
+<p>Another option is consider the axis associated with the predictor <span class="math inline">\(X_2\)</span>,
+that is, the vertical axis in the figure below:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-168"></span>
+<img src="images/discrim/discrim_axes3.svg" alt="Axis $X_1$ separates class 3 from groups 1 and 2" width="50%" />
 <p class="caption">
-Figure 12.3: Matrix diagram for response
+Figure 18.3: Axis <span class="math inline">\(X_1\)</span> separates class 3 from groups 1 and 2
 </p>
 </div>
-<p>Usually, you don’t use all <span class="math inline">\(p\)</span> PCs, but just a few of them.
-In other words, if we only keep a subset of <span class="math inline">\(k &lt; p\)</span> PCs, then the idea of PCR
-remains constant: use the <span class="math inline">\(k\)</span> components in <span class="math inline">\(\mathbf{Z}\)</span> as
-predictors of <span class="math inline">\(\mathbf{y}\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z b}
-\]</span></p>
-<p>Without loss of generality suppose the predictors and response are standardized.
-In Principal Components Regression we regress <span class="math inline">\(\mathbf{y}\)</span> onto the PC’s:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b \mathbf{z_2} 
-+ \dots + b_p \mathbf{z_k}
-\]</span></p>
-<p>The vector of PCR coefficients is obtained via ordinary least squares (OLS):</p>
-<p><span class="math display">\[
-\mathbf{b} = \mathbf{(Z^\mathsf{T} Z)^{-1} Z^\mathsf{T} y}
-\]</span></p>
-<p>Using the <code>cars2004</code> data set, with the PCA of the inputs, we can run a linear
-regression of <code>price</code> onto all nine PCs:</p>
-<pre><code>#&gt; Regression coefficients for all PCs
-#&gt;       Estimate  Std. Error   t value  Pr(&gt;|t|)
-#&gt; PC1  -4470.761    205.1288  -21.7949    0.0000
-#&gt; PC2   7608.419    468.4759   16.2408    0.0000
-#&gt; PC3  -9650.324    660.1829  -14.6177    0.0000
-#&gt; PC4  -1768.547    980.6487   -1.8034    0.0721
-#&gt; PC5  10528.146   1115.0825    9.4416    0.0000
-#&gt; PC6  -5593.736   1177.6700   -4.7498    0.0000
-#&gt; PC7  -5746.452   1721.5725   -3.3379    0.0009
-#&gt; PC8  -7606.196   1926.3769   -3.9484    0.0001
-#&gt; PC9   5473.090   2660.3834    2.0573    0.0404</code></pre>
-<p>If we only take the first two PCs, then the regression coefficients are:</p>
-<pre><code>#&gt;       Estimate  Std. Error   t value  Pr(&gt;|t|)
-#&gt; PC1  -4470.761    205.1288  -21.7949         0
-#&gt; PC2   7608.419    468.4759   16.2408         0</code></pre>
-<p>Likewise, if take only the first three PCs, then the regression coefficients are:</p>
-<pre><code>#&gt;       Estimate  Std. Error   t value  Pr(&gt;|t|)
-#&gt; PC1  -4470.761    205.1288  -21.7949         0
-#&gt; PC2   7608.419    468.4759   16.2408         0
-#&gt; PC3  -9650.324    660.1829  -14.6177         0</code></pre>
-<p>Because of uncorrelatedness, the contributions and estimated coefficient of
-a PC are unaffected by which other PCs are also included in the regression.</p>
+<p>If we project the individuals onto this axis <span class="math inline">\(X_2\)</span>, class 3 is well separated from
+classes 1 and 2. However, class 1 is largely confouded with class 2.</p>
+<p>Is there an axis that “best” separates the three clouds?</p>
+<p>We can try to look for an optimal representation in the sense of finding
+an axis that best separates the clouds, like in the following diagram:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-169"></span>
+<img src="images/discrim/discrim_axes4.svg" alt="An axis the best separates all three classes" width="50%" />
+<p class="caption">
+Figure 18.4: An axis the best separates all three classes
+</p>
 </div>
-<div id="how-does-pcr-work" class="section level2">
-<h2><span class="header-section-number">12.3</span> How does PCR work?</h2>
-<p>Start with <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{n \times p}\)</span>, assuming standardized data.
-Then, perform PCA on <span class="math inline">\(\mathbf{X}\)</span>: either a EVD of a multiple of
-<span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> (e.g. <span class="math inline">\((n-1)^{-1} \mathbf{X^\mathsf{T} X}\)</span>), or the
-SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</span>. In either case,
-<span class="math inline">\(\mathbf{X} = \mathbf{Z V^\mathsf{T}}\)</span>
-(the matrix of PC’s times the transpose of the matrix of loadings).</p>
-<p>From OLS, we have:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} = \mathbf{Xb}_\text{ols}
-\]</span></p>
-<p>We can replace <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z V^\mathsf{T}}\)</span>:</p>
-<p><span class="math display">\[\begin{align*}
-\mathbf{\hat{y}} &amp;= \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} \\
- &amp;= \mathbf{Z V^\mathsf{T}} \left (\mathbf{(Z V^\mathsf{T})^\mathsf{T} Z V^\mathsf{T}} \right )^{-1} \mathbf{(Z V^\mathsf{T})^\mathsf{T} y} \\
- &amp;= \mathbf{Z V^\mathsf{T}} \left (\mathbf{V Z^\mathsf{T} Z V^\mathsf{T}} \right )^{-1} \mathbf{V Z^\mathsf{T} y} \\
- &amp;= \mathbf{Z V^\mathsf{T}} (\mathbf{V \Lambda V^\mathsf{T}})^{-1} \mathbf{V Z^\mathsf{T} y} \\
- &amp;= \mathbf{Z V^\mathsf{T}} (\mathbf{V} \mathbf{\Lambda}^{-1} \mathbf{V^\mathsf{T}}) \mathbf{V Z^\mathsf{T} y} \\
- &amp;= \mathbf{Z} \mathbf{\Lambda}^{-1} \mathbf{Z^\mathsf{T} y} \\
- &amp;= \mathbf{Zb}_\text{pcr}
-\end{align*}\]</span></p>
-<div id="transition-formula" class="section level3">
-<h3><span class="header-section-number">12.3.1</span> Transition Formula</h3>
-<p>In PCR, if <span class="math inline">\(k = p\)</span> (and assuming <span class="math inline">\(\mathbf{X}\)</span> is of full-rank), which means
-that if you keep all PC’s, what happens is:</p>
-<p><span class="math display">\[\begin{align*}
-\mathbf{\hat{y}} &amp;= \mathbf{X} \mathbf{b}_{\text{ols}} \\
-&amp;= \mathbf{Z V^\mathsf{T}} \mathbf{b}_{\text{ols}} \\
-&amp;= \mathbf{Z} \mathbf{b}_{\text{pcr}}
-\end{align*}\]</span></p>
-<p>We can reexpress the PCR coefficients in terms of the original variables.</p>
-<p><span class="math display">\[\begin{align*}
-\mathbf{\hat{y}} &amp;= \mathbf{Z} \mathbf{b}_{\text{pcr}} \\
-&amp;= \mathbf{X V} \mathbf{b}_{\text{pcr}} \\
-&amp;= \mathbf{X} \mathbf{b}_{\text{ols}}
-\end{align*}\]</span></p>
-<p>In summary, we can go back and forth between regression coefficients for PC
-scores, and regression coefficients for original input features:</p>
+<div id="looking-for-a-discriminant-axis" class="section level3">
+<h3><span class="header-section-number">18.0.1</span> Looking for a discriminant axis</h3>
+<p>How to find a low dimensional representation of the objects
+which provides the best separation between classes? To answer this question,
+we can look for an axis <span class="math inline">\(\Delta_u\)</span>, spanned by some vector <span class="math inline">\(\mathbf{u}\)</span>, such
+that the linear combination <span class="math inline">\(Z = u_1 X_1 + u_2 X_2\)</span> separates all three groups</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-170"></span>
+<img src="images/discrim/discrim_axes5.svg" alt="Looking for a discriminant axis" width="50%" />
+<p class="caption">
+Figure 18.5: Looking for a discriminant axis
+</p>
+</div>
+<p>The idea is to look for a linear combination of the predictors,
+<span class="math inline">\(\mathbf{z} = \mathbf{Xu}\)</span>, that <em>ideally</em> could:</p>
 <ul>
-<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} \mathbf{b}_\text{ols} = \mathbf{Z V^\mathsf{T}} \mathbf{b}_\text{ols} = \mathbf{Z b}_\text{pcr}\)</span>.</p></li>
-<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_\text{pcr} = \mathbf{X V} \mathbf{b}_\text{pcr} = \mathbf{X b}_\text{ols}\)</span>.</p></li>
+<li><p>Minimize within-groups dispersion: <span class="math inline">\(min \{ \mathbf{u^\mathsf{T} W u \}}\)</span></p></li>
+<li><p>Maximize between-groups dispersion: <span class="math inline">\(max \{ \mathbf{u^\mathsf{T} B u \}}\)</span></p></li>
 </ul>
-<p>The following output shows the regression coefficients of all nine regression
-equations in terms of the original input variables:</p>
-<pre><code>#&gt;          Z_1:1 Z_1:2 Z_1:3 Z_1:4 Z_1:5 Z_1:6   Z_1:7 Z_1:8 Z_1:9
-#&gt; engine    1641  2345  5487  5203  1887  1064  2168.5 -3551 -3327
-#&gt; cyl       1544  2881  7312  7289  2213  1401  -295.5  3856  3766
-#&gt; hp        1377  4148  8402  8755 16016 17348 17585.7 17700 17352
-#&gt; city_mpg -1487 -3864   459  -149  -470   999  1891.3  2151 -1213
-#&gt; hwy_mpg  -1472 -4140   583   516  1633  1468  1477.9  1607  5536
-#&gt; weight    1642  1261  -510 -1187 -2266   707  3557.7  5507  7033
-#&gt; wheel     1385 -2392 -2860 -2422 -3009  -187 -3315.7 -4832 -4938
-#&gt; length    1332 -2634 -2202 -1346  -883 -2778    28.2  1260   447
-#&gt; width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
-<p>Obviously, if you keep all components, you aren’t changing anything: you’re
-spending the same amount of money as you were in regular least-squares regression.</p>
-<pre><code>#&gt;     engine        cyl         hp   city_mpg    hwy_mpg     weight      wheel 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
-#&gt;     length      width 
-#&gt;   446.9752 -2141.8196</code></pre>
-<p>compare with the regression coefficients of OLS:</p>
-<pre><code>#&gt;    Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight     Xwheel 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
-#&gt;    Xlength     Xwidth 
-#&gt;   446.9752 -2141.8196</code></pre>
-<p>The idea is to keep only a few components. Hence, the goal is to find <span class="math inline">\(k\)</span>
-principal components (with <span class="math inline">\(k \ll p\)</span>; <span class="math inline">\(k\)</span> is called the <strong>tuning parameter</strong>
-or the <strong>hyperparameter</strong>). How do we determine <span class="math inline">\(k\)</span>?
-The typical way is to use cross-validation.</p>
+<p>On one hand, it would be nice to have <span class="math inline">\(\mathbf{u}\)</span>, such that the between-class
+dispersion is maximized:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-171"></span>
+<img src="images/discrim/discrim_maximize_between.svg" alt="Maximize between-class dispersion" width="50%" />
+<p class="caption">
+Figure 18.6: Maximize between-class dispersion
+</p>
 </div>
-<div id="size-of-coefficients" class="section level3">
-<h3><span class="header-section-number">12.3.2</span> Size of Coefficients</h3>
-<p>Let’s look at the <em>evolution</em> of the PCA regression coefficients. This is a
-very interesting plot that allows us to see how the size of the coefficients
-grow as we add more and more PCs into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-109-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<div id="remarks" class="section level4 unnumbered">
-<h4>Remarks</h4>
-<p>The catch: those PC’s you choose to keep may not be good predictors of
-<span class="math inline">\(\mathbf{y}\)</span>. That is, there is a chance that some of those PC’s you discarded
-actually capture a fair amount of the signal. Unfortunately, there is no way
-of knowing this in a real-life setting. Partial Least Squares was developed
-as a cure for this, which is the topic of the <a href="pls.html#pls">next chapter</a>.</p>
+<p>On the other hand, it would also make sense to have <span class="math inline">\(\mathbf{u}\)</span>, such that
+the within-class dispersion is minimized:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-172"></span>
+<img src="images/discrim/discrim_minimize_within.svg" alt="Minimize within-class dispersion" width="50%" />
+<p class="caption">
+Figure 18.7: Minimize within-class dispersion
+</p>
+</div>
+<p>We have not so good news. It is generally impossible to find an axis
+<span class="math inline">\(\Delta_u\)</span>, spanned by <span class="math inline">\(\mathbf{u}\)</span>, which in order
+to meet the objective of discriminant analysis, simoultaneously:</p>
+<ul>
+<li>maximizes the between-groups variance</li>
+<li>minimizes the within-groups variance</li>
+</ul>
+<p>Let’s see a cartoon picture of this issue. Say we have two classes, each
+one with its centroid.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-173"></span>
+<img src="images/discrim/discrim_double_goal1.svg" alt="Minimize within-class dispersion" width="50%" />
+<p class="caption">
+Figure 18.8: Minimize within-class dispersion
+</p>
+</div>
+<p>Maximizing the between-class separation, involves choosing <span class="math inline">\(\mathbf{u}_a\)</span>
+parallel to the segment linking the centroids. In other words, the direction
+of <span class="math inline">\(\mathbf{u}\)</span> is the one that crosses the centroids:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
+<img src="images/discrim/discrim_double_goal2.svg" alt="Maximize between-class dispersion" width="50%" />
+<p class="caption">
+Figure 18.9: Maximize between-class dispersion
+</p>
+</div>
+<p>Minimizing the within-class separation, involves finding <span class="math inline">\(\mathbf{u}_b\)</span>
+perpendicular to the principal axis of the ellipses. This type of <span class="math inline">\(\mathbf{u}\)</span><br />
+does not necessarily crosses through the centroids:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-175"></span>
+<img src="images/discrim/discrim_double_goal3.svg" alt="Minimize within-class dispersion" width="50%" />
+<p class="caption">
+Figure 18.10: Minimize within-class dispersion
+</p>
+</div>
+<p>In general, we end up with two possibilities <span class="math inline">\(\mathbf{u}_a \neq \mathbf{u}_b\)</span>:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-176"></span>
+<img src="images/discrim/discrim_double_goal4.svg" alt="Double goal of discriminant analysis ... generally impossible" width="50%" />
+<p class="caption">
+Figure 18.11: Double goal of discriminant analysis … generally impossible
+</p>
+</div>
+<p>Impossible simultaneity (in general):</p>
+<p><span class="math display">\[
+min \{ \mathbf{u^\mathsf{T} W u} \} \Longrightarrow  \mathbf{W u} = \alpha \mathbf{u} 
+\]</span></p>
+<p><span class="math display">\[
+max \{ \mathbf{u^\mathsf{T} B u} \} \Longrightarrow  \mathbf{B u} = \beta \mathbf{u}
+\]</span></p>
+<p>What can we do about this simultaneous impossibility?</p>
+<p>We should look then for a compromise.
+This is where the variance decomposition comes handy:
+<span class="math inline">\(\mathbf{V} = \mathbf{W} + \mathbf{B}\)</span></p>
+<p><span class="math display">\[
+\mathbf{u^\mathsf{T} V u} = \mathbf{u^\mathsf{T} W u} + \mathbf{u^\mathsf{T} B u}
+\]</span></p>
+<p><span class="math display">\[
+\mathbf{u^\mathsf{T} V u} = \underbrace{\mathbf{u^\mathsf{T} W u}}_{\text{minimize}} + \underbrace{\mathbf{u^\mathsf{T} B u}}_{\text{maximize}}
+\]</span></p>
+<p>We have two options for the compromise:</p>
+<p><span class="math display">\[
+max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
+\quad \textsf{OR} \quad
+max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} \right \}
+\]</span></p>
+<p>We look for <span class="math inline">\(\mathbf{u}\)</span> such that:</p>
+<p><span class="math display">\[
+max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
+\]</span></p>
+<p>This criterion is scale invariant, meaning that we use any scale variation of
+<span class="math inline">\(\mathbf{u}\)</span>: i.e. <span class="math inline">\(\alpha \mathbf{u}\)</span></p>
+<p>Thus:</p>
+<p><span class="math display">\[
+max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
+\Longleftrightarrow max \{\mathbf{u^\mathsf{T} B u}\} \quad \text{s.t.} \quad 
+\mathbf{u^\mathsf{T} V u} = 1
+\]</span></p>
+<p>Using the method of Lagrangian multiplier:</p>
+<p><span class="math display">\[
+L(\mathbf{u}) = \mathbf{u^\mathsf{T} B u} - \lambda (\mathbf{u^\mathsf{T} V u} - 1)
+\]</span></p>
+<p>Deriving w.r.t <span class="math inline">\(\mathbf{u}\)</span> and equation to zero:</p>
+<p><span class="math display">\[
+\frac{\partial L(\mathbf{u})}{\partial \mathbf{u}} = 2 \mathbf{Bu} - 2 \lambda \mathbf{Vu} = 0
+\]</span></p>
+<p>The optimal vector <span class="math inline">\(\mathbf{u}\)</span> is such that:</p>
+<p><span class="math display">\[
+\mathbf{Bu} = \lambda \mathbf{Vu}
+\]</span></p>
+<p>If the matrix <span class="math inline">\(\mathbf{V}\)</span> is inversible (which it is in general) then:</p>
+<p><span class="math display">\[
+\mathbf{V^{-1}Bu} = \lambda \mathbf{u}
+\]</span></p>
+<p>that is, the optimal vector <span class="math inline">\(\mathbf{u}\)</span> is eigenvector of <span class="math inline">\(\mathbf{V^{-1}B}\)</span></p>
+<p>The vector <span class="math inline">\(\mathbf{u}\)</span> verifies <span class="math inline">\(\mathbf{Bu} = \lambda \mathbf{Vu}\)</span>
+subject to <span class="math inline">\(\mathbf{u^\mathsf{T} V u} = 1\)</span></p>
+<p>If we replace <span class="math inline">\(\mathbf{V}\)</span> by <span class="math inline">\(\mathbf{B + W}\)</span> then we have:</p>
+<p><span class="math display">\[
+\mathbf{Bu} = \rho \mathbf{Wu} \quad \text{with} \quad \rho = \frac{\lambda}{1 - \lambda}
+\]</span></p>
+<p>It can be shown that <span class="math inline">\(\mathbf{u}\)</span> is also eigenvector of <span class="math inline">\(\mathbf{W^{-1}B}\)</span></p>
+<p><span class="math display">\[
+\mathbf{W^{-1}Bu} = \rho \mathbf{u}
+\]</span></p>
+<p>Keep in mind that <span class="math inline">\(\mathbf{W^{-1}B}\)</span> is not symmetric.</p>
+<p>The problem is that most software routines that diagonilize a matrix (find its
+eigenvalue decomposition) use the Jacobi method, which works with symmetric
+matrices.</p>
 
 </div>
 </div>
-</div>
-</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="regular.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="discrim.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
