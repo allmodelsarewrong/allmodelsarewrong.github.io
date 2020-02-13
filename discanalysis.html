@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 About this book | All Models Are Wrong</title>
+  <title>19 Discriminant Analysis | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 About this book | All Models Are Wrong" />
+  <meta property="og:title" content="19 Discriminant Analysis | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 About this book | All Models Are Wrong" />
+  <meta name="twitter:title" content="19 Discriminant Analysis | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="intro.html"/>
+<link rel="prev" href="cda.html"/>
+<link rel="next" href="classperformance.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -379,70 +379,253 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="about" class="section level1">
-<h1><span class="header-section-number">1</span> About this book</h1>
-<p>This is a book about concepts of Statistical Learning.
-The book has an overarching take-home message
-that we use as the title of this work: <em>All Models Are Wrong</em>. This comes from
-a <a href="https://en.wikipedia.org/wiki/All_models_are_wrong">famous quote</a>
-credited to great British statistician
-<a href="https://en.wikiquote.org/wiki/George_E._P._Box">George Edward Pelham Box</a>:</p>
-<blockquote>
-<p>“All models are wrong, but some are useful.”</p>
-</blockquote>
-<p>Because Statistical Learning is inherently related to model building, we must
-never forget that every proposed model will be wrong. This is why we need to
-measure the generalization error of a model. We may never be able to come up
-with a perfect model that gives zero error. And that is okay. It doesn’t have to
-be perfect. The important—and challenging—thing is to find useful models
-(yes, we know, <em>easier said than done</em>).</p>
-<p>Knowing that the field(s) of Machine Learning, Statisticial Learning (SL), and
-any other name about learning from data, is a very broad subject, we should warn
-you that this book is not intended to be the ultimate compilation of every single
-SL technique ever devised.</p>
-<p>Instead, we focus on the concepts that we consider the building blocks that any
-user or practitioner needs to make sense of most common SL techniques.</p>
-<p>A big shortcoming of the book: we don’t cover neural networks. At least not in this first round of iterations. Sorry.</p>
-<p>On the plus side: We’ve tried hard to keep the notation as simple and consistent
-as possible. And we’ve also made a titanic effort to make it extremely visual
-(lots of diagrams, pictures, plots, graphs, figures, …, you name it).</p>
-<div id="prerequisites" class="section level3 unnumbered">
-<h3>Prerequisites</h3>
-<p>We are assuming that you already have some knowledge under your belt.</p>
-<p>You will better understand (and hopefully enjoy) the book if you’ve taken one
-or more courses on the following subjects:</p>
-<ul>
-<li>linear or matrix algebra</li>
-<li>multivariable calculus</li>
-<li>statistics</li>
-<li>probability</li>
-<li>programming or scripting</li>
-</ul>
+<div id="discanalysis" class="section level1">
+<h1><span class="header-section-number">19</span> Discriminant Analysis</h1>
+<p>So far we have considered Discriminant Analysis (DA) from a largely conceptual
+standpoint. In this lecture, we start to formalize our notions into a
+mathematical framework in what we will call <strong>Probabilistic Discriminant Analysis</strong>.</p>
+<div id="probabilistic-da" class="section level2">
+<h2><span class="header-section-number">19.1</span> Probabilistic DA</h2>
+<p>We start with the notion of the <strong>Bayes Classifier</strong>, which is explained in
+more detail in section 2.2.3 of ISL. Suppose we have a response with <span class="math inline">\(K\)</span> classes
+<span class="math inline">\((C_1, \dots, C_K)\)</span>, and further suppose we have <span class="math inline">\(p\)</span> predictors. The Bayes
+Classifier gives us the following classification rule:</p>
+<p><span class="math display">\[
+\text{assign } x_i \text{ to the class for which } Pr( \{ y_i = k \} \mid x_i) \text{ is the largest}
+\]</span></p>
+<p>This rule is optimal in the sense that it minimizes the misclassification error,
+though it is usually computationally intensive (since it involves computing
+probabilities for all <span class="math inline">\(K\)</span> classes). As such, we would like to develop a slightly
+more feasible classification rule.</p>
+<p>We start by examining the other conditional probability: that is,
+<span class="math inline">\(Pr(x_i \mid y_i = k)\)</span>. Of course, these two conditional probabilities are
+related:</p>
+<p><span class="math display">\[
+Pr(x_i \mid \{ y_i = k \} ) = \frac{Pr(x_i \cap \{ y_i = k\} ) }{Pr( \{ y_i = k \} ) }
+\]</span></p>
+<p><span class="math display">\[
+Pr(\{ y_i = k \} \mid x_i ) = \frac{Pr( \{ y_i = k\}  \cap x_i   ) }{Pr( x_i ) }
+\]</span></p>
+<p>Note that the numerator in the above equations are the same: hence, we obtain
+(notice that we omit writing in the braces in the probabilities, for convenience):</p>
+<p><span class="math display">\[
+Pr(y_i = k \mid x_i) Pr(x_i) = Pr(y_i = k) Pr(x_i \mid y_i = k)
+\]</span></p>
+<p>after rearranging terms, yields</p>
+<p><span class="math display">\[
+\underbrace{ Pr(y_i = k \mid x_i)  }_{\text{posterior}} = \frac{ \overbrace{ Pr(x_i \mid y_i = k) }^{\text{likelihood}} \overbrace{  Pr(y_i = k) }^{\text{prior}} }{Pr(x_i) }
+\]</span></p>
+<p>This is nothing but <strong>Bayes’ Rule</strong>! Now, we’re almost done; we just need to
+simplify the denominator a bit. Typically, to compute the denominator, we would
+use partitioning:</p>
+<p><span class="math display">\[
+Pr(x_i) = \sum_{k=1}^{K} Pr(y_i = k) Pr(x_i \mid y_i = k)
+\]</span></p>
+<p>and we would write:</p>
+<p><span class="math display">\[
+Pr(y_i = k \mid x_i) = \frac{Pr(x_i \mid y_i = k) Pr(y_i = k) }{Pr(x_i) }
+\]</span></p>
+<p>We can re-express the above equation with more traditional notation:</p>
+<p><span class="math display">\[
+Pr(y_i = k \mid x_i) = \frac{\pi_k f_k(x) }{\sum_{k=1}^{K} \pi_k f_k(x) }
+\]</span></p>
+<p>where <span class="math inline">\(\pi_k\)</span> denotes the priors and <span class="math inline">\(f_k(x)\)</span> denotes the class conditional
+(aka likelihood) probabilities.</p>
 </div>
-<div id="acknowledgements" class="section level3 unnumbered">
-<h3>Acknowledgements</h3>
-<p>Many thanks to the UC Berkeley students, and teaching staff, of
-<em>Stat 154 Modern Statistical Prediction and Machine Learning</em>
-(Fall 2017, Spring 2018, Fall 2019).</p>
-<p>In particular, thank you to Jin Kweon, and Jiyoon Jeong for catching
-many typos in the first iteration of the course slides.</p>
-<p>Also, thanks to Anita Silver, Joyce Yip, Jingwei Guan, Skylar Liang,
-and Raymond Chang for being amazing and committed note takers.</p>
-<p>Likewise, thanks to Johnny Hong, Omid Shams Solari, Ryan Theisen, and
-Frank Qiu, for their collaboration as TAs.</p>
+<div id="estimations" class="section level2">
+<h2><span class="header-section-number">19.2</span> Estimations</h2>
+<p>Let’s parse through our equation from above. Clearly, in order for this to be
+of any <em>practical</em> use, we need to estimate some of these quantities.
+Estimating <span class="math inline">\(\pi_k\)</span> is relatively intuitive: <span class="math inline">\(\hat{\pi}_k = n_k / n\)</span> where
+<span class="math inline">\(n_k = |C_k|\)</span> denotes the size of class <span class="math inline">\(k\)</span> and <span class="math inline">\(n\)</span> denotes the total number of
+data points.</p>
+<p>Now, here comes one of the key assumptions of Discriminant Analysis:
+<strong>we assume that our class-conditional probabilities follow a Gaussian distribution</strong>.</p>
+<div id="univariate-data-boldsymbolp-1" class="section level3">
+<h3><span class="header-section-number">19.2.1</span> Univariate Data (<span class="math inline">\(\boldsymbol{p = 1}\)</span>)</h3>
+<p>In the case of univariate data, we have</p>
+<p><span class="math display">\[
+f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k^2}} \hspace{1mm} \exp\left\{ -\frac{1}{2} \left( \frac{x - \mu_k}{\sigma_k} \right)^2 \right\}
+\]</span></p>
+</div>
+<div id="multivariate-data-boldsymbolp-1" class="section level3">
+<h3><span class="header-section-number">19.2.2</span> Multivariate Data (<span class="math inline">\(\boldsymbol{p &gt; 1}\)</span>)</h3>
+<p>In the case of multivariate data, we use a multivariate normal distribution as our likelihood:</p>
+<p><span class="math display">\[
+f_k(\mathbf{x}) = \frac{1}{(2 \pi)^{p/2} | \mathbf{\Sigma_k} |^{1/2} } \exp\left\{  - \frac{1}{2} (\mathbf{x} - \boldsymbol{\mu_k})^{\mathsf{T}} \mathbf{\Sigma_k}^{-1} (\mathbf{x} - \boldsymbol{\mu_k})  \right\}
+\]</span></p>
+<p>where <span class="math inline">\(\mathsf{\Sigma_k}\)</span> denotes the variance-covariance matrix associated
+with <span class="math inline">\(C_k\)</span>, and <span class="math inline">\(\boldsymbol{\mu_k}\)</span> denotes the centroid of <span class="math inline">\(C_k\)</span>. Note that
+the exponent of the likelihood is simple the Mahalanobis distance between
+<span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\boldsymbol{\mu_k}\)</span>.</p>
+</div>
+<div id="multivariate-estimations" class="section level3">
+<h3><span class="header-section-number">19.2.3</span> Multivariate Estimations</h3>
+<p>For <span class="math inline">\(\hat{\mu}\)</span>, we can use the centroid of <span class="math inline">\(C_k\)</span>; i.e. the average individual
+of class <span class="math inline">\(k\)</span>. For <span class="math inline">\(\mathbf{\widehat{\Sigma}_k}\)</span>, we can use the within-variance
+matrix:</p>
+<p><span class="math display">\[
+\mathbf{\widehat{\Sigma}_k} = \frac{1}{n-1} \mathbf{X_k}^\mathsf{T} \mathbf{X_k}
+\]</span></p>
+<p>(assuming mean-centered data within each class).</p>
+</div>
+</div>
+<div id="discriminant-functions" class="section level2">
+<h2><span class="header-section-number">19.3</span> Discriminant Functions</h2>
+<p>Given all of our above estimations, we can now find an estimate for
+<span class="math inline">\(Pr(y_i = k \mid x_i)\)</span>, using equation (1) above (for the moment, let us
+consider the multivariate case):</p>
+<p><span class="math display">\[
+\widehat{ Pr(y_i = k \mid \mathbf{x} )  } = \frac{\hat{\pi}_k \hat{f}_k(\mathbf{x}) }{\sum_{k=1}^{K} \hat{\pi}_k \hat{f}_k(\mathbf{x}) }
+\]</span></p>
+<p>Now, note that the denominator remains constant across classes. Furthermore,
+we have a Gaussian expression in our numerator; hence, it makes sense to take
+logarithms:</p>
+<p><span class="math display">\[
+\ln\left[ Pr(y_i = k \mid \mathbf{x} ) \right] \propto \ln( \hat{\pi}_k) + \ln\left[ \hat{f}_k(\mathbf{x}) \right]
+\]</span></p>
+<p>We now substitute the Multivariate Normal p.d.f. into our expression above, to see:</p>
+<p><span class="math display">\[\begin{align*}
+\ln\left[ \hat{f}_k(x) \right] &amp; = \ln \left[  (2\pi)^{-p/2} | \mathbf{\hat{\Sigma}_k} |^{-1/2}  \exp\left\{  - \frac{1}{2} (\mathbf{x} - \boldsymbol{\hat{\mu}})^{\mathsf{T}} \mathbf{\hat{\Sigma}}^{-1} (\mathbf{x} - \boldsymbol{\hat{\mu}})  \right\}   \right] \\
+&amp; \to \ln\left( | \mathbf{\hat{\Sigma}_k} |^{-1/2} \right) - \frac{1}{2} (\mathbf{x} - \boldsymbol{\hat{\mu}})^{\mathsf{T}} \mathbf{\hat{\Sigma}}^{-1} (\mathbf{x} - \boldsymbol{\hat{\mu}})  \\
+&amp; = -\frac{1}{2} \ln\left( | \mathbf{\hat{\Sigma}_k} |  \right) - \frac{1}{2} \left[ \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}_k^{-1}} \mathbf{x} - 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}_k^{-1}} \boldsymbol{\hat{\mu}} + \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}_k^{-1}} \boldsymbol{\hat{\mu}}  \right] 
+\end{align*}\]</span></p>
+<p>Substituting this back into our expression for <span class="math inline">\(\ln[Pr(y_i = k \mid \mathbf{x})]\)</span> leads us to the so-called <strong>discriminant functions</strong>:</p>
+<p><span class="math display">\[
+\delta_k(\mathbf{x}) := -\frac{1}{2} \ln\left( | \mathbf{\hat{\Sigma}_k} |  \right) - \frac{1}{2} \left[ \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}_k^{-1}} \mathbf{x}^\mathsf{T} - 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}_k^{-1}} \boldsymbol{\hat{\mu}} + \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}_k^{-1}} \boldsymbol{\hat{\mu}}  \right]  + \ln\left(  \hat{\pi}_k \right)
+\]</span></p>
+<p>In general, our classification rule is as follows:</p>
+<p><span class="math display">\[
+\text{assign } \mathbf{x}  \text{ to the class for which } \delta_k(\mathbf{x}) \text{ is the largest} 
+\]</span></p>
+</div>
+<div id="quadratic-discriminant-analysis-qda" class="section level2">
+<h2><span class="header-section-number">19.4</span> Quadratic Discriminant Analysis (QDA)</h2>
+<p>Let us classify the order of each term, w.r.t. <span class="math inline">\(\mathbf{x}\)</span>:</p>
+<p><span class="math display">\[
+\delta_k(\mathbf{x}) :=  -\frac{1}{2}   \underbrace{ \ln\left( | \mathbf{\hat{\Sigma}_k} |  \right) }_{\text{constant}}- \frac{1}{2} \left[ \underbrace{ \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}_k^{-1}} \mathbf{x} }_{\text{quadratic}}  - \underbrace{ 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}_k^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} + \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}_k^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}  \right]  + \underbrace{ \ln\left(  \hat{\pi}_k \right) }_{\text{constant}}
+\]</span></p>
+<p>Of course, we could group terms to obtain an expression of the form
+<span class="math inline">\(\text{const} + \text{linear} + \text{quadratic}\)</span>. That is, we obtain a
+quadratic function of <span class="math inline">\(\mathbf{x}\)</span>; this leads us to
+<strong>Quadratic Discriminant Analysis (QDA)</strong>.</p>
+</div>
+<div id="linear-discriminant-analysis" class="section level2">
+<h2><span class="header-section-number">19.5</span> Linear Discriminant Analysis</h2>
+<p>What if, in our expression for <span class="math inline">\(\delta_K(\mathbf{x})\)</span>, we have that $ =  = =  =:  $?
+In this case, the discriminant function becomes</p>
+<p><span class="math display">\[
+\delta_k(\mathbf{x}) =  \underbrace{ \ln\left(  \hat{\pi}_k \right) }_{\text{constant}} -   \underbrace{ \frac{1}{2} \ln\left( | \mathbf{\hat{\Sigma}} |  \right) }_{\text{no k dependency}} - \frac{1}{2} \left[ \underbrace{ \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \mathbf{x} }_{\text{no k dependency}}  - \underbrace{ 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} + \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}  \right]
+\]</span></p>
+<p>In other words, ignoring terms that do not depend on <span class="math inline">\(k\)</span>, we obtain
+(again, w.r.t. <span class="math inline">\(\mathbf{x}\)</span>)</p>
+<p><span class="math display">\[
+\delta_k(\mathbf{x}) =  \underbrace{ \ln\left(  \hat{\pi}_k \right) }_{\text{constant}}  - \frac{1}{2} \left[ - \underbrace{ 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} + \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}  \right]
+\]</span></p>
+<p>That is, our discriminant function is now linear w.r.t. <span class="math inline">\(\mathbf{x}\)</span>; hence,
+we end up with <strong>Linear Discriminant Analysis (LDA)</strong> in its most general form.</p>
+</div>
+<div id="canonical-discriminant-analysis" class="section level2">
+<h2><span class="header-section-number">19.6</span> Canonical Discriminant Analysis</h2>
+<p>Let us continue our idealistic assumptions. We again assume that
+$ =  = =  =:  $
+as well as <span class="math inline">\(\hat{\pi}_1 = \dots = \hat{\pi}_k =: \hat{\pi}\)</span>. The</p>
+<p>discriminant function then becomes</p>
+<p><span class="math display">\[
+\delta_k(\mathbf{x}) =  \underbrace{ \ln\left(  \hat{\pi} \right) }_{\text{no k dependency}} +  \underbrace{  \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} - \frac{1}{2}  \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}
+\]</span></p>
+<p>which means, after ignoring <span class="math inline">\(k\)</span>-independent terms, we have</p>
+<p><span class="math display">\[
+\delta_k(\mathbf{x}) =  \underbrace{  \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} - \frac{1}{2}  \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}
+\]</span></p>
+<p>Now, what is going in with this first term? It is simply the distance between
+<span class="math inline">\(\mathbf{x}\)</span> and the centroid of <span class="math inline">\(C_k\)</span>, using the within-class variance matrix
+as a metric matrix. In other words, <em>the above expression is our good friend CDA!</em></p>
+</div>
+<div id="naive-bayes" class="section level2">
+<h2><span class="header-section-number">19.7</span> Naive Bayes</h2>
+<p>Again assume that <span class="math inline">\(\mathbf{\hat{\Sigma}_1} = \mathbf{\hat{\Sigma}_2} = \dots = \mathbf{\hat{\Sigma}_K} =: \mathbf{\hat{\Sigma}}\)</span> as well as
+<span class="math inline">\(\hat{\pi}_1 = \dots = \hat{\pi}_k =: \hat{\pi}\)</span>. Now, we also assume that
+<span class="math inline">\(\mathbf{\hat{\Sigma}}\)</span> is diagonal; i.e. that the predictors are uncorrelated:</p>
+<p><span class="math display">\[
+\mathbf{\hat{\Sigma}} = \begin{pmatrix} Var(X_1) &amp; 0 &amp; \dots &amp; 0 \\ 0 &amp; Var(X_2) &amp; \dots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \dots &amp; Var(X_p) \\ \end{pmatrix}
+\]</span></p>
+<p>This leads to what is known as <strong>Naive Bayes</strong>.</p>
+</div>
+<div id="fifth-case" class="section level2">
+<h2><span class="header-section-number">19.8</span> Fifth Case</h2>
+<p>Again assume that <span class="math inline">\(\mathbf{\hat{\Sigma}_1} = \mathbf{\hat{\Sigma}_2} = \dots = \mathbf{\hat{\Sigma}_K} =: \mathbf{\hat{\Sigma}}\)</span> as well as
+<span class="math inline">\(\hat{\pi}_1 = \dots = \hat{\pi}_k =: \hat{\pi}\)</span>. Also assume that
+<span class="math inline">\(\mathbf{\hat{\Sigma}} = \mathbf{I_p}\)</span>, the <span class="math inline">\(p \times p\)</span> identity matrix.
+In other words, our Mahalanobis distance collapses to the Euclidean distance.</p>
+</div>
+<div id="comparing-the-cases" class="section level2">
+<h2><span class="header-section-number">19.9</span> Comparing the Cases</h2>
+<p>Here’s a summary table of the five cases discussed above:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Cov Matrix</th>
+<th align="left">Priors</th>
+<th align="left">Method</th>
+<th align="left">Bayes Rule</th>
+<th align="left">Flexibility</th>
+<th align="left">Bias</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Unequal across classes</td>
+<td align="left">Unequal across classes</td>
+<td align="left">QDA</td>
+<td align="left">quadratic</td>
+<td align="left">+++</td>
+<td align="left">+</td>
+</tr>
+<tr class="even">
+<td align="left">Equal across classes</td>
+<td align="left">Unequal across classes</td>
+<td align="left">LDA</td>
+<td align="left">linear</td>
+<td align="left">++</td>
+<td align="left">++</td>
+</tr>
+<tr class="odd">
+<td align="left">Equal across classes</td>
+<td align="left">Equal across classes</td>
+<td align="left">CDA</td>
+<td align="left">linear</td>
+<td align="left">+</td>
+<td align="left">+++</td>
+</tr>
+<tr class="even">
+<td align="left">Equal across classes, diagonal</td>
+<td align="left">Equal across classes</td>
+<td align="left">Naive Bayes</td>
+<td align="left">linear</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Equal across classes, identity</td>
+<td align="left">Equal across classes</td>
+<td align="left">Euclid. Dist.</td>
+<td align="left">linear</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cda.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classperformance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

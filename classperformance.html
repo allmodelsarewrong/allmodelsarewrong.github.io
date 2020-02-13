@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 About this book | All Models Are Wrong</title>
+  <title>20 Performance of Classifiers | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 About this book | All Models Are Wrong" />
+  <meta property="og:title" content="20 Performance of Classifiers | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 About this book | All Models Are Wrong" />
+  <meta name="twitter:title" content="20 Performance of Classifiers | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="intro.html"/>
+<link rel="prev" href="discanalysis.html"/>
+<link rel="next" href="clustering.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -379,58 +379,148 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="about" class="section level1">
-<h1><span class="header-section-number">1</span> About this book</h1>
-<p>This is a book about concepts of Statistical Learning.
-The book has an overarching take-home message
-that we use as the title of this work: <em>All Models Are Wrong</em>. This comes from
-a <a href="https://en.wikipedia.org/wiki/All_models_are_wrong">famous quote</a>
-credited to great British statistician
-<a href="https://en.wikiquote.org/wiki/George_E._P._Box">George Edward Pelham Box</a>:</p>
-<blockquote>
-<p>“All models are wrong, but some are useful.”</p>
-</blockquote>
-<p>Because Statistical Learning is inherently related to model building, we must
-never forget that every proposed model will be wrong. This is why we need to
-measure the generalization error of a model. We may never be able to come up
-with a perfect model that gives zero error. And that is okay. It doesn’t have to
-be perfect. The important—and challenging—thing is to find useful models
-(yes, we know, <em>easier said than done</em>).</p>
-<p>Knowing that the field(s) of Machine Learning, Statisticial Learning (SL), and
-any other name about learning from data, is a very broad subject, we should warn
-you that this book is not intended to be the ultimate compilation of every single
-SL technique ever devised.</p>
-<p>Instead, we focus on the concepts that we consider the building blocks that any
-user or practitioner needs to make sense of most common SL techniques.</p>
-<p>A big shortcoming of the book: we don’t cover neural networks. At least not in this first round of iterations. Sorry.</p>
-<p>On the plus side: We’ve tried hard to keep the notation as simple and consistent
-as possible. And we’ve also made a titanic effort to make it extremely visual
-(lots of diagrams, pictures, plots, graphs, figures, …, you name it).</p>
-<div id="prerequisites" class="section level3 unnumbered">
-<h3>Prerequisites</h3>
-<p>We are assuming that you already have some knowledge under your belt.</p>
-<p>You will better understand (and hopefully enjoy) the book if you’ve taken one
-or more courses on the following subjects:</p>
+<div id="classperformance" class="section level1">
+<h1><span class="header-section-number">20</span> Performance of Classifiers</h1>
+<p>How do we measure the performance of a classifier? In a classification setting
+we still have response observations <span class="math inline">\(y_i\)</span> and predicted values <span class="math inline">\(\hat{y}_i\)</span>;
+we still want a way to compare <span class="math inline">\(y_i\)</span> and <span class="math inline">\(\hat{y}_i\)</span>. We could try to use
+a quadratic pointwise error <span class="math inline">\((y_i - \hat{y}_i)^2\)</span>, and then combined them
+into a Mean Squared Error (MSE) measure like we did in regression.</p>
+<p><span class="math display">\[
+\mathrm{MSE} = \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)^2
+\]</span></p>
+<p>unfortunately, <span class="math inline">\(\text{MSE}\)</span> will no longer work; as such, we need to develop a
+new error measure.</p>
+<div id="error-for-binary-response" class="section level2">
+<h2><span class="header-section-number">20.1</span> Error for Binary Response</h2>
+<p>What if our <span class="math inline">\(y\)</span> values are binary; that is, <span class="math inline">\(y_i \in \{0, 1\}\)</span>. Then, we could
+try the following pointwise error measure:</p>
+<p><span class="math display">\[
+\left| y_i - \hat{y}_i \right| = \begin{cases} 0 &amp; \text{if } y_i = \hat{y}_i \\ 1 &amp; \text{if } y_i \neq \hat{y}_i \\ \end{cases}
+\]</span></p>
+<p>Now, suppose we still had binary data but instead we encoded our data so that
+<span class="math inline">\(y_i \in \{-1, 1\}\)</span>. What kind of pointwise error measure should we use?
+We could use the following:</p>
+<p><span class="math display">\[
+(y_i - \hat{y}_i)^2 = \begin{cases} 0 &amp; \text{if agreement}\\ 4 &amp; \text{if disagreement} \\ \end{cases}
+\]</span></p>
+<p>Alternatively, we could use</p>
+<p><span class="math display">\[
+y_i \times \hat{y}_i = \begin{cases} -1 &amp; \text{if agreement} \\ 1 &amp; \text{if agreement} \\ \end{cases}
+\]</span></p>
+<p>The point is: <strong>there are many different choices for pointwise error measures!</strong>
+In fact, there isn’t really a single agreed-upon measure in this case.</p>
+</div>
+<div id="categorical-response" class="section level2">
+<h2><span class="header-section-number">20.2</span> Categorical Response</h2>
+<p>Now suppose, for example, <span class="math inline">\(y_i \in \{a, b, c, d\}\)</span>. That is, <span class="math inline">\(y_i\)</span> is still
+categorical but no longer binary. For illustrative purposes, consider the
+following data:</p>
+<p><span class="math display">\[
+\begin{array}{c|ccccc}
+y &amp; a &amp; b &amp; c &amp; d &amp; b \\ \hline \hat{y} &amp; a &amp; a &amp; c &amp; d &amp; c \\ \hline &amp; \checkmark &amp; \times &amp; \checkmark &amp; \checkmark &amp; \times \\  \end{array}
+\]</span></p>
+<p>(here the symbol <span class="math inline">\(\checkmark\)</span> denotes agreement between the observed values and
+the predicted values). In this case, it makes sense to use the <strong>binary error</strong>
+as our pointwise error measure, defined to be</p>
+<p><span class="math display">\[
+[\![ \hat{y}_i \neq y_i ]\!] \to \begin{cases} 1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\ 0 \  (\text{or FALSE}) &amp; \text{if agree} \\ \end{cases}
+\]</span></p>
+<p>Averaging these binary errors over our observations yields the
+<strong>misclassification error rate</strong>:</p>
+<p><span class="math display">\[
+\frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
+\]</span></p>
+</div>
+<div id="confusion-matrices" class="section level2">
+<h2><span class="header-section-number">20.3</span> Confusion Matrices</h2>
+<p>In this categorical-but-not-binary case, it is customary to construct a
+<strong>confusion matrix</strong>.</p>
+<p><img src="images/classif/confusion-matrix0.svg" width="50%" style="display: block; margin: auto;" /></p>
+<p>Any entry in this matrix contains information about how our predicted
+classifications compare with the observed classifications. For example, the
+number in the <span class="math inline">\((1, 2)\)</span> entry represents the number of observations that were
+classified as being of class <span class="math inline">\(a\)</span> when in fact they were actually in class <span class="math inline">\(b\)</span>.
+As such, <strong>the off-diagonal entries represent entries that were misclassified</strong>.
+(By convention, diagonal entries are set to be the number of observations in
+each class). Hence, we can recover our misclassification error from the
+confusion matrix using the formula</p>
+<p><span class="math display">\[
+1 - \frac{\sum (\text{all cells in diagonal}) }{n} = \text{Misclassification Error} \]</span></p>
+<p>In this way, the “ideal” confusion matrix is one that is completely diagonal,
+with all off-diagonal entries equal to <span class="math inline">\(0\)</span>. The higher the off-diagonal entries,
+the worse our model is performing.</p>
+</div>
+<div id="binary-response-example" class="section level2">
+<h2><span class="header-section-number">20.4</span> Binary Response: Example</h2>
+<p>Consider an approval application process. That is, we look at all the steps a
+customer at a certain bank would need to take in order to get approval for
+something: for example</p>
 <ul>
-<li>linear or matrix algebra</li>
-<li>multivariable calculus</li>
-<li>statistics</li>
-<li>probability</li>
-<li>programming or scripting</li>
+<li>Credit Card</li>
+<li>Car Loan</li>
+<li>Mortgage</li>
+<li>Savings/Checking Account</li>
+<li>Moneymarket Account</li>
+<li>Insurance policy</li>
+</ul>
+<p>For each of these applications, there will be some series of questions a customer needs to answer: for example</p>
+<ul>
+<li>Do you have a bank account?</li>
+<li>Are you a US citizen?</li>
+<li>Are you over the age of 18?</li>
+<li>What is your income?</li>
+</ul>
+<p>That is, we want a model <span class="math inline">\(f\)</span> that takes the answers to these questions <span class="math inline">\(\mathbf{x_i}\)</span>, and spits out either <code>accept</code> or <code>reject</code>. Pictorially:</p>
+<p><span class="math display">\[
+\mathbf{x_i} \to \boxed{\hat{f}} \to \hat{y}_i = \begin{cases} \text{accept} \\ \text{reject} \\ \end{cases}
+\]</span></p>
+<p>Now, given past data (on acceptances and rejections), we could construct our confusion matrix:</p>
+<p><img src="images/classif/accept-reject1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Note that the different types of errors may have different importance. That is,
+there may be a situation in which a false acceptance is “worse” (in some way)
+than a false rejection. We explore these considerations in the next section.</p>
+<div id="types-of-errors-application-for-savings-account" class="section level3">
+<h3><span class="header-section-number">20.4.1</span> Types of Errors: Application for Savings Account</h3>
+<p>The first kind of error is a <strong>false rejection</strong>. That is, suppose a customer
+fills out an application and, despite the fact that they are theoretically
+eligible to open a savings account, is rejected. The second kind of error is a
+<strong>false acceptance</strong>; that is, a customer who is (theoretical) a bad customer,
+still gets approved to open an account.</p>
+<p>Which type of error is worse from the bank’s point of view? A false rejection!
+This is because this “good” customer would likely be able to go across the
+street and open up an account at the rival bank; that is, the initial bank has
+lost a potential customer!</p>
+<p>Hence, when constructing the confusion matrix, we might want to assign
+different penalties to the different errors:</p>
+<p><img src="images/classif/accept-reject2.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Note that the values <span class="math inline">\(1\)</span> and <span class="math inline">\(10\)</span> were somewhat arbitrary; the actual values
+are less important as the relative <em>magnitude</em> of them (for example we could
+have just as easily used <span class="math inline">\(20\)</span> and <span class="math inline">\(50\)</span>, respectively, instead).</p>
+</div>
+<div id="another-example-loans" class="section level3">
+<h3><span class="header-section-number">20.4.2</span> Another Example: Loans</h3>
+<p>Now, suppose that the application in question is for a mortgage. The two types
+of errors still stand: false rejection and false acceptance. In this case,
+which error is more costly (from the bank’s point of view)? False acceptance;
+if the bank grants a loan to someone who won’t be able to pay it back in the
+long run, the bank will lose money (likely more money than they would have
+gained through interest from somebody who could have paid their loan)!
+Hence, we might assign the following penalties:</p>
+<p><img src="images/classif/accept-reject3.svg" width="70%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p><strong>False Rejection</strong>: The bank loses money that they could have gathered through interest from the customer.</p></li>
+<li><p><strong>False Acceptance</strong>: The bank loses money because the customer will ultimately default and not pay back the loan.</p></li>
 </ul>
 </div>
-<div id="acknowledgements" class="section level3 unnumbered">
-<h3>Acknowledgements</h3>
-<p>Many thanks to the UC Berkeley students, and teaching staff, of
-<em>Stat 154 Modern Statistical Prediction and Machine Learning</em>
-(Fall 2017, Spring 2018, Fall 2019).</p>
-<p>In particular, thank you to Jin Kweon, and Jiyoon Jeong for catching
-many typos in the first iteration of the course slides.</p>
-<p>Also, thanks to Anita Silver, Joyce Yip, Jingwei Guan, Skylar Liang,
-and Raymond Chang for being amazing and committed note takers.</p>
-<p>Likewise, thanks to Johnny Hong, Omid Shams Solari, Ryan Theisen, and
-Frank Qiu, for their collaboration as TAs.</p>
+<div id="the-ideal-situation" class="section level3">
+<h3><span class="header-section-number">20.4.3</span> The Ideal Situation</h3>
+<p>In an ideal situation, we would simultaneously minimize the false acceptance
+and false rejection rates. However, as with everything else in Machine Learning,
+there is a tradeoff; in general, minimizing false acceptance rates increases
+false rejection rates, and vice-versa.</p>
 
+</div>
 </div>
 </div>
 
@@ -441,8 +531,8 @@ Frank Qiu, for their collaboration as TAs.</p>
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="discanalysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
