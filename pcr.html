@@ -255,10 +255,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
 <li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
-</ul></li>
-<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>11.3</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
@@ -441,7 +439,7 @@ variables:</p>
 <p>And let’s also take a look at the circle of correlations, from the output of
 a PCA on the entire data set:</p>
 <pre><code>#&gt; Error in text.default(cars_pca$var$coord[1, 1], cars_pca$var$coord[1, : plot.new has not been called yet</code></pre>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-97-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Computing the OLS solution for the regression model of <code>price</code> onto the
 other nine predictors we obtain:</p>
 <pre><code>#&gt;               Estimate  Std. Error  t value   Pr(&gt;|t|)
@@ -476,7 +474,7 @@ correlated with <code>price</code> but it has a positive regression coefficient.
 <h2><span class="header-section-number">12.2</span> The PCR Model</h2>
 <p>In PCR, we seek principal components <span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>,
 linear combinations of the inputs: <span class="math inline">\(\mathbf{z_k} = \mathbf{Xv_k}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-100"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101"></span>
 <img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
 <p class="caption">
 Figure 12.1: PCs as linear combinations of input variables
@@ -498,7 +496,7 @@ or noise part:</p>
 <span class="math display">\[
 \underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times k}{\mathbf{V^\mathsf{T}}} + \underset{n \times k}{\mathbf{E}}
 \]</span>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-102"></span>
 <img src="images/pcr/pcr-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
 <p class="caption">
 Figure 12.2: Matrix diagram for inputs
@@ -510,7 +508,7 @@ coefficients <span class="math inline">\(\mathbf{b}\)</span>:</p>
 <p><span class="math display">\[
 \mathbf{y} = \mathbf{Zb} + \mathbf{e}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-102"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-103"></span>
 <img src="images/pcr/pcr-response-model.svg" alt="Matrix diagram for response" width="50%" />
 <p class="caption">
 Figure 12.3: Matrix diagram for response
@@ -634,7 +632,7 @@ The typical way is to use cross-validation.</p>
 <p>Let’s look at the <em>evolution</em> of the PCA regression coefficients. This is a
 very interesting plot that allows us to see how the size of the coefficients
 grow as we add more and more PCs into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-109-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-110-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <div id="remarks" class="section level4 unnumbered">
 <h4>Remarks</h4>
 <p>The catch: those PC’s you choose to keep may not be good predictors of

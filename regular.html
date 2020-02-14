@@ -255,10 +255,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
 <li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
-</ul></li>
-<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>11.3</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
@@ -394,15 +392,8 @@ in non-linear contexts.</p>
 <p>Simply put: regularization has to do with “making things regular”.</p>
 <p>But what about <em>regularization</em> in the context of supervised learning? What are
 the “irregular” things that need to be made “regular”? In order to answer this
-question, we will first motivate the discussion by sWe will answer this
-questions by discussing the effects of having predictors with high multicollinearity.</p>
-<p>means reducing the variability
-(and therefore the size) of the vector of
-predicted coefficients. What we have seen is that if there is multicollinearity,
-some of the elements of <span class="math inline">\(\mathbf{b}_{\text{ols}}\)</span> will have high variance.
-In other words, <span class="math inline">\(\| \mathbf{b}_{\text{ols}} \|_{\ell_p}\)</span> will be very large
-(in this case, we say that the coefficients are <strong>irregular</strong>).
-In regularization, we try to mitigate the effects of these irregular coefficients.</p>
+question, we will first motivate the discussion by looking at the effects of
+having predictors with high multicollinearity.</p>
 <p>We will discuss two main types of approaches to achieve regularization:</p>
 <ul>
 <li><p><strong>Dimension Reduction</strong>: Principal Components Regression (PCR), Partial Least Squares regression (PLSR)</p></li>
@@ -415,21 +406,22 @@ the condition that arises when two or more predictors are highly correlated.</p>
 <p>How does this affect OLS regression?</p>
 <p>When one or more predictors are linear combinations of other predictors, then
 <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is singular. This is known as <em>exact collinearity</em>.
-When this happends, there is no unique LS estimate <span class="math inline">\(\mathbf{b}\)</span>.</p>
-<p>A more challenging problem arises when <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is close to
-singular but not exactly.
-This is usually referred to as <em>near perfect collinearity</em> or simply
-<em>multicollinearity</em>. Multicollinearity leads to imprecise (unstable)
-estimates <span class="math inline">\(\mathbf{b}\)</span>.</p>
+When this happends, there is no unique least squares estimate <span class="math inline">\(\mathbf{b}\)</span>.</p>
+<p>A more challenging problem arises when <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is close but
+not exactly singular.
+This is usually referred to as <em>near perfect collinearity</em> or, more commonly,
+as <em>multicollinearity</em>. Why is this a problem? Because multicollinearity leads
+to imprecise (unstable) estimates <span class="math inline">\(\mathbf{b}\)</span>.</p>
 <p>What are the typical causes of multicollinearity?</p>
 <ul>
 <li>One or more predictors are linear combinations of other predictors</li>
 <li>One or more predictors are almost perfect linear combinations of other predictors</li>
-<li>More predictors than observations <span class="math inline">\(p &gt; n\)</span></li>
+<li>There are more predictors than observations <span class="math inline">\(p &gt; n\)</span></li>
 </ul>
 <div id="toy-example" class="section level3">
 <h3><span class="header-section-number">11.1.1</span> Toy Example</h3>
-<p>Let’s play with <code>mtcars</code>, one of the built-in data sets in R.</p>
+<p>To illustrate the issues of dealing with multicollinearity, let’s play with
+<code>mtcars</code>, one of the built-in data sets in R.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regular.html#cb1-1"></a>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ]</span>
 <span id="cb1-2"><a href="regular.html#cb1-2"></a><span class="co">#&gt;                    mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span></span>
 <span id="cb1-3"><a href="regular.html#cb1-3"></a><span class="co">#&gt; Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span></span>
@@ -453,7 +445,8 @@ estimates <span class="math inline">\(\mathbf{b}\)</span>.</p>
 <span id="cb2-8"><a href="regular.html#cb2-8"></a></span>
 <span id="cb2-9"><a href="regular.html#cb2-9"></a><span class="co"># standardized predictors</span></span>
 <span id="cb2-10"><a href="regular.html#cb2-10"></a>X &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, hp, wt))</span></code></pre></div>
-<p>Let’s inspect the correlation matrix:</p>
+<p>Let’s inspect the correlation matrix, assuming the data matrix of predictors
+<span class="math inline">\(\mathbf{X}\)</span> is mean-centered:</p>
 <p><span class="math display">\[
 \mathbf{R} = \frac{1}{n-1} \mathbf{X^\mathsf{T} X}
 \]</span></p>
@@ -464,9 +457,12 @@ estimates <span class="math inline">\(\mathbf{b}\)</span>.</p>
 <span id="cb3-5"><a href="regular.html#cb3-5"></a><span class="co">#&gt; hp   0.7909486 1.0000000 0.6587479</span></span>
 <span id="cb3-6"><a href="regular.html#cb3-6"></a><span class="co">#&gt; wt   0.8879799 0.6587479 1.0000000</span></span></code></pre></div>
 <p>If we look at the circle of correlations from a principal components analysis,
-we see the following pattern:</p>
+we see the following pattern: <code>hp</code>, <code>disp</code>, and <code>wt</code> are positively correlated;
+indicated by the fact the arrows are pointing in a common general direction.</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Carrying out an ordinary least squares regression:</p>
+<p>Carrying out an ordinary least squares regression, that is, regressing <code>mpg</code>
+onto <code>disp</code>, <code>hp</code>, and <code>wt</code> we get the following output provided the
+linear model function <code>lm()</code>:</p>
 <pre><code>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = mpg ~ disp + hp + wt)
@@ -494,14 +490,23 @@ we see the following pattern:</p>
 #&gt; Residual standard error: 2.639 on 28 degrees of freedom
 #&gt; Multiple R-squared:  0.8268, Adjusted R-squared:  0.8083 
 #&gt; F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11</code></pre>
-<p>What about <span class="math inline">\(\mathbf{(X^\mathsf{T} X)^{-1}}\)</span></p>
+<p>Analytically, the estimated vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>, and the
+predicted response <span class="math inline">\(\mathbf{\hat{y}}\)</span> are obtained as:</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{b} = (\mathbf{X^\mathsf{T} X})^{-1} \mathbf{X^\mathsf{T} y}\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} (\mathbf{X^\mathsf{T} X})^{-1} \mathbf{X^\mathsf{T} y}\)</span></p></li>
+</ul>
+<p>So let’s take a look at the matrix <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)</span></p>
 <pre><code>#&gt;             disp          hp          wt
 #&gt; disp  0.23627475 -0.08598357 -0.15316573
 #&gt; hp   -0.08598357  0.08827847  0.01819843
 #&gt; wt   -0.15316573  0.01819843  0.15627798</code></pre>
+<div id="exact-collinearity" class="section level4 unnumbered">
+<h4>Exact Collinearity</h4>
 <p>Let’s introduce exact collinearity. For example, let’s create a fourth variable
-<code>disp1</code> that is a multiple of <code>disp</code>, and then let’s add this variable to the data
-matrix <code>X</code>. What happens if we try to compute the inverse of <span class="math inline">\(\mathbf{X^\mathsf{T}X}\)</span>?</p>
+<code>disp1</code> that is a multiple of <code>disp</code>, and then let’s add this variable to the
+data matrix <code>X</code>. What happens if we try to compute the inverse of
+<span class="math inline">\(\mathbf{X_{1}^\mathsf{T} X_1}\)</span>?</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="regular.html#cb6-1"></a>disp1 &lt;-<span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span>disp</span>
 <span id="cb6-2"><a href="regular.html#cb6-2"></a></span>
 <span id="cb6-3"><a href="regular.html#cb6-3"></a>X1 &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, disp1, hp, wt))</span>
@@ -509,8 +514,13 @@ matrix <code>X</code>. What happens if we try to compute the inverse of <span cl
 <span id="cb6-5"><a href="regular.html#cb6-5"></a><span class="kw">solve</span>(<span class="kw">t</span>(X1) <span class="op">%*%</span><span class="st"> </span>X1)</span>
 <span id="cb6-6"><a href="regular.html#cb6-6"></a><span class="co">#&gt; Error in solve.default(t(X1) %*% X1): system is computationally singular: reciprocal condition number = 1.55757e-17</span></span></code></pre></div>
 <p>As you can tell, R detected perfect collinearity, and the computation of the
-inverse shows that the matrix if singular.</p>
-<p>Let’s introduce near-exact collinearity</p>
+inverse shows that the matrix <span class="math inline">\(\mathbf{X_{1}^\mathsf{T} X_1}\)</span> is singular.</p>
+</div>
+<div id="near-exact-collinearity" class="section level4 unnumbered">
+<h4>Near-Exact Collinearity</h4>
+<p>Let’s introduce near-exact collinearity by creating a new variable <code>disp2</code>
+which is almost a clone of <code>disp</code>, and put everything together in a new
+matrix <code>X2</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regular.html#cb7-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb7-2"><a href="regular.html#cb7-2"></a>disp2 &lt;-<span class="st"> </span>disp <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(disp))</span>
 <span id="cb7-3"><a href="regular.html#cb7-3"></a></span>
@@ -522,7 +532,17 @@ inverse shows that the matrix if singular.</p>
 <span id="cb7-9"><a href="regular.html#cb7-9"></a><span class="co">#&gt; disp2 -590.721826  593.525960 -1.10174784 -2.15719062</span></span>
 <span id="cb7-10"><a href="regular.html#cb7-10"></a><span class="co">#&gt; hp       1.010559   -1.101748  0.09032362  0.02220277</span></span>
 <span id="cb7-11"><a href="regular.html#cb7-11"></a><span class="co">#&gt; wt       1.993833   -2.157191  0.02220277  0.16411837</span></span></code></pre></div>
-<p>Let’s make things even more extreme!</p>
+<p>In this case, R was able to invert the matrix <span class="math inline">\(\mathbf{X_{2}^\mathsf{T} X_2}\)</span>.
+But if we compare <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)</span> against
+<span class="math inline">\((\mathbf{X_{2}^\mathsf{T} X_2})^{-1}\)</span>, we’ll see that the diagonal entry of the
+matrices associated to <code>disp</code> are very different.</p>
+</div>
+<div id="more-extreme-near-exact-collinearity" class="section level4 unnumbered">
+<h4>More Extreme Near-Exact Collinearity</h4>
+<p>Let’s make things even more extreme! What about increasing the amount of
+near-exact collinearity by creating a new variable <code>disp3</code>
+which is almost a perfect clone of <code>disp</code>. This time we put everything in a
+new matrix <code>X3</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regular.html#cb8-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb8-2"><a href="regular.html#cb8-2"></a>disp3 &lt;-<span class="st"> </span>disp <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(disp), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">0.1</span>)</span>
 <span id="cb8-3"><a href="regular.html#cb8-3"></a></span>
@@ -530,8 +550,9 @@ inverse shows that the matrix if singular.</p>
 <span id="cb8-5"><a href="regular.html#cb8-5"></a></span>
 <span id="cb8-6"><a href="regular.html#cb8-6"></a><span class="kw">cor</span>(disp, disp3)</span>
 <span id="cb8-7"><a href="regular.html#cb8-7"></a><span class="co">#&gt; [1] 0.9999997</span></span></code></pre></div>
-<p>And let’s introduce a minor, tiny modification, that in theory, would hardly
-have any effect:</p>
+<p>And to make things more interesting, let’s create one more matrix,
+denoted <code>X31</code>, that is a copy of <code>X3</code> but contains a tiny modification,
+that in theory, would hardly have any effect:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regular.html#cb9-1"></a><span class="co"># small changes may have a &quot;butterfly&quot; effect</span></span>
 <span id="cb9-2"><a href="regular.html#cb9-2"></a>disp31 &lt;-<span class="st"> </span>disp3</span>
 <span id="cb9-3"><a href="regular.html#cb9-3"></a></span>
@@ -542,7 +563,9 @@ have any effect:</p>
 <span id="cb9-8"><a href="regular.html#cb9-8"></a></span>
 <span id="cb9-9"><a href="regular.html#cb9-9"></a><span class="kw">cor</span>(disp, disp31)</span>
 <span id="cb9-10"><a href="regular.html#cb9-10"></a><span class="co">#&gt; [1] 0.9999973</span></span></code></pre></div>
-<p>When we calculate the inverse of <span class="math inline">\(\mathbf{X}_{31}^\mathsf{T} \mathbf{X}_{31}\)</span>,
+<p>When we calculate the inverse of both
+<span class="math inline">\(\mathbf{X}_{3}^\mathsf{T} \mathbf{X}_{3}\)</span> and
+<span class="math inline">\(\mathbf{X}_{31}^\mathsf{T} \mathbf{X}_{31}\)</span>,
 something weird happens:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regular.html#cb10-1"></a><span class="kw">solve</span>(<span class="kw">t</span>(X3) <span class="op">%*%</span><span class="st"> </span>X3)</span>
 <span id="cb10-2"><a href="regular.html#cb10-2"></a><span class="co">#&gt;               disp        disp3           hp           wt</span></span>
@@ -559,13 +582,18 @@ something weird happens:</p>
 <span id="cb10-13"><a href="regular.html#cb10-13"></a><span class="co">#&gt; wt         0.6494796    -0.8027858  0.01825147  0.15638642</span></span></code></pre></div>
 <p>This is what we may call a “butterfly effect.” By modifying just one cell in
 <span class="math inline">\(\mathbf{X}_{31}\)</span> by adding a little amount of random noise, the inverses</p>
-<p><span class="math inline">\((\mathbf{X}_{3}^\mathsf{T} \mathbf{X}_{3})^{-1}\)</span> and <span class="math inline">\(\mathbf{X}_{31}^\mathsf{T} \mathbf{X}_{31}\)</span> have changed dramatically.</p>
+<p><span class="math inline">\((\mathbf{X}_{3}^\mathsf{T} \mathbf{X}_{3})^{-1}\)</span> and
+<span class="math inline">\((\mathbf{X}_{31}^\mathsf{T} \mathbf{X}_{31})^{-1}\)</span> have changed dramatically.
+Which illustrates some of the issues when dealing with matrices that are not
+technically singular, but have a large degree of multicollinearity.</p>
+</div>
 </div>
 </div>
 <div id="irregular-coefficients" class="section level2">
 <h2><span class="header-section-number">11.2</span> Irregular Coefficients</h2>
-<p>In OLS regression, the theoretical variance-covariance matrix of the regression
-coefficients is given by:</p>
+<p>Another interesting thing to look at in linear regression—via OLS—, is the
+theoretical variance-covariance matrix of the regression coefficients,
+given by:</p>
 <p><span class="math display">\[
 Var(\mathbf{\boldsymbol{\hat{\beta}}}) = 
 \
@@ -576,10 +604,8 @@ Cov(\hat{\beta}_2, \hat{\beta}_1) &amp; Var(\hat{\beta}_2) &amp; \cdots &amp; Co
 Cov(\hat{\beta}_p, \hat{\beta}_1) &amp; Cov(\hat{\beta}_p, \hat{\beta}_2) &amp; \cdots &amp; Var(\hat{\beta}_p) \\
 \end{bmatrix}
 \]</span></p>
-<p><span class="math display">\[
-Var(\mathbf{\boldsymbol{\hat{\beta}}}) = \sigma^2 (\mathbf{X^\mathsf{T} X})^{-1}
-\]</span></p>
-<p>Doing some algebra,</p>
+<p>Doing some algebra, the matrix <span class="math inline">\(Var(\boldsymbol{\hat{\beta}})\)</span> can be
+compactly expressed in matrix notation as:</p>
 <p><span class="math display">\[
 Var(\boldsymbol{\hat{\beta}}) = \sigma^2 (\mathbf{X^\mathsf{T} X})^{-1}
 \]</span></p>
@@ -595,13 +621,13 @@ diagonal element of <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)
 <span class="math inline">\(\hat{\sigma}^2\)</span>?</li>
 <li>We don’t observe the error terms <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> but we do have
 the residuals <span class="math inline">\(\mathbf{e = y - \hat{y}}\)</span></li>
-<li>As well as the Residual Sum of Squares (RSS)</li>
+<li>We also have the Residual Sum of Squares (RSS)</li>
 </ul>
 <p><span class="math display">\[
 \text{RSS} = \sum_{i=1}^{n} e_{i}^{2} = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
 \]</span></p>
-<div id="effect-of-multicollinearity" class="section level3">
-<h3><span class="header-section-number">11.2.1</span> Effect of Multicollinearity</h3>
+<div id="effect-of-multicollinearity" class="section level4 unnumbered">
+<h4>Effect of Multicollinearity</h4>
 <p>Assuming standardized variables, <span class="math inline">\(\mathbf{X^\mathsf{T} X} = n \mathbf{R}\)</span>
 It can be shown that:</p>
 <p><span class="math display">\[
@@ -621,17 +647,49 @@ to 1, then VIF will be large, and so <span class="math inline">\(Var(\hat{\beta}
 <p><span class="math display">\[
 \mathbf{R = V \boldsymbol{\Lambda} V^\mathsf{T}}
 \]</span></p>
-<p>then the inverse of <span class="math inline">\(\mathbf{R}\)</span> becomes:</p>
+<p>Let us decompose this expression further. Consider the EVD of
+<span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span>: that is, write
+<span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X} = \mathbf{V \Lambda} \mathbf{V}^\mathsf{T}\)</span>.
+Substituting this into the variance assumption yields:</p>
+<p><span class="math display">\[\begin{align}
+(\mathbf{X}^\mathsf{T} \mathbf{X})^{-1} &amp;= (\mathbf{V \Lambda} \mathbf{V}^\mathsf{T})^{-1} \\
+&amp;= \mathbf{V} \mathbf{\Lambda}^{-1} \mathbf{V}^\mathsf{T} \\
+&amp;= \begin{bmatrix} 
+\mid &amp; \mid &amp;  &amp; \mid \\ 
+\mathbf{v_1} &amp; \mathbf{v_2} &amp; \dots &amp; \mathbf{v_p} \\  
+\mid &amp; \mid &amp;  &amp; \mid \\  
+\end{bmatrix} 
+\begin{pmatrix} 
+\frac{1}{\lambda_1} &amp; 0 &amp; \dots &amp; 0 \\ 
+0 &amp; \frac{1}{\lambda_2} &amp; \dots &amp; 0 \\ 
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 
+0 &amp; 0 &amp; \dots &amp; \frac{1}{\lambda_p} \\ 
+\end{pmatrix} 
+\begin{bmatrix} - \mathbf{v^\mathsf{T}_1} - \\ - \mathbf{v^\mathsf{T}_2} - \\ \vdots \\ - \mathbf{v^\mathsf{T}_p} - \\  
+\end{bmatrix}
+\end{align}\]</span></p>
+<p>Therefore, the inverse of <span class="math inline">\(\mathbf{R}\)</span> becomes:</p>
 <p><span class="math display">\[
 \mathbf{R^{-1} = V \boldsymbol{\Lambda}^{-1} V^\mathsf{T}}
 \]</span></p>
-<p>It can be shown that:</p>
+<p>In this way, we obtain a formula for <span class="math inline">\(V(\hat{b}_j)\)</span> involving the eigenvectors
+and eigenvalues of <span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span> (as well as <span class="math inline">\(\sigma^2\)</span>):</p>
+<p><span class="math display">\[
+V(\hat{b}_j) = \frac{1}{n} \left ( \frac{\sigma^2}{\lambda_1} v_{1j}^2 + \frac{\sigma^2}{\lambda_2} v_{2j}^2 + \dots + \frac{\sigma^2}{\lambda_p} v_{pj}^2 \right) = \frac{\sigma^2}{n} \sum_{\ell=1}^{p} \frac{1}{\lambda_i} v_{\ell j}^2
+\]</span></p>
+<p>where <span class="math inline">\(v_{ij}\)</span> denotes the <span class="math inline">\(i\)</span>th eigenvalue, <span class="math inline">\(j\)</span>th position.</p>
 <p><span class="math display">\[
 Var(\hat{\beta}_j) = \left ( \frac{\sigma^2}{n} \right )  \sum_{l=1}^{p} \frac{v^{2}_{jl}}{\lambda_l}
 \]</span></p>
-<p>As you can tell, the variance of the estimators depends on the inverses of the
-eigenvalues of <span class="math inline">\(\mathbf{R}\)</span>.
-With very small eigenvalues, the larger the variance of the estimates.</p>
+<p>The block matrix diagram above is designed to help visualize how we got these
+<span class="math inline">\(v_{ij}^2\)</span> terms. As you can tell, the variance of the estimators depends on the
+inverses of the eigenvalues of <span class="math inline">\(\mathbf{R}\)</span>.</p>
+<p>This formula is useful in interpreting collinearity. If we have perfect
+collinearity, some of the eigenvalues of <span class="math inline">\((\mathbf{X}^\mathsf{T} \mathbf{X})^{-1}\)</span>
+would be equal to 0. In the case of near-perfect collinearity, some eigenvalues
+will be very close to 0. That is, <span class="math inline">\(\frac{1}{\lambda_i}\)</span> will be very large.
+Stated differently: if we have multicollinearity, our OLS coefficients will
+have large variance.</p>
 <p>In summary:</p>
 <ul>
 <li>the standard errors of <span class="math inline">\(\hat{\beta}_j\)</span> are inflated.</li>
@@ -649,20 +707,48 @@ With very small eigenvalues, the larger the variance of the estimates.</p>
 </ul>
 </div>
 </div>
-<div id="regularization-metaphor" class="section level2">
-<h2><span class="header-section-number">11.3</span> Regularization Metaphor</h2>
-<p>In OLS, we want to find parameters that give us a linear combination of our
-response variables. Think of this as if you go “shopping” for parameters.
-We assume (initially) that we have a blank check, and can pick whatever
-parameters we want. In regularization, we impose some sort of restriction
-on what coefficients we can buy. We could use penalized methods or we could use
-a slightly more lenient method: dimension reduction.</p>
+<div id="connection-to-regularization" class="section level2">
+<h2><span class="header-section-number">11.3</span> Connection to Regularization</h2>
+<p>So how all of the previous discussion connects with regularization?
+Generally speaking, we know that <em>regularization</em> has to do with
+“making things regular.” So, if you think about it, regularization implies
+that something is irregular.</p>
+<p>In the context of regression, what is it that is irregular? What are the
+things that we are interested in “making regular.”</p>
+<p>Within linear regression, regularization means reducing the
+variability—and therefore the size—of the vector of predicted coefficients.
+What we have seen is that if there is multicollinearity, some of the elements
+of <span class="math inline">\(\mathbf{b}_{ols}\)</span> will have high variance. In other words,
+<span class="math inline">\(\| \mathbf{b}_{ols} \|_{\ell, p}\)</span> will be very large. When this is the case,
+we say that the coefficients are <strong>irregular</strong>. Consequently, regularization
+involves finding ways to mitigate the effects of these irregular coefficients.</p>
+<div id="regularization-metaphor" class="section level4 unnumbered">
+<h4>Regularization Metaphor</h4>
+<p>Here’s a metaphor that we like to use when talking about regularization and
+the issue with “irregular” coefficients. As you know, in OLS regression, we
+want to find parameters that give us a linear combination of our
+response variables.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
+<img src="images/ols/ols-path-diagram-betas1.svg" alt="Linear combination without constant term" width="40%" />
+<p class="caption">
+Figure 11.1: Linear combination without constant term
+</p>
+</div>
+<p>Think of finding the parameters <span class="math inline">\(b_1, \dots, b_p\)</span> as if you go “shopping”
+for parameters. We assume (initially) that we have a blank check, and can
+pick whatever parameters we can buy. No need to worry about about how much
+they cost. If we are not careful (if there’s high multicollinearity) we could
+end up spending quite a lot of money.</p>
+<p>To have some sort of budgeting control, we use regularization. This is like
+imposing some sort of restriction on what coefficients we can buy. We could
+use penalized methods or we could also use dimension reduction methods.</p>
+<p>In penalized methods, we explicitly impose a budget on how much money we can
+spend when buying parameters.</p>
 <p>In dimension reduction, there are no explicit penalties, but we still impose a
 “cost” on the regressors that are highly collinear. We reduce the number of
 parameters that we can buy.</p>
-<p>In penalized methods, we explicitly impose a budget on how much money we can
-spend when buying parameters.</p>
 
+</div>
 </div>
 </div>
             </section>

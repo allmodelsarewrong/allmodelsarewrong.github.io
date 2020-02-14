@@ -255,10 +255,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>11.1</b> Multicollinearity Issues</a><ul>
 <li class="chapter" data-level="11.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>11.1.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="regular.html"><a href="regular.html#effect-of-multicollinearity"><i class="fa fa-check"></i><b>11.2.1</b> Effect of Multicollinearity</a></li>
-</ul></li>
-<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#regularization-metaphor"><i class="fa fa-check"></i><b>11.3</b> Regularization Metaphor</a></li>
+<li class="chapter" data-level="11.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>11.2</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="11.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>11.3</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>12</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="12.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>12.1</b> Motivation Example</a></li>
@@ -462,7 +460,7 @@ that can be used to decompone the inputs and the response:</p>
 <p><span class="math display">\[
 \mathbf{X} = \mathbf{Z V^\mathsf{T}} + \mathbf{E}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-115"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-116"></span>
 <img src="images/pls/pls-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
 <p class="caption">
 Figure 13.1: Matrix diagram for inputs
@@ -472,7 +470,7 @@ Figure 13.1: Matrix diagram for inputs
 <p><span class="math display">\[
 \mathbf{y} = \mathbf{Z b} + \mathbf{e}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-116"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-117"></span>
 <img src="images/pls/pls-response-model.svg" alt="Matrix diagram for response" width="50%" />
 <p class="caption">
 Figure 13.2: Matrix diagram for response
@@ -505,7 +503,7 @@ component <span class="math inline">\(\mathbf{z_1}\)</span>.</p>
 <p>Assume that both the inputs and the response are mean-centered (and possibly
 standardized).
 We compute the covariances between all the input variables and the response: <span class="math inline">\(\mathbf{\tilde{w}_1} = (cov(\mathbf{x_1}, \mathbf{y}), \dots, cov(\mathbf{x_p}, \mathbf{y}))\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-117"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-118"></span>
 <img src="images/pls/pls-path-diag-z0.svg" alt="Towards the first PLS component." width="40%" />
 <p class="caption">
 Figure 13.3: Towards the first PLS component.
@@ -534,7 +532,7 @@ Figure 13.3: Towards the first PLS component.
 <p>We use these weights to compute the first component <span class="math inline">\(\mathbf{z_1}\)</span> as a
 linear combination of the inputs:
 <span class="math inline">\(\mathbf{z_1} = w_{11} \mathbf{x_1} + \dots + w_{p1} \mathbf{x_p}\)</span>,</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-119"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-120"></span>
 <img src="images/pls/pls-path-diag-z1.svg" alt="First PLS component." width="40%" />
 <p class="caption">
 Figure 13.4: First PLS component.
@@ -600,7 +598,7 @@ repeating the process described above on the residual data matrices <span class=
 <span class="math inline">\(\mathbf{X_2}\)</span>, etc., and the residual response vectors <span class="math inline">\(\mathbf{y_1}\)</span>,
 <span class="math inline">\(\mathbf{y_2}\)</span>, etc. For example, a second PLS score <span class="math inline">\(\mathbf{z_2}\)</span> will be
 formed by a linear combination of first <span class="math inline">\(X\)</span>-residuals:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
 <img src="images/pls/pls-path-diag-z2.svg" alt="Second PLS component." width="40%" />
 <p class="caption">
 Figure 13.5: Second PLS component.
@@ -711,7 +709,7 @@ we can conveniently reexpress the solution in terms of the original predictors:<
 (not OLS). Note that these PLS star-coefficients of the regression
 equation are NOT parameters of the PLS regression model. Instead, these are
 post-hoc calculations for making things more maneagable.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-127"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-128"></span>
 <img src="images/pls/pls-path-diag-scores.svg" alt="PLS components in terms of original inputs." width="85%" />
 <p class="caption">
 Figure 13.6: PLS components in terms of original inputs.
@@ -727,7 +725,7 @@ coefficients.</p>
 <p>Let’s look at the <em>evolution</em> of the PLS regression coefficients. This is a
 very interesting plot that allows us to see how the size of the coefficients
 grow as we add more and more PLS components into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-128-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-129-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="some-properties" class="section level3">
 <h3><span class="header-section-number">13.4.3</span> Some Properties</h3>
