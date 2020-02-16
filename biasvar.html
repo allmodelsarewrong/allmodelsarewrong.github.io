@@ -235,7 +235,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
 <li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>9.5.1</b> Bias-Variance Tradeoff Picture</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
 <li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
@@ -584,7 +586,7 @@ data sets <span class="math inline">\(\mathcal{D}\)</span>.</p>
 <p>The second MSE involves a single hypothesis <span class="math inline">\(h()\)</span>, measuring its
 performance over all out-of-sample points <span class="math inline">\(x_0\)</span>. Notice that <span class="math inline">\(h()\)</span> has been
 fitted on just one training set <span class="math inline">\(\mathcal{D}\)</span>.</p>
-<p>As for the third MSE, this a combination of the two previous MSEs. Notice
+<p>As for the third MSE, this is a combination of the two previous MSEs. Notice
 how this MSE involves a double expectation. Simply put, it measures the
 performance of a class of hypothesis <span class="math inline">\(h()\)</span>, over multiple training
 data sets <span class="math inline">\(\mathcal{D}\)</span>, over all out-of-sample points <span class="math inline">\(x_0\)</span>.
@@ -610,30 +612,98 @@ the out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</
 tradeoff. Keep in mind that BV is a good <em>theoretical</em> device; i.e. we can never
 compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in which case
 we wouldn’t really need Statistical Learning in the first place!)</p>
+<div id="bias-variance-tradeoff-picture" class="section level3">
+<h3><span class="header-section-number">9.5.1</span> Bias-Variance Tradeoff Picture</h3>
+<p>Consider several classes of hypothesis, for example a class <span class="math inline">\(\mathcal{H}_1\)</span>
+of cubic polynomials; a class <span class="math inline">\(\mathcal{H}_2\)</span> of quadratic models; and a class
+<span class="math inline">\(\mathcal{H}_3\)</span> of linear models. For visualization purposes suppose that
+we can look at the (abstract) space that contains these types of models, like
+in the diagram below.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-84"></span>
+<img src="images/theory/hypothesis-space1.svg" alt="Space of hypotheses." width="70%" />
+<p class="caption">
+Figure 9.3: Space of hypotheses.
+</p>
+</div>
+<p>Each hollow (non-filled) point on the diagram above represents a fit based on
+some particular dataset, and each filled point represents the average model of
+a particular class of hypotheses. For example, if <span class="math inline">\(\mathcal{H}_1\)</span> represents
+fits based on linear models, each circle represents some linear polynomial
+<span class="math inline">\(ax + b\)</span> with coefficients <span class="math inline">\(a, b\)</span> that change depending on the sample.</p>
+<p>Let’s make our diagram more interesting by taking into account the variability
+in each class of models (see diagram below). In this way, the dashed lines represent
+the deviations of each fitted model against the average hypothesis. That is, the
+set of all dashed lines conveys the idea of <strong>variance</strong> in each model class:
+i.e. how spread out the models within each class are.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-85"></span>
+<img src="images/theory/hypothesis-space2.svg" alt="Space of hypotheses." width="70%" />
+<p class="caption">
+Figure 9.4: Space of hypotheses.
+</p>
+</div>
+<p>Finally, suppose that we can also locate the true model in this space, indicated
+by a solid diammond (see diagram below). Notice that this true model <span class="math inline">\(f()\)</span> is
+assumed to be of class <span class="math inline">\(\mathcal{H}_1\)</span>. The solid lines between each average
+hypothesis and the target
+function represent the <strong>bias</strong> of each class of model. In practice, of course,
+we won’t have access to either the average models (shown in solid colors;
+i.e. the solid square, triangle, and circle) or the true model (shown in gray).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-86"></span>
+<img src="images/theory/hypothesis-space3.svg" alt="Space of hypotheses." width="70%" />
+<p class="caption">
+Figure 9.5: Space of hypotheses.
+</p>
+</div>
 <div id="bias" class="section level4 unnumbered">
 <h4>Bias</h4>
 <p>Let’s first focus on the bias, <span class="math inline">\(\bar{h} - f(x)\)</span>. The average <span class="math inline">\(\bar{h}\)</span> comes
 from a class of hypotheses (e.g. constant models, linear models, etc.) In other
 words, <span class="math inline">\(\bar{h}\)</span> is a prototypical example of a certain class of hypotheses.
-The bias term thus can be interpreted as a measure of how well a particlar type
-of hypothesis <span class="math inline">\(\mathcal{H}\)</span> (e.g. constant model, linear model, quadratic model, etc.)
-approximates the target function <span class="math inline">\(f\)</span>.</p>
+The bias term thus can be interpreted as a measure of how well a particular type
+of hypothesis <span class="math inline">\(\mathcal{H}\)</span> (e.g. constant model, linear model, quadratic
+model, etc.) approximates the target function <span class="math inline">\(f\)</span>.</p>
+<p>Another to think about bias is as a deterministic noise.</p>
+<p><span class="math display">\[
+\text{MSE} = \mathrm{Variance} \quad + \underbrace{ \mathrm{Bias} }_{\text{deterministic noise}}+ \underbrace{ \text{Noise} }_{\text{random noise}}
+\]</span></p>
 </div>
 <div id="variance" class="section level4 unnumbered">
 <h4>Variance</h4>
 <p>Let’s focus on the variance,
-<span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ (h^{(\mathcal{D})}(x) - \bar{g} )^2 \right ]\)</span>.
+<span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ (h^{(\mathcal{D})}(x) - \bar{h} )^2 \right ]\)</span>.
 This is a measure of how close a particular <span class="math inline">\(h^{(\mathcal{D})}(x)\)</span> can get to
-the average functional form <span class="math inline">\(\bar{h}\)</span>. Put ir in other terms, how precise is
-our particular function compared to the average function?</p>
+the average functional form <span class="math inline">\(\bar{h}\)</span>. Put it in other terms, how precise is
+our particular function compared to the average function.</p>
 </div>
 <div id="tradeoff" class="section level4 unnumbered">
 <h4>Tradeoff</h4>
-<p>Ideally, a model should have small variance <em>and</em> small bias. But, of course,
+<p>Ideally, a model should have both small variance <em>and</em> small bias. But, of course,
 there is a tradeoff between these two (hence the Bias-Variance tradeoff).
-That is, decreasing bias tends to result in increases variance, and vice-versa.</p>
-<p>To decrease bias, a model has to be more flexible/complex. How complex?
-In theory, to decrease bias, one needs “insider” information. That is, to truly
+Decreasing bias comes at the cost of increasing variance, and vice-versa.</p>
+<p>Also, to understand the bias-variance decomposition, you need access to
+<span class="math inline">\(\bar{h}\)</span>. In practice, however, we will never have access to <span class="math inline">\(\bar{h}\)</span> as
+computing <span class="math inline">\(\bar{h}\)</span> requires first computing <em>every</em> model of a particular
+type (e.g. linear, quadratic, etc.).</p>
+<ul>
+<li><p>More complex/flexible models tend to have less bias, and therefore a better
+opportunity to approximate <span class="math inline">\(f(x)\)</span>. They also tend to produce small in-sample
+error: <span class="math inline">\(E_{in} \approx 0\)</span>.</p></li>
+<li><p>On the downside, more complex models tend to have higher variance. They also
+have a higher risk of producing large out-of-sample error: <span class="math inline">\(E_{out}(h) \neq 0\)</span>.
+You will also need more resources (training data, as well as computational
+resources) to produce a more complicated model.</p></li>
+<li><p>Less complex/flexible models (i.e. simpler models) tend to have less variance,
+but more bias (i.e. less opportunity to estimate <span class="math inline">\(f\)</span>, but a higher chance to
+approximate out of sample error): <span class="math inline">\(E_{in} \approx E_{out}\)</span>, but
+<span class="math inline">\(E_{in} \approx E_{out} \neq 0\)</span>. Simpler models also require less
+data/computational resources.</p></li>
+</ul>
+<p>To decrease bias, a model has to be more flexible/complex.
+We should note that notions of “flexibility” and “complexity” are difficult to
+define precisely. For example, in the context of classification, complexity
+could be related to various hyperparameters (e.g. number of child nodes in our
+tree, etc.).</p>
+<p>In theory, to decrease bias, one needs “insider” information. That is, to truly
 decrease bias, we need some information on the form of <span class="math inline">\(f\)</span>. Hence, it is nearly
 impossible to decrease bias. We therefore put our efforts towards decreasing
 variance.</p>
@@ -644,7 +714,9 @@ matrices through, for example, PCA).</p>
 <p>We could also apply regularization. At its core, this notion relates to making
 the size of a model’s parameters small. Consequently, there is a reduction in
 the variance of a model.</p>
+<p>In summary: <strong>decreasing bias comes at the cost of increasing variance, and vice-versa.</strong></p>
 
+</div>
 </div>
 </div>
 </div>

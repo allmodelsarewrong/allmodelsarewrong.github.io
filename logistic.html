@@ -235,7 +235,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
 <li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>9.5.1</b> Bias-Variance Tradeoff Picture</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
 <li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
@@ -459,7 +461,7 @@ extend beyond the range <span class="math inline">\([0,1]\)</span>. Think about 
 <span class="math inline">\(\hat{y}_i\)</span> taking any number between 0 and 1 (which, in this context, makes no
 sense). We could also get negative predicted values, or even predicted values
 greater than 1! On the other hand, if we examine the residuals, then things don’t look great for the linear regression.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-142-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-145-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>So, we need a way to fix these problems.</p>
 </div>
 <div id="secodn-approach-harsh-thresholding" class="section level3">
@@ -522,11 +524,11 @@ coronary heart disease cases in each age group</p>
 #&gt; 8 60-69            10    0.8</code></pre>
 <p>And then graph these averages on the scatterplot, connecting the dots with a
 line:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-145-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-148-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sometimes, however, you may not have data points for a specific <span class="math inline">\(x\)</span>-value. So instead we can use groups of ages. For example, say we define a first group of ages to be 24 - 29 years. The corresponding average will be: <span class="math inline">\(avg(y_i | x_i = \text{group}_1)\)</span></p>
 <p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>. Which is exactly the <strong>regression function</strong>.</p>
 <p>By connecting the averages, we get an interesting sigmoid pattern</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-146-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-149-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>This pattern can be approximated by some mathematical functions, the most popular being the so-called <strong>logistic</strong> function:</p>
 <p><span class="math display">\[
 \text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
@@ -562,7 +564,7 @@ The most famous function—and the function we will use—is the
 Prob(y _i \mid \mathbf{X} ; \boldsymbol{\beta} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{1 + e^{\mathbf{b^\mathsf{T} x_i}}}
 \]</span>
 where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for individual <span class="math inline">\(i\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-147"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-150"></span>
 <img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="70%" />
 <p class="caption">
 Figure 16.1: Regression Model Diagram

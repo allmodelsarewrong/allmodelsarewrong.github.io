@@ -235,7 +235,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
 <li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
+<li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>9.5.1</b> Bias-Variance Tradeoff Picture</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i><b>10</b> Validation</a><ul>
 <li class="chapter" data-level="10.1" data-path="validation.html"><a href="validation.html#model-assessment"><i class="fa fa-check"></i><b>10.1</b> Model Assessment</a></li>
@@ -461,7 +463,7 @@ that can be used to decompose the inputs and the response:</p>
 <p><span class="math display">\[
 \mathbf{X} = \mathbf{Z V^\mathsf{T}} + \mathbf{E}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-122"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-125"></span>
 <img src="images/pls/pls-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
 <p class="caption">
 Figure 13.1: Matrix diagram for inputs
@@ -471,7 +473,7 @@ Figure 13.1: Matrix diagram for inputs
 <p><span class="math display">\[
 \mathbf{y} = \mathbf{Z b} + \mathbf{e}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-126"></span>
 <img src="images/pls/pls-response-model.svg" alt="Matrix diagram for response" width="50%" />
 <p class="caption">
 Figure 13.2: Matrix diagram for response
@@ -511,7 +513,7 @@ component <span class="math inline">\(\mathbf{z_1}\)</span>.</p>
 <p>Assume that both the inputs and the response are mean-centered (and possibly
 standardized).
 We compute the covariances between all the input variables and the response: <span class="math inline">\(\mathbf{\tilde{w}_1} = (cov(\mathbf{x_1}, \mathbf{y}), \dots, cov(\mathbf{x_p}, \mathbf{y}))\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-127"></span>
 <img src="images/pls/pls-path-diag-z0.svg" alt="Towards the first PLS component." width="40%" />
 <p class="caption">
 Figure 13.3: Towards the first PLS component.
@@ -540,7 +542,7 @@ Figure 13.3: Towards the first PLS component.
 <p>We use these weights to compute the first component <span class="math inline">\(\mathbf{z_1}\)</span> as a
 linear combination of the inputs:
 <span class="math inline">\(\mathbf{z_1} = w_{11} \mathbf{x_1} + \dots + w_{p1} \mathbf{x_p}\)</span>,</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-126"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-129"></span>
 <img src="images/pls/pls-path-diag-z1.svg" alt="First PLS component." width="40%" />
 <p class="caption">
 Figure 13.4: First PLS component.
@@ -606,7 +608,7 @@ repeating the process described above on the residual data matrices <span class=
 <span class="math inline">\(\mathbf{X_2}\)</span>, etc., and the residual response vectors <span class="math inline">\(\mathbf{y_1}\)</span>,
 <span class="math inline">\(\mathbf{y_2}\)</span>, etc. For example, a second PLS score <span class="math inline">\(\mathbf{z_2}\)</span> will be
 formed by a linear combination of first <span class="math inline">\(X\)</span>-residuals:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-130"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-133"></span>
 <img src="images/pls/pls-path-diag-z2.svg" alt="Second PLS component." width="40%" />
 <p class="caption">
 Figure 13.5: Second PLS component.
@@ -717,7 +719,7 @@ we can conveniently reexpress the solution in terms of the original predictors:<
 (not OLS). Note that these PLS star-coefficients of the regression
 equation are NOT parameters of the PLS regression model. Instead, these are
 post-hoc calculations for making things more maneagable.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-134"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-137"></span>
 <img src="images/pls/pls-path-diag-scores.svg" alt="PLS components in terms of original inputs." width="85%" />
 <p class="caption">
 Figure 13.6: PLS components in terms of original inputs.
@@ -733,7 +735,7 @@ coefficients.</p>
 <p>Let’s look at the <em>evolution</em> of the PLS regression coefficients. This is a
 very interesting plot that allows us to see how the size of the coefficients
 grow as we add more and more PLS components into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-135-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-138-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="some-properties" class="section level3">
 <h3><span class="header-section-number">13.4.3</span> Some Properties</h3>
