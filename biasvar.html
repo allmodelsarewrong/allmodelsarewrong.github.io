@@ -231,8 +231,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
 <li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
-<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
-<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#out-of-sample-predictions"><i class="fa fa-check"></i><b>9.4.1</b> Out-of-Sample Predictions</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
 </ul></li>
@@ -380,7 +381,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="biasvar" class="section level1">
 <h1><span class="header-section-number">9</span> Bias-Variance Tradeoff</h1>
 <p>In this chapter we discuss one of the theoretical dogmas of statistical
-learning: the famous Bias-Variance tradeoff.</p>
+learning: the famous Bias-Variance tradeoff. Because Bias-Variance (BV) depends
+on <span class="math inline">\(\text{MSE}\)</span>, it is a topic that is typically discussed within the
+confines of regression, but a generalization is possible to classification
+problems. Having said that, we will only discuss Bias-Variance from a regression
+perspective.</p>
 <div id="bias-variance-tradeoff" class="section level2">
 <h2><span class="header-section-number">9.1</span> Bias-Variance Tradeoff</h2>
 <p>In the previous chapter we reviewed the concept of Mean Squared Error of a
@@ -393,36 +398,42 @@ statistic (or estimator) <span class="math inline">\(\hat{\theta}\)</span>. As w
 </div>
 <div id="motivation-example" class="section level2">
 <h2><span class="header-section-number">9.2</span> Motivation Example</h2>
-<p>Let’s start with a toy example. Consider a noiseless target function
+<p>Let’s start with a toy example. Consider a noiseless target function given by
 <span class="math inline">\(f(x) = sin(\pi x)\)</span>, with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>,
 like in the following picture:</p>
-<div class="figure" style="text-align: center">
-<img src="allmodelsarewrong_files/figure-html/plot_target-1.png" alt="Target function" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-74"></span>
+<img src="allmodelsarewrong_files/figure-html/unnamed-chunk-74-1.png" alt="Target function" width="70%" height="80%" />
 <p class="caption">
-(#fig:plot_target)Target function
+Figure 9.1: Target function
 </p>
 </div>
 <div id="two-hypotheses" class="section level3">
 <h3><span class="header-section-number">9.2.1</span> Two Hypotheses</h3>
 <p>Let’s assume a learning scenario in which, given a data set of <span class="math inline">\(n\)</span> points, we
-fit the data using one of two models (see the <em>idealized</em> figure shown below):</p>
+fit the data using one of two models <span class="math inline">\(\mathcal{H}_0\)</span> and <span class="math inline">\(\mathcal{H}_1\)</span>
+(see the <em>idealized</em> figure shown below):</p>
 <ul>
 <li><p><span class="math inline">\(\mathcal{H}_0\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b\)</span></p></li>
 <li><p><span class="math inline">\(\mathcal{H}_1\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b_0 + b_1 x\)</span></p></li>
 </ul>
-<div class="figure" style="text-align: center">
-<img src="allmodelsarewrong_files/figure-html/plot_two_hypotheses-1.png" alt="Two Learning hypothesis models" width="85%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-76"></span>
+<img src="allmodelsarewrong_files/figure-html/unnamed-chunk-76-1.png" alt="Two Learning hypothesis models" width="85%" />
 <p class="caption">
-(#fig:plot_two_hypotheses)Two Learning hypothesis models
+Figure 9.2: Two Learning hypothesis models
 </p>
 </div>
 </div>
 </div>
 <div id="learning-from-two-points" class="section level2">
 <h2><span class="header-section-number">9.3</span> Learning from two points</h2>
-<p>In this case study, we will assume a data set of size <span class="math inline">\(n = 2\)</span>. That is, we sample <span class="math inline">\(x\)</span> uniformly in <span class="math inline">\([-1,1]\)</span> to generate a data set of two points <span class="math inline">\((x_1, y_1), (x_2, y_2)\)</span>; and fit the data using the two models <span class="math inline">\(\mathcal{H}_0\)</span> and <span class="math inline">\(\mathcal{H}_1\)</span>.</p>
-<p>For <span class="math inline">\(\mathcal{H}_0\)</span>, we choose the constant hypothesis that best fits the data (the horizontal line at the midpoint <span class="math inline">\(b = \frac{y_1 + y_2}{2}\)</span>).</p>
-<p>For <span class="math inline">\(\mathcal{H}_1\)</span>, we choose the line that passes through the two data points <span class="math inline">\((x_1, y_1)\)</span> and <span class="math inline">\((x_2, y_2)\)</span>.</p>
+<p>In this case study, we will assume a tiny data set of size <span class="math inline">\(n = 2\)</span>. That is,
+we sample <span class="math inline">\(x\)</span> uniformly in <span class="math inline">\([-1,1]\)</span> to generate a data set of two points
+<span class="math inline">\((x_1, y_1), (x_2, y_2)\)</span>; and fit the data using the two models <span class="math inline">\(\mathcal{H}_0\)</span>
+and <span class="math inline">\(\mathcal{H}_1\)</span>.</p>
+<p>For <span class="math inline">\(\mathcal{H}_0\)</span>, we choose the constant hypothesis that best fits the data:
+the horizontal line at the midpoint <span class="math inline">\(b = \frac{y_1 + y_2}{2}\)</span>.</p>
+<p>For <span class="math inline">\(\mathcal{H}_1\)</span>, we choose the line that passes through the two data points
+<span class="math inline">\((x_1, y_1)\)</span> and <span class="math inline">\((x_2, y_2)\)</span>.</p>
 <p>Here’s an example in R of two <span class="math inline">\(x\)</span>-points randomly sampled from a uniform distribution in the interval <span class="math inline">\([-1,1]\)</span>, and their corresponding <span class="math inline">\(y\)</span>-points:</p>
 <ul>
 <li><p><span class="math inline">\(p_1(x_1, y_1) = (0.0949158, 0.2937874)\)</span></p></li>
@@ -433,25 +444,91 @@ fit the data using one of two models (see the <em>idealized</em> figure shown be
 <li><p><span class="math inline">\(h_0(x) = 0.646544\)</span></p></li>
 <li><p><span class="math inline">\(h_1(x) = 0.123472 + 1.794385 \hspace{1mm} x\)</span></p></li>
 </ul>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-77-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-79-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p>As you can tell, the fitted lines are very different. As expected, <span class="math inline">\(h_0\)</span>
+is a constant line (with zero slope), while <span class="math inline">\(h_1\)</span> has a steep positive slope.
+Obviously the fitted lines depend on which two points are sampled. As you can
+imagine, a new sample of two points <span class="math inline">\((x_1, y_1)\)</span> and <span class="math inline">\((x_2, y_2)\)</span>
+would provide different fitted models <span class="math inline">\(h_0\)</span> and <span class="math inline">\(h_1\)</span>. So let’s see what could
+happen if we actually repeat this sampling process multiple times.</p>
+<div id="small-simulation" class="section level4 unnumbered">
+<h4>Small Simulation</h4>
+<p>Here’s a simulation of the sampling process described above (e.g. repeat it
+500 times): we randomly sample two points in the interval <span class="math inline">\([-1,1]\)</span>,
+and fit both models <span class="math inline">\(h_0\)</span> and <span class="math inline">\(h_1\)</span>.</p>
+<p>The figures which follow show the resulting 500 fits on the same (random)
+data sets for both methods. We are also displaying the average hypotheses
+<span class="math inline">\(\bar{h}_0\)</span> and <span class="math inline">\(\bar{h}_1\)</span> (colored in red), in each case.</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-83-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p>Look at the plot of <span class="math inline">\(\mathcal{H}_0\)</span> models (the constant lines). If we average
+all 500 fitted models, we get <span class="math inline">\(\bar{h}_0\)</span> which roughly corresponds to
+the horizontal line at <span class="math inline">\(y = 0\)</span> (i.e. the red horizontal line). Generally speaking,
+all the individual fitted lines have the same slope of the average hypothesis,
+but different <span class="math inline">\(y\)</span>-intercept values. We say that the class of <span class="math inline">\(\mathcal{H}_0\)</span>
+models have “low” variance, and “high” bias.</p>
+<p>What about the plot of <span class="math inline">\(\mathcal{H}_1\)</span> models? Averaging all 500 fitted
+models, we get <span class="math inline">\(\bar{h}_1\)</span> which roughly corresponds to
+the red line with positive slope. Generally speaking, the individual fitted
+lines have all sorts of slopes from extremely negative, to zero or close to
+zero, to extremely positive. This reflects the fact that there is a substantial
+amount of variability between the average profile <span class="math inline">\(\bar{h}_1\)</span> and the form of
+any single fit <span class="math inline">\(h_1\)</span>. However, the fact that the average hypothesis has positive
+slope, tells us that the majority of fitted lines also have positive slope.
+Moreover, the average hypothesis somewhat matches the overall trend of the
+target function <span class="math inline">\(f()\)</span> around its <em>middle</em> section (range of <span class="math inline">\(x \in [-0.5, 0.5]\)</span>).
+We can summarize all of this by saying that the class of <span class="math inline">\(\mathcal{H}_1\)</span>
+models have “high” variance, and “low” bias.</p>
+<p>We hope that this simulation example gives you a good starting point to motivate
+the discussion of the bias-variance tradeoff. But we know it is not enough, and
+it does not prove anything mathematically. So let’s go ahead and fully disect
+this mythical bias-variance concept.</p>
+</div>
 </div>
 <div id="bias-variance-derivation" class="section level2">
 <h2><span class="header-section-number">9.4</span> Bias-Variance Derivation</h2>
-<p>Bias-Variance (BV) depends on MSE, and is typically discussed within the
-confines of regression. BV is a good <em>theoretical</em> device; i.e. we can never
-compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in which case
-we wouldn’t really need Statistical Learning in the first place!)</p>
+<p>From the <a href="mse.html#mse">previous chapter</a>, we saw that the mean squared error
+(<span class="math inline">\(\text{MSE}\)</span>) of an estimator <span class="math inline">\(\hat{\theta}\)</span> can be decomposed in terms of
+bias and variance as:</p>
+<p><span class="math display">\[
+\text{MSE}(\hat{\theta}) = \underbrace{\mathbb{E} [(\hat{\theta} - \mu_{\hat{\theta}})^2]}_{\text{Variance}} + 
+(\underbrace{\mu_{\hat{\theta}} - \theta}_{\text{Bias}})^2
+\]</span></p>
+<p>with <span class="math inline">\(\mu_{\hat{\theta}} = \mathbb{E}(\hat{\theta})\)</span>. In words:</p>
+<ul>
+<li><p>the <strong>bias</strong>, <span class="math inline">\(\mu_{\hat{\theta}} - \theta\)</span>, is the tendency of <span class="math inline">\(\hat{\theta}\)</span>
+to overestimate or underestimate <span class="math inline">\(\theta\)</span> over all possible samples.</p></li>
+<li><p>the <strong>variance</strong>, <span class="math inline">\(\text{Var}(\hat{\theta})\)</span>, simply measures the average
+variability of the estimators around their mean <span class="math inline">\(\mathbb{E}(\hat{\theta})\)</span>.</p></li>
+</ul>
+<p>In this chapter, though, we are not talking about any generic estimator
+<span class="math inline">\(\hat{\theta}\)</span>. In this chapter we are discussing things within the confines of
+regression. More specifically, the estimator we are dealing with is <span class="math inline">\(\hat{f}()\)</span>,
+our approximation of a target function <span class="math inline">\(f()\)</span>. Because of this very particular
+point of view, we need to study the BV decomposition in more detail.</p>
+<div id="out-of-sample-predictions" class="section level3">
+<h3><span class="header-section-number">9.4.1</span> Out-of-Sample Predictions</h3>
+<p>In order to talk about the mean squared error <span class="math inline">\(\text{MSE}\)</span> as a theoretical
+expected value—as opposed to an empirical average—we have to suppose the
+existance of an out-of-sample data point <span class="math inline">\(x_0\)</span>.</p>
 <p>Given a data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>, the
-expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_o\)</span>, over all
+expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
 possible training sets, is expressed as:</p>
 <p><span class="math display">\[
 \mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
 \]</span></p>
-<p>Assume the target <span class="math inline">\(f(x)\)</span> is noiseless. Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> plays the
-role of <span class="math inline">\(\hat{\theta}\)</span> and <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>. Hence, we need
-to introduce
+<p>For the sake of simplicity, assume the target <span class="math inline">\(f(x)\)</span> is noiseless. Of course
+this is an idealistic assumption but it will help us to simplify notation.
+Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> denotes the value predicted by model <span class="math inline">\(h()\)</span>
+fitted on a specific training data set <span class="math inline">\(\mathcal{D}\)</span>. This is nothing else
+than an estimator, and we can treat <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> as playing the
+role of <span class="math inline">\(\hat{\theta}\)</span>. Likewise, <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>.</p>
+<p>What about the term that corresponds to <span class="math inline">\(\mu_{\hat{\theta}} = \mathbb{E}(\hat{\theta})\)</span>?
+To answer this question we need to introduce
 <span class="math inline">\(\bar{h} := \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right]\)</span>;
-i.e. the “average hypothesis”. Then:</p>
+simply put, think of this term as the “average hypothesis”.</p>
+<p>Now that we have the names and symbols for all the ingredients, let’s do the
+algebra to find out what the expected squared error for a given out-of-sample
+point <span class="math inline">\(x_0\)</span>, over all possible training sets, turns out to be:</p>
 <p><span class="math display">\[\begin{align*}
 \mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] &amp;= 
 \mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} + \bar{h} - f(x_0) \right)^2 \right ] \\
@@ -462,15 +539,15 @@ i.e. the “average hypothesis”. Then:</p>
 \end{align*}\]</span></p>
 <p>Let’s examine the first two terms:</p>
 <ul>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} \right)^2 \right ] = \text{variance} \left( h(x_0) \right)\)</span></p></li>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} \left [ \left (\bar{h} - f(x_0) \right)^2 \right ] = \text{Bias}^2 \left( h(x_0) \right)\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} [a^2] = \mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} \right)^2 \right ] = \text{variance} \left( h(x_0) \right)\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} [b^2] = \mathbb{E}_{\mathcal{D}} \left [ \left (\bar{h} - f(x_0) \right)^2 \right ] = \text{Bias}^2 \left( h(x_0) \right)\)</span></p></li>
 </ul>
 <p>Now, what about the cross-term: <span class="math inline">\(\mathbb{E}_{\mathcal{D}} [2ab]\)</span>?</p>
 <p><span class="math display">\[\begin{align*}
 \mathbb{E}_{\mathcal{D}} \left[ 2 \left( h^{(\mathcal{D})}(x_0) - \bar{h} \right)  \left( \bar{h} - f(x_0)  \right) \right] &amp; \propto \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] - \bar{h} \\
 &amp; = \bar{g} - \bar{g} = 0 
 \end{align*}\]</span></p>
-<p>Hence, under the assumption of noiseless <span class="math inline">\(f\)</span>, we have that the
+<p>Hence, under the assumption of a noiseless target function <span class="math inline">\(f\)</span>, we have that the
 expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
 possible training sets, is expressed as:</p>
 <p><span class="math display">\[
@@ -478,8 +555,9 @@ possible training sets, is expressed as:</p>
 \underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} +
 \underbrace{\left [ (\bar{h}(x_0) - f(x_0))^2 \right ] }_{\text{bias}^2}
 \]</span></p>
+</div>
 <div id="noisy-target" class="section level3">
-<h3><span class="header-section-number">9.4.1</span> Noisy Target</h3>
+<h3><span class="header-section-number">9.4.2</span> Noisy Target</h3>
 <p>Now, when there is noise in the data we have that: <span class="math inline">\(y = f(x) + \epsilon\)</span>.
 If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
 the bias-variance decomposition becomes:</p>
@@ -490,19 +568,48 @@ the bias-variance decomposition becomes:</p>
 just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
 </div>
 <div id="types-of-theoretical-mses" class="section level3">
-<h3><span class="header-section-number">9.4.2</span> Types of Theoretical MSEs</h3>
-<p>Keep in mind that there are different flavors of (theoretical) MSE:</p>
-<ul>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \left( h(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
+<h3><span class="header-section-number">9.4.3</span> Types of Theoretical MSEs</h3>
+<p>At this point we need to make an important confession: for better or for worse,
+there is not just one type of <span class="math inline">\(\text{MSE}\)</span>. The truth is that there are several
+flavors of theoretical <span class="math inline">\(\text{MSE}&#39;s\)</span>, listed below in no particular order of
+importance:</p>
+<ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(\mathbb{E}_\mathcal{D} \left[ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \left( h(x_0) - f(x_0) \right)^2 \right]\)</span></p></li>
 <li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \mathbb{E}_\mathcal{D} \left\{ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right\} \right]\)</span></p></li>
-</ul>
+</ol>
+<p>The first MSE involves a single out-of-sample point <span class="math inline">\(x_0\)</span>, measuring the
+performance of a single type of hypothesis <span class="math inline">\(h()\)</span> over multiple training
+data sets <span class="math inline">\(\mathcal{D}\)</span>.</p>
+<p>The second MSE involves a single hypothesis <span class="math inline">\(h()\)</span>, measuring its
+performance over all out-of-sample points <span class="math inline">\(x_0\)</span>. Notice that <span class="math inline">\(h()\)</span> has been
+fitted on just one training set <span class="math inline">\(\mathcal{D}\)</span>.</p>
+<p>As for the third MSE, this a combination of the two previous MSEs. Notice
+how this MSE involves a double expectation. Simply put, it measures the
+performance of a class of hypothesis <span class="math inline">\(h()\)</span>, over multiple training
+data sets <span class="math inline">\(\mathcal{D}\)</span>, over all out-of-sample points <span class="math inline">\(x_0\)</span>.
+We call this the <strong>overall expected MSE</strong>.</p>
+<p>Unfortunately, in the Machine Learning literature, most authors simply mention
+an MSE without really specifying which type of MSE. Naturally, this may cause
+some confusion to the unaware reader. The good news is that, regardless of which
+MSE flavor you are faced with, they all admit a decomposition into bias-squared,
+variance, and noise.</p>
+<p>We cannot emphasize enough the theoretical nature of any type of <span class="math inline">\(\text{MSE}\)</span>.
+This means that in practice we will never be able to compute the mean squared
+error. Why? Because on one hand, we don’t know the target function <span class="math inline">\(f\)</span>. And
+on the other hand, we don’t have access to all out-of-sample points.
+We can, however, try to compute an approximation—an estimate—of an
+<span class="math inline">\(\text{MSE}\)</span> using a test data set denoted <span class="math inline">\(\mathcal{D}_{test}\)</span>. This data
+set will be assumed to be a representative subset (i.e. a unbiased sample) of
+the out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</p>
 </div>
 </div>
 <div id="the-tradeoff" class="section level2">
 <h2><span class="header-section-number">9.5</span> The Tradeoff</h2>
 <p>We finish this chapter with a brief discussion of the so-called bias-variance
-tradeoff.</p>
+tradeoff. Keep in mind that BV is a good <em>theoretical</em> device; i.e. we can never
+compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in which case
+we wouldn’t really need Statistical Learning in the first place!)</p>
 <div id="bias" class="section level4 unnumbered">
 <h4>Bias</h4>
 <p>Let’s first focus on the bias, <span class="math inline">\(\bar{h} - f(x)\)</span>. The average <span class="math inline">\(\bar{h}\)</span> comes

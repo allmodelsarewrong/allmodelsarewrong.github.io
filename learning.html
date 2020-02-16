@@ -231,8 +231,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
 <li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
-<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
-<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#out-of-sample-predictions"><i class="fa fa-check"></i><b>9.4.1</b> Out-of-Sample Predictions</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
 </ul></li>
@@ -404,9 +405,9 @@ some sort of mythical creature, like a unicorn (or your preferred creature).
 We are trying to find this elusive guy.</p>
 <p>More generally, we have a dataset
 <span class="math inline">\(\mathcal{D}: (\mathbf{x_1}, y_1), ( \mathbf{x_2}, y_2), \dots, (\mathbf{x_n}, y_n)\)</span>,
-where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for the <span class="math inline">\(i\)</span>-th
-player/individual.<br />
-From this data, we wish to obtain a hypothesis model <span class="math inline">\(\widehat{f}: \mathcal{X} \to \mathcal{Y}\)</span> that is an approximation to the unknown function <span class="math inline">\(f\)</span>.
+where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of features for the <span class="math inline">\(i\)</span>-th
+player/individual.</p>
+<p>From this data, we wish to obtain a hypothesis model <span class="math inline">\(\widehat{f}: \mathcal{X} \to \mathcal{Y}\)</span> that is an approximation to the unknown function <span class="math inline">\(f\)</span>.
 We can sketch these basic ideas in a sort of “mental map”.
 We will refer to this picture as the “diagram for supervised learning”.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-61"></span>
@@ -431,7 +432,7 @@ is the data set <span class="math inline">\(\mathcal{D}\)</span> which is influe
 The other blue rectangle has to do with a set of candidate models <span class="math inline">\(\mathcal{H}\)</span>,
 which is sometimes referred to as the <em>hypothesis set</em>. Both the data set and
 the set of models are tangible ingredients. Moreover, the set of candidate
-models is totally under out control. We get to dedice what type of models
+models is totally under out control. We get to decide what type of models
 we want try out (e.g. linear model, polynomial models, non-parametric models).</p>
 <p>Then we go to the yellow oval shape which right now is simply labeled as the
 <em>learning algorithm</em> <span class="math inline">\(\mathcal{A}\)</span>. This corresponds to the set of instructions
@@ -443,7 +444,7 @@ algorithm from the set of hypothesis models. Ideally, this model is the one
 that provides a good approximation for the target function <span class="math inline">\(f\)</span>.</p>
 <p>Going back to the holy grail of supervised learning, our goal is to find a
 model <span class="math inline">\(\widehat{f}\)</span> that gives “good” or accurate predictions. Before discussing
-what exactly do we mean by “accurate?”, we first need to talk about predictions.</p>
+what exactly do we mean by “accurate”, we first need to talk about predictions.</p>
 </div>
 <div id="kinds-of-predictions" class="section level2">
 <h2><span class="header-section-number">7.2</span> Kinds of Predictions</h2>
@@ -474,7 +475,7 @@ predictive quality of a model</p></li>
 </div>
 <div id="two-types-of-predictions" class="section level3">
 <h3><span class="header-section-number">7.2.2</span> Two Types of Predictions</h3>
-<p>In other words, we have two types of predictions:</p>
+<p>Given the two kinds of data points, we have two types of predictions:</p>
 <ol style="list-style-type: decimal">
 <li><p>predictions <span class="math inline">\(\hat{y}_i\)</span> of observed/seen values <span class="math inline">\(x_i\)</span></p></li>
 <li><p>predicitons <span class="math inline">\(\hat{y}_0\)</span> of unobserved/unseed values <span class="math inline">\(x_0\)</span></p></li>

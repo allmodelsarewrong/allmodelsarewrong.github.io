@@ -231,8 +231,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
 <li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
-<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
-<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#out-of-sample-predictions"><i class="fa fa-check"></i><b>9.4.1</b> Out-of-Sample Predictions</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
 </ul></li>
@@ -393,7 +394,7 @@ number of clusters is generally defined a priori. The main methods are:</p>
 <p>Imagine we are in <span class="math inline">\(\mathbb{R}^n\)</span> (or <span class="math inline">\(\mathbb{R}^p\)</span>, depending on if we are
 looking at things from the individuals perspective or variables perspective).
 For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-201"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-207"></span>
 <img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
 <p class="caption">
 Figure 22.1: Toy data set
@@ -403,7 +404,7 @@ Figure 22.1: Toy data set
 Typically, the way centroids are initialized is by randomly selecting two
 objects. Sometimes, however, a more “educated” initialization may be possible
 when we have additional information about where the cluster may be located.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-202"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-208"></span>
 <img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
 <p class="caption">
 Figure 22.2: Arbitrary centroids
@@ -412,7 +413,7 @@ Figure 22.2: Arbitrary centroids
 <p>Given a new data point, we compute the distances from this point to the two
 centroids, and classify the point to the cluster to which the closest centroid
 belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-203"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-209"></span>
 <img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
 <p class="caption">
 Figure 22.3: Distance of an object to both centroids
@@ -420,14 +421,14 @@ Figure 22.3: Distance of an object to both centroids
 </div>
 <p>The distances of all objects to the centroids are computed as well, and the
 objects get assigned to the group of the closest centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-204"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-210"></span>
 <img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
 <p class="caption">
 Figure 22.4: Assigning objects to closest centroid
 </p>
 </div>
 <p>Now, with this new grouped data, we have to recompute the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-205"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-211"></span>
 <img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
 <p class="caption">
 Figure 22.5: Update centroids
@@ -435,14 +436,14 @@ Figure 22.5: Update centroids
 </div>
 <p>We repeat this procedure, that is, calculate distances of all objects to the
 centroids, and re-assigning objects to clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-206"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-212"></span>
 <img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
 <p class="caption">
 Figure 22.6: Reassigning objects
 </p>
 </div>
 <p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-207"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-213"></span>
 <img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
 <p class="caption">
 Figure 22.7: Recalculate centroids
@@ -451,7 +452,7 @@ Figure 22.7: Recalculate centroids
 <p>After enough iterations, the centroids will not move too much between each
 iteration. At this point we will say the algorithm as converged, and we stop
 (and the resulting clusters will be the ones we use).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-208"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-214"></span>
 <img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
 <p class="caption">
 Figure 22.8: Rinse and repeat until convergence

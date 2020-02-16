@@ -231,8 +231,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="biasvar.html"><a href="biasvar.html#learning-from-two-points"><i class="fa fa-check"></i><b>9.3</b> Learning from two points</a></li>
 <li class="chapter" data-level="9.4" data-path="biasvar.html"><a href="biasvar.html#bias-variance-derivation"><i class="fa fa-check"></i><b>9.4</b> Bias-Variance Derivation</a><ul>
-<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.1</b> Noisy Target</a></li>
-<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.2</b> Types of Theoretical MSEs</a></li>
+<li class="chapter" data-level="9.4.1" data-path="biasvar.html"><a href="biasvar.html#out-of-sample-predictions"><i class="fa fa-check"></i><b>9.4.1</b> Out-of-Sample Predictions</a></li>
+<li class="chapter" data-level="9.4.2" data-path="biasvar.html"><a href="biasvar.html#noisy-target"><i class="fa fa-check"></i><b>9.4.2</b> Noisy Target</a></li>
+<li class="chapter" data-level="9.4.3" data-path="biasvar.html"><a href="biasvar.html#types-of-theoretical-mses"><i class="fa fa-check"></i><b>9.4.3</b> Types of Theoretical MSEs</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="biasvar.html"><a href="biasvar.html#the-tradeoff"><i class="fa fa-check"></i><b>9.5</b> The Tradeoff</a></li>
 </ul></li>
@@ -381,7 +382,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">21</span> Clustering</h1>
 <p>In this part of the book, we go back to unsupervised learning methods. In
 particular, the so-called clustering methods.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-186"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-192"></span>
 <img src="images/cluster/four-corners-clustering.svg" alt="Clustering Corner" width="85%" />
 <p class="caption">
 Figure 21.1: Clustering Corner
@@ -444,7 +445,7 @@ defining a hierarchy of partitions.</p></li>
 somewhat obvious from the data at first glance. Of course, there will be cases
 where there are no natural groups; in such a case, we might say we have
 “artificial” groups.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-187"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-193"></span>
 <img src="images/cluster/clustering-structures.svg" alt="Some Typical Clustering Structures" width="70%" />
 <p class="caption">
 Figure 21.2: Some Typical Clustering Structures
@@ -489,7 +490,7 @@ to the individuals to be clustered (although you could also cluster variables).<
 usual, suppose that the individuals form a cloud of points in a <span class="math inline">\(p\)</span>-dimensional
 space, and that we also have the centroid or average individual, like in the
 following figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-188"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-194"></span>
 <img src="images/cluster/clusters-cloud2.svg" alt="Cloud of n points in p-dim space" width="50%" />
 <p class="caption">
 Figure 21.3: Cloud of n points in p-dim space
@@ -504,7 +505,7 @@ distances from the centroid given by:</p>
 \]</span></p>
 <p>Now suppose that we have some group structure in which objects are divided into
 several clusters <span class="math inline">\(C_1, C_2, \dots, C_K\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-189"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-195"></span>
 <img src="images/cluster/clusters-cloud3.svg" alt="Each cluster forms its own cloud" width="50%" />
 <p class="caption">
 Figure 21.4: Each cluster forms its own cloud
@@ -513,7 +514,7 @@ Figure 21.4: Each cluster forms its own cloud
 <p>Because each cluster <span class="math inline">\(C_k\)</span> will form its own cloud of points, we can make the
 visual representation more pattent by using different shapes for the points.
 Likewise, we suppose that each cluster has its own centroid <span class="math inline">\(\mathbf{g_k}\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-190"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-196"></span>
 <img src="images/cluster/clusters-cloud5.svg" alt="Each cluster has a certain within dispersion" width="50%" />
 <p class="caption">
 Figure 21.5: Each cluster has a certain within dispersion
@@ -527,7 +528,7 @@ is a Cluster Sum of Squared distances (<span class="math inline">\(\text{CSSD}\)
 \text{CSSD} = \sum_{i \in C_k} d^2(\mathbf{x_i}, \mathbf{g_k})
 \tag{21.2}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-191"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-197"></span>
 <img src="images/cluster/clusters-cloud6.svg" alt="Dispersion within each cluster" width="50%" />
 <p class="caption">
 Figure 21.6: Dispersion within each cluster
@@ -543,7 +544,7 @@ sum of squared distances <span class="math inline">\(\text{WSSD}\)</span>:</p>
 <div id="between-cluster-dispersion" class="section level4 unnumbered">
 <h4>Between Cluster Dispersion</h4>
 <p>Let’s now turn our attention to the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-192"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-198"></span>
 <img src="images/cluster/clusters-cloud7.svg" alt="Focusing on the centroids" width="50%" />
 <p class="caption">
 Figure 21.7: Focusing on the centroids
@@ -556,7 +557,7 @@ between-cluster dispersion the <span class="math inline">\(\text{BSSD}\)</span> 
 \text{BSSD} = \sum_{k=1}^{K} n_k d^2(\mathbf{g_k}, \mathbf{g})
 \tag{21.4}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-193"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-199"></span>
 <img src="images/cluster/clusters-cloud8.svg" alt="Dispersion between the centroids" width="50%" />
 <p class="caption">
 Figure 21.8: Dispersion between the centroids
@@ -595,7 +596,7 @@ in clustering, we will want to minimize <span class="math inline">\(\text{WSSD}\
 #&gt; 4  0.3  0.6
 #&gt; 5  0.4  1.0</code></pre>
 <p>Here’s the scatterplot:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-195"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-201"></span>
 <img src="images/cluster/aggregation1.svg" alt="Toy data set" width="60%" />
 <p class="caption">
 Figure 21.9: Toy data set
@@ -615,7 +616,7 @@ d^{2}_{i\ell} = d^2(\mathbf{x_i}, \mathbf{x_{\ell}}) = \sum_{j=1}^{p} (x_{ij} - 
 4  0.52  0.53  0.10  0.00      
 5  1.09  0.72  0.25  0.17  0.00</code></pre>
 <p>We could consider two possible clustering partitions or configurations:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-197"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-203"></span>
 <img src="images/cluster/aggregation2.svg" alt="Two possible clustering configurations" width="60%" />
 <p class="caption">
 Figure 21.10: Two possible clustering configurations
