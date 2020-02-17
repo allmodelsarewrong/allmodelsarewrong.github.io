@@ -335,7 +335,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.4.3" data-path="classperformance.html"><a href="classperformance.html#the-ideal-situation"><i class="fa fa-check"></i><b>20.4.3</b> The Ideal Situation</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>VIII Clustering</b></span></li>
+<li class="part"><span><b>VIII Unsupervised II: Clustering</b></span></li>
 <li class="chapter" data-level="21" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>21</b> Clustering</a><ul>
 <li class="chapter" data-level="21.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>21.1</b> About Clustering</a><ul>
 <li class="chapter" data-level="21.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>21.1.1</b> Types of Clustering</a></li>
@@ -388,16 +388,71 @@ to select a model between a set of candidate models (i.e. model selection).
 Likewise, how to make the most of a limitted data (resampling techniques).</p>
 <div id="model-assessment" class="section level2">
 <h2><span class="header-section-number">10.1</span> Model Assessment</h2>
-<p>Model Assessment has to do with: How can we estimate <span class="math inline">\(E_{out}\)</span>?</p>
+<p>Once you have trained a (candidate) model <span class="math inline">\(h\)</span>, the next step involves measuring
+its prediction quality. In other words, you want to see how good (or how bad)
+the predictions of <span class="math inline">\(h\)</span> are. The general idea is fairly simple, at least
+conceptually. Given an input data <span class="math inline">\(\mathbf{x_i}\)</span>, you need to assess the
+discrepancy between the predicted value <span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> and the
+observed value <span class="math inline">\(y_i\)</span>. Simple, right? … Well, not really.</p>
+<p>As you may recall from the chapter about the
+<a href="learning.html#learning">theoretical framework of supervised learning</a>, there are two major
+types of <em>predictions</em>. On one hand, we have predictions
+<span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> of in-sample points <span class="math inline">\(\mathbf{x_i} \in \mathcal{D}_{in}\)</span>.
+In-sample points are those data points that we used to train/fit a given model.
+On the other hand, we have predictions <span class="math inline">\(\hat{y}_0 = h(\mathbf{x_0})\)</span> of
+out-of-sample points <span class="math inline">\(\mathbf{x_0} \in \mathcal{D}_{out}\)</span>. Out-of-sample points
+are data points not used to train/fit a model.</p>
+<p>Because of this distinction between in-sample data <span class="math inline">\(\mathcal{D}_{in}\)</span>, and
+out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>, we can
+measure the predictive quality of a model from these two perspectives. This
+obviously implies having predictions, and errors, of two different natures.
+Aggregating all the discrepancies between the predicted in-sample points
+<span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> and their observed values <span class="math inline">\(y_i\)</span>, allows us
+to quantify the in-sample error <span class="math inline">\(E_{in}\)</span>, which inform us
+about the <strong>resubstitution power</strong> of the model <span class="math inline">\(h\)</span> (i.e. how well the model
+fits the training data).</p>
+<p>The more interesting part comes with the out-of-sample points. If we had
+access to all points <span class="math inline">\(\mathbf{x_0}\)</span> in <span class="math inline">\(\mathcal{D}_{out}\)</span>, measuring the
+discrepancies between the predicted out-of-sample points
+<span class="math inline">\(\hat{y}_0 = h(\mathbf{x_0})\)</span> and their observed values <span class="math inline">\(y_0\)</span>, would allow us
+to quantify the out-of-sample error <span class="math inline">\(E_{out}\)</span>, truly measuring the
+<strong>generalization power</strong> of the model <span class="math inline">\(h\)</span>. In practice, unfortunately, we won’t
+have access to the entire out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</p>
+<p>Knowing that the out-of-sample data set is not entirely within our reach, the
+second best thing that we can do is to find a proxy set for <span class="math inline">\(\mathcal{D}_{out}\)</span>.
+If we can obtain a data set <span class="math inline">\(\mathcal{D}_{proxy}\)</span> that is a representative
+subset of <span class="math inline">\(\mathcal{D}_{out}\)</span>, then we can compute <span class="math inline">\(E_{proxy}\)</span> and use it to
+approximate <span class="math inline">\(E_{out}\)</span>, thus having a fair estimation of the generalization power
+of <span class="math inline">\(h\)</span>. This is precisely the idea of the so-called term <strong>Model Assessment</strong>:
+How can we estimate <span class="math inline">\(E_{out}\)</span>? Which basically reduces to: how can we find an
+unbiased sample <span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to
+get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
 </div>
 <div id="holdout-method" class="section level2">
 <h2><span class="header-section-number">10.2</span> Holdout Method</h2>
-<p>Let us start with a theoretical approach: the so-called <strong>Holdout Method</strong>.</p>
-<p>In practice, we start with some available data
-<span class="math inline">\(\mathcal{D} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>.
-We then split <span class="math inline">\(\mathcal{D}\)</span> into two subsets: (1) the training set
-<span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span>, and (2) the test set <span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>.
-How do we actually obtain these two sets? Usually by taking random
+<p>In order to answer the question “How can we estimate <span class="math inline">\(E_{out}\)</span>?”, let us
+start with a basic theoretical approach known as the <strong>Holdout Method</strong>.</p>
+<p>In practice, we always have some available data
+<span class="math inline">\(\mathcal{D} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>. If we used
+all the <span class="math inline">\(n\)</span> data points to train/fit a model, we could perfectly measure <span class="math inline">\(E_{in}\)</span>
+but then we wouldn’t have any out-of-sample points to get an honest
+measure of <span class="math inline">\(\hat{E}_{out}\)</span>. Perhaps you are thinking: "why not use <span class="math inline">\(E_{in}\)</span> as
+an estimate <span class="math inline">\(\hat{E}_{out}\)</span> of <span class="math inline">\(E_{out}\)</span>? Because it won’t be a realiable
+estimate. You may have a model <span class="math inline">\(h\)</span> that produces a very small in-sample
+error, <span class="math inline">\(E_{in} \approx 0\)</span>, but that doesn’t necessarily means that it has good
+generalization performance out-of-sample.</p>
+<p>Given that the only available data is <span class="math inline">\(\mathcal{D}\)</span>, the Holdout Method proposes
+to split <span class="math inline">\(\mathcal{D}\)</span> into two subsets: (1) a subset <span class="math inline">\(\mathcal{D}_{\mathrm{train}}\)</span>,
+called the <strong>training set</strong>, used to train/fit the model, and (2) another subset
+<span class="math inline">\(\mathcal{D}_{\mathrm{test}}\)</span>, called the <strong>test set</strong>,to be used as a proxy of
+<span class="math inline">\(\mathcal{D}_{out}\)</span> for testing purposes.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-89"></span>
+<img src="images/validation/training-test-sets.svg" alt="Data split into training and test sets" width="60%" />
+<p class="caption">
+Figure 10.1: Data split into training and test sets
+</p>
+</div>
+<p>How do we actually obtain these two sets? Usually by taking random
 samples, without replacement, from <span class="math inline">\(\mathcal{D}\)</span>.</p>
 <p><span class="math display">\[
 \mathcal{D} \to \begin{cases} 
@@ -467,12 +522,30 @@ Var(E_{\mathrm{test}}) = \frac{1}{k^2} \sum_{i=1}^{k} Var(err_i) = \frac{1}{k^2}
 <p>Hence, the larger the test set, the smaller the variance of <span class="math inline">\(E_{test}\)</span> will be.
 Of course, <span class="math inline">\(k\)</span> is not freely selectable; the larger <span class="math inline">\(k\)</span> is, the smaller our
 training dataset will be.</p>
+<p>Again, the holdout method is simply a conceptual starting point. Also, depending
+on how you form your training and test sests, you may end up with a split that
+may not be truly representative of the studied phenomenon. So instead of using
+just one split, some authors propose to use several splits of training-test sets
+obtained through resampling methods.</p>
 </div>
 </div>
 <div id="repeated-holdout-method" class="section level2">
 <h2><span class="header-section-number">10.3</span> Repeated Holdout Method</h2>
-<p>Our next validation procedure is the “Repeated Holdout Method”, also known as
-Monte-Carlo Cross-Validation.</p>
+<p>Our next validation procedure is the “Repeated Holdout Method”, sometimes
+known as Monte-Carlo Cross-Validation.</p>
+<p>As the name indicates, the repeated holdout method consists of several
+repetitions of the holdout method. At each iteration (or repetition) <span class="math inline">\(b\)</span> we
+split <span class="math inline">\(\mathcal{D}\)</span> into <span class="math inline">\(\mathcal{D}^{b}_{\mathrm{train}}\)</span> and
+<span class="math inline">\(\mathcal{D}^{b}_{\mathrm{test}}\)</span>. We use the training set to fit a particular
+model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on the test set <span class="math inline">\(E_{test}^{b}\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-90"></span>
+<img src="images/validation/repeated-holdout.svg" alt="Several splits into training and test sets" width="80%" />
+<p class="caption">
+Figure 10.2: Several splits into training and test sets
+</p>
+</div>
+<p>After several repetitions, we average all the test errors <span class="math inline">\(E_{test}^{b}\)</span>
+to obtain an estimate <span class="math inline">\(\hat{E}_{out}\)</span>.</p>
 <div id="repeated-holdout-algorithm" class="section level4 unnumbered">
 <h4>Repeated Holdout Algorithm</h4>
 <p>Here’s the conceptual algorithm for the repeated holdout method:</p>
@@ -481,9 +554,10 @@ Monte-Carlo Cross-Validation.</p>
 <li><p>Repeat the Holdout method <span class="math inline">\(B\)</span> times, where <span class="math inline">\(B\)</span> is a very large integer
 (for example, 500). At each iteration, obtain the following elements:</p>
 <ol style="list-style-type: lower-alpha">
-<li><p><span class="math inline">\(\mathcal{D}^{b}_{train}\)</span>, the <span class="math inline">\(b\)</span>-th training set.</p></li>
-<li><p><span class="math inline">\(h^{-}_{b}\)</span>, the <span class="math inline">\(b\)</span>-th fitted model (fitted to <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span>)</p></li>
-<li><p><span class="math inline">\(E_{test}^{b} = \frac{1}{k} \sum_{i=1}^{n} err_i[ h^{-}_{b}(\mathbf{x_j}), y_j]\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}^{b}\)</span></p></li>
+<li><p>Generate <span class="math inline">\(\mathcal{D}^{b}_{train}\)</span>, by sampling <span class="math inline">\(n-k\)</span> elements <strong>without</strong>
+replacement from <span class="math inline">\(\mathcal{D}\)</span>.</p></li>
+<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span>)</p></li>
+<li><p>Compute <span class="math inline">\(E_{test}^{b} = \frac{1}{k} \sum_{i} err_i[ h^{-}_{b}(\mathbf{x_j}), y_j]\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}^{b}\)</span></p></li>
 </ol></li>
 <li><p>Obtain an overall value for <span class="math inline">\(E_{test}\)</span> by averaging the <span class="math inline">\(E_{test}^{b}\)</span>
 values:</p></li>
@@ -496,9 +570,23 @@ E_{test} = \frac{1}{B} \sum_{b=1}^{B} E_{test}^{b}
 <div id="bootstrap-method" class="section level2">
 <h2><span class="header-section-number">10.4</span> Bootstrap Method</h2>
 <p>Another interesting validation procedure is the “Bootstrap Method”.</p>
+<p>This method is very similar to the Repeated Holdout method. The main difference
+is in the way <span class="math inline">\(\mathcal{D}\)</span> is split in each repetition. In the bootstrap
+method, as the name says, the samples consists of <em>bootstrap</em> samples.</p>
+<p>Recall that a bootstrap sample is a random sample of the data taken
+<strong>with replacement</strong>. This means that the bootstrap sample is the same size as
+elements in <span class="math inline">\(\mathcal{D}\)</span>. As a result, some samples will be represented
+multiple times in the bootstrap sample while other will not be selected at all.
+The samples not selected are usually referred to as the out-of-bag samples.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-91"></span>
+<img src="images/validation/bootstrap-method.svg" alt="Several splits with bootstrap samples into training and test sets" width="80%" />
+<p class="caption">
+Figure 10.3: Several splits with bootstrap samples into training and test sets
+</p>
+</div>
 <div id="bootstrap-algorithm" class="section level4 unnumbered">
 <h4>Bootstrap Algorithm</h4>
-<p>Here’s the conceptual algorithm for the repeated holdout method:</p>
+<p>Here’s the conceptual algorithm for the bootstrap method:</p>
 <ol style="list-style-type: decimal">
 <li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
 <li><p>Repeat the following steps for <span class="math inline">\(b = 1, 2, \dots B\)</span> where <span class="math inline">\(B\)</span> is a very large
@@ -512,7 +600,7 @@ could contain repeated elements).</p></li>
 the size of <span class="math inline">\(\mathcal{D}_{test}\)</span> will change at each iteration.
 (Note that <span class="math inline">\(\mathcal{D}_{train}\)</span> should <strong>not</strong> contain repeated values).</p></li>
 <li><p>Generate <span class="math inline">\(h^{-}_b\)</span> by fitting a model to <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span>.</p></li>
-<li><p>Compute <span class="math inline">\(E_{test}^b = \frac{1}{k_b} \sum_{i=1}^{n} err_i \big( h^{-}_i(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}^b\)</span> and <span class="math inline">\(k_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{test}^b\)</span>.</p></li>
+<li><p>Compute <span class="math inline">\(E_{test}^b = \frac{1}{k_b} \sum_{i} err_i \big( h^{-}_i(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}^b\)</span> and <span class="math inline">\(k_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{test}^b\)</span>.</p></li>
 </ol></li>
 <li><p>Obtain an overall value for <span class="math inline">\(E_{test}\)</span> by averaging the <span class="math inline">\(E_{test}^b\)</span> values:</p></li>
 </ol>
@@ -529,6 +617,9 @@ We have that:</p>
 </div>
 <div id="model-selection" class="section level2">
 <h2><span class="header-section-number">10.5</span> Model Selection</h2>
+<p>Now that we’ve talked about how to measure the generalization performance of a
+given model, the next step is to discuss how to compare different models,
+in order to select the best one.</p>
 <p>Say we have <span class="math inline">\(M\)</span> models to choose from. Consider, for example, the following
 three cases (each with <span class="math inline">\(M = 3\)</span>):</p>
 <p>We could have three different types of hypotheses:</p>
@@ -552,18 +643,25 @@ componenets to retain:</p>
 <li><span class="math inline">\(h_3:\)</span> PCR <span class="math inline">\((c = 3)\)</span></li>
 </ul>
 <p>The schematic for validation can be viewed in the following visual diagram:</p>
-<p><strong>INSERT DIAGRAM</strong></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
+<img src="images/validation/repeated-2way-holdout.svg" alt="Repeated 2-way holdout method for model selection" width="70%" />
+<p class="caption">
+Figure 10.4: Repeated 2-way holdout method for model selection
+</p>
+</div>
 <p>Note that in the diagram, <span class="math inline">\(\mathcal{H}_m\)</span> represents the <span class="math inline">\(m\)</span>-th hypothesis,
 and <span class="math inline">\(h^{-}_m\)</span> represents the <span class="math inline">\(m\)</span>-th fit to the <span class="math inline">\(m\)</span>-th hypothesis.</p>
 <p>Why are we calling <span class="math inline">\(\mathcal{D}_{val}\)</span> a “validation” set, when it appears to
-be serving the same role as a “test” set? Indeed, ISL makes no distinction between the validation set and the test set (see, for instance, pages 176-177 in the textbook).</p>
+be serving the same role as a “test” set? Indeed, ISL makes no distinction
+between the validation set and the test set (see, for instance, pages 176-177
+in the textbook).</p>
 <p>However, in making this distinction explicit, we hope to make one point clear:
 choosing the “best” model (i.e. the model with the smallest <span class="math inline">\(E_{val}\)</span>) is a
 <strong>learning decision</strong>. Had we stopped our procedure before making this choice
 (i.e. if we had stopped after considering <span class="math inline">\(E_{val}^m\)</span> for <span class="math inline">\(m = 1, 2, ..., M\)</span>),
 we could have plausibly called these errors “test errors.” However, we went
 one step further and as a result obtain a <em>biased</em> estimate of <span class="math inline">\(E_{out}\)</span>;
-namely, <span class="math inline">\(E_{val}^{m^*}\)</span>.</p>
+namely, <span class="math inline">\(E_{val}^{m}\)</span> for the chosen model <span class="math inline">\(m\)</span>.</p>
 <div id="three-way-holdout-method" class="section level3">
 <h3><span class="header-section-number">10.5.1</span> Three-way Holdout Method</h3>
 <p>We can use the idea of validation in conjunction with the holdout method.
@@ -572,10 +670,31 @@ we split it into three sets: training, validation, and test.</p>
 <p><span class="math display">\[ 
 \mathcal{D} \to \begin{cases} \mathcal{D}_{train} \\ \mathcal{D}_{test} \\ \mathcal{D}_{val} \\ \end{cases}
 \]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
+<img src="images/validation/training-validation-test-sets.svg" alt="Data split into training, validation, and test sets" width="60%" />
+<p class="caption">
+Figure 10.5: Data split into training, validation, and test sets
+</p>
+</div>
 <p>We perform validation as above, then use <span class="math inline">\(\mathcal{D}_{train}\)</span> to get
 <span class="math inline">\(E_{test}(h_{m}^{*})\)</span>. Then finally refit the model <span class="math inline">\(h_{m}\)</span> using the winning
 class (e.g. the <span class="math inline">\(m\)</span>-th hypothesis) as well as the entire dataset.
 Now we have an unbiased estimate of error to report: <span class="math inline">\(E_{test}(h_{m}^{*})\)</span>.</p>
+<p>The schematic for validation with 3-way holdout method is depicted in the
+following visual diagram:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-94"></span>
+<img src="images/validation/repeated-3way-holdout.svg" alt="Repeated 3-way holdout method for model selection" width="70%" />
+<p class="caption">
+Figure 10.6: Repeated 3-way holdout method for model selection
+</p>
+</div>
+<p>Like in the 2-way case, here <span class="math inline">\(\mathcal{H}_m\)</span> represents the <span class="math inline">\(m\)</span>-th hypothesis,
+and <span class="math inline">\(h^{-}_m\)</span> represents the <span class="math inline">\(m\)</span>-th fit to the <span class="math inline">\(m\)</span>-th hypothesis.</p>
+<p>After the best model <span class="math inline">\(h^{-}_{m}\)</span> has been selected (with the smallest <span class="math inline">\(E_{val}\)</span>),
+a model <span class="math inline">\(h_{\overset{*}m}\)</span> is fitted using <span class="math inline">\(\mathcal{D}_{train} \cap \mathcal{D}_{val}\)</span>.
+The performance of this model is evaluated by using <span class="math inline">\(\mathcal{D}_{test}\)</span> to
+obtain <span class="math inline">\(E^{m}_{test}\)</span>. Finally, the “official” model is the model fitted on the
+entire data set <span class="math inline">\(\mathcal{D}\)</span>, but the reported performance is <span class="math inline">\(E^{m}_{test}\)</span>.</p>
 <p>Of course, there is still a tradeoff: now we need to split our data into <em>three</em>!
 The larger our test and validations sets are, the smaller our training set will be.</p>
 </div>
@@ -586,6 +705,39 @@ The larger our test and validations sets are, the smaller our training set will 
 <div id="leave-one-out-cross-validation-loocv" class="section level3">
 <h3><span class="header-section-number">10.6.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
 <p>This is a particular case for <span class="math inline">\(k\)</span>-fold CV.</p>
+<ol style="list-style-type: decimal">
+<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
+<li><p>Repeat the following for <span class="math inline">\(i = 1, 2, \dots, n\)</span> (where <span class="math inline">\(n\)</span> is the number of
+data points)</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Generate the <span class="math inline">\(i\)</span>-th training set <span class="math inline">\(\mathcal{D}_i\)</span> by removing the <span class="math inline">\(i\)</span>-th
+element from <span class="math inline">\(\mathcal{D}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
+<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span>, and use <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> to obtain
+<span class="math inline">\(E_{val}^i = err[ h^{-}(\mathbf{x_i}), y_i]\)</span>.</p></li>
+</ol></li>
+<li><p>Obtain the <strong>cross-validation error</strong> <span class="math inline">\(E_{cv}\)</span> by averaging the individual
+errors:</p></li>
+</ol>
+<p><span class="math display">\[
+E_{cv} = \frac{1}{n} \sum_{i=1}^{n} err_i  = \frac{1}{n} \sum_{i=1}^{n} E_{val}^i
+\]</span></p>
+<p>In this way, we are able to fit <span class="math inline">\(n\)</span> models with <span class="math inline">\(n - 1\)</span> points, while also
+generating <span class="math inline">\(n\)</span> testing datasets. So, this looks like the best of both worlds:
+we have a large training data set, <em>and</em> a lot of test datasets! But, there is
+still a cost: the individual errors are no longer independent.</p>
+<p>For illustrative purposes, consider a data set withonly three points:
+<span class="math inline">\(\mathcal{D} = \{p_1, p_2, p_3\}\)</span> (pictured below).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
+<img src="images/validation/toy-loocv.png" alt="Illustration of loocv errors" width="80%" />
+<p class="caption">
+Figure 10.7: Illustration of loocv errors
+</p>
+</div>
+<p>We would therefore repeat step (2) above <span class="math inline">\(n = 3\)</span> times, to obtain <span class="math inline">\(3\)</span> errors:
+<span class="math inline">\(e_1, \ e_2,\)</span> and <span class="math inline">\(e_3\)</span> [note that in the last figure, the red dashed line
+extends to touch the blue line; unfortunately, the point of intersection was
+too low to feasibly show on the graph. In other words, use your imagination:
+the red line touches the blue line].</p>
 
 </div>
 </div>

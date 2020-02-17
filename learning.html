@@ -335,7 +335,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.4.3" data-path="classperformance.html"><a href="classperformance.html#the-ideal-situation"><i class="fa fa-check"></i><b>20.4.3</b> The Ideal Situation</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>VIII Clustering</b></span></li>
+<li class="part"><span><b>VIII Unsupervised II: Clustering</b></span></li>
 <li class="chapter" data-level="21" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>21</b> Clustering</a><ul>
 <li class="chapter" data-level="21.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>21.1</b> About Clustering</a><ul>
 <li class="chapter" data-level="21.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>21.1.1</b> Types of Clustering</a></li>
@@ -553,28 +553,36 @@ based on the type of data that is used to assess the individual errors:</p>
 <li><p><strong>Out-of-sample Error</strong>, denoted <span class="math inline">\(E_{out}\)</span></p></li>
 </ul>
 <p>The in-sample error is the average of pointwise errors from data points of the
-in-sample data <span class="math inline">\(D_{in}\)</span>:</p>
+in-sample data <span class="math inline">\(\mathcal{D}_{in}\)</span>:</p>
 <p><span class="math display">\[
 E_{in} (\widehat{f}, f) = \frac{1}{n} \sum_{i} err_i
 \]</span></p>
 <p>The out-of-sample error is the theoretical mean, or expected value, of the
-pointwise errors:</p>
+pointwise errors over the entire input space:</p>
 <p><span class="math display">\[
 E_{out} (\widehat{f}, f) = \mathbb{E}_{\mathcal{X}} \left[ err \left( \widehat{f}(x), f(x) \right) \right]
 \]</span></p>
-<p>The expectation is taken over the input space <span class="math inline">\(\mathcal{X}\)</span>.
-The point <span class="math inline">\(x\)</span> denotes a general data point in such space <span class="math inline">\(\mathcal{X}\)</span>.
-Notice the theoretical nature of <span class="math inline">\(E_{out}\)</span>. In practice, you will never, never,
-be able to compute this quantity.</p>
-<p>In the machine learning literature, these overall measures of error are formally
-known as <strong>cost functions</strong> or <strong>risks</strong>.</p>
-<p>Let’s update our supervised learning diagram to include error measures:</p>
+<p>The point <span class="math inline">\(x\)</span> denotes a general data point in the input space <span class="math inline">\(\mathcal{X}\)</span>.
+And as we said, the expectation is taken over the input space <span class="math inline">\(\mathcal{X}\)</span>.
+Which means that the nature of <span class="math inline">\(E_{out}\)</span> is highly theoretical. In practice,
+you will never, never, be able to compute this quantity.</p>
+<p>In the machine learning literature, these overall measures of error tend to
+be formally known as <strong>cost functions</strong> or <strong>risks</strong>.</p>
+<p>Let’s update our supervised learning diagram to include error measures (see
+figure below). We add a new box (in blue) involving an overall error measure
+as well as some pointwise error function.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-62"></span>
 <img src="images/theory/learning-diag1.svg" alt="Supervised Learning Diagram (ver 2)" width="85%" />
 <p class="caption">
 Figure 7.2: Supervised Learning Diagram (ver 2)
 </p>
 </div>
+<p>Notice the connections of the error elements to both the learning algortihm
+<span class="math inline">\(\mathcal{A}\)</span>, and the final model <span class="math inline">\(\hat{f}\)</span>. Why is this? As we will learn in
+the upcoming chapters, learning algorithms use—implicitly or explicitly—a
+pointwise error function. In turn, in order to determine which candidate
+model <span class="math inline">\(h()\)</span> is the best approximation to the target model <span class="math inline">\(f()\)</span>, we need to
+use an overall measure of error.</p>
 </div>
 <div id="auxiliary-technicality" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Auxiliary Technicality</h3>
