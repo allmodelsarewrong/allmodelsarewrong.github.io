@@ -564,7 +564,7 @@ possible training sets, is expressed as:</p>
 If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
 the bias-variance decomposition becomes:</p>
 <p><span class="math display">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_o) - y_o \right)^2 \right ] = \text{bias}^2 + \text{var} + \sigma^2
+\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - y_0 \right)^2 \right ] = \text{bias}^2 + \text{var} + \sigma^2
 \]</span></p>
 <p>Notice that the above equation assumes that the squared error corresponds to
 just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
@@ -582,7 +582,9 @@ importance:</p>
 </ol>
 <p>The first MSE involves a single out-of-sample point <span class="math inline">\(x_0\)</span>, measuring the
 performance of a single type of hypothesis <span class="math inline">\(h()\)</span> over multiple training
-data sets <span class="math inline">\(\mathcal{D}\)</span>.</p>
+data sets <span class="math inline">\(\mathcal{D}\)</span>. This is what
+<a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">ISL</a>
+calls <em>expected test MSE</em> (page 34).</p>
 <p>The second MSE involves a single hypothesis <span class="math inline">\(h()\)</span>, measuring its
 performance over all out-of-sample points <span class="math inline">\(x_0\)</span>. Notice that <span class="math inline">\(h()\)</span> has been
 fitted on just one training set <span class="math inline">\(\mathcal{D}\)</span>.</p>
@@ -590,7 +592,9 @@ fitted on just one training set <span class="math inline">\(\mathcal{D}\)</span>
 how this MSE involves a double expectation. Simply put, it measures the
 performance of a class of hypothesis <span class="math inline">\(h()\)</span>, over multiple training
 data sets <span class="math inline">\(\mathcal{D}\)</span>, over all out-of-sample points <span class="math inline">\(x_0\)</span>.
-We call this the <strong>overall expected MSE</strong>.</p>
+This is what
+<a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">ISL</a>
+calls <em>overall expected test MSE</em> (page 34).</p>
 <p>Unfortunately, in the Machine Learning literature, most authors simply mention
 an MSE without really specifying which type of MSE. Naturally, this may cause
 some confusion to the unaware reader. The good news is that, regardless of which
@@ -598,11 +602,12 @@ MSE flavor you are faced with, they all admit a decomposition into bias-squared,
 variance, and noise.</p>
 <p>We cannot emphasize enough the theoretical nature of any type of <span class="math inline">\(\text{MSE}\)</span>.
 This means that in practice we will never be able to compute the mean squared
-error. Why? Because on one hand, we don’t know the target function <span class="math inline">\(f\)</span>. And
-on the other hand, we don’t have access to all out-of-sample points.
+error. Why? First, we don’t know the target function <span class="math inline">\(f\)</span>. Second, we don’t have
+access to all out-of-sample points. And third, we cannot have infinite training
+sets in order to compute the average hypothesis.
 We can, however, try to compute an approximation—an estimate—of an
 <span class="math inline">\(\text{MSE}\)</span> using a test data set denoted <span class="math inline">\(\mathcal{D}_{test}\)</span>. This data
-set will be assumed to be a representative subset (i.e. a unbiased sample) of
+set will be assumed to be a representative subset (i.e. an unbiased sample) of
 the out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</p>
 </div>
 </div>
@@ -722,7 +727,7 @@ matrices through, for example, PCA).</p>
 <p>We could also apply regularization. At its core, this notion relates to making
 the size of a model’s parameters small. Consequently, there is a reduction in
 the variance of a model.</p>
-<p>In summary: <strong>decreasing bias comes at the cost of increasing variance, and vice-versa.</strong></p>
+<p>Summarizing: <strong>in general, decreasing bias comes at the cost of increasing variance, and vice-versa.</strong></p>
 
 </div>
 </div>
