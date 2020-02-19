@@ -384,10 +384,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">9</span> Bias-Variance Tradeoff</h1>
 <p>In this chapter we discuss one of the theoretical dogmas of statistical
 learning: the famous Bias-Variance tradeoff. Because Bias-Variance (BV) depends
-on <span class="math inline">\(\text{MSE}\)</span>, it is a topic that is typically discussed within the
-confines of regression, but a generalization is possible to classification
-problems. Having said that, we will only discuss Bias-Variance from a regression
-perspective.</p>
+on Mean Squared Error (MSE), it is a topic that is typically discussed within
+the confines of regression, but a generalization is possible to classification
+problems (but the math is not as clean and strightforward as in regression).
+Even though we will only discuss Bias-Variance from a regression
+perspective, keep in mind that the practical implications of the bias-variance
+tradeoff are applicable to all supervised learning contexts.</p>
 <div id="bias-variance-tradeoff" class="section level2">
 <h2><span class="header-section-number">9.1</span> Bias-Variance Tradeoff</h2>
 <p>In the previous chapter we reviewed the concept of Mean Squared Error of a
@@ -675,7 +677,7 @@ words, <span class="math inline">\(\bar{h}\)</span> is a prototypical example of
 The bias term thus can be interpreted as a measure of how well a particular type
 of hypothesis <span class="math inline">\(\mathcal{H}\)</span> (e.g. constant model, linear model, quadratic
 model, etc.) approximates the target function <span class="math inline">\(f\)</span>.</p>
-<p>Another to think about bias is as a deterministic noise.</p>
+<p>Another way to think about bias is as a deterministic noise.</p>
 <p><span class="math display">\[
 \text{MSE} = \mathrm{Variance} \quad + \underbrace{ \mathrm{Bias} }_{\text{deterministic noise}}+ \underbrace{ \text{Noise} }_{\text{random noise}}
 \]</span></p>
