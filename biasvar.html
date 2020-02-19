@@ -225,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="biasvar.html"><a href="biasvar.html"><i class="fa fa-check"></i><b>9</b> Bias-Variance Tradeoff</a><ul>
-<li class="chapter" data-level="9.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff"><i class="fa fa-check"></i><b>9.1</b> Bias-Variance Tradeoff</a></li>
+<li class="chapter" data-level="9.1" data-path="biasvar.html"><a href="biasvar.html#introduction"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
 <li class="chapter" data-level="9.2" data-path="biasvar.html"><a href="biasvar.html#motivation-example"><i class="fa fa-check"></i><b>9.2</b> Motivation Example</a><ul>
 <li class="chapter" data-level="9.2.1" data-path="biasvar.html"><a href="biasvar.html#two-hypotheses"><i class="fa fa-check"></i><b>9.2.1</b> Two Hypotheses</a></li>
 </ul></li>
@@ -385,20 +385,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this chapter we discuss one of the theoretical dogmas of statistical
 learning: the famous Bias-Variance tradeoff. Because Bias-Variance (BV) depends
 on Mean Squared Error (MSE), it is a topic that is typically discussed within
-the confines of regression, but a generalization is possible to classification
-problems (but the math is not as clean and strightforward as in regression).
-Even though we will only discuss Bias-Variance from a regression
+the confines of regression, although a generalization is possible to
+classification problems (but the math is not as clean and straightforward as
+in regression). Even though we only discuss Bias-Variance from a regression
 perspective, keep in mind that the practical implications of the bias-variance
 tradeoff are applicable to all supervised learning contexts.</p>
-<div id="bias-variance-tradeoff" class="section level2">
-<h2><span class="header-section-number">9.1</span> Bias-Variance Tradeoff</h2>
-<p>In the previous chapter we reviewed the concept of Mean Squared Error of a
-statistic (or estimator) <span class="math inline">\(\hat{\theta}\)</span>. As we saw, we can decompose
-<span class="math inline">\(\text{MSE}(\hat{\theta})\)</span> as the sum of two components: Bias-squared and Variance.</p>
-<p><span class="math display">\[
-\text{MSE}(\hat{\theta}) = \text{Var}(\hat{\theta}) + \text{Bias}^{2} (\hat{\theta})
-\]</span></p>
-<p>In this chapter we extend this notion to the MSE of a regression model.</p>
+<div id="introduction" class="section level2">
+<h2><span class="header-section-number">9.1</span> Introduction</h2>
+<p>From the <a href="learning.html#learning">theoretical framework of supervised learning</a>, the main
+goal is to find a model <span class="math inline">\(\hat{f}\)</span> that is a good approximation to the target
+model <span class="math inline">\(f\)</span>, or put it compactly, we want <span class="math inline">\(\hat{f} \approx f\)</span>.
+By good approximation we mean finding a model <span class="math inline">\(\hat{f}\)</span> that gives “good”
+predictions of both types of data points: predictions of in-sample data
+<span class="math inline">\(\hat{y}_i = \hat{f}(x_i)\)</span>, <em>and</em> predictions of out-of-sample data
+<span class="math inline">\(\hat{y}_0 = \hat{f}(x_0)\)</span>. In turn, these two types of predictions involves
+two types of errors:</p>
+<ul>
+<li>in-sample error: <span class="math inline">\(E_{in}(\hat{f})\)</span></li>
+<li>out-of-sample error: <span class="math inline">\(E_{out}(\hat{f})\)</span></li>
+</ul>
+<p>Consequently, our desire to have <span class="math inline">\(\hat{f} \approx f\)</span> can be broken down into
+two separate wishes that are supposed to be fulfilled simultaneously:</p>
+<ul>
+<li>small in-sample error: <span class="math inline">\(E_{in}(\hat{f}) \approx 0\)</span></li>
+<li>out-of-sample error similar to in-sample error: <span class="math inline">\(E_{out}(\hat{f}) \approx E_{in}(\hat{f})\)</span></li>
+</ul>
+<p>Achieving both wishes essentially means that <span class="math inline">\(\hat{f}\)</span> is a good model.</p>
+<p>Now, before discussing how to get <span class="math inline">\(E_{out}(\hat{f}) \approx E_{in}(\hat{f})\)</span>,
+we are going to first study some aspects about <span class="math inline">\(E_{out}(\hat{f})\)</span>. More
+specifically, we are going to study the behavior of <span class="math inline">\(E_{out}(\hat{f})\)</span> from
+a regression perspective, and taking the form of Mean Squared Error (MSE).</p>
 </div>
 <div id="motivation-example" class="section level2">
 <h2><span class="header-section-number">9.2</span> Motivation Example</h2>
