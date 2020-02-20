@@ -398,7 +398,7 @@ model <span class="math inline">\(f\)</span>, or put it compactly, we want <span
 By good approximation we mean finding a model <span class="math inline">\(\hat{f}\)</span> that gives “good”
 predictions of both types of data points: predictions of in-sample data
 <span class="math inline">\(\hat{y}_i = \hat{f}(x_i)\)</span>, <em>and</em> predictions of out-of-sample data
-<span class="math inline">\(\hat{y}_0 = \hat{f}(x_0)\)</span>. In turn, these two types of predictions involves
+<span class="math inline">\(\hat{y}_0 = \hat{f}(x_0)\)</span>. In turn, these two types of predictions involve
 two types of errors:</p>
 <ul>
 <li>in-sample error: <span class="math inline">\(E_{in}(\hat{f})\)</span></li>
@@ -413,8 +413,9 @@ two separate wishes that are supposed to be fulfilled simultaneously:</p>
 <p>Achieving both wishes essentially means that <span class="math inline">\(\hat{f}\)</span> is a good model.</p>
 <p>Now, before discussing how to get <span class="math inline">\(E_{out}(\hat{f}) \approx E_{in}(\hat{f})\)</span>,
 we are going to first study some aspects about <span class="math inline">\(E_{out}(\hat{f})\)</span>. More
-specifically, we are going to study the behavior of <span class="math inline">\(E_{out}(\hat{f})\)</span> from
-a regression perspective, and taking the form of Mean Squared Error (MSE).</p>
+specifically, we are going to study the theoretical behavior of
+<span class="math inline">\(E_{out}(\hat{f})\)</span> from a regression perspective, and taking the form of
+Mean Squared Error (MSE).</p>
 </div>
 <div id="motivation-example" class="section level2">
 <h2><span class="header-section-number">9.2</span> Motivation Example</h2>
@@ -530,17 +531,17 @@ point of view, we need to study the BV decomposition in more detail.</p>
 <p>In order to talk about the mean squared error <span class="math inline">\(\text{MSE}\)</span> as a theoretical
 expected value—as opposed to an empirical average—we have to suppose the
 existance of an out-of-sample data point <span class="math inline">\(x_0\)</span>.</p>
-<p>Given a data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>, the
-expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
-possible training sets, is expressed as:</p>
+<p>Given a learning data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>,
+the expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>,
+over all possible learning sets, is expressed as:</p>
 <p><span class="math display">\[
 \mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
 \]</span></p>
 <p>For the sake of simplicity, assume the target <span class="math inline">\(f(x)\)</span> is noiseless. Of course
 this is an idealistic assumption but it will help us to simplify notation.
 Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> denotes the value predicted by model <span class="math inline">\(h()\)</span>
-fitted on a specific training data set <span class="math inline">\(\mathcal{D}\)</span>. This is nothing else
-than an estimator, and we can treat <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> as playing the
+fitted on a specific learning data set <span class="math inline">\(\mathcal{D}\)</span>. This is nothing but an
+estimator, and we can treat <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> as playing the
 role of <span class="math inline">\(\hat{\theta}\)</span>. Likewise, <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>.</p>
 <p>What about the term that corresponds to <span class="math inline">\(\mu_{\hat{\theta}} = \mathbb{E}(\hat{\theta})\)</span>?
 To answer this question we need to introduce
@@ -548,7 +549,7 @@ To answer this question we need to introduce
 simply put, think of this term as the “average hypothesis”.</p>
 <p>Now that we have the names and symbols for all the ingredients, let’s do the
 algebra to find out what the expected squared error for a given out-of-sample
-point <span class="math inline">\(x_0\)</span>, over all possible training sets, turns out to be:</p>
+point <span class="math inline">\(x_0\)</span>, over all possible learning sets, turns out to be:</p>
 <p><span class="math display">\[\begin{align*}
 \mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] &amp;= 
 \mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} + \bar{h} - f(x_0) \right)^2 \right ] \\
@@ -569,7 +570,7 @@ point <span class="math inline">\(x_0\)</span>, over all possible training sets,
 \end{align*}\]</span></p>
 <p>Hence, under the assumption of a noiseless target function <span class="math inline">\(f\)</span>, we have that the
 expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
-possible training sets, is expressed as:</p>
+possible learning sets, is expressed as:</p>
 <p><span class="math display">\[
 \mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] = 
 \underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} +
@@ -599,16 +600,16 @@ importance:</p>
 <li><p><span class="math inline">\(\mathbb{E}_{\mathcal{X}} \left[ \mathbb{E}_\mathcal{D} \left\{ \left( h^{\mathcal{D}}(x_0) - f(x_0) \right)^2 \right\} \right]\)</span></p></li>
 </ol>
 <p>The first MSE involves a single out-of-sample point <span class="math inline">\(x_0\)</span>, measuring the
-performance of a single type of hypothesis <span class="math inline">\(h()\)</span> over multiple training
+performance of a single type of hypothesis <span class="math inline">\(h()\)</span> over multiple learning
 data sets <span class="math inline">\(\mathcal{D}\)</span>. This is what
 <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">ISL</a>
 calls <em>expected test MSE</em> (page 34).</p>
 <p>The second MSE involves a single hypothesis <span class="math inline">\(h()\)</span>, measuring its
 performance over all out-of-sample points <span class="math inline">\(x_0\)</span>. Notice that <span class="math inline">\(h()\)</span> has been
-fitted on just one training set <span class="math inline">\(\mathcal{D}\)</span>.</p>
+fitted on just one learning set <span class="math inline">\(\mathcal{D}\)</span>.</p>
 <p>As for the third MSE, this is a combination of the two previous MSEs. Notice
 how this MSE involves a double expectation. Simply put, it measures the
-performance of a class of hypothesis <span class="math inline">\(h()\)</span>, over multiple training
+performance of a class of hypothesis <span class="math inline">\(h()\)</span>, over multiple learning
 data sets <span class="math inline">\(\mathcal{D}\)</span>, over all out-of-sample points <span class="math inline">\(x_0\)</span>.
 This is what
 <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/">ISL</a>
@@ -621,7 +622,7 @@ variance, and noise.</p>
 <p>We cannot emphasize enough the theoretical nature of any type of <span class="math inline">\(\text{MSE}\)</span>.
 This means that in practice we will never be able to compute the mean squared
 error. Why? First, we don’t know the target function <span class="math inline">\(f\)</span>. Second, we don’t have
-access to all out-of-sample points. And third, we cannot have infinite training
+access to all out-of-sample points. And third, we cannot have infinite learning
 sets in order to compute the average hypothesis.
 We can, however, try to compute an approximation—an estimate—of an
 <span class="math inline">\(\text{MSE}\)</span> using a test data set denoted <span class="math inline">\(\mathcal{D}_{test}\)</span>. This data
@@ -662,10 +663,10 @@ Figure 9.4: Space of hypotheses.
 </p>
 </div>
 <p>Let’s make our diagram more interesting by taking into account the variability
-in each class of models (see diagram below). In this way, the dashed lines represent
-the deviations of each fitted model against the average hypothesis. That is, the
-set of all dashed lines conveys the idea of <strong>variance</strong> in each model class:
-i.e. how spread out the models within each class are.</p>
+in each class of models (see diagram below). In this way, the dashed lines
+represent the deviations of each fitted model against their average hypothesis.
+That is, the set of all dashed lines conveys the idea of <strong>variance</strong> in each
+model class: i.e. how spread out the models within each class are.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-86"></span>
 <img src="images/theory/hypothesis-space3.svg" alt="Each class of hypothesis has a certain variability." width="65%" />
 <p class="caption">
@@ -726,7 +727,7 @@ resources) to produce a more complicated model.</p></li>
 <li><p>Less complex/flexible models (i.e. simpler models) tend to have less variance,
 but more bias (i.e. less opportunity to estimate <span class="math inline">\(f\)</span>, but a higher chance to
 approximate out of sample error): <span class="math inline">\(E_{in} \approx E_{out}\)</span>, but
-<span class="math inline">\(E_{in} \approx E_{out} \neq 0\)</span>. Simpler models also require less
+<span class="math inline">\(E_{in} \approx E_{out} \neq 0\)</span>. Simpler models also tend to require less
 data/computational resources.</p></li>
 </ul>
 <p>To decrease bias, a model has to be more flexible/complex.
@@ -736,8 +737,8 @@ could be related to various hyperparameters (e.g. number of child nodes in our
 tree, etc.).</p>
 <p>In theory, to decrease bias, one needs “insider” information. That is, to truly
 decrease bias, we need some information on the form of <span class="math inline">\(f\)</span>. Hence, it is nearly
-impossible to decrease bias. We therefore put our efforts towards decreasing
-variance.</p>
+impossible to have zero bias. We therefore put our efforts towards decreasing
+variance when working with more complex/flexible models.</p>
 <p>One way to decrease variance would be to add more training data. However, there
 is a price to pay: we will have less test data.</p>
 <p>We could reduce the dimensions of our data (i.e. play with lower-rank data
