@@ -241,12 +241,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>10</b> Learning Phases</a><ul>
 <li class="chapter" data-level="10.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
-<li class="chapter" data-level="10.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>10.2</b> Model Assessment</a></li>
-<li class="chapter" data-level="10.3" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>10.3</b> Holdout Test Set</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>10.3.1</b> Why does a test set work?</a></li>
+<li class="chapter" data-level="10.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>10.2</b> Model Assessment</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>10.2.1</b> Holdout Test Set</a></li>
+<li class="chapter" data-level="10.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>10.2.2</b> Why does a test set work?</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="phases.html"><a href="phases.html#model-selection"><i class="fa fa-check"></i><b>10.4</b> Model Selection</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="phases.html"><a href="phases.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.4.1</b> Three-way Holdout Method</a></li>
+<li class="chapter" data-level="10.3" data-path="phases.html"><a href="phases.html#model-selection"><i class="fa fa-check"></i><b>10.3</b> Model Selection</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="phases.html"><a href="phases.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.3.1</b> Three-way Holdout Method</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
@@ -445,7 +445,9 @@ provide an estimation of its predictive behavior out-of-sample.</p></li>
 <p>Now that we have identified the main learning phases, let’s place them in
 our supervised learning diagram (see image below). As you can tell, now we
 are taking a peek inside the learning algorithm section. This is where the
-model training and the pre-selection tasks occur.</p>
+model training, the pre-selection, and the final-selection tasks occur.
+In turn, the model assessment part has to do with estimating the out-of-sample
+performance of the final model.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-90"></span>
 <img src="images/validation/learning-diag-simplified2.svg" alt="Schematic of Learning Phases" width="90%" />
 <p class="caption">
@@ -494,25 +496,24 @@ of <span class="math inline">\(h\)</span>. This is precisely the idea of the so-
 How can we estimate <span class="math inline">\(E_{out}\)</span>? Which basically reduces to: how can we find an
 unbiased sample <span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to
 get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
-</div>
-<div id="holdout-test-set" class="section level2">
-<h2><span class="header-section-number">10.3</span> Holdout Test Set</h2>
+<div id="holdout-test-set" class="section level3">
+<h3><span class="header-section-number">10.2.1</span> Holdout Test Set</h3>
 <p>In order to answer the question “How can we estimate <span class="math inline">\(E_{out}\)</span>?”, let us
 discuss the theoretical rationale behind the so-called <strong>Holdout Method</strong>.</p>
 <p>In practice, we always have some available data
 <span class="math inline">\(\mathcal{D} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>. If we used
 all the <span class="math inline">\(n\)</span> data points to train/fit a model, we could perfectly measure <span class="math inline">\(E_{in}\)</span>
 but then we wouldn’t have any out-of-sample points to get an honest
-approximation <span class="math inline">\(\hat{E}_{out}\)</span> of <span class="math inline">\(\hat{E}_{out}\)</span>. Perhaps you are thinking:
+approximation <span class="math inline">\(\hat{E}_{out}\)</span> of <span class="math inline">\(E_{out}\)</span>. Perhaps you are thinking:
 “Why not use <span class="math inline">\(E_{in}\)</span> as an estimate <span class="math inline">\(\hat{E}_{out}\)</span> of <span class="math inline">\(E_{out}\)</span>?” Because it
 won’t be a realiable estimate. We may have a model <span class="math inline">\(h\)</span> that produces a very
 small in-sample error, <span class="math inline">\(E_{in} \approx 0\)</span>, but that doesn’t necessarily mean
 that it has good generalization performance out-of-sample.</p>
-<p>Given that the only available data is <span class="math inline">\(\mathcal{D}\)</span>, the Holdout Method proposes
-to split <span class="math inline">\(\mathcal{D}\)</span> into two subsets: (1) a subset <span class="math inline">\(\mathcal{D}_{train}\)</span>,
-called the <strong>training set</strong>, used to train/fit the model, and (2) another subset
-<span class="math inline">\(\mathcal{D}_{test}\)</span>, called the <strong>test set</strong>,to be used as a proxy of
-<span class="math inline">\(\mathcal{D}_{out}\)</span> for testing/assessment purposes.</p>
+<p>Given that the only available data set is <span class="math inline">\(\mathcal{D}\)</span>, the Holdout Method
+proposes to split <span class="math inline">\(\mathcal{D}\)</span> into two subsets: (1) a subset
+<span class="math inline">\(\mathcal{D}_{train}\)</span>, called the <strong>training set</strong>, used to train/fit the model,
+and (2) another subset <span class="math inline">\(\mathcal{D}_{test}\)</span>, called the <strong>test set</strong>,to be used
+as a proxy of <span class="math inline">\(\mathcal{D}_{out}\)</span> for testing/assessment purposes.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-91"></span>
 <img src="images/validation/training-test-sets.svg" alt="Data split into training and test sets" width="60%" />
 <p class="caption">
@@ -520,7 +521,7 @@ Figure 10.3: Data split into training and test sets
 </p>
 </div>
 <p>How do we actually obtain these two sets? Usually by taking random
-samples, without replacement, from <span class="math inline">\(\mathcal{D}\)</span>.</p>
+samples, without replacement, from <span class="math inline">\(\mathcal{D}\)</span> (although there are exceptions).</p>
 <p><span class="math display">\[
 \mathcal{D} \to \begin{cases} 
 \text{training } \mathcal{D}_{train} &amp; \to \text{size } n - K \\ \text{test } \mathcal{D}_{test} &amp;  \to \text{size } K \\ 
@@ -535,8 +536,9 @@ the performance of the model <span class="math inline">\(h^{-}(x)\)</span> as:</
 E_{test}(h^{-}) = \frac{1}{K} \sum_{k=1}^{K} err\left( h^{-}(\mathbf{x_k}) , y_k \right) ; \hspace{5mm} (\mathbf{x_k}, y_k) \in \mathcal{D}_{test}
 \]</span></p>
 <p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give a good estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why?</p>
+</div>
 <div id="why-does-a-test-set-work" class="section level3">
-<h3><span class="header-section-number">10.3.1</span> Why does a test set work?</h3>
+<h3><span class="header-section-number">10.2.2</span> Why does a test set work?</h3>
 <p>Consider an out-of-sample point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span> that is part of the test
 set: <span class="math inline">\((\mathbf{x_0}, y_0) \in \mathcal{D}_{test}\)</span>. Given a pointwise error
 function <span class="math inline">\(err()\)</span>, we can measure the error: <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span>.
@@ -593,7 +595,7 @@ estimating the performance of a model <span class="math inline">\(h\)</span>, wh
 on how you form your training and test sests, you may end up with a split that
 may not be truly representative of the studied phenomenon. So instead of using
 just one split, some authors propose to use several splits of training-test sets
-obtained through resampling methods. We talk about this topic in more detail
+obtained through resampling methods. We talk about this topic with more detail
 in the next chapter.</p>
 <div id="holdout-algorithm" class="section level4 unnumbered">
 <h4>Holdout Algorithm</h4>
@@ -601,7 +603,7 @@ in the next chapter.</p>
 <ol style="list-style-type: decimal">
 <li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
 <li><p>Choose <span class="math inline">\(k \in \mathbb{Z}^{+}\)</span> elements from <span class="math inline">\(\mathcal{D}\)</span> to comprise a test
-set <span class="math inline">\(\mathcal{D}_{test}\)</span>, and place the remaining <span class="math inline">\(n - k\)</span> points into the
+set <span class="math inline">\(\mathcal{D}_{test}\)</span>, and place the remaining <span class="math inline">\(n - K\)</span> points into the
 training set <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
 <li><p>Use <span class="math inline">\(\mathcal{D}_{train}\)</span> to fit a particular model <span class="math inline">\(h^{-}(x)\)</span>.</p></li>
 <li><p>Measure the performance of <span class="math inline">\(h^{-}\)</span> using <span class="math inline">\(\mathcal{D}_{test}\)</span>;
@@ -626,7 +628,7 @@ remaining 20% to the test set.</p>
 </div>
 </div>
 <div id="model-selection" class="section level2">
-<h2><span class="header-section-number">10.4</span> Model Selection</h2>
+<h2><span class="header-section-number">10.3</span> Model Selection</h2>
 <p>Now that we’ve talked about how to measure the generalization performance of a
 given model, the next step is to discuss how to compare different models,
 in order to select the best one.</p>
@@ -646,7 +648,7 @@ different degrees:</p>
 <li><span class="math inline">\(h_3:\)</span> 15th-degree model</li>
 </ul>
 <p>Or maybe a principal components regression with three options for the number of
-componenets to retain:</p>
+components to retain:</p>
 <ul>
 <li><span class="math inline">\(h_1:\)</span> PCR <span class="math inline">\((c = 1)\)</span></li>
 <li><span class="math inline">\(h_2:\)</span> PCR <span class="math inline">\((c = 2)\)</span></li>
@@ -654,7 +656,7 @@ componenets to retain:</p>
 </ul>
 <p>How do we select the best model from a set of candidate models?</p>
 <div id="three-way-holdout-method" class="section level3">
-<h3><span class="header-section-number">10.4.1</span> Three-way Holdout Method</h3>
+<h3><span class="header-section-number">10.3.1</span> Three-way Holdout Method</h3>
 <p>We can use the idea of validation in conjunction with the holdout method.
 Namely, instead of splitting <span class="math inline">\(\mathcal{D}\)</span> into two sets (training and test),
 we split it into three sets: training, validation, and test.</p>
