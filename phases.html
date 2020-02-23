@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Principal Components Analysis | All Models Are Wrong</title>
+  <title>10 Learning Phases | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Principal Components Analysis | All Models Are Wrong" />
+  <meta property="og:title" content="10 Learning Phases | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Principal Components Analysis | All Models Are Wrong" />
+  <meta name="twitter:title" content="10 Learning Phases | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="duality.html"/>
-<link rel="next" href="ols.html"/>
+<link rel="prev" href="biasvar.html"/>
+<link rel="next" href="resampling.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -383,519 +383,345 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca" class="section level1">
-<h1><span class="header-section-number">4</span> Principal Components Analysis</h1>
-<p>Our first unsupervised method of the book is Principal Components Analysis,
-commonly referred to as PCA.</p>
-<p>Principal Components Analysis (PCA) is the workhorse method of multivariate data
-analysis. Simply put, PCA helps us study and explore a data set of quantitative
-variables measured on a set of objects. One way to look at the purpose of principal
-components analysis is to get the <em>best</em> low-dimensional representation of the
-variation in data. Among the various appealing features of PCA is that it allows
-us to obtain a visualization of the objects in order to see their proximities.
-Likewise, it also provides us results to get a graphic representation of the
-variables in terms of their correlations. Overall, PCA is a multivariate technique
-that allows us to summarize the systematic patterns of variations in a data set.</p>
-<p>The classic reference for PCA is the work by the eminent British biostatistician
-Karl Pearson “On Lines and Planes of Closest Fit to Systems of Points in Space,”
-from 1901. This publication presents the PCA problem under a purely geometric
-standpoint, describing how to find low-dimensional subspaces that best
-fit—in the least squares sense—a cloud of points. The other seminal work of
-PCA is the one by the American mathematician and economic theorist Harold Hotelling
-with “Analysis of a Complex of Statistical Variables into Principal Components,”
-from 1933. Unlike Pearson, Hotelling finds the principal components as
-orthogonal linear combinations of the variables of maximum variance.</p>
-<p>PCA is one of those methods that can be approached from multiple, seemingly
-unrelated, perspectives. The way we are going to introduce PCA is not the typical
-way in which PCA is discussed in most books published in English. However, our
-introduction is actually based on the ideas and concepts originally published
-in <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson’s</a> 1901 paper
-<em>On lines and planes of closest fit to systems of points in space</em>. This is what
-can be considered to be the first paper on PCA, although keep in mind that
-Karl Pearson never used the term <em>principal components analysis</em>. That term was
-coined by Harold Hotelling, who formalized the method by giving it a more
-mature statistical perspective.</p>
-<div id="low-dimensional-representations" class="section level2">
-<h2><span class="header-section-number">4.1</span> Low-dimensional Representations</h2>
-<p>Let’s play the following game. Imagine for a minute that you have the superpower
-to see any type of multidimensional space (not just three-dimensions). As we
-mentioned before, we think of the individuals as forming a cloud of points in a
-<span class="math inline">\(p\)</span>-dim space, and the variables forming a cloud of arrows in an <span class="math inline">\(n\)</span>-dim space.</p>
-<p>Pretend that you have some data in which its cloud of points has the shape of
-a mug, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
-<img src="images/pca/mug-data.png" alt="Cloud of points in the form of a mug" width="30%" />
+<div id="phases" class="section level1">
+<h1><span class="header-section-number">10</span> Learning Phases</h1>
+<p>In this chapter we further discuss more theoretical elements of the
+supervised learning framework. In particular, we take a deep dive into
+some of the activities to be performed in every learning process, namely,
+model training, model selection, and model assessment.</p>
+<p>A word of caution needs to be said about the terminology that we use here.
+If you look at other books or resources about statistical/machine learning,
+you will find that there is no consistent use of words such as training,
+testing, validation, evaluation, assessment, and other similar terms.
+We have decided to use specific words—for certain concepts—that other
+authors or practitioners may handle differently.</p>
+<p>Also, bear in mind that many of the notions and ideas described in this chapter
+tend to have a decisive theoretical flavor. As we move on, we will provide
+more details and explanations on how to make such ideas more concrete, and
+how to execute them in practice.</p>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">10.1</span> Introduction</h2>
+<p>Let’s bring back a simplified version of the supervised learning diagram
+depicted in the figure below. We know that there are more elements in the
+full-fledged diagram, but we want to focus on three main stages that are
+present in all supervised learning contexts.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-89"></span>
+<img src="images/validation/learning-diag-simplified1.svg" alt="Simplified Supervised Learning Diagram" width="85%" />
 <p class="caption">
-Figure 4.1: Cloud of points in the form of a mug
+Figure 10.1: Simplified Supervised Learning Diagram
 </p>
 </div>
-<p>This mug is supposed to be high-dimensional, and something that you are not
-supposed to ever see in real life. So the question is: Is there a way in which
-we can get a low-dimensional representation of this data?</p>
-<p>Luckily, the answer is: YES, we can!</p>
-<p>How? Well, the name of the game is <strong>projections</strong>: we can look for projections
-of the data into sub-spaces of lower dimension, like in the diagram below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
-<img src="images/pca/mug-projections.png" alt="Various projections onto subspaces" width="70%" />
-<p class="caption">
-Figure 4.2: Various projections onto subspaces
-</p>
-</div>
-<p>Think of <em>projections</em> as taking photographs or x-rays of the mug. You can take
-a photo of the mug from different angles. For instance, you can take a picture
-in which the lens
-of the camera is on the top of the mug, or another picture in which the lens is
-below the mug (from the bottom), and so on.</p>
-<p>If you have to take the “best” photograph of the mug, from what angle would
-you take such picture? To answer this question we need to be more precise
-about what do we mean by “best”. Here, we are talking about getting a picture
-in which the image of the mug is as similar as possible to the original object.</p>
-<p>As you can tell from the above figure, we have three candidate subspaces:
-<span class="math inline">\(\mathbb{H}_A\)</span>, <span class="math inline">\(\mathbb{H}_B\)</span>, and <span class="math inline">\(\mathbb{H}_C\)</span>. Among the three possible
-projections, subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the one that provides the best low
-dimensional representation, in the sense that the projected silhouette is the
-most similar to the original mug shape.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
-<img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="70%" />
-<p class="caption">
-Figure 4.3: The shape of the projection is similar to the original mug shape.
-</p>
-</div>
-<p>We can say that the “photo” from projecting onto subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the
-one that most resembles the original object. Now, keep in mind that the resulting
-image in the low-dimensional space is not capturing the whole pattern. In other
-words, there is some loss of information. However, by chosing the right
-projection, we hope to minimize such loss.</p>
-</div>
-<div id="projections" class="section level2">
-<h2><span class="header-section-number">4.2</span> Projections</h2>
-<p>Following the idea of projections, let’s now discuss with more detail this
-concept, and its implications.</p>
-<p>Pretend that we zoom in to see some of the individuals of the cloud of points
-that form the mug (see figure below). Keep in mind that these data points are
-in a <span class="math inline">\(p\)</span>-dimensional space, which will also have its centroid (i.e. average
-individual).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
-<img src="images/pca/pca-scalar-projection0.svg" alt="Set of individuals in p-dim space." width="55%" />
-<p class="caption">
-Figure 4.4: Set of individuals in p-dim space.
-</p>
-</div>
-<p>Because our goal is to look for a low-dimensional represention,
-we can start by considering a one-dimensional space, that is, some axis.
-In the above diagram (as well as the one below) this dimension is depicted with
-the yellow line, labeled as <span class="math inline">\(dim_{\mathbf{v}}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
-<img src="images/pca/pca-scalar-projection1.svg" alt="Set of individuals in p-dim space." width="70%" />
-<p class="caption">
-Figure 4.5: Set of individuals in p-dim space.
-</p>
-</div>
-<p>We should note that we don’t really manipulate <span class="math inline">\(dim_{\mathbf{v}}\)</span> directly.
-Instead, what we manipulate is a vector <span class="math inline">\(\mathbf{v}\)</span> along this dimension.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
-<img src="images/pca/pca-scalar-projection2.svg" alt="Dimension spanned by vector v" width="70%" />
-<p class="caption">
-Figure 4.6: Dimension spanned by vector v
-</p>
-</div>
-<p>At the end of the day, we want to project the individuals onto this dimension.
-In particular, the type of projections that we are interested in are orthogonal
-projections.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
-<img src="images/pca/pca-scalar-projection3.svg" alt="Projections onto one dimension" width="70%" />
-<p class="caption">
-Figure 4.7: Projections onto one dimension
-</p>
-</div>
-<div id="vector-and-scalar-projections" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> Vector and Scalar Projections</h3>
-<p>Let’s consider a specific individual, for example the <span class="math inline">\(i\)</span>-th individual.
-And let’s take the centroid as the origin of the cloud of points. In this way,
-the dimension that we are looking for has to pass thorugh the centroid of this
-cloud. Obtaining the orthogonal projection of the <span class="math inline">\(i\)</span>-th individual
-onto the dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span> involves projecting <span class="math inline">\(\mathbf{x_i}\)</span> onto
-<span class="math inline">\(\mathbf{v}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
-<img src="images/pca/pca-scalar-projection4.svg" alt="Projection of an individual onto one dimension" width="70%" />
-<p class="caption">
-Figure 4.8: Projection of an individual onto one dimension
-</p>
-</div>
-<p>Recall that an orthogonal projection can be split into two types of projections:
-(1) the vector projection, and (2) the scalar projection.</p>
-<p>The <strong>vector projection</strong> of <span class="math inline">\(\mathbf{x_i}\)</span> onto the <span class="math inline">\(\mathbf{v}\)</span>
-is defined as:</p>
-<p><span class="math display">\[
-proj_{\mathbf{v}} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T} v}}{\mathbf{v^\mathsf{T}v}} \hspace{1mm} \mathbf{v} = \mathbf{\hat{v}}
-\]</span></p>
-<p>The <strong>scalar projection</strong> of <span class="math inline">\(\mathbf{x_i}\)</span> onto <span class="math inline">\(\mathbf{v}\)</span>
-is defined as:</p>
-<p><span class="math display">\[
-comp_{\mathbf{v}} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T}v}}{\|\mathbf{v}\|} = z_{ik}
-\]</span></p>
-<p>The following diagram displays both types of projections:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
-<img src="images/pca/pca-scalar-projection5.svg" alt="Scalar and vector projections of i-th individual onto vector v" width="70%" />
-<p class="caption">
-Figure 4.9: Scalar and vector projections of i-th individual onto vector v
-</p>
-</div>
-<p>We are not really interested in obtaining the vector projection
-<span class="math inline">\(proj_{\mathbf{v}} (\mathbf{x_i})\)</span>. Instead, what we care about is the scalar
-projection <span class="math inline">\(comp_{\mathbf{v}} (\mathbf{x_i})\)</span>. In other words, we just want to
-obtain the coordinate of the <span class="math inline">\(i\)</span>-th individual along this axis.</p>
-</div>
-<div id="projected-inertia" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> Projected Inertia</h3>
-<p>As we said before, our goal is to find the angle that gives us the “best”
-photo of the mug (i.e. cloud of points). This can be translated as finding a
-subspace in which the distances between the points is most similar to those on
-the actual mug.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
-<img src="images/pca/pca-projection-goal.svg" alt="Projection Goal" width="90%" />
-<p class="caption">
-Figure 4.10: Projection Goal
-</p>
-</div>
-<p>Now, we need to define what we mean by “similar” distances in <span class="math inline">\(\mathbb{H}\)</span>. Consider the overall dispersion of our original system (the one with all <span class="math inline">\(p\)</span>
-dimensions): <span class="math inline">\(\sum_{j} \sum_{\ell} d^2 (i, \ell)\)</span>. This is a fixed number;
-and we cannot change it. However, we can try fine-tune our subset <span class="math inline">\(\mathbb{H}\)</span>
-such that
-<span class="math inline">\(\sum_{j} \sum_{\ell} d^2 (i, \ell) \approx \sum_{i} \sum_{\ell} d_H^2(i, \ell)\)</span>.</p>
-<p><span class="math display">\[ 
-\sum_{j} \sum_{\ell} d^2 (i, \ell) = \ 2n \sum_i d^2 (i, g)
-\]</span></p>
-<p>However, it will be easier to simply consider the <em>inertia</em> of the system
-(as opposed to the overall dispersion).</p>
-<p><span class="math display">\[
-2n \sum_i d^2 (i, g) \  \to  \ \frac{1}{n} \sum_{i=1}^{n} d^2 (i, g)
-\]</span></p>
-<p>In mathematical terms, finding the subspace <span class="math inline">\(\mathbb{H}\)</span> that gives us “similar”
-distances to those of the original space corresponds to maximizing the
-projected inertia:</p>
-<p><span class="math display">\[
-\max_{\mathbb{H}} \left\{ \frac{1}{n} \sum_{i=1}^{n} d_{\mathbb{H}}^2 (i, g) \right\}
-\]</span></p>
-<p>Now, as we discuss before, the simplest subspace will be one dimension,
-that is, we consider the case where <span class="math inline">\(\mathbb{H} \subseteq \mathbb{R}^1\)</span>.
-So the first approach is to project our data points onto a vector <span class="math inline">\(\mathbf{v}\)</span>.
-Hence, the projected inertia becomes:</p>
-<p><span class="math display">\[
-\frac{1}{n} \sum_{i=1}^{n} d_\mathbb{H}^2 (i, g) = \frac{1}{n} \sum_{i=1}^{n} \left( \mathbf{x_i}^\mathsf{T} \mathbf{v}  \right)^2 = \frac{1}{n} \sum_{i=1}^{n} z_i^2
-\]</span></p>
-<p>and our maximization problem becomes</p>
-<p><span class="math display">\[
-\max_{\mathbf{v}} \left\{ \frac{1}{n} \sum_{i=1}^{n} \left( \mathbf{x_i}^\mathsf{T}  \mathbf{v}  \right)^2   \right\} \quad \mathrm{s.t.} \quad \mathbf{v}^\mathsf{T} \mathbf{v} = 1
-\]</span></p>
-<p>For convenience, we add the restriction that <span class="math inline">\(\mathbf{v}\)</span> is a unit-vector
-(vector of unit norm). Why do we need the constraint? If we didn’t have the
-constraint, we could always find a <span class="math inline">\(\mathbf{v}\)</span> that obtains higher inertia,
-and things would explode. Furthermore, as we will see in the next sectoin,
-this helps in the algebra we will use when we actually perform the maximization.</p>
-</div>
-</div>
-<div id="maximization-problem" class="section level2">
-<h2><span class="header-section-number">4.3</span> Maximization Problem</h2>
-<p>We now need to compute the projected Inertia. Since we have projected onto a
-line spanned by <span class="math inline">\(\mathbf{v}\)</span>, the projected inertia <span class="math inline">\(I_{\mathbb{H}}\)</span> will simply
-be the variance of the projected data points:</p>
-<p><span class="math display">\[
-I_{\mathbb{H}} = \frac{1}{n} \sum_{i=1}^{n} d_\mathbb{H}^2(i, 0) = \frac{1}{n} \sum_{i=1}^{n} z_i^2
-\]</span></p>
-<p>(note that <span class="math inline">\(g = 0\)</span> since we are assuming our data is mean-centered).
-We can simplify notation as follows:</p>
-<p><span class="math display">\[
-\mathbf{z} := \begin{pmatrix} z_1 \\ z_2 \\ \vdots \\ z_n \\ \end{pmatrix} \ \Longrightarrow \ I_\mathbb{H} = \frac{1}{n} \mathbf{z}^\mathsf{T} \mathbf{z} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v}
-\]</span></p>
-<p>Hence, the maximization problem becomes</p>
-<p><span class="math display">\[
-\max_{\mathbf{v}} \left\{ \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} \right\} \qquad \text{s.t.} \qquad \mathbf{v}^\mathsf{T} \mathbf{v} = 1
-\]</span></p>
-<p>To solve this maximization problem, we utilize the method of
-Lagrange Multipliers:</p>
-<p><span class="math display">\[
-\mathcal{L} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - \lambda \left( \mathbf{v}^\mathsf{T} \mathbf{v}  - 1 \right)
-\]</span></p>
-<p>Calculating the derivative of the lagrangian <span class="math inline">\(\mathcal{L}\)</span> with respect to
-<span class="math inline">\(\mathbf{v}\)</span>, and equating to zero we get:</p>
-<p><span class="math display">\[
-\frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = \mathbf{0} \ \Rightarrow \ \underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \ \Rightarrow \ \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
-\]</span></p>
-<p>That is, we obtain the equation <span class="math inline">\(\mathbf{S} \mathbf{v} = \lambda \mathbf{v}\)</span>
-where <span class="math inline">\(\mathbf{S} \in \mathbb{R}^{p \times p}\)</span> is symmetric.
-This means that <span class="math inline">\(\mathbf{v}\)</span> is an eigenvector (with eigenvalue <span class="math inline">\(\lambda\)</span>)
-of <span class="math inline">\(\mathbf{S}\)</span>. Moreover, <span class="math inline">\(\lambda\)</span> is the value of the projected inertia
-<span class="math inline">\(I_\mathbb{H}\)</span>—which is the thing that we want to maximize.</p>
-<div id="eigenvectors-of-mathbfs" class="section level3">
-<h3><span class="header-section-number">4.3.1</span> Eigenvectors of <span class="math inline">\(\mathbf{S}\)</span></h3>
-<p>Assume that <span class="math inline">\(\mathbf{X}\)</span> has full rank (i.e. <span class="math inline">\(\mathrm{rank}(\mathbf{X}) = p\)</span>).
-We then obtain <span class="math inline">\(p\)</span> eigenvectors, which together form the matrix <span class="math inline">\(\mathbf{V}\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{V} = \begin{bmatrix} \mathbf{v_1} &amp; \mathbf{v_2} &amp; \dots &amp; \mathbf{v_k} &amp; \dots &amp; \mathbf{v_p} \\ \end{bmatrix}
-\]</span></p>
-<p>We can also obtain <span class="math inline">\(\mathbf{\Lambda}_{p \times p} := \mathrm{diag}\left\{ \lambda_i \right\}_{i=1}^{n}\)</span>
-(i.e. the matrix of eigenvalues): that is,</p>
-<p><span class="math display">\[
-\mathbf{\Lambda} = \begin{bmatrix} \lambda_1 &amp; 0 &amp; \dots &amp; 0 \\ 0 &amp; \lambda_2 &amp; \dots &amp; 0 \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; \dots &amp; \lambda_p \\ \end{bmatrix}
-\]</span></p>
-<p>Finally, we can also obtain the matrix <span class="math inline">\(\mathbf{Z}_{n \times p}\)</span> which is the
-matrix consisting of the vectors <span class="math inline">\(\mathbf{z_i}\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{Z} = \begin{bmatrix} \mathbf{z_1} &amp; \mathbf{z_2} &amp; \dots &amp; \mathbf{z_k} &amp; \dots &amp; \mathbf{z_p} \\ \end{bmatrix}
-\]</span></p>
+<p>In every learning situation, there is a handful of tasks we need to carry out.
+First, we need to fit several models, typically involving working with different
+classes of hypothesis. For example, we can consider four types of regression
+methods: principal components regression (<span class="math inline">\(\mathcal{H_1}\)</span>), partial least
+squares regression (<span class="math inline">\(\mathcal{H_2}\)</span>), ridge regression (<span class="math inline">\(\mathcal{H_3}\)</span>),
+and lasso (<span class="math inline">\(\mathcal{H_4}\)</span>). For each hypothesis family, we need to choose a
+finalist model: the best principal components regression, the best partial
+least regression, etc. Then, we need to select the best model among the
+finalist models. This will be <em>the</em> final model to be delivered. Finally,
+we need to measure the predicting performance of the final model: measure
+how the model will behave with out-of-sample points.</p>
+<p>We can formalize these tasks into three major phases encountered in every
+supervised learning system: 1) model training, 2) model selection, and
+3) model assessment.</p>
 <ul>
-<li><p>The matrix <span class="math inline">\(\mathbf{V}\)</span> consists of the <strong>loadings</strong></p></li>
-<li><p>The matrix <span class="math inline">\(\mathbf{Z}\)</span> contains the <strong>principal components</strong> (PC’s),
-also known as <strong>scores</strong>.</p></li>
+<li><p><strong>Training</strong>: Given some data, and a certain modeling hypothesis
+<span class="math inline">\(\mathcal{H}_m\)</span>, how can we fit/estimate a model <span class="math inline">\(h_m\)</span>? Often, we are also
+interested in telling something about its predicting performance (in a limited sense).</p></li>
+<li><p><strong>Selection</strong>: Choosing a model from a set of candidate models. This typically
+is broken down into two types of selection:</p>
+<ul>
+<li><p><strong>Pre-Selection</strong>: choosing a finalist model from a set of models belonging
+to a certain class of hypothesis.</p></li>
+<li><p><strong>Final-Selection</strong>: choosing a final model among a set of finalist models;
+that is, choosing <em>the</em> very final model.</p></li>
+</ul></li>
+<li><p><strong>Assessment</strong>: Given a final <span class="math inline">\(\widehat{f}\)</span>, how can we
+provide an estimate <span class="math inline">\(\widehat{E}_{out}(\hat{f})\)</span> of the out-of-sample error?
+In other words, how to measure the performance of the final model in order to
+provide an estimation of its predictive behavior out-of-sample.</p></li>
 </ul>
-<p>Let us examine the <span class="math inline">\(k\)</span>th principal component <span class="math inline">\(\mathbf{z_k}\)</span>:</p>
+<p>Now that we have identified the main learning phases, let’s place them in
+our supervised learning diagram (see image below). As you can tell, now we
+are taking a peek inside the learning algorithm section. This is where the
+model training and the pre-selection tasks occur.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-90"></span>
+<img src="images/validation/learning-diag-simplified2.svg" alt="Schematic of Learning Phases" width="90%" />
+<p class="caption">
+Figure 10.2: Schematic of Learning Phases
+</p>
+</div>
+</div>
+<div id="model-assessment" class="section level2">
+<h2><span class="header-section-number">10.2</span> Model Assessment</h2>
+<p>Let us consider a situation in which we have fitted some model <span class="math inline">\(h\)</span>.
+The next logical step should involve measuring its prediction quality. In other
+words, we want to see how good (or how bad) the predictions of <span class="math inline">\(h\)</span> are.
+The general idea is fairly simple—at least conceptually. Given an input data <span class="math inline">\(\mathbf{x_i}\)</span>, we need to assess the discrepancy between the predicted value
+<span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> and the observed value <span class="math inline">\(y_i\)</span>.</p>
+<p>Simple, right? … Well, not really.</p>
+<p>As you may recall from the chapter about the
+<a href="learning.html#learning">theoretical framework of supervised learning</a>, there are two major
+types of <em>predictions</em>. On one hand, we have predictions
+<span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> of in-sample points <span class="math inline">\(\mathbf{x_i} \in \mathcal{D}_{in}\)</span>.
+In-sample points are those data points that we used to fit a given model.
+On the other hand, we have predictions <span class="math inline">\(\hat{y}_0 = h(\mathbf{x_0})\)</span> of
+out-of-sample points <span class="math inline">\(\mathbf{x_0} \in \mathcal{D}_{out}\)</span>. Out-of-sample points
+are data points not used to fit a model.</p>
+<p>Because of this distinction between in-sample data <span class="math inline">\(\mathcal{D}_{in}\)</span>, and
+out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>, we can
+measure the predictive quality of a model from these two perspectives. This
+obviously implies having predictions, and errors, of two different natures.
+Aggregating all the discrepancies between the predicted in-sample points
+<span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> and their observed values <span class="math inline">\(y_i\)</span>, allows us
+to quantify the in-sample error <span class="math inline">\(E_{in}\)</span>, which inform us
+about the <strong>resubstitution power</strong> of the model <span class="math inline">\(h\)</span> (i.e. how well the model
+fits the learning data).</p>
+<p>The more interesting part comes with the out-of-sample points. If we had
+access to all points <span class="math inline">\(\mathbf{x_0}\)</span> in <span class="math inline">\(\mathcal{D}_{out}\)</span>, measuring the
+discrepancies between the predicted out-of-sample points
+<span class="math inline">\(\hat{y}_0 = h(\mathbf{x_0})\)</span> and their observed values <span class="math inline">\(y_0\)</span>, would allow us
+to quantify the out-of-sample error <span class="math inline">\(E_{out}\)</span>, truly measuring the
+<strong>generalization power</strong> of the model <span class="math inline">\(h\)</span>. In practice, unfortunately, we won’t
+have access to the entire out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</p>
+<p>Knowing that the whole out-of-sample data set is not within our reach, the
+second best thing that we can do is to find a proxy set for <span class="math inline">\(\mathcal{D}_{out}\)</span>.
+If we can obtain a data set <span class="math inline">\(\mathcal{D}_{proxy}\)</span> that is a representative
+subset of <span class="math inline">\(\mathcal{D}_{out}\)</span>, then we can compute <span class="math inline">\(E_{proxy}\)</span> and use it to
+approximate <span class="math inline">\(E_{out}\)</span>, thus having a fair estimation of the generalization power
+of <span class="math inline">\(h\)</span>. This is precisely the idea of the so-called term <strong>Model Assessment</strong>:
+How can we estimate <span class="math inline">\(E_{out}\)</span>? Which basically reduces to: how can we find an
+unbiased sample <span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to
+get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
+</div>
+<div id="holdout-test-set" class="section level2">
+<h2><span class="header-section-number">10.3</span> Holdout Test Set</h2>
+<p>In order to answer the question “How can we estimate <span class="math inline">\(E_{out}\)</span>?”, let us
+discuss the theoretical rationale behind the so-called <strong>Holdout Method</strong>.</p>
+<p>In practice, we always have some available data
+<span class="math inline">\(\mathcal{D} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>. If we used
+all the <span class="math inline">\(n\)</span> data points to train/fit a model, we could perfectly measure <span class="math inline">\(E_{in}\)</span>
+but then we wouldn’t have any out-of-sample points to get an honest
+approximation <span class="math inline">\(\hat{E}_{out}\)</span> of <span class="math inline">\(\hat{E}_{out}\)</span>. Perhaps you are thinking:
+“Why not use <span class="math inline">\(E_{in}\)</span> as an estimate <span class="math inline">\(\hat{E}_{out}\)</span> of <span class="math inline">\(E_{out}\)</span>?” Because it
+won’t be a realiable estimate. We may have a model <span class="math inline">\(h\)</span> that produces a very
+small in-sample error, <span class="math inline">\(E_{in} \approx 0\)</span>, but that doesn’t necessarily mean
+that it has good generalization performance out-of-sample.</p>
+<p>Given that the only available data is <span class="math inline">\(\mathcal{D}\)</span>, the Holdout Method proposes
+to split <span class="math inline">\(\mathcal{D}\)</span> into two subsets: (1) a subset <span class="math inline">\(\mathcal{D}_{train}\)</span>,
+called the <strong>training set</strong>, used to train/fit the model, and (2) another subset
+<span class="math inline">\(\mathcal{D}_{test}\)</span>, called the <strong>test set</strong>,to be used as a proxy of
+<span class="math inline">\(\mathcal{D}_{out}\)</span> for testing/assessment purposes.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-91"></span>
+<img src="images/validation/training-test-sets.svg" alt="Data split into training and test sets" width="60%" />
+<p class="caption">
+Figure 10.3: Data split into training and test sets
+</p>
+</div>
+<p>How do we actually obtain these two sets? Usually by taking random
+samples, without replacement, from <span class="math inline">\(\mathcal{D}\)</span>.</p>
 <p><span class="math display">\[
-\mathbf{z_k} = \mathbf{X v_k} = v_{1k} \mathbf{x_1} + v_{2k} \mathbf{x_2} + \dots + v_{pk} \mathbf{x_p}
+\mathcal{D} \to \begin{cases} 
+\text{training } \mathcal{D}_{train} &amp; \to \text{size } n - K \\ \text{test } \mathcal{D}_{test} &amp;  \to \text{size } K \\ 
+\end{cases}
 \]</span></p>
-<p>(where <span class="math inline">\(\mathbf{x_k}\)</span> denotes columns of <span class="math inline">\(\mathbf{X}\)</span>). Note that
-<span class="math inline">\(\mathrm{mean}(\mathbf{z_k}) = 0\)</span>; since we are assuming that the data is
-mean-centered, we have that <span class="math inline">\(\mathrm{mean}(\mathbf{x_1}) = 0\)</span>.
-What about variance?</p>
+<p>We then fit a particular model using <span class="math inline">\(\mathcal{D}_{train}\)</span>; obtaining a model
+that we’ll call <span class="math inline">\(h^{-}(x)\)</span>, “<span class="math inline">\(h\)</span>-minus”, because it is a model fitted with the
+training set <span class="math inline">\(\mathcal{D}_{train}\)</span>, which is a subset of the available data
+<span class="math inline">\(\mathcal{D}\)</span>. With the remainder points in <span class="math inline">\(\mathcal{D}_{test}\)</span>, we can measure
+the performance of the model <span class="math inline">\(h^{-}(x)\)</span> as:</p>
+<p><span class="math display">\[
+E_{test}(h^{-}) = \frac{1}{K} \sum_{k=1}^{K} err\left( h^{-}(\mathbf{x_k}) , y_k \right) ; \hspace{5mm} (\mathbf{x_k}, y_k) \in \mathcal{D}_{test}
+\]</span></p>
+<p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give a good estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why?</p>
+<div id="why-does-a-test-set-work" class="section level3">
+<h3><span class="header-section-number">10.3.1</span> Why does a test set work?</h3>
+<p>Consider an out-of-sample point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span> that is part of the test
+set: <span class="math inline">\((\mathbf{x_0}, y_0) \in \mathcal{D}_{test}\)</span>. Given a pointwise error
+function <span class="math inline">\(err()\)</span>, we can measure the error: <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span>.
+Moreover, we can treat it as a point estimate of <span class="math inline">\(E_{out}(h)\)</span>.</p>
+<p>Here’s a relevant question: Is <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> an unbiased
+estimate of <span class="math inline">\(E_{out}(h)\)</span>?</p>
+<p>To see whether the point estimate <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> is an unbiased
+estimate of <span class="math inline">\(E_{out}(h)\)</span>, let’s determine its expectation over the input space:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{X}} [ err(h(\mathbf{x_0}), y_0) ]
+\]</span></p>
+<p>Remember what the above expression represent? Yes, it is precisely the
+out-of-sample error <span class="math inline">\(E_{out}(h)\)</span>! Therefore, <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> is
+an unbiased point estimate of the out-of-sample error.</p>
+<p>What about the variance: <span class="math inline">\(Var[err(h(\mathbf{x_0}), y_0)]\)</span>? For the sake of
+simplicity let’s assume that this variance is constant:</p>
+<p><span class="math display">\[
+Var[err(h(\mathbf{x_0}), y_0)] = s^2
+\]</span></p>
+<p>Obviously this variance could be large (or small). So having just one test
+point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, even though is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>,
+does not allow us to have an idea of how reliable that estimate is.</p>
+<p>Well, let’s consider a set <span class="math inline">\(D_{test} = \{ (\mathbf{x_1}, y_1), \dots, (\mathbf{x_K}, y_K) \}\)</span> containing <span class="math inline">\(K &gt; 1\)</span> points. We can average their pointwise errors to
+get <span class="math inline">\(E_{test}\)</span></p>
+<p><span class="math display">\[
+E_{test}(h) = \frac{1}{K} \sum_{k=1}^{K} err[ h^{-}(\mathbf{x_k}), y_k ]
+\]</span></p>
+<p>The question becomes: is <span class="math inline">\(E_{test}(h)\)</span> an unbiased estimate of <span class="math inline">\(E_{out}(h)\)</span>?</p>
+<p>Let’s find out:</p>
 <p><span class="math display">\[\begin{align*}
-Var(\mathbf{z_k}) &amp; = \frac{1}{n} \mathbf{z_{k}^\mathsf{T}} \mathbf{z_k} \\
-&amp;  = \frac{1}{n}\left( \mathbf{X} \mathbf{v_k} \right)^{\mathsf{T}} \left( \mathbf{X} \mathbf{v_k} \right) \\
-&amp; = \frac{1}{n} \mathbf{v_{k}^\mathsf{T}} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v_k} \\
-&amp; = \mathbf{v_k}^\mathsf{T} \mathbf{S} \mathbf{v_k} \\
-&amp; = \mathbf{v_k}^\mathsf{T} \left( \lambda_k \mathbf{v_k} \right) = \lambda_k \left( \mathbf{v_k}^\mathsf{T} \mathbf{v_k} \right) \\
-&amp; = \lambda_k 
+\mathbb{E}_{\mathcal{X}} [E_{test}(h)] &amp;= \mathbb{E}_{\mathcal{X}} \left [ \frac{1}{K} \sum_{k=1}^{K} err[ h^{-}(\mathbf{x_k}), y_k ] \right ] \\
+&amp;= \frac{1}{K} \sum_{k=1}^{K} \mathbb{E}_{\mathcal{X}} \left [ err \left ( h^{-}(\mathbf{x_k}), y_k \right) \right ] \\
+&amp;= \frac{1}{K} \sum_{k=1}^{K} E_{out}(h) \\
+&amp;= E_{out}(h)
 \end{align*}\]</span></p>
-<p>Hence, we obtain the following interesting result: the <span class="math inline">\(k\)</span>-th eigenvalue of <span class="math inline">\(\mathbf{S}\)</span> is simply the variance of the <span class="math inline">\(k\)</span>-th principal component.</p>
-<p>If <span class="math inline">\(\mathbf{X}\)</span> is mean centered, then
-<span class="math inline">\(\mathbf{S} = \frac{1}{n} \mathbf{X^\mathsf{T} X}\)</span> is nothing but the
-variance-covariance matrix of our data. If <span class="math inline">\(\mathbf{X}\)</span> is <em>standardized</em>
-(i.e. mean-centered and scaled by the variance), then <span class="math inline">\(\mathbf{S}\)</span> becomes the
-correlation matrix.</p>
-<p>In summary:</p>
-<ul>
-<li><p><span class="math inline">\(\mathrm{mean}(\mathbf{z_k}) = 0\)</span></p></li>
-<li><p><span class="math inline">\(Var(\mathbf{z_k}) = \lambda_k\)</span></p></li>
-<li><p><span class="math inline">\(\mathrm{sd}(\mathbf{z_k}) = \sqrt{\lambda_k}\)</span></p></li>
-</ul>
-<p>We have the following fact (the proof is omitted, and may be assigned as
-homework or as a test question):</p>
+<p>Yes, it turns out that <span class="math inline">\(E_{test}(h)\)</span> is an unbiased estimate of <span class="math inline">\(E_{out}(h)\)</span>.
+But what about the variance? Let’s assume that the errors across points are
+independent (this may not be the case in practice, but we make this assumption
+to ease computation): It can be shown that the variance of <span class="math inline">\(E_{test}(h)\)</span>
+is given by:</p>
 <p><span class="math display">\[
-I = \frac{1}{n} \sum_{i=1}^{n} d^2(i, g) = \sum_{k} \lambda_k = \mathrm{tr}\left( \frac{1}{n} \mathbf{X^\mathsf{T} X} \right)
+Var[E_{test}(h)] = \frac{1}{K^2} \sum_{k=1}^{K} Var[ err(h(\mathbf{x_0}), y_0) ] = \frac{s^2}{K}
 \]</span></p>
+<p>The above equation tells us that, as we increase the number <span class="math inline">\(K\)</span> of test points,
+the variance of the estimator <span class="math inline">\(E_{test}(h)\)</span> will decrease. Simply put, the
+more test points we use, the more reliably <span class="math inline">\(E_{test}(h)\)</span> estimates <span class="math inline">\(E_{out}(h)\)</span>.
+Of course, <span class="math inline">\(K\)</span> is not freely selectable; the larger <span class="math inline">\(K\)</span> is, the smaller our
+training dataset will be.</p>
+<p>In any case, the important thing is that reserving some points
+<span class="math inline">\(\mathcal{D}_{test}\)</span> from a learning set <span class="math inline">\(\mathcal{D}\)</span> to use them for testing
+purposes is a very wise idea. It definitely allows us to have a war for
+estimating the performance of a model <span class="math inline">\(h\)</span>, when applied to out-of-sample points.</p>
+<p>Again, the holdout method is simply a conceptual starting point. Also, depending
+on how you form your training and test sests, you may end up with a split that
+may not be truly representative of the studied phenomenon. So instead of using
+just one split, some authors propose to use several splits of training-test sets
+obtained through resampling methods. We talk about this topic in more detail
+in the next chapter.</p>
+<div id="holdout-algorithm" class="section level4 unnumbered">
+<h4>Holdout Algorithm</h4>
+<p>Here’s the conceptual algorithm behind the holdout method.</p>
+<ol style="list-style-type: decimal">
+<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
+<li><p>Choose <span class="math inline">\(k \in \mathbb{Z}^{+}\)</span> elements from <span class="math inline">\(\mathcal{D}\)</span> to comprise a test
+set <span class="math inline">\(\mathcal{D}_{test}\)</span>, and place the remaining <span class="math inline">\(n - k\)</span> points into the
+training set <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
+<li><p>Use <span class="math inline">\(\mathcal{D}_{train}\)</span> to fit a particular model <span class="math inline">\(h^{-}(x)\)</span>.</p></li>
+<li><p>Measure the performance of <span class="math inline">\(h^{-}\)</span> using <span class="math inline">\(\mathcal{D}_{test}\)</span>;
+specifically, compute</p></li>
+</ol>
+<p><span class="math display">\[
+E_{test}(h^{-}) = \frac{1}{K} \sum_{i=1}^{K} err_i[ h^{-}(\mathbf{x_i}), y_i ]
+\]</span></p>
+<p>where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}\)</span>, and <span class="math inline">\(err_i\)</span> is some measure
+of pointwise error.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Generate the final model <span class="math inline">\(\widehat{h}\)</span> by refitting <span class="math inline">\(h^{-}\)</span> to the entire
+dataset <span class="math inline">\(\mathcal{D}\)</span>.</li>
+</ol>
+<p>There are many different conventions as to how to pick <span class="math inline">\(K\)</span>: one common
+rule-of-thumb is to assign 80% of your data to the training set, and the
+remaining 20% to the test set.</p>
+<p>Also, keep in mind that the model that you ultimately deliver will not be
+<span class="math inline">\(h^{-}\)</span>; rather, you need to refit <span class="math inline">\(h^{-}\)</span> using the <em>entire</em> data
+<span class="math inline">\(\mathcal{D}\)</span>. This yields the final hypothesis model <span class="math inline">\(\widehat{h}\)</span>.</p>
+</div>
+</div>
+</div>
+<div id="model-selection" class="section level2">
+<h2><span class="header-section-number">10.4</span> Model Selection</h2>
+<p>Now that we’ve talked about how to measure the generalization performance of a
+given model, the next step is to discuss how to compare different models,
+in order to select the best one.</p>
+<p>Say we have <span class="math inline">\(M\)</span> models to choose from. Consider, for example, the following
+three cases (each with <span class="math inline">\(M = 3\)</span>):</p>
+<p>We could have three different types of hypotheses:</p>
 <ul>
-<li><p>The dimensions that we find in our analysis (through <span class="math inline">\(\mathbf{v_k}\)</span>)
-relates directly to <span class="math inline">\(\mathbf{z_k}\)</span>.</p></li>
-<li><p><span class="math inline">\(\sum_{k=1}^{p} \lambda_k\)</span> relates directly to the total amount of variability
-of our data.</p></li>
+<li><span class="math inline">\(h_1:\)</span> linear model</li>
+<li><span class="math inline">\(h_2:\)</span> neural network</li>
+<li><span class="math inline">\(h_3:\)</span> regression tree</li>
 </ul>
-<p><strong>Remark</strong>: The principal components capture different parts of the variability
-of the full data.</p>
-</div>
-</div>
-<div id="another-perspective-of-pca" class="section level2">
-<h2><span class="header-section-number">4.4</span> Another Perspective of PCA</h2>
-<p>Let us present another way to approach PCA. Given a set of <span class="math inline">\(p\)</span> variables
-<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>, we want to obtain new <span class="math inline">\(k\)</span> variables
-<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
-<p>A principal component is a linear combination of the <span class="math inline">\(p\)</span> variables:
-<span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>. The first PC is a linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
-<img src="images/pca/pca-path-diag1.svg" alt="PCs as linear combinations of X-variables" width="55%" />
-<p class="caption">
-Figure 4.11: PCs as linear combinations of X-variables
-</p>
-</div>
-<p>The second PC is another linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
-<img src="images/pca/pca-path-diag2.svg" alt="PCs as linear combinations of X-variables" width="55%" />
-<p class="caption">
-Figure 4.12: PCs as linear combinations of X-variables
-</p>
-</div>
-<p>We want to compute the <strong>PCs as linear combinations</strong> of the original variables.</p>
+<p>Or we could also have a particular type of model, e.g. polynomials, with three
+different degrees:</p>
+<ul>
+<li><span class="math inline">\(h_1:\)</span> quadratic model</li>
+<li><span class="math inline">\(h_2:\)</span> cubic model</li>
+<li><span class="math inline">\(h_3:\)</span> 15th-degree model</li>
+</ul>
+<p>Or maybe a principal components regression with three options for the number of
+componenets to retain:</p>
+<ul>
+<li><span class="math inline">\(h_1:\)</span> PCR <span class="math inline">\((c = 1)\)</span></li>
+<li><span class="math inline">\(h_2:\)</span> PCR <span class="math inline">\((c = 2)\)</span></li>
+<li><span class="math inline">\(h_3:\)</span> PCR <span class="math inline">\((c = 3)\)</span></li>
+</ul>
+<p>How do we select the best model from a set of candidate models?</p>
+<div id="three-way-holdout-method" class="section level3">
+<h3><span class="header-section-number">10.4.1</span> Three-way Holdout Method</h3>
+<p>We can use the idea of validation in conjunction with the holdout method.
+Namely, instead of splitting <span class="math inline">\(\mathcal{D}\)</span> into two sets (training and test),
+we split it into three sets: training, validation, and test.</p>
 <p><span class="math display">\[ 
-\begin{array}{c}
-\mathbf{z_1} = v_{11} \mathbf{x_1} + \dots + v_{p1} \mathbf{x_p} \\
-\mathbf{z_2} = v_{12} \mathbf{x_1} + \dots + v_{p2} \mathbf{x_p} \\
-\vdots \\
-\mathbf{z_k} = v_{1k} \mathbf{x_1} + \dots + v_{pk} \mathbf{x_p} \\
-\end{array}
+\mathcal{D} \to \begin{cases} \mathcal{D}_{train} \\ \mathcal{D}_{val} \\ \mathcal{D}_{test} \\ \end{cases}
 \]</span></p>
-<p>Or in matrix notation:</p>
-<p><span class="math display">\[
-\mathbf{Z} = \mathbf{X V}
-\]</span></p>
-<p>where <span class="math inline">\(\mathbf{Z}\)</span> is an <span class="math inline">\(n \times k\)</span> matrix of principal components, and
-<span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
-vectors of the principal axes. The following figure shows a graphical
-representation of a PCA problem in diagram notation:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
-<img src="images/pca/pca-path-diag4.svg" alt="PCs as linear combinations of X-variables" width="70%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
+<img src="images/validation/training-validation-test-sets.svg" alt="Data split into training, validation, and test sets" width="60%" />
 <p class="caption">
-Figure 4.13: PCs as linear combinations of X-variables
+Figure 10.4: Data split into training, validation, and test sets
 </p>
 </div>
-<p>We look to transform the original variables into a smaller set of new variables,
-the Principal Components (PCs), that summarize the variation in data.
-The PCs are obtained as linear combinations (i.e. weighted sums) of the
-original variables. We look for PCs is in such a way that they have maximum
-variance, and being mutually orthogonal.</p>
-<div id="finding-principal-components" class="section level3">
-<h3><span class="header-section-number">4.4.1</span> Finding Principal Components</h3>
-<p>The way to find principal components is to construct them as weighted sums of
-the original variables, looking to optimize some criterion and following some
-constraints. One way in which we can express the criterion is to require components
-<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span> that capture most of the variation
-in the data <span class="math inline">\(\mathbf{X}\)</span>. “Capturing most of the variation,” implies looking
-for a vector <span class="math inline">\(\mathbf{v_h}\)</span> such that a component <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span>
-has maximum variance:</p>
-<p><span class="math display">\[
-\max_{\mathbf{v_h}} \; var(\mathbf{z_h}) \quad \Rightarrow \quad \max_{\mathbf{v_h}} \; var(\mathbf{X v_h})
-\]</span></p>
-<p>that is</p>
-<p><span class="math display">\[
-\max_{\mathbf{v_h}} \; \frac{1}{n} \mathbf{v_{h}^\mathsf{T} X^\mathsf{T} X v_h}
-\]</span></p>
-<p>As you can tell, this is a maximization problem. Without any constraints, this
-problem is unbounded, not to mention useless. We could take <span class="math inline">\(\mathbf{v_h}\)</span> as
-bigger as we want without being able to reach any maximum. To get a feasible
-solution we need to impose some kind of restriction. The standard adopted
-constraint is to require <span class="math inline">\(\mathbf{v_h}\)</span> to be of unit norm:</p>
-<p><span class="math display">\[
-\| \mathbf{v_h} \| = 1 \; \hspace{1mm} \Rightarrow \; \hspace{1mm} \mathbf{v_{h}^\mathsf{T} v_h} = 1 
-\]</span></p>
-<p>Note that <span class="math inline">\((1/n) \mathbf{X^\mathsf{T} X}\)</span> is the variance-covariance matrix.
-If we denote <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T} X}\)</span> then the criterion to
-be maximized is:</p>
-<p><span class="math display">\[
-\max_{\mathbf{v_h}} \; \mathbf{v_{h}^\mathsf{T} S v_h}
-\]</span></p>
-<p>subject to <span class="math inline">\(\mathbf{v_{h}^\mathsf{T} v_h} = 1\)</span></p>
-<p>To avoid a PC <span class="math inline">\(\mathbf{z_h}\)</span> from capturing the same variation as other PCs
-<span class="math inline">\(\mathbf{z_l}\)</span> (i.e. avoiding redundant information), we also require them to be
-<strong>mutually orthogonal</strong> so they are uncorrelated with each other. Formally,
-we impose the restriction <span class="math inline">\(\mathbf{z_h}\)</span> to be perpendicular to other components:
-<span class="math inline">\(\mathbf{z_{h}^\mathsf{T} z_l} = 0; (h \neq l)\)</span>.</p>
+<p>We perform validation as above, then use <span class="math inline">\(\mathcal{D}_{train}\)</span> to get
+<span class="math inline">\(E_{test}(h_{m}^{*})\)</span>. Then finally refit the model <span class="math inline">\(h_{m}\)</span> using the winning
+class (e.g. the <span class="math inline">\(m\)</span>-th hypothesis) as well as the entire dataset.
+Now we have an unbiased estimate of error to report: <span class="math inline">\(E_{test}(h_{m}^{*})\)</span>.</p>
+<p>The schematic for validation with 3-way holdout method is depicted in the
+following visual diagram:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
+<img src="images/validation/repeated-3way-holdout.svg" alt="Repeated 3-way holdout method for model selection" width="70%" />
+<p class="caption">
+Figure 10.5: Repeated 3-way holdout method for model selection
+</p>
 </div>
-<div id="finding-the-first-pc" class="section level3">
-<h3><span class="header-section-number">4.4.2</span> Finding the first PC</h3>
-<p>In order to get the first principal component <span class="math inline">\(\mathbf{z_1} = \mathbf{X v_1}\)</span>,
-we need to find <span class="math inline">\(\mathbf{v_1}\)</span> such that:</p>
-<p><span class="math display">\[
-\max_{\mathbf{v_1}} \; \mathbf{v_{1}^\mathsf{T} S v_1}
-\]</span></p>
-<p>subject to <span class="math inline">\(\mathbf{v_{1}^\mathsf{T} v_1} = 1\)</span></p>
-<p>Being a maximization problem, the typical procedure to find the solution is by
-using the <strong>Lagrangian multiplier</strong> method. Using Lagrange multipliers we get:</p>
-<p><span class="math display">\[
-\mathbf{v_{1}^\mathsf{T} S v_1} - \lambda (\mathbf{v_{1}^\mathsf{T} v_1} - 1) = 0
-\]</span></p>
-<p>Differentiation with respect to <span class="math inline">\(\mathbf{v_1}\)</span>, and equating to zero gives:</p>
-<p><span class="math display">\[
-\mathbf{S v_1} - \lambda_1 \mathbf{v_1} = \mathbf{0}
-\]</span></p>
-<p>Rearranging some terms we get:</p>
-<p><span class="math display">\[
-\mathbf{S v_1} = \lambda_1 \mathbf{v_1}
-\]</span></p>
-<p>What does this mean? It means that <span class="math inline">\(\lambda_1\)</span> is an eigenvalue of <span class="math inline">\(\mathbf{S}\)</span>,
-and <span class="math inline">\(\mathbf{v_1}\)</span> is the corresponding eigenvector.</p>
+<p>Like in the 2-way case, here <span class="math inline">\(\mathcal{H}_m\)</span> represents the <span class="math inline">\(m\)</span>-th hypothesis,
+and <span class="math inline">\(h^{-}_m\)</span> represents the <span class="math inline">\(m\)</span>-th fit to the <span class="math inline">\(m\)</span>-th hypothesis.</p>
+<p>After the best model <span class="math inline">\(h^{-}_{m}\)</span> has been selected (with the smallest <span class="math inline">\(E_{val}\)</span>),
+a model <span class="math inline">\(h_{\overset{*}m}\)</span> is fitted using <span class="math inline">\(\mathcal{D}_{train} \cap \mathcal{D}_{val}\)</span>.
+The performance of this model is evaluated by using <span class="math inline">\(\mathcal{D}_{test}\)</span> to
+obtain <span class="math inline">\(E^{m}_{test}\)</span>. Finally, the “official” model is the model fitted on the
+entire data set <span class="math inline">\(\mathcal{D}\)</span>, but the reported performance is <span class="math inline">\(E^{m}_{test}\)</span>.</p>
+<p>Of course, there is still a tradeoff: now we need to split our data into <em>three</em>!
+The larger our test and validations sets are, the smaller our training set will be.</p>
+<div id="using-a-validation-set" class="section level4 unnumbered">
+<h4>Using a Validation Set</h4>
+<p>The schematic for validation can be viewed in the following visual diagram:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-94"></span>
+<img src="images/validation/repeated-2way-holdout.svg" alt="Repeated 2-way holdout method for model selection" width="70%" />
+<p class="caption">
+Figure 10.6: Repeated 2-way holdout method for model selection
+</p>
 </div>
-<div id="finding-the-second-pc" class="section level3">
-<h3><span class="header-section-number">4.4.3</span> Finding the second PC</h3>
-<p>In order to find the second principal component <span class="math inline">\(\mathbf{z_2} = \mathbf{X v_2}\)</span>,
-we need to find <span class="math inline">\(\mathbf{v_2}\)</span> such that</p>
-<p><span class="math display">\[
-\max_{\mathbf{v_2}} \; \mathbf{v_{2}^\mathsf{T} S v_2}
-\]</span></p>
-<p>subject to <span class="math inline">\(\| \mathbf{v_2} \| = 1\)</span> and <span class="math inline">\(\mathbf{z_{1}^\mathsf{T} z_2} = 0\)</span>.
-Remember that <span class="math inline">\(\mathbf{z_2}\)</span> must be uncorrelated to <span class="math inline">\(\mathbf{z_1}\)</span>.
-Applying the Lagrange multipliers, it can be shown that the desired
-<span class="math inline">\(\mathbf{v_2}\)</span> is such that</p>
-<p><span class="math display">\[
-\mathbf{S v_2} = \lambda_2 \mathbf{v_2}
-\]</span></p>
-<p>In other words. <span class="math inline">\(\lambda_2\)</span> is an eigenvalue of <span class="math inline">\(\mathbf{S}\)</span> and <span class="math inline">\(\mathbf{v_2}\)</span>
-is the corresponding eigenvector.</p>
-</div>
-<div id="finding-all-pcs" class="section level3">
-<h3><span class="header-section-number">4.4.4</span> Finding all PCs</h3>
-<p>All PCs can be found simultaneously by <strong>diagonalizing</strong> <span class="math inline">\(\mathbf{S}\)</span>.
-Diagonalizing <span class="math inline">\(\mathbf{S}\)</span> involves expressing it as the product:</p>
-<p><span class="math display">\[ 
-\mathbf{S} = \mathbf{V \Lambda V^\mathsf{T}}
-\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(\mathbf{D}\)</span> is a diagonal matrix</li>
-<li>the elements in the diagonal of <span class="math inline">\(\mathbf{D}\)</span> are the eigenvalues of <span class="math inline">\(\mathbf{S}\)</span></li>
-<li>the columns of <span class="math inline">\(\mathbf{V}\)</span> are orthonormal: <span class="math inline">\(\mathbf{V^\mathsf{T} V= I}\)</span></li>
-<li>the columns of <span class="math inline">\(\mathbf{V}\)</span> are the eigenvectors of <span class="math inline">\(\mathbf{S}\)</span></li>
-<li><span class="math inline">\(\mathbf{V^\mathsf{T}} = \mathbf{V^{-1}}\)</span></li>
-</ul>
-<p>Diagonalizing a symmetric matrix is nothing more than obtaining its
-<strong>eigenvalue decomposition</strong> (a.k.a. spectral decomposition).
-A <span class="math inline">\(p \times p\)</span> symmetric matrix <span class="math inline">\(\mathbf{S}\)</span> has the following properties:</p>
-<ul>
-<li><span class="math inline">\(\mathbf{S}\)</span> has <span class="math inline">\(p\)</span> real eigenvalues (counting multiplicites)</li>
-<li>the eigenvectors corresponding to different eigenvalues are orthogonal</li>
-<li><span class="math inline">\(\mathbf{S}\)</span> is orthogonally diagonalizable (<span class="math inline">\(\mathbf{S} = \mathbf{V \Lambda V^\mathsf{T}}\)</span>)</li>
-<li>the set of eigenvalues of <span class="math inline">\(\mathbf{S}\)</span> is called the <strong>spectrum</strong> of <span class="math inline">\(\mathbf{S}\)</span></li>
-</ul>
-<p>In summary: The PCA solution can be obtained with an Eigenvalue Decomposition
-of the matrix <span class="math inline">\(\mathbf{S} = (1/n) \mathbf{X^\mathsf{T}X}\)</span></p>
-</div>
-</div>
-<div id="data-decomposition-model" class="section level2">
-<h2><span class="header-section-number">4.5</span> Data Decomposition Model</h2>
-<p>Formally, PCA involves finding scores and loadings such that the data can be
-expressed as a product of two matrices:</p>
-<p><span class="math display">\[
-\underset{n \times p}{\mathbf{X}} = \underset{n \times r}{\mathbf{Z}} \underset{r \times p}{\mathbf{V^\mathsf{T}}}
-\]</span></p>
-<p>where <span class="math inline">\(\mathbf{Z}\)</span> is the matrix of PCs or <em>scores</em>, and <span class="math inline">\(\mathbf{V}\)</span> is the
-matrix of <em>loadings</em>. We can obtain as many different eigenvalues as the rank of
-<span class="math inline">\(\mathbf{S}\)</span> denoted by <span class="math inline">\(r\)</span>. Ideally, we expect <span class="math inline">\(r\)</span> to be smaller than <span class="math inline">\(p\)</span>
-so we get a convenient data reduction. But usually we will only retain just a
-few PCs (i.e. <span class="math inline">\(k \ll p\)</span>) expecting not to lose too much information:</p>
-<p><span class="math display">\[
-\underset{n \times p}{\mathbf{X}} \approx \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times p}{\mathbf{V^\mathsf{T}}} + \text{Residual}
-\]</span></p>
-<p>The previous expression means that just a few PCs will <em>optimally</em> summarize the main structure of the data</p>
-<div id="alternative-approaches" class="section level3">
-<h3><span class="header-section-number">4.5.1</span> Alternative Approaches</h3>
-<p>Finding <span class="math inline">\(\mathbf{z_h} = \mathbf{X v_h}\)</span> with maximum variance has another
-important property that it is not always mentioned in multivariate textbooks
-but that we find worth mentioning. <span class="math inline">\(\mathbf{z_h}\)</span> is such that</p>
-<p><span class="math display">\[
-\max \sum_{j = 1}^{p} cor^2(\mathbf{z_h, x_j})
-\]</span></p>
-<p>What this expression implies is that principal components <span class="math inline">\(\mathbf{z_h}\)</span> are
-computed to be the <em>best</em> representants in terms of maximizing the sum of
-squared correlations with the variables
-<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>.
-Interestingly, you can think of PCs as predictors
-of the variables in <span class="math inline">\(\mathbf{X}\)</span>. Under this perspective, we can reverse the
-relations and see PCA from a regression-like model perspective:</p>
-<p><span class="math display">\[
-\mathbf{x_j} = v_{jh} \mathbf{z_h} + \mathbf{e_h}
-\]</span></p>
-<p>Notice that the regression coefficient is the <span class="math inline">\(j\)</span>-th element of the <span class="math inline">\(h\)</span>-th
-eigenvector.</p>
+<p>Note that in the diagram, <span class="math inline">\(\mathcal{H}_m\)</span> represents the <span class="math inline">\(m\)</span>-th hypothesis,
+and <span class="math inline">\(h^{-}_m\)</span> represents the <span class="math inline">\(m\)</span>-th fit to the <span class="math inline">\(m\)</span>-th hypothesis.</p>
+<p>Why are we calling <span class="math inline">\(\mathcal{D}_{val}\)</span> a “validation” set, when it appears to
+be serving the same role as a “test” set? Indeed, ISL makes no distinction
+between the validation set and the test set (see, for instance, pages 176-177
+in the textbook).</p>
+<p>However, in making this distinction explicit, we hope to make one point clear:
+choosing the “best” model (i.e. the model with the smallest <span class="math inline">\(E_{val}\)</span>) is a
+<strong>learning decision</strong>. Had we stopped our procedure before making this choice
+(i.e. if we had stopped after considering <span class="math inline">\(E_{val}^m\)</span> for <span class="math inline">\(m = 1, 2, ..., M\)</span>),
+we could have plausibly called these errors “test errors.” However, we went
+one step further and as a result obtain a <em>biased</em> estimate of <span class="math inline">\(E_{out}\)</span>;
+namely, <span class="math inline">\(E_{val}^{m}\)</span> for the chosen model <span class="math inline">\(m\)</span>.</p>
 
 </div>
 </div>
 </div>
-
-
-
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="duality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ols.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="biasvar.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="resampling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
