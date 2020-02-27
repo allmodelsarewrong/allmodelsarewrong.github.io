@@ -251,10 +251,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="phases.html"><a href="phases.html#model-training"><i class="fa fa-check"></i><b>10.4</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
-<li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.1</b> Repeated Holdout Method</a></li>
-<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.2</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.3</b> Cross-Validation</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.3.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+<li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>11.1</b> General Sampling Blueprint</a></li>
+<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.2</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.3</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.4</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
@@ -466,7 +467,7 @@ to imprecise (unstable) estimates <span class="math inline">\(\mathbf{b}\)</span
 <p>If we look at the circle of correlations from a principal components analysis,
 we see the following pattern: <code>hp</code>, <code>disp</code>, and <code>wt</code> are positively correlated;
 indicated by the fact the arrows are pointing in a common general direction.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-103-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-104-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Carrying out an ordinary least squares regression, that is, regressing <code>mpg</code>
 onto <code>disp</code>, <code>hp</code>, and <code>wt</code> we get the following output provided the
 linear model function <code>lm()</code>:</p>
@@ -735,7 +736,7 @@ involves finding ways to mitigate the effects of these irregular coefficients.</
 the issue with “irregular” coefficients. As you know, in OLS regression, we
 want to find parameters that give us a linear combination of our
 response variables.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-111"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-112"></span>
 <img src="images/ols/ols-path-diagram-betas1.svg" alt="Linear combination without constant term" width="40%" />
 <p class="caption">
 Figure 12.1: Linear combination without constant term

@@ -251,10 +251,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="phases.html"><a href="phases.html#model-training"><i class="fa fa-check"></i><b>10.4</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
-<li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.1</b> Repeated Holdout Method</a></li>
-<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.2</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.3</b> Cross-Validation</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.3.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+<li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>11.1</b> General Sampling Blueprint</a></li>
+<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.2</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.3</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.4</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
@@ -389,8 +390,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this chapter we discuss how to make the most of a limitted data. We
 describe several resampling techniques to generate multiple training sets,
 as well as multiple evaluation sets to calibrate tuning parameters.</p>
+<div id="general-sampling-blueprint" class="section level2">
+<h2><span class="header-section-number">11.1</span> General Sampling Blueprint</h2>
+<p>The idea behind most common (re)sampling approaches is to have a way to
+generate multiple sets from just one data set. In statistical learning, the
+training set is the one on which we usually apply resampling methods.</p>
+<p>The following figure depicts the general sampling regime of the approaches
+that are described in the next sections.</p>
+<p>Suppose we are interested in fitting a <span class="math inline">\(k\)</span>-Nearest-Neighbor (<span class="math inline">\(k\)</span>-NN) model.
+In particular, we want to fit a <span class="math inline">\(k\)</span>-NN model with <span class="math inline">\(k=3\)</span> neighbors. So let’s
+denote this type of model as <span class="math inline">\(\mathcal{H}_1\)</span> hypothesis.
+The starting point is the training set <span class="math inline">\(\mathcal{D}_{train}\)</span>. Using a sampling
+mechanism we split the training set into two subsets. One of the subsets,
+that we denote as <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, is used to train a model, denoted
+<span class="math inline">\(h_{1,b}\)</span>. The other subset, denoted <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>, is used to
+evaluate <span class="math inline">\(h_{1,b}\)</span> by calculating <span class="math inline">\(E_{eval-b}\)</span>.</p>
+<p>The way the evaluation set is formed, is by taking those data points in
+<span class="math inline">\(\mathcal{D}_{train}\)</span>, that are not included in <span class="math inline">\(\mathcal{D}_{train-b}\)</span>,
+that is:
+<span class="math inline">\(\mathcal{D}_{eval-b} = \mathcal{D}_{train} \setminus \mathcal{D}_{train-b}\)</span></p>
+<p>This procedure is repeated
+<span class="math inline">\(B\)</span> times. At the end, we average all the evaluation errors to get a single
+measure indicating the typical performance for the particular type of trained
+models. In this example, this would be the typical performance of 3-NN
+models.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
+<img src="images/validation/sampling-methods1.svg" alt="General scheme for sampling approaches" width="95%" />
+<p class="caption">
+Figure 11.1: General scheme for sampling approaches
+</p>
+</div>
+</div>
 <div id="repeated-holdout-method" class="section level2">
-<h2><span class="header-section-number">11.1</span> Repeated Holdout Method</h2>
+<h2><span class="header-section-number">11.2</span> Repeated Holdout Method</h2>
 <p>Our next validation procedure is the “Repeated Holdout Method”, sometimes
 known as Monte-Carlo Cross-Validation.</p>
 <p>As the name indicates, the repeated holdout method consists of several
@@ -398,10 +430,10 @@ repetitions of the holdout method. At each iteration (or repetition) <span class
 split <span class="math inline">\(\mathcal{D}\)</span> into <span class="math inline">\(\mathcal{D}^{b}_{\mathrm{train}}\)</span> and
 <span class="math inline">\(\mathcal{D}^{b}_{\mathrm{test}}\)</span>. We use the training set to fit a particular
 model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on the test set <span class="math inline">\(E_{test}^{b}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
 <img src="images/validation/repeated-holdout.svg" alt="Several splits into training and test sets" width="80%" />
 <p class="caption">
-Figure 11.1: Several splits into training and test sets
+Figure 11.2: Several splits into training and test sets
 </p>
 </div>
 <p>After several repetitions, we average all the test errors <span class="math inline">\(E_{test}^{b}\)</span>
@@ -428,7 +460,7 @@ E_{test} = \frac{1}{B} \sum_{b=1}^{B} E_{test}^{b}
 </div>
 </div>
 <div id="bootstrap-method" class="section level2">
-<h2><span class="header-section-number">11.2</span> Bootstrap Method</h2>
+<h2><span class="header-section-number">11.3</span> Bootstrap Method</h2>
 <p>Another interesting validation procedure is the “Bootstrap Method”.</p>
 <p>This method is very similar to the Repeated Holdout method. The main difference
 is in the way <span class="math inline">\(\mathcal{D}\)</span> is split in each repetition. In the bootstrap
@@ -438,10 +470,10 @@ method, as the name says, the samples consists of <em>bootstrap</em> samples.</p
 elements in <span class="math inline">\(\mathcal{D}\)</span>. As a result, some samples will be represented
 multiple times in the bootstrap sample while other will not be selected at all.
 The samples not selected are usually referred to as the out-of-bag samples.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
 <img src="images/validation/bootstrap-method.svg" alt="Several splits with bootstrap samples into training and test sets" width="80%" />
 <p class="caption">
-Figure 11.2: Several splits with bootstrap samples into training and test sets
+Figure 11.3: Several splits with bootstrap samples into training and test sets
 </p>
 </div>
 <div id="bootstrap-algorithm" class="section level4 unnumbered">
@@ -476,10 +508,10 @@ We have that:</p>
 </div>
 </div>
 <div id="cross-validation" class="section level2">
-<h2><span class="header-section-number">11.3</span> Cross-Validation</h2>
+<h2><span class="header-section-number">11.4</span> Cross-Validation</h2>
 <p>We will focus our attention to Leave-One Out CV.</p>
 <div id="leave-one-out-cross-validation-loocv" class="section level3">
-<h3><span class="header-section-number">11.3.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
+<h3><span class="header-section-number">11.4.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
 <p>This is a particular case for <span class="math inline">\(k\)</span>-fold CV.</p>
 <ol style="list-style-type: decimal">
 <li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
@@ -503,10 +535,10 @@ we have a large training data set, <em>and</em> a lot of test datasets! But, the
 still a cost: the individual errors are no longer independent.</p>
 <p>For illustrative purposes, consider a data set withonly three points:
 <span class="math inline">\(\mathcal{D} = \{p_1, p_2, p_3\}\)</span> (pictured below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-98"></span>
 <img src="images/validation/toy-loocv.png" alt="Illustration of loocv errors" width="80%" />
 <p class="caption">
-Figure 11.3: Illustration of loocv errors
+Figure 11.4: Illustration of loocv errors
 </p>
 </div>
 <p>We would therefore repeat step (2) above <span class="math inline">\(n = 3\)</span> times, to obtain <span class="math inline">\(3\)</span> errors:
