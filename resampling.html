@@ -248,6 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.3" data-path="phases.html"><a href="phases.html#model-selection"><i class="fa fa-check"></i><b>10.3</b> Model Selection</a><ul>
 <li class="chapter" data-level="10.3.1" data-path="phases.html"><a href="phases.html#three-way-holdout-method"><i class="fa fa-check"></i><b>10.3.1</b> Three-way Holdout Method</a></li>
 </ul></li>
+<li class="chapter" data-level="10.4" data-path="phases.html"><a href="phases.html#model-training"><i class="fa fa-check"></i><b>10.4</b> Model Training</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
 <li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.1</b> Repeated Holdout Method</a></li>
@@ -397,7 +398,7 @@ repetitions of the holdout method. At each iteration (or repetition) <span class
 split <span class="math inline">\(\mathcal{D}\)</span> into <span class="math inline">\(\mathcal{D}^{b}_{\mathrm{train}}\)</span> and
 <span class="math inline">\(\mathcal{D}^{b}_{\mathrm{test}}\)</span>. We use the training set to fit a particular
 model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on the test set <span class="math inline">\(E_{test}^{b}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
 <img src="images/validation/repeated-holdout.svg" alt="Several splits into training and test sets" width="80%" />
 <p class="caption">
 Figure 11.1: Several splits into training and test sets
@@ -437,7 +438,7 @@ method, as the name says, the samples consists of <em>bootstrap</em> samples.</p
 elements in <span class="math inline">\(\mathcal{D}\)</span>. As a result, some samples will be represented
 multiple times in the bootstrap sample while other will not be selected at all.
 The samples not selected are usually referred to as the out-of-bag samples.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
 <img src="images/validation/bootstrap-method.svg" alt="Several splits with bootstrap samples into training and test sets" width="80%" />
 <p class="caption">
 Figure 11.2: Several splits with bootstrap samples into training and test sets
@@ -502,7 +503,7 @@ we have a large training data set, <em>and</em> a lot of test datasets! But, the
 still a cost: the individual errors are no longer independent.</p>
 <p>For illustrative purposes, consider a data set withonly three points:
 <span class="math inline">\(\mathcal{D} = \{p_1, p_2, p_3\}\)</span> (pictured below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-98"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
 <img src="images/validation/toy-loocv.png" alt="Illustration of loocv errors" width="80%" />
 <p class="caption">
 Figure 11.3: Illustration of loocv errors
