@@ -252,9 +252,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
 <li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>11.1</b> General Sampling Blueprint</a></li>
-<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.2</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#monte-carlo-cross-validation"><i class="fa fa-check"></i><b>11.2</b> Monte Carlo Cross Validation</a></li>
 <li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.3</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.4</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>11.4</b> <span class="math inline">\(K\)</span>-Fold Cross-Validation</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
@@ -734,7 +734,7 @@ the very final model.</p>
 <h2><span class="header-section-number">10.4</span> Model Training</h2>
 <p>In order to perform the pre-selection of finalist models, the selection of the
 final model, and its corresponding assessment, we need to be able to fit
-all candidate models belonging to different classes or hypotheses.</p>
+all candidate models belonging to different classes of hypotheses.</p>
 <p>The data set that we use to fit/train such models is, surprise-surprise,
 the training set <span class="math inline">\(\mathcal{D}_{train}\)</span>. This will also be the set that we’ll
 use to pre-select the finalist models from each class.
@@ -761,12 +761,12 @@ something like a <span class="math inline">\(\mathcal{D}_{train}\)</span> for tr
 <span class="math inline">\(\mathcal{D}_{pre}\)</span> for pre-selecting finalist models,
 <span class="math inline">\(\mathcal{D}_{final}\)</span> for selecting the very final model, and
 <span class="math inline">\(\mathcal{D}_{assess}\)</span> for assessing the performance of the final model.
-We’ve seen what the theory says about reserving some out-of-sample points
-for both, making learning decisions (e.g. choosing a finalist), as well as
-for assessing the performance of a model. It is a wise idea to have fresh
-unseen points to be used, as we move on with into a new learning phase.
-The problem is that theory don’t tell us exactly how many holdout sets we
-should have, or how big should they be.</p>
+We’ve seen what theory says about reserving some out-of-sample points
+for both 1) making learning decisions (e.g. choosing a finalist), and for 2)
+assessing the performance of a model. It is a wise idea to have fresh
+unseen points to be spent as we move on into a new learning phase.
+The problem is that theory doesn’t tell us exactly how many holdout sets we
+should have, or how big they should be.</p>
 <p>The main limitation is that we only have so much data. Can we really afford
 splitting our limited data resources into four different sets? Are we doomed …?</p>
 <p>Resampling methods to the rescue!</p>

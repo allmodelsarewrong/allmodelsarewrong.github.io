@@ -252,9 +252,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
 <li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>11.1</b> General Sampling Blueprint</a></li>
-<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.2</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#monte-carlo-cross-validation"><i class="fa fa-check"></i><b>11.2</b> Monte Carlo Cross Validation</a></li>
 <li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.3</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.4</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>11.4</b> <span class="math inline">\(K\)</span>-Fold Cross-Validation</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
@@ -452,7 +452,7 @@ methods.</li>
 <li>Matches the purpose of clustering most closely.</li>
 <li>Ward distance defined as the reduction in between-cluster sum of squares.</li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-231"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-232"></span>
 <img src="images/cluster/aggregation-criteria.svg" alt="Aggregation Criteria" width="60%" />
 <p class="caption">
 Figure 24.1: Aggregation Criteria
@@ -479,7 +479,7 @@ d   9  25   4   0  13
 e  10   2   9  13   0</code></pre>
 <p>Here’s a scatterplot of the data set, and the unique distances between
 individuals:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
 <img src="images/cluster/hclus0.svg" alt="Five objects and their distances" width="85%" />
 <p class="caption">
 Figure 24.2: Five objects and their distances
@@ -489,7 +489,7 @@ Figure 24.2: Five objects and their distances
 we see this is the pair <span class="math inline">\((\textsf{a}, \textsf{c})\)</span>. In other words, the first aggregation occurs
 with objects <span class="math inline">\(\textsf{a}\)</span> and <span class="math inline">\(\textsf{c}\)</span>. We now treat this pair as a single
 point, and recompute distances:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
 <img src="images/cluster/hclus1.svg" alt="The two closest objects" width="85%" />
 <p class="caption">
 Figure 24.3: The two closest objects
@@ -503,7 +503,7 @@ the distance between cluster <span class="math inline">\(\textsf{ac}\)</span> an
 the distance between a cluster and a point? Well, this is where the two
 approaches of hierarchical clustering come in. Again, we will consider only
 agglomerative methods.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
 <img src="images/cluster/hclus2.svg" alt="Distance between a cluster and other objects?" width="85%" />
 <p class="caption">
 Figure 24.4: Distance between a cluster and other objects?
@@ -521,7 +521,7 @@ d^2(\textsf{ac}, \textsf{b}) = min \{ d^2(\textsf{a},\textsf{b}), d^2(\textsf{c}
 <li><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \min\{9, 4\} = 4\)</span></li>
 <li><span class="math inline">\(d^2(\textsf{ac}, \textsf{e}) = \min\{10, 9\} = 9\)</span></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
 <img src="images/cluster/hclus3.svg" alt="Aggregation Criteria" width="85%" />
 <p class="caption">
 Figure 24.5: Aggregation Criteria
@@ -530,7 +530,7 @@ Figure 24.5: Aggregation Criteria
 <p>Once we have the distances, we look for the next pair of objects that are
 closest to each other. In this case, those objects are <span class="math inline">\(\textsf{b}\)</span> and
 <span class="math inline">\(\textsf{e}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
 <img src="images/cluster/hclus4.svg" alt="Second cluster" width="85%" />
 <p class="caption">
 Figure 24.6: Second cluster
@@ -538,7 +538,7 @@ Figure 24.6: Second cluster
 </div>
 <p>So now we have two clusters <span class="math inline">\(\textsf{ac}\)</span> and <span class="math inline">\(\textsf{be}\)</span>, and a third
 individual object <span class="math inline">\(\textsf{d}\)</span>. The matrix of distances is updated as follows:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
 <img src="images/cluster/hclus5.svg" alt="Second cluster" width="85%" />
 <p class="caption">
 Figure 24.7: Second cluster
@@ -546,7 +546,7 @@ Figure 24.7: Second cluster
 </div>
 <p>We then select the smallest distance which corresponds to the distance
 between cluster <span class="math inline">\(\textsf{ac}\)</span> and individual <span class="math inline">\(\textsf{d}\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
 <img src="images/cluster/hclus6.svg" alt="Third cluster" width="85%" />
 <p class="caption">
 Figure 24.8: Third cluster
@@ -554,14 +554,14 @@ Figure 24.8: Third cluster
 </div>
 <p>At this step, we have two clusters left: <span class="math inline">\(\textsf{acd}\)</span> and <span class="math inline">\(\textsf{be}\)</span>.
 These two groups have a distance of 9:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-242"></span>
 <img src="images/cluster/hclus7.svg" alt="Three partitions" width="85%" />
 <p class="caption">
 Figure 24.9: Three partitions
 </p>
 </div>
 <p>The last step involves merging both clusters into a single overall cluster:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-242"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-243"></span>
 <img src="images/cluster/hclus8.svg" alt="Single cluster with all objects" width="85%" />
 <p class="caption">
 Figure 24.10: Single cluster with all objects
@@ -570,7 +570,7 @@ Figure 24.10: Single cluster with all objects
 <div id="dendrogram" class="section level3">
 <h3><span class="header-section-number">24.2.1</span> Dendrogram</h3>
 <p>The process of forming clusters can be visualized with a dendrogram.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-243-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-244-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

@@ -252,9 +252,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
 <li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>11.1</b> General Sampling Blueprint</a></li>
-<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.2</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#monte-carlo-cross-validation"><i class="fa fa-check"></i><b>11.2</b> Monte Carlo Cross Validation</a></li>
 <li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.3</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.4</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>11.4</b> <span class="math inline">\(K\)</span>-Fold Cross-Validation</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
@@ -389,7 +389,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">11</span> Resample Approaches</h1>
 <p>In this chapter we discuss how to make the most of a limitted data. We
 describe several resampling techniques to generate multiple training sets,
-as well as multiple evaluation sets to calibrate tuning parameters.</p>
+as well as multiple evaluation sets that we can use for both the training phase
+and the pre-selection phase.</p>
+<p>to calibrate tuning parameters.</p>
 <div id="general-sampling-blueprint" class="section level2">
 <h2><span class="header-section-number">11.1</span> General Sampling Blueprint</h2>
 <p>The idea behind most common (re)sampling approaches is to have a way to
@@ -420,42 +422,45 @@ models.</p>
 Figure 11.1: General scheme for sampling approaches
 </p>
 </div>
+<p>What distinguishes each sampling approach is the size and way in which the
+random samples are generated to obtain the sets <span class="math inline">\(\mathcal{D}_{train-b}\)</span>. They
+can be random samples without replacement,
+they can be random samples with replacement. The samples</p>
 </div>
-<div id="repeated-holdout-method" class="section level2">
-<h2><span class="header-section-number">11.2</span> Repeated Holdout Method</h2>
-<p>Our next validation procedure is the “Repeated Holdout Method”, sometimes
-known as Monte-Carlo Cross-Validation.</p>
-<p>As the name indicates, the repeated holdout method consists of several
-repetitions of the holdout method. At each iteration (or repetition) <span class="math inline">\(b\)</span> we
-split <span class="math inline">\(\mathcal{D}\)</span> into <span class="math inline">\(\mathcal{D}^{b}_{\mathrm{train}}\)</span> and
-<span class="math inline">\(\mathcal{D}^{b}_{\mathrm{test}}\)</span>. We use the training set to fit a particular
-model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on the test set <span class="math inline">\(E_{test}^{b}\)</span>.</p>
+<div id="monte-carlo-cross-validation" class="section level2">
+<h2><span class="header-section-number">11.2</span> Monte Carlo Cross Validation</h2>
+<p>The first sampling method that we discuss is Monte-Carlo Cross-Validation,
+sometimes known as Repeated Holdout Method.</p>
+<p>As the name indicates, this method repeatedly produces a holdout set,
+<span class="math inline">\(\mathcal{D}_{eval-b}\)</span>, to be used for evaluating the performance of a model.
+At each iteration (or repetition) <span class="math inline">\(b\)</span> we split <span class="math inline">\(\mathcal{D}_{train}\)</span> into <span class="math inline">\(\mathcal{D}_{train-b}\)</span> and <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>. We use the training subset
+to fit a particular model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on <span class="math inline">\(E_{eval-b}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
-<img src="images/validation/repeated-holdout.svg" alt="Several splits into training and test sets" width="80%" />
+<img src="images/validation/repeated-holdout.svg" alt="Several splits into training and evaluation sets" width="80%" />
 <p class="caption">
-Figure 11.2: Several splits into training and test sets
+Figure 11.2: Several splits into training and evaluation sets
 </p>
 </div>
-<p>After several repetitions, we average all the test errors <span class="math inline">\(E_{test}^{b}\)</span>
-to obtain an estimate <span class="math inline">\(\hat{E}_{out}\)</span>.</p>
+<p>After several repetitions, we average all the test errors <span class="math inline">\(E_{eval-b}\)</span>
+to obtain <span class="math inline">\(E_{eval}(h^{-})\)</span>, an estimate of <span class="math inline">\(E_{out}(h^{-})\)</span>.</p>
 <div id="repeated-holdout-algorithm" class="section level4 unnumbered">
 <h4>Repeated Holdout Algorithm</h4>
 <p>Here’s the conceptual algorithm for the repeated holdout method:</p>
 <ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
+<li><p>Compile the available training data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
 <li><p>Repeat the Holdout method <span class="math inline">\(B\)</span> times, where <span class="math inline">\(B\)</span> is a very large integer
 (for example, 500). At each iteration, obtain the following elements:</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Generate <span class="math inline">\(\mathcal{D}^{b}_{train}\)</span>, by sampling <span class="math inline">\(n-k\)</span> elements <strong>without</strong>
-replacement from <span class="math inline">\(\mathcal{D}\)</span>.</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span>)</p></li>
-<li><p>Compute <span class="math inline">\(E_{test}^{b} = \frac{1}{k} \sum_{i} err_i[ h^{-}_{b}(\mathbf{x_j}), y_j]\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}^{b}\)</span></p></li>
+<li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, by sampling <span class="math inline">\(n-r\)</span> elements <strong>without</strong>
+replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
+<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span>)</p></li>
+<li><p>Compute <span class="math inline">\(E_{eval-b} = \frac{1}{r} \sum_{i} err_i[ h^{-}_{b}(\mathbf{x_i}), y_i]\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span></p></li>
 </ol></li>
-<li><p>Obtain an overall value for <span class="math inline">\(E_{test}\)</span> by averaging the <span class="math inline">\(E_{test}^{b}\)</span>
+<li><p>Obtain an overall value for <span class="math inline">\(E_{eval}\)</span> by averaging the <span class="math inline">\(E_{eval-b}\)</span>
 values:</p></li>
 </ol>
 <p><span class="math display">\[
-E_{test} = \frac{1}{B} \sum_{b=1}^{B} E_{test}^{b}
+E_{eval} = \frac{1}{B} \sum_{b=1}^{B} E_{eval-b}
 \]</span></p>
 </div>
 </div>
@@ -463,11 +468,11 @@ E_{test} = \frac{1}{B} \sum_{b=1}^{B} E_{test}^{b}
 <h2><span class="header-section-number">11.3</span> Bootstrap Method</h2>
 <p>Another interesting validation procedure is the “Bootstrap Method”.</p>
 <p>This method is very similar to the Repeated Holdout method. The main difference
-is in the way <span class="math inline">\(\mathcal{D}\)</span> is split in each repetition. In the bootstrap
-method, as the name says, the samples consists of <em>bootstrap</em> samples.</p>
+is in the way <span class="math inline">\(\mathcal{D}_{train}\)</span> is split in each repetition. In the
+bootstrap method, as the name says, the samples consists of <em>bootstrap</em> samples.</p>
 <p>Recall that a bootstrap sample is a random sample of the data taken
 <strong>with replacement</strong>. This means that the bootstrap sample is the same size as
-elements in <span class="math inline">\(\mathcal{D}\)</span>. As a result, some samples will be represented
+elements in <span class="math inline">\(\mathcal{D}_{train}\)</span>. As a result, some samples will be represented
 multiple times in the bootstrap sample while other will not be selected at all.
 The samples not selected are usually referred to as the out-of-bag samples.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
@@ -480,54 +485,76 @@ Figure 11.3: Several splits with bootstrap samples into training and test sets
 <h4>Bootstrap Algorithm</h4>
 <p>Here’s the conceptual algorithm for the bootstrap method:</p>
 <ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
+<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
 <li><p>Repeat the following steps for <span class="math inline">\(b = 1, 2, \dots B\)</span> where <span class="math inline">\(B\)</span> is a very large
 integer (for example, 500):</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span> by sampling <span class="math inline">\(n\)</span> times <strong>with</strong>
-replacement from <span class="math inline">\(\mathcal{D}\)</span>. (Note that <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span>
+<li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span> by sampling <span class="math inline">\(n\)</span> times <strong>with</strong>
+replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>. (Note that <span class="math inline">\(\mathcal{D}_{train-b}\)</span>
 could contain repeated elements).</p></li>
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{test}^{b}\)</span> by combining all of the elements in
-<span class="math inline">\(\mathcal{D}\)</span> that were not captured in <span class="math inline">\(\mathcal{D}_{train}\)</span>. Hence,
-the size of <span class="math inline">\(\mathcal{D}_{test}\)</span> will change at each iteration.
-(Note that <span class="math inline">\(\mathcal{D}_{train}\)</span> should <strong>not</strong> contain repeated values).</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_b\)</span> by fitting a model to <span class="math inline">\(\mathcal{D}_{train}^{b}\)</span>.</p></li>
-<li><p>Compute <span class="math inline">\(E_{test}^b = \frac{1}{k_b} \sum_{i} err_i \big( h^{-}_i(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{test}^b\)</span> and <span class="math inline">\(k_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{test}^b\)</span>.</p></li>
+<li><p>Generate <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> by combining all of the elements in
+<span class="math inline">\(\mathcal{D}_{train}\)</span> that were not captured in <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.
+Hence, the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> will change at each iteration.
+(Note that <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> should <strong>not</strong> contain repeated values).</p></li>
+<li><p>Generate <span class="math inline">\(h^{-}_b\)</span> by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.</p></li>
+<li><p>Compute <span class="math inline">\(E_{eval} = \frac{1}{r_b} \sum_{i} err_i \big( h^{-}_b(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span> and <span class="math inline">\(r_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>.</p></li>
 </ol></li>
-<li><p>Obtain an overall value for <span class="math inline">\(E_{test}\)</span> by averaging the <span class="math inline">\(E_{test}^b\)</span> values:</p></li>
+<li><p>Obtain an overall value for bootstrap <span class="math inline">\(E_{eval}\)</span> by averaging the
+<span class="math inline">\(E_{eval-b}\)</span> values:</p></li>
 </ol>
 <p><span class="math display">\[
-E_{boot} = \frac{1}{B} \sum_{b=1}^{B} E_{test}^{b}
+\text{bootstrap } E_{eval} = \frac{1}{B} \sum_{b=1}^{B} E_{eval-b}
 \]</span></p>
 <p>Bootstrapping enables us to construct confidence intervals for <span class="math inline">\(E_{out}\)</span>.
 We have that:</p>
 <p><span class="math display">\[ 
-\mathrm{SE}_{boot} = \sqrt{  \frac{1}{B - 1}  \sum_{b=1}^{B} \left(E_{test}^{b} - E_{boot} \right)^2 }
+\mathrm{SE}_{boot} = \sqrt{  \frac{1}{B - 1}  \sum_{b=1}^{B} \left(E_{eval-b} - E_{eval} \right)^2 }
 \]</span></p>
 <p>Empirical quantiles can be used.</p>
 </div>
 </div>
-<div id="cross-validation" class="section level2">
-<h2><span class="header-section-number">11.4</span> Cross-Validation</h2>
-<p>We will focus our attention to Leave-One Out CV.</p>
+<div id="k-fold-cross-validation" class="section level2">
+<h2><span class="header-section-number">11.4</span> <span class="math inline">\(K\)</span>-Fold Cross-Validation</h2>
+<p>The idea of the <em>classic</em> cross-validation method (not to confuse with monte
+carlo cross-validation) is to split the training data into <span class="math inline">\(K\)</span> sets of equal
+(or almost equal) size. Each of the resulting subsets is referred to as a
+<strong>fold</strong>. Usually, the way in which the folds are formed is by randomly
+splitting the initial data.</p>
+<p>The diagram below illustrates a 3-fold cross validation sampling scheme:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-98"></span>
+<img src="images/validation/cv-3fold.svg" alt="3-fold splits" width="85%" />
+<p class="caption">
+Figure 11.4: 3-fold splits
+</p>
+</div>
+<p>As you can tell, the training data is (randomly) divided into three sets of
+similar size: the 3-folds. Then, at each iteration <span class="math inline">\(b\)</span>, one of the folds is
+held out for evaluation purposes, i.e. <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>; the reamining
+folds are merged into <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, and used for training purposes.
+As usual, at the end of the iterations (<span class="math inline">\(b = K\)</span>), all evaluation errors
+<span class="math inline">\(E_{eval-b}\)</span> errors are aggregated into an average <span class="math inline">\(E_{eval}\)</span>, commonly known
+as the cross-validation error <span class="math inline">\(E_{cv}\)</span>.</p>
 <div id="leave-one-out-cross-validation-loocv" class="section level3">
 <h3><span class="header-section-number">11.4.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
-<p>This is a particular case for <span class="math inline">\(k\)</span>-fold CV.</p>
+<p>One special case of <span class="math inline">\(K\)</span>-fold cross-validation is when each fold consists of a
+single data point, that is <span class="math inline">\(K = n\)</span>. This particular scheme is known as
+leave-one-out cross-validation (loocv). Let’s see how to carry out loocv.</p>
 <ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
+<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
 <li><p>Repeat the following for <span class="math inline">\(i = 1, 2, \dots, n\)</span> (where <span class="math inline">\(n\)</span> is the number of
 data points)</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Generate the <span class="math inline">\(i\)</span>-th training set <span class="math inline">\(\mathcal{D}_i\)</span> by removing the <span class="math inline">\(i\)</span>-th
-element from <span class="math inline">\(\mathcal{D}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
-<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span>, and use <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> to obtain
-<span class="math inline">\(E_{val}^i = err[ h^{-}(\mathbf{x_i}), y_i]\)</span>.</p></li>
+element from <span class="math inline">\(\mathcal{D}_{train}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
+<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span> to obtain model <span class="math inline">\(h_{i}\)</span></p></li>
+<li><p>Use the point <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> that is left-out to compute
+<span class="math inline">\(E_{eval-i} = err[ h_{i}^{-}(\mathbf{x_i}), y_i]\)</span>.</p></li>
 </ol></li>
 <li><p>Obtain the <strong>cross-validation error</strong> <span class="math inline">\(E_{cv}\)</span> by averaging the individual
 errors:</p></li>
 </ol>
 <p><span class="math display">\[
-E_{cv} = \frac{1}{n} \sum_{i=1}^{n} err_i  = \frac{1}{n} \sum_{i=1}^{n} E_{val}^i
+E_{cv} = \frac{1}{n} \sum_{i=1}^{n} err_i  = \frac{1}{n} \sum_{i=1}^{n} E_{eval-i}
 \]</span></p>
 <p>In this way, we are able to fit <span class="math inline">\(n\)</span> models with <span class="math inline">\(n - 1\)</span> points, while also
 generating <span class="math inline">\(n\)</span> testing datasets. So, this looks like the best of both worlds:
@@ -535,10 +562,10 @@ we have a large training data set, <em>and</em> a lot of test datasets! But, the
 still a cost: the individual errors are no longer independent.</p>
 <p>For illustrative purposes, consider a data set withonly three points:
 <span class="math inline">\(\mathcal{D} = \{p_1, p_2, p_3\}\)</span> (pictured below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-98"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-99"></span>
 <img src="images/validation/toy-loocv.png" alt="Illustration of loocv errors" width="80%" />
 <p class="caption">
-Figure 11.4: Illustration of loocv errors
+Figure 11.5: Illustration of loocv errors
 </p>
 </div>
 <p>We would therefore repeat step (2) above <span class="math inline">\(n = 3\)</span> times, to obtain <span class="math inline">\(3\)</span> errors:

@@ -252,9 +252,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>11</b> Resample Approaches</a><ul>
 <li class="chapter" data-level="11.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>11.1</b> General Sampling Blueprint</a></li>
-<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#repeated-holdout-method"><i class="fa fa-check"></i><b>11.2</b> Repeated Holdout Method</a></li>
+<li class="chapter" data-level="11.2" data-path="resampling.html"><a href="resampling.html#monte-carlo-cross-validation"><i class="fa fa-check"></i><b>11.2</b> Monte Carlo Cross Validation</a></li>
 <li class="chapter" data-level="11.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>11.3</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>11.4</b> Cross-Validation</a><ul>
+<li class="chapter" data-level="11.4" data-path="resampling.html"><a href="resampling.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>11.4</b> <span class="math inline">\(K\)</span>-Fold Cross-Validation</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>11.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
@@ -447,7 +447,7 @@ variables:</p>
 <p>And let’s also take a look at the circle of correlations, from the output of
 a PCA on the entire data set:</p>
 <pre><code>#&gt; Error in text.default(cars_pca$var$coord[1, 1], cars_pca$var$coord[1, : plot.new has not been called yet</code></pre>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-118-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-119-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Computing the OLS solution for the regression model of <code>price</code> onto the
 other nine predictors we obtain:</p>
 <pre><code>#&gt;               Estimate  Std. Error  t value   Pr(&gt;|t|)
@@ -482,7 +482,7 @@ correlated with <code>price</code> but it has a positive regression coefficient.
 <h2><span class="header-section-number">13.2</span> The PCR Model</h2>
 <p>In PCR, we seek principal components <span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>,
 linear combinations of the inputs: <span class="math inline">\(\mathbf{z_k} = \mathbf{Xv_k}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-121"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-122"></span>
 <img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
 <p class="caption">
 Figure 13.1: PCs as linear combinations of input variables
@@ -504,7 +504,7 @@ or noise part:</p>
 <span class="math display">\[
 \underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times k}{\mathbf{V^\mathsf{T}}} + \underset{n \times k}{\mathbf{E}}
 \]</span>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-122"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
 <img src="images/pcr/pcr-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
 <p class="caption">
 Figure 13.2: Matrix diagram for inputs
@@ -516,7 +516,7 @@ coefficients <span class="math inline">\(\mathbf{b}\)</span>:</p>
 <p><span class="math display">\[
 \mathbf{y} = \mathbf{Zb} + \mathbf{e}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-124"></span>
 <img src="images/pcr/pcr-response-model.svg" alt="Matrix diagram for response" width="50%" />
 <p class="caption">
 Figure 13.3: Matrix diagram for response
@@ -640,7 +640,7 @@ The typical way is to use cross-validation.</p>
 <p>Let’s look at the <em>evolution</em> of the PCA regression coefficients. This is a
 very interesting plot that allows us to see how the size of the coefficients
 grow as we add more and more PCs into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-130-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-131-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <div id="remarks" class="section level4 unnumbered">
 <h4>Remarks</h4>
 <p>The catch: those PC’s you choose to keep may not be good predictors of
