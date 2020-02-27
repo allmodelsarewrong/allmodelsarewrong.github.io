@@ -391,7 +391,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 describe several resampling techniques to generate multiple training sets,
 as well as multiple evaluation sets that we can use for both the training phase
 and the pre-selection phase.</p>
-<p>to calibrate tuning parameters.</p>
 <div id="general-sampling-blueprint" class="section level2">
 <h2><span class="header-section-number">11.1</span> General Sampling Blueprint</h2>
 <p>The idea behind most common (re)sampling approaches is to have a way to
@@ -532,7 +531,7 @@ similar size: the 3-folds. Then, at each iteration <span class="math inline">\(b
 held out for evaluation purposes, i.e. <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>; the reamining
 folds are merged into <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, and used for training purposes.
 As usual, at the end of the iterations (<span class="math inline">\(b = K\)</span>), all evaluation errors
-<span class="math inline">\(E_{eval-b}\)</span> errors are aggregated into an average <span class="math inline">\(E_{eval}\)</span>, commonly known
+<span class="math inline">\(E_{eval-b}\)</span> are aggregated into an average <span class="math inline">\(E_{eval}\)</span>, commonly known
 as the cross-validation error <span class="math inline">\(E_{cv}\)</span>.</p>
 <div id="leave-one-out-cross-validation-loocv" class="section level3">
 <h3><span class="header-section-number">11.4.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
@@ -546,7 +545,7 @@ data points)</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Generate the <span class="math inline">\(i\)</span>-th training set <span class="math inline">\(\mathcal{D}_i\)</span> by removing the <span class="math inline">\(i\)</span>-th
 element from <span class="math inline">\(\mathcal{D}_{train}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
-<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span> to obtain model <span class="math inline">\(h_{i}\)</span></p></li>
+<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span> to obtain model <span class="math inline">\(h_{i}^{-}\)</span></p></li>
 <li><p>Use the point <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> that is left-out to compute
 <span class="math inline">\(E_{eval-i} = err[ h_{i}^{-}(\mathbf{x_i}), y_i]\)</span>.</p></li>
 </ol></li>
