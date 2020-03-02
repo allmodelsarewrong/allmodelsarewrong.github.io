@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14 Partial Least Squares Regression | All Models Are Wrong</title>
+  <title>25 Intro to Decision Trees | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14 Partial Least Squares Regression | All Models Are Wrong" />
+  <meta property="og:title" content="25 Intro to Decision Trees | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14 Partial Least Squares Regression | All Models Are Wrong" />
+  <meta name="twitter:title" content="25 Intro to Decision Trees | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="pcr.html"/>
-<link rel="next" href="ridge.html"/>
+<link rel="prev" href="hclus.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -398,390 +398,320 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pls" class="section level1">
-<h1><span class="header-section-number">14</span> Partial Least Squares Regression</h1>
-<p>Another dimension reduction method that we can use to regularize a model is
-Partial Least Squares Regression (PLSR).</p>
-<p>Before we dive deep into the nuts and bolts of PLSR, we should let you know that
-PLS methods form a very big family of methods. While the regression method is
-probably the most popular PLS technique, it is by no means the only one.
-And even within PLSR, there’s a wide array of different algorithms that let
-you obtain the core solution.</p>
-<p>PLS Regression was mainly developed in the early 1980s by Scandinavian
-chemometricians Svante Wold and Harald Martens.
-The theoretical background was based on the <em>PLS Modeling</em> framework of
-Herman Wold (Svante’s father).</p>
+<div id="trees" class="section level1">
+<h1><span class="header-section-number">25</span> Intro to Decision Trees</h1>
+<p>In this chapter we introduce decision trees, which are one the most popular and
+intuitive supervised learning tools.</p>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">25.1</span> Introduction</h2>
+<p>Trees are used in classification and regression tasks by detecting a set of
+rules allowing the analyst to assign the individuals in data into a class
+or assign it a predicted value.</p>
+<p>The reason they are called trees is because the set of rules can organized
+into a hierarchical <em>tree</em>. Moreover, this structure can be visually
+displayed as an inverted tree diagram (although the tree is generally displayed
+upside down) like in the image below.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-246"></span>
+<img src="images/trees/tree-diagram1.svg" alt="Diagram of a tree structure" width="85%" />
+<p class="caption">
+Figure 25.1: Diagram of a tree structure
+</p>
+</div>
+<p>Decision trees have three types of nodes: root, internal, and leaf nodes.</p>
 <ul>
-<li>PLS Regression was developed as an algorithmic solution, with no optimization
-criterion explicitly defined.</li>
-<li>It was introduced in the fields of chemometrics (where almost immediately became a hit).</li>
-<li>It slowly attracted the attention of curious applied statisticians.</li>
-<li>It took a couple of years (late 1980s - early 1990s) for applied mathematicians to discover its properties.</li>
-<li>Nowadays there are several versions (flavors) of the algorithm to compute a PLS regression.</li>
+<li><p>There is exactly one root node that contains the entire set of elements in the sample; the root node has no incoming branches, and it may have zero, two, or more outgoing branches.</p></li>
+<li><p>Internal nodes, each of which is hoped to contain as many elements as possible belonging to one class; each internal node has one incoming branch and two (or more) outgoing branches.</p></li>
+<li><p>Leaf or terminal nodes which, unlike internal nodes, have no outgoing branches.</p></li>
 </ul>
-<div id="motivation-example-2" class="section level2">
-<h2><span class="header-section-number">14.1</span> Motivation Example</h2>
-<p>To introduce PLSR we are using the same data set of the previous chapter: a
-subset of the “2004 New Car and Truck Data”. The data set consists of
-10 variables measured on 385 cars. Here’s what
-the first six rows look like:</p>
-<pre><code>#&gt;                               price engine cyl  hp city_mpg
-#&gt; Acura 3.5 RL 4dr              43755    3.5   6 225       18
-#&gt; Acura 3.5 RL w/Navigation 4dr 46100    3.5   6 225       18
-#&gt; Acura MDX                     36945    3.5   6 265       17
-#&gt; Acura NSX coupe 2dr manual S  89765    3.2   6 290       17
-#&gt; Acura RSX Type S 2dr          23820    2.0   4 200       24
-#&gt; Acura TL 4dr                  33195    3.2   6 270       20
-#&gt;                               hwy_mpg weight wheel length width
-#&gt; Acura 3.5 RL 4dr                   24   3880   115    197    72
-#&gt; Acura 3.5 RL w/Navigation 4dr      24   3893   115    197    72
-#&gt; Acura MDX                          23   4451   106    189    77
-#&gt; Acura NSX coupe 2dr manual S       24   3153   100    174    71
-#&gt; Acura RSX Type S 2dr               31   2778   101    172    68
-#&gt; Acura TL 4dr                       28   3575   108    186    72</code></pre>
-<p>The response variable is <code>price</code>, and there are nine predictors:</p>
+<p>The root node can be regarded as the starting node. The branches are the lines
+connecting the nodes. Every node that is preceded by a higher level node is
+called a “child” node. A node that gives origin to two (or more) child nodes is
+called a parent node. Terminal nodes are nodes without children. The most
+common way of visually representing a tree is by means of the classical
+node-link diagram that connects nodes together with line segments.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-247"></span>
+<img src="images/trees/tree-diagram2.svg" alt="Common elements of a tree diagram" width="85%" />
+<p class="caption">
+Figure 25.2: Common elements of a tree diagram
+</p>
+</div>
+</div>
+<div id="binary-trees" class="section level2">
+<h2><span class="header-section-number">25.2</span> Binary Trees</h2>
+<p>One special kind of decision trees are binary trees. They are called <em>binary</em>
+because the nodes are only partitioned in two (see diagram below).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-248"></span>
+<img src="images/trees/tree-binary-diagram1.svg" alt="Example of a binary tree diagram" width="85%" />
+<p class="caption">
+Figure 25.3: Example of a binary tree diagram
+</p>
+</div>
+<p>The usual process to build an ordinary binary decision tree is as follows.
+First, a search among all the predictor variables is done in order to find the
+single variable which best splits the data in two groups. In other words, one
+must find the segmentation variable that splits the data in two subsets so that
+they are as different as possible with respect to the response variable. This
+process is applied separately to each subgroup, and so on recursively until the
+subgroups either reach a minimum size or until no improvement can be made.
+In each dichotomy the two parts are the most contrasting according to the
+response variable.</p>
+<div id="the-process-of-building-a-tree" class="section level3">
+<h3><span class="header-section-number">25.2.1</span> The Process of Building a Tree</h3>
+<p>Let us begin with the general idea behind trees. The main idea is to build a
+tree structure by successively (i.e. recursively) dividing the set of objects
+with the help of features <span class="math inline">\(X_1, \dots, X_p\)</span>, in order to obtain the terminal
+nodes (i.e. final segments) that are as homogeneous as possible (with respect
+to the response).</p>
+<p>The tree building process requires three main components</p>
 <ul>
-<li><code>engine</code></li>
-<li><code>cyl</code></li>
-<li><code>hp</code></li>
-<li><code>city_mpg</code></li>
-<li><code>hw_mpg</code></li>
-<li><code>weight</code></li>
-<li><code>wheel</code></li>
-<li><code>length</code></li>
-<li><code>width</code></li>
+<li>Establish the set of admissible divisions for each node: compute all possible binary splits</li>
+<li>Define a criterion to find the “best” node split: some optimization criterion to be optimized</li>
+<li>some measure of heterogeneity (within a given node)</li>
+<li>Define a rule to declare a given node as internal node or leaf node</li>
 </ul>
-<p>The regression model involves predicting <code>price</code> in terms of the nine inputs:</p>
-<p><span class="math inline">\(\texttt{price} = b_0 + b_1 \texttt{cyl} + b_2 \texttt{hp} + \dots + b_9 \texttt{width} + \boldsymbol{\varepsilon}\)</span></p>
-<p>Computing the OLS solution for the regression model of <code>price</code> onto the
-other nine predictors we obtain the following coefficients (see first column):</p>
-<pre><code>#&gt;               Estimate  Std. Error  t value   Pr(&gt;|t|)
-#&gt; (Intercept)  32536.025   17777.488   1.8302  6.802e-02
-#&gt; engine       -3273.053    1542.595  -2.1218  3.451e-02
-#&gt; cyl           2520.927     896.202   2.8129  5.168e-03
-#&gt; hp             246.595      13.201  18.6797  1.621e-55
-#&gt; city_mpg      -229.987     332.824  -0.6910  4.900e-01
-#&gt; hwy_mpg        979.967     345.558   2.8359  4.817e-03
-#&gt; weight           9.937       2.045   4.8584  1.741e-06
-#&gt; wheel         -695.392     172.896  -4.0220  6.980e-05
-#&gt; length          33.690      89.660   0.3758  7.073e-01
-#&gt; width         -635.382     306.344  -2.0741  3.875e-02</code></pre>
+<p>Establishing the set of admissible splits for each node is related with the
+nature of the segmentation variables in the data. The number and type of
+possible binary splits will vary depending on the scale (e.g., binary, nominal,
+ordinal, and continuous) of the predictor variables. Further discussion is
+given in the next section.</p>
+<p>The second aspect to build a segmentation tree is the definition of a node
+splitting rule. This rule is necessary to find at each internal node a test for
+splitting the data into subgroups. Since finding a split involves finding the
+predictor variable that is the most discriminating, the splitting test helps to
+rank variables according to their discriminating power.</p>
+<p>The last component of the tree building process has to do with the definition
+of a node termination rule. In essence, there are two different ways to deal
+with this issue: 1) pre-pruning and 2) post-pruning. Pre-pruning implies that
+the decision of when to stop the growth of a tree is made prospectively.
+Post-pruning refers to reducing the size of a fully expanded tree by pruning
+some of its branches retrospectively.</p>
 </div>
-<div id="the-plsr-model" class="section level2">
-<h2><span class="header-section-number">14.2</span> The PLSR Model</h2>
-<p>In PLS regression, like in PCR, we seek components
-<span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>, linear combinations of the inputs
-(e.g. <span class="math inline">\(\mathbf{z_1} = \mathbf{Xw_1}\)</span>), such that
-they are good predictors for both the response <span class="math inline">\(\mathbf{y}\)</span> as well as the
-inputs <span class="math inline">\(\mathbf{x_j}\)</span> for <span class="math inline">\(j = 1,\dots, p\)</span>.</p>
-<p>Moreover, there is an implicit assumption in the PLS regression model: both
-<span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> are assumed to be functions of a reduced (<span class="math inline">\(k &lt; p\)</span>)
-number of components <span class="math inline">\(\mathbf{Z} = [\mathbf{z_1}, \dots, \mathbf{z_k}]\)</span>
-that can be used to decompose the inputs and the response:</p>
-<p><span class="math display">\[
-\mathbf{X} = \mathbf{Z V^\mathsf{T}} + \mathbf{E}
-\]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-137"></span>
-<img src="images/pls/pls-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
-<p class="caption">
-Figure 14.1: Matrix diagram for inputs
-</p>
-</div>
-<p>and</p>
-<p><span class="math display">\[
-\mathbf{y} = \mathbf{Z b} + \mathbf{e}
-\]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-138"></span>
-<img src="images/pls/pls-response-model.svg" alt="Matrix diagram for response" width="50%" />
-<p class="caption">
-Figure 14.2: Matrix diagram for response
-</p>
-</div>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(\mathbf{Z}\)</span> is a matrix of PLS components</li>
-<li><span class="math inline">\(\mathbf{V}\)</span> is a matrix of PLS loadings</li>
-<li><span class="math inline">\(\mathbf{E}\)</span> is a matrix of <span class="math inline">\(X\)</span>-residuals</li>
-<li><span class="math inline">\(\mathbf{b}\)</span> is a vector of PLS regression coefficients</li>
-<li><span class="math inline">\(\mathbf{e}\)</span> is a vector of <span class="math inline">\(y\)</span>-residuals</li>
-</ul>
-<p>By taking a few number of components
-<span class="math inline">\(\mathbf{Z} = [\mathbf{z_1}, \dots, \mathbf{z_k}]\)</span>, we can have approximations
-for the inputs and the response. The model for the <span class="math inline">\(X\)</span>-space is:</p>
-<p><span class="math display">\[
-\mathbf{\hat{X}} = \mathbf{Z V^{\mathsf{T}}}
-\]</span></p>
-<p>In turn, the prediction model for <span class="math inline">\(\mathbf{y}\)</span> is given by:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z b}
-\]</span></p>
-<p>To avoid confusing the PLSR coefficients with the OLS coefficients, we
-can be more proper and rewirte the previous expression as:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_{\text{pls}}
-\]</span></p>
-<p>to indicate that the obtained <span class="math inline">\(b\)</span>-coefficients are those assocaited to the
-PLS components.</p>
-</div>
-<div id="how-does-plsr-work" class="section level2">
-<h2><span class="header-section-number">14.3</span> How does PLSR work?</h2>
-<p>So how do we obtain the PLS components, <em>aka</em> PLS scores? We use an iterative
-algorithm, obtaining one component at a time. Here’s how to get the first PLS
-component <span class="math inline">\(\mathbf{z_1}\)</span>.</p>
-<p>Assume that both the inputs and the response are mean-centered (and possibly
-standardized).
-We compute the covariances between all the input variables and the response: <span class="math inline">\(\mathbf{\tilde{w}_1} = (cov(\mathbf{x_1}, \mathbf{y}), \dots, cov(\mathbf{x_p}, \mathbf{y}))\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-139"></span>
-<img src="images/pls/pls-path-diag-z0.svg" alt="Towards the first PLS component." width="40%" />
-<p class="caption">
-Figure 14.3: Towards the first PLS component.
-</p>
-</div>
-<p>In vector-matrix notation we have:</p>
-<p><span class="math display">\[
-\mathbf{\tilde{w}_1} = \mathbf{X^\mathsf{T}y}
-\]</span></p>
-<p>For convenience purposes, we normalize the vector of covariances
-<span class="math inline">\(\mathbf{\tilde{w}_1}\)</span>, which gives us a unit-vector <span class="math inline">\(\mathbf{w_1}\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{w_1} = \frac{\mathbf{\tilde{w}_1}}{\|\mathbf{\tilde{w}_1}\|}
-\]</span></p>
-<pre><code>#&gt; first PLS weight
-#&gt;                  [,1]
-#&gt; engine    0.001782118
-#&gt; cyl       0.002857956
-#&gt; hp        0.171985612
-#&gt; city_mpg -0.007484109
-#&gt; hwy_mpg  -0.007752089
-#&gt; weight    0.984987298
-#&gt; wheel     0.004225081
-#&gt; length    0.008131684
-#&gt; width     0.003089621</code></pre>
-<p>We use these weights to compute the first component <span class="math inline">\(\mathbf{z_1}\)</span> as a
-linear combination of the inputs:
-<span class="math inline">\(\mathbf{z_1} = w_{11} \mathbf{x_1} + \dots + w_{p1} \mathbf{x_p}\)</span>,</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-141"></span>
-<img src="images/pls/pls-path-diag-z1.svg" alt="First PLS component." width="40%" />
-<p class="caption">
-Figure 14.4: First PLS component.
-</p>
-</div>
-<p>or in vector-matrix notation:</p>
-<p><span class="math display">\[
-\mathbf{z_1} = \mathbf{Xw_1}
-\]</span></p>
-<p>Here are the first 10 elements of <span class="math inline">\(\mathbf{z_1}\)</span></p>
-<pre><code>#&gt; first PLS component (10 elements only)
-#&gt;                                     [,1]
-#&gt; Acura 3.5 RL 4dr               344.24572
-#&gt; Acura 3.5 RL w/Navigation 4dr  357.05055
-#&gt; Acura MDX                      913.48050
-#&gt; Acura NSX coupe 2dr manual S  -360.90753
-#&gt; Acura RSX Type S 2dr          -745.89228
-#&gt; Acura TL 4dr                    51.39841
-#&gt; Acura TSX 4dr                 -300.53740
-#&gt; Audi A4 1.8T 4dr              -284.07748
-#&gt; Audi A4 3.0 4dr                -68.58479
-#&gt; Audi A4 3.0 convertible 2dr    278.15085</code></pre>
-<p>We use this component to regress both the inputs and the response onto it.
-The regression coefficient <span class="math inline">\(v_{1j}\)</span> of each simple linear regression between
-<span class="math inline">\(\mathbf{z_1}\)</span> and the <span class="math inline">\(j\)</span>-th predictor is called a <strong>PLS loading</strong>. The entire
-vector of loadings <span class="math inline">\(\mathbf{v_1}\)</span> associated to first component is:</p>
-<p><span class="math display">\[
-\mathbf{v_1} = \mathbf{X^\mathsf{T}z_1} / \mathbf{z_{1}^\mathsf{T}z_1}
-\]</span></p>
-<pre><code>#&gt; first PLS loading
-#&gt;                  [,1]
-#&gt; engine    0.001176718
-#&gt; cyl       0.001561745
-#&gt; hp        0.064016991
-#&gt; city_mpg -0.005536001
-#&gt; hwy_mpg  -0.006343509
-#&gt; weight    1.003819205
-#&gt; wheel     0.007551534
-#&gt; length    0.012276141
-#&gt; width     0.003862309</code></pre>
-<p>In turn, the PLS regression coefficient <span class="math inline">\(b_1\)</span> is obtained by regressing the
-response onto the first component:</p>
-<p><span class="math display">\[
-b_1 = \mathbf{y^\mathsf{T} z_1} / \mathbf{z_{1}^\mathsf{T}z_1}
-\]</span></p>
-<p>In our example, the regression coefficient <span class="math inline">\(b_1\)</span> of the first PLS score
-<span class="math inline">\(\mathbf{z_1}\)</span> is:</p>
-<pre><code>#&gt; first PLS regression coefficient
-#&gt; [1] 13.61137</code></pre>
-<p>We can get a first one-rank approximation
-<span class="math inline">\(\mathbf{\hat{X}} = \mathbf{z_1 v^{\mathsf{T}}_1}\)</span>, and then obtain a residual
-matrix <span class="math inline">\(\mathbf{X_1}\)</span> by removing the variation in the inputs captured by
-<span class="math inline">\(\mathbf{z_1}\)</span>:</p>
-<p><span class="math display">\[
-\mathbf{X_1} = \mathbf{X} - \mathbf{\hat{X}} = \mathbf{X} - \mathbf{z_1 v^{\mathsf{T}}_1} \qquad \mathsf{(deflation)}
-\]</span></p>
-<p>We can also deflate the response:</p>
-<p><span class="math display">\[
-\mathbf{y_1} = \mathbf{y} - b_1 \mathbf{z_1}
-\]</span></p>
-<p>We can obtain further PLS components <span class="math inline">\(\mathbf{z_2}\)</span>, <span class="math inline">\(\mathbf{z_3}\)</span>, etc. by
-repeating the process described above on the residual data matrices <span class="math inline">\(\mathbf{X_1}\)</span>,
-<span class="math inline">\(\mathbf{X_2}\)</span>, etc., and the residual response vectors <span class="math inline">\(\mathbf{y_1}\)</span>,
-<span class="math inline">\(\mathbf{y_2}\)</span>, etc. For example, a second PLS score <span class="math inline">\(\mathbf{z_2}\)</span> will be
-formed by a linear combination of first <span class="math inline">\(X\)</span>-residuals:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-145"></span>
-<img src="images/pls/pls-path-diag-z2.svg" alt="Second PLS component." width="40%" />
-<p class="caption">
-Figure 14.5: Second PLS component.
-</p>
-</div>
-</div>
-<div id="plsr-algorithm" class="section level2">
-<h2><span class="header-section-number">14.4</span> PLSR Algorithm</h2>
-<p>We will describe what we consider the “standard” or “classic” algorithm.
-However, keep in mind that there are a handful of slightly different versions
-that may find in other places.</p>
-<p>We assume mean-centered and standardized variables <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>.</p>
-<ol start="0" style="list-style-type: decimal">
-<li>We start by setting <span class="math inline">\(\mathbf{X_0} = \mathbf{X}\)</span>, and
-<span class="math inline">\(\mathbf{y_0} = \mathbf{y}\)</span>.</li>
-</ol>
-<p>Repeat for <span class="math inline">\(h = 1, \dots, r = \text{rank}(\mathbf{X})\)</span>:</p>
+<div id="binary-partitions" class="section level3">
+<h3><span class="header-section-number">25.2.2</span> Binary Partitions</h3>
+<p>In binary segmentation trees, the set of admissible splits for each node
+depends on the nature of the segmentation variables in the data. Predictor
+variables can be of different type. In practice, most variables are of
+categorical nature although sometimes continuous variables may be present.
+We can divide them in four classes:</p>
 <ol style="list-style-type: decimal">
-<li><p>Start with weights <span class="math inline">\(\mathbf{\tilde{w}_h} = \mathbf{X_{h-1}^\mathsf{T}} \mathbf{y_{h-1}} / \mathbf{y_{h-1}}^\mathsf{T} \mathbf{y_{h-1}}\)</span></p></li>
-<li><p>Normalize weights: <span class="math inline">\(\mathbf{w_h} = \mathbf{\tilde{w}_h} / \| \mathbf{\tilde{w}_h} \|\)</span></p></li>
-<li><p>Compute PLS component: <span class="math inline">\(\mathbf{z_h} = \mathbf{X_{h-1} w_h} / \mathbf{w_{h}^\mathsf{T} w_h}\)</span></p></li>
-<li><p>Regress <span class="math inline">\(\mathbf{y_h}\)</span> onto <span class="math inline">\(\mathbf{z_h}\)</span>: <span class="math inline">\(b_h = \mathbf{y_{h}^{\mathsf{T}} z_h / z_{h}^{\mathsf{T}} z_h}\)</span></p></li>
-<li><p>Regress <span class="math inline">\(\mathbf{x_j}\)</span> onto <span class="math inline">\(\mathbf{z_h}\)</span>: <span class="math inline">\(\mathbf{v_h} = \mathbf{X_{h-1}}^{\mathsf{T}} \mathbf{z_h} / \mathbf{z_{h}}^{\mathsf{T}} \mathbf{z_h}\)</span></p></li>
-<li><p>Deflate (residual) predictors:
-<span class="math inline">\(\mathbf{X_h} = \mathbf{X_{h-1}} - \mathbf{z_h} \mathbf{v_{h}^{\mathsf{T}}}\)</span></p></li>
-<li><p>Deflate (residual) response: <span class="math inline">\(\mathbf{y_h} = \mathbf{y_{h-1}} - b_h \mathbf{z_h}\)</span></p></li>
+<li>Binary variables</li>
+<li>Ordinal variables</li>
+<li>Nominal variables</li>
+<li>Continuous variables</li>
 </ol>
-<p>Notice that steps 1, 3, 4, and 5 involve simple OLS regressions. If you think
-about it, what PLS is doing is calculating all the different ingredients
-(e.g. <span class="math inline">\(\mathbf{w_h}, \mathbf{z_h}, \mathbf{v_h}, b_h\)</span>) <em>separately</em>, using
-<em>least squares</em> regressions. Hence the reason for its name
-<strong>partial least squares</strong>.</p>
-<p>By default, we can obtain up to <span class="math inline">\(r = rank(\mathbf{X})\)</span> different PLS components.
-In the cars example, we can actually obtain nine scores.
-The following output shows the regression coefficients of all nine regression
-equations:</p>
-<pre><code>#&gt;            Z_1:1  Z_1:2   Z_1:3   Z_1:4   Z_1:5   Z_1:6   Z_1:7    Z_1:8
-#&gt; engine    0.0243   1.44   -3.34  -15.09  -33.59 -113.70 -284.84 -1148.41
-#&gt; cyl       0.0389   3.03    6.87   55.93  166.51  471.47 1056.23  2073.22
-#&gt; hp        2.3410 250.04  248.74  262.63  254.81  251.35  243.73   238.81
-#&gt; city_mpg -0.1019  -4.69   50.66  368.94  210.79  -69.52 -412.43  -171.42
-#&gt; hwy_mpg  -0.1055  -3.49   48.59  464.50  528.56  811.07 1177.28   933.19
-#&gt; weight   13.4070  -2.27    1.80    6.44    8.21    9.61    9.77     9.08
-#&gt; wheel     0.0575  -7.32 -125.75 -387.68 -797.42 -669.88 -680.47  -676.98
-#&gt; length    0.1107  -9.00 -196.71  -90.85   83.57   59.30    2.26    17.07
-#&gt; width     0.0421  -1.61  -43.73 -181.27 -427.09 -940.70 -729.49  -725.37
-#&gt;             Z_1:9
-#&gt; engine   -3273.05
-#&gt; cyl       2520.93
-#&gt; hp         246.59
-#&gt; city_mpg  -229.99
-#&gt; hwy_mpg    979.97
-#&gt; weight       9.94
-#&gt; wheel     -695.39
-#&gt; length      33.69
-#&gt; width     -635.38</code></pre>
-<p>If we keep all components, we get the OLS solution (using standardized data):</p>
-<pre><code>#&gt; Regression coefficients using all 9 PLS components
-#&gt;      engine         cyl          hp    city_mpg     hwy_mpg      weight 
-#&gt; -3273.05304  2520.92691   246.59496  -229.98735   979.96656     9.93652 
-#&gt;       wheel      length       width 
-#&gt;  -695.39157    33.69009  -635.38224</code></pre>
-<p>Compare with the regression coefficients of OLS:</p>
-<pre><code>#&gt;    Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight     Xwheel 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
-#&gt;    Xlength     Xwidth 
-#&gt;   446.9752 -2141.8196</code></pre>
-<p>Obviously, reatining all PLS scores does not provide an improvement over the
-OLS regression. This is because we are not changing anything. Using our
-metaphor about “shopping for coefficients”, by keeping all PLS scores we are
-spending the same amount of money that we spend in ordinary least-squares
-regression.</p>
-<p>The dimension reduction idea involves keeping only a few components <span class="math inline">\(k \ll r\)</span>,
-such that the fitted model has a better generalization ability than the full
-model. The number of components <span class="math inline">\(k\)</span> is called the <strong>tuning parameter</strong>
-or <strong>hyperparameter</strong>. How do we determine <span class="math inline">\(k\)</span>? The typical way is to use
-cross-validation.</p>
-<div id="pls-solution-with-original-variables" class="section level3">
-<h3><span class="header-section-number">14.4.1</span> PLS Solution with original variables</h3>
-<p>The PLS regression equation is typically expressed in terms of the original
-variables <span class="math inline">\(\mathbf{X}\)</span> instead of using the deflated matrices <span class="math inline">\(\mathbf{X_{h-1}}\)</span>.
-This re-arrangement is more convenient for prediction purposes.</p>
-<p><span class="math display">\[
-\mathbf{y = X b}_{\text{pls}} + \mathbf{e} 
-\]</span></p>
-<p>Note that the PLS <span class="math inline">\(\mathbf{b}_{\text{pls}}\)</span>-coefficients of the regression equation are
-not parameters of the PLS regression model. Instead, these are post-hoc calculations
-for making things more maneagable.</p>
-<div id="transforming-regression-coefficients" class="section level4 unnumbered">
-<h4>Transforming Regression Coefficients</h4>
-<p>PLS components are obtained as linear combinations of residual matrices <span class="math inline">\(\mathbf{X_h}\)</span>,
-but they can also be expressed in terms of the original variables:</p>
-<p><span class="math display">\[\begin{align*}
-\mathbf{z_1} &amp;= \mathbf{X w_1 = X \overset{*}{w}_{1}} \\
-\mathbf{z_2} &amp;= \mathbf{X_1 w_2 = X (I - z_1 v_{1}^{\mathsf{T}}) w_2 = X \overset{*}{w}_{2}} \\
-\mathbf{z_3} &amp;= \mathbf{X_2 w_3 = X (I - z_2 v_{2}^{\mathsf{T}}) w_3 = X \overset{*}{w}_{3}} \\
- &amp; \vdots \\
-\mathbf{z_h} &amp;= \mathbf{X_{h-1} w_h = X (I - z_{h-1} v_{h-1}^{\mathsf{T}}) w_h  = X \overset{*}{w}_{h}} \\
-\end{align*}\]</span></p>
-<p>Consequently, <span class="math inline">\(\mathbf{Z_h} = [\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_h}] = \mathbf{X \overset{*}{W}_{h}}\)</span></p>
-<p>We know that <span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + \dots + b_h \mathbf{z_h} = \mathbf{Z b}\)</span>.
-And because the PLS components can be expressed in terms of the original variables,
-we can conveniently reexpress the solution in terms of the original predictors:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z b} = \mathbf{X \overset{*}{W} b} = \mathbf{X \overset{*}{b}}_\text{pls}
-\]</span></p>
-<p>where <span class="math inline">\(\overset{*}{\mathbf{b}}_\text{pls}\)</span> are the derived PLS-coefficients
-(not OLS). Note that these PLS star-coefficients of the regression
-equation are NOT parameters of the PLS regression model. Instead, these are
-post-hoc calculations for making things more maneagable.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-149"></span>
-<img src="images/pls/pls-path-diag-scores.svg" alt="PLS components in terms of original inputs." width="85%" />
+<p>The number of possible binary splits for each type of segmentation variable is
+described below.</p>
+<div id="binary-variables" class="section level4 unnumbered">
+<h4>Binary variables</h4>
+<p>Because binary variables have two values, they only generate one binary
+partition. For example, the variable <em>Gender</em> with two values, female and male,
+can only de divided in one possible way.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-249"></span>
+<img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
 <p class="caption">
-Figure 14.6: PLS components in terms of original inputs.
+Figure 25.4: Example of a binary partition for a binary variable
 </p>
 </div>
-<p>Interestingly, if you retain all <span class="math inline">\(h = rank(\mathbf{X})\)</span> PLS components, the
-<span class="math inline">\(\overset{*}{\mathbf{b}}_\text{pls}\)</span> coefficients will be equal to the OLS
-coefficients.</p>
+</div>
+<div id="nominal-variables" class="section level4 unnumbered">
+<h4>Nominal Variables</h4>
+<p>A nominal variable may have many categories and the number of binary splits
+depends on the number of distinct categories for the corresponding variable.
+The total number of possible binary partitions for a nominal variable with <span class="math inline">\(q\)</span>
+categories is <span class="math inline">\(2^{q-1} - 1\)</span>. For example, suppose a variable <em>Color</em> with three
+categories: Green, White and Red. The number of binary splits is
+<span class="math inline">\(2^{3-1} - 1 = 3\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-250"></span>
+<img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
+<p class="caption">
+Figure 25.5: Example of binary splits for a nominal variable
+</p>
 </div>
 </div>
-<div id="size-of-coefficients-1" class="section level3">
-<h3><span class="header-section-number">14.4.2</span> Size of Coefficients</h3>
-<p>Let’s look at the <em>evolution</em> of the PLS regression coefficients. This is a
-very interesting plot that allows us to see how the size of the coefficients
-grow as we add more and more PLS components into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-150-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div id="oridnal-variables" class="section level4 unnumbered">
+<h4>Oridnal Variables</h4>
+<p>Binary splits for ordinal variables must respect the order property of the
+categories, that is, the grouping of categories must preserve the order among
+the values. The total number of binary partitions for an ordinal variable with
+<span class="math inline">\(q\)</span> categories is <span class="math inline">\(q-1\)</span>. For example, the <em>Apparel size</em> may have four
+categories: small (S), medium (M), large (L) and extra-large (XL). In this
+case, the number of binary splits will be <span class="math inline">\(4-1 = 3\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-251"></span>
+<img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
+<p class="caption">
+Figure 25.6: Example of binary splits for an ordinal variable
+</p>
 </div>
-<div id="some-properties" class="section level3">
-<h3><span class="header-section-number">14.4.3</span> Some Properties</h3>
-<p>Some interesting properties of the different elements derived in PLS Regression:</p>
+</div>
+<div id="continuous-variables" class="section level4 unnumbered">
+<h4>Continuous variables</h4>
+<p>The treatment for continuous variables depends on the number of different
+values the variable takes. Suppose a continuous variable with <span class="math inline">\(q\)</span> different
+values. If we consider that <span class="math inline">\(q\)</span> is “adequate” in some sense, we can treat the
+continuous variable like an ordinal variable. If we consider <span class="math inline">\(q\)</span> to be large we
+may group its values and reduced their number in <span class="math inline">\(q^*\)</span> (<span class="math inline">\(q^*&lt;q\)</span>). In both cases,
+the variable is treated as an ordinal variable and the number of binary splits
+will be <span class="math inline">\(q-1\)</span> or <span class="math inline">\(q^*-1\)</span>. For example, imagine the continuous variable <em>Age</em>
+(measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
+splits is <span class="math inline">\(5 - 1 = 4\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-252"></span>
+<img src="images/trees/splits_quatitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
+<p class="caption">
+Figure 25.7: Example of binary splits for a continuous variable
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="measures-of-heterogeneity" class="section level2">
+<h2><span class="header-section-number">25.3</span> Measures of Heterogeneity</h2>
+<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> points
+and <span class="math inline">\(2\)</span> classes (with <span class="math inline">\(7\)</span> objects of each class). Suppose this node splits in
+the following manner:</p>
+<p><span class="math display">\[
+\textbf{[Tree; left node with 5 circles 2 triangles, right with opposite]}
+\]</span></p>
+<p>We have an intuitive feeling that the parent node has more heterogeneity than
+its child nodes. In fact, this is a general result: a split cannot result in
+child nodes with more heterogeneity than the parent node. Stated differently,
+you can never do worse than the parent node.</p>
+<p>Most measures of heterogeneity (and therefore homogeneity) relate to
+proportions. Let’s spitball some ideas as to how to do this:</p>
 <ul>
-<li><span class="math inline">\(\mathbf{z_h^{\mathsf{T}} z_l} = 0, \quad l &gt; h\)</span></li>
-<li><span class="math inline">\(\mathbf{w_h^{\mathsf{T}} p_h} = 1\)</span></li>
-<li><span class="math inline">\(\mathbf{w_h^{\mathsf{T}} X_{l}^{\mathsf{T}}} = 0, \quad l \geq h\)</span></li>
-<li><span class="math inline">\(\mathbf{w_h^{\mathsf{T}} p_l} = 0, \quad l &gt; h\)</span></li>
-<li><span class="math inline">\(\mathbf{w_h^{\mathsf{T}} w_l} = 0, \quad l &gt; h\)</span></li>
-<li><span class="math inline">\(\mathbf{z_h^{\mathsf{T}} X_l} = 0, \quad l \geq h\)</span></li>
-<li><span class="math inline">\(\mathbf{X_h} = \mathbf{X} \prod_{j=1}^{p} (\mathbf{I - w_j v_{j}^{\mathsf{T}}}), \quad h \geq 1\)</span></li>
+<li><p><span class="math inline">\(\mathrm{prop}(\bigcirc) - \mathrm{prop}(\Delta)\)</span>; you would need to assign
+some sort of interpretation to the value <span class="math inline">\(0\)</span> in this case.</p></li>
+<li><p>Entropy (infromation, as viewed from a computer science standpoint). Could also refer to this as a measure of “disorder” within a node.</p></li>
+<li><p>Impurity (how mixed, diverse)</p></li>
 </ul>
-<div id="remarks-1" class="section level4 unnumbered">
-<h4>Remarks</h4>
+<div id="entropy" class="section level3">
+<h3><span class="header-section-number">25.3.1</span> Entropy</h3>
+<p>In the parent node, there is an equal probability of being a <span class="math inline">\(\bigcirc\)</span> as
+there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node, there is a higher chance
+of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is true of the right node).</p>
+<p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
+all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-253"></span>
+<img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
+<p class="caption">
+Figure 25.8: Set of 12 objects of same type
+</p>
+</div>
+<p>If we randomly select an object from this box, we have zero uncertainty about
+its class: in other words, there is <strong>zero entropy</strong> associated with this
+situation.</p>
+<p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-254"></span>
+<img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
+<p class="caption">
+Figure 25.9: Set with two different types of objects
+</p>
+</div>
+<p>If we were to draw an object from this box, there would be <em>some</em> amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.</p>
+<p>Finally, in the most extreme case, say we have 12 objects of different classes:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-255"></span>
+<img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
+<p class="caption">
+Figure 25.10: Set with 12 different types of objects
+</p>
+</div>
+<p>We are quite uncertain as to the classes of objects drawn from this box;
+that is, we have <strong>maximum entropy</strong>.</p>
+<p>In Short: the intuition behind entropy relates to how “mixed” a box is, with
+respect to the classes contained inside. If a box is “pure” (i.e. has only one
+class), it has zero entropy where as if a box is “highly impure” (i.e. has many
+different classes), it has some nonzero amount of entropy.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-256"></span>
+<img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
+<p class="caption">
+Figure 25.11: Set with 12 different types of objects
+</p>
+</div>
+<p>Now, let’s see how we can link our idea of entropy with the idea of
+<em>probability</em>. From the examples above, we can see the following relationship:</p>
+<p><span class="math display">\[
+\begin{array}{lcl} \text{large probability} &amp; \Rightarrow &amp; \text{small entropy value} \\ 
+\text{small probability} &amp; \Rightarrow &amp; \text{large entropy value} \\ 
+\end{array}
+\]</span></p>
+<p>Hence, it makes sense to try and model entropy as a function of <span class="math inline">\(P\)</span>, the probability of selecting a certain class. From our discussion above, we see
+that our entropy function should be small when <span class="math inline">\(P\)</span> is around 1, and large when
+<span class="math inline">\(P\)</span> is around <span class="math inline">\(0\)</span>.</p>
+<p>There are quite a few functions that display this behavior. The one we will use
+is the logarithm, of any base <span class="math inline">\(b\)</span>. Note that</p>
+<p><span class="math display">\[
+\log_b(P) : [0, 1] \to (-\infty, 0)
+\]</span></p>
+<p>That is, since our probability values are restricted to lie in the unit interval,
+the entropy will lie somewhere on the negative real axis.</p>
+</div>
+<div id="the-math-behind-entropy" class="section level3">
+<h3><span class="header-section-number">25.3.2</span> The Math Behind Entropy</h3>
+<p>Letting <span class="math inline">\(H(\text{node})\)</span> denote the entropy of a particular node, we use the
+following definition:</p>
+<p><span class="math display">\[
+H(\text{node}) = - \sum_{k=1}^{h} p_k \log_2(p_k)
+\]</span></p>
+<p>where <span class="math inline">\(p_k\)</span> denotes the probability of randomly selecting an object that comes
+from class <span class="math inline">\(k\)</span>. Note that convention dictates that we use a log of base 2. The
+reason rationale behind picking <span class="math inline">\(2\)</span> comes from information theory, as base-2
+logs can be interpreted in terms of bits.</p>
+<p>Let’s see if this definition of entropy is consistent with our intuition. For
+example, let us consider a <strong>pure</strong> node; that is, a node in which all
+objects share the same class. In this case <span class="math inline">\(p_k = 1\)</span>, and we have only one
+class so</p>
+<p><span class="math display">\[
+H(\text{node}) = -(1) \cdot \log_2(1) = 0 \cdot 0 = 0
+\]</span></p>
+<p>Now, for our second example above, we have <span class="math inline">\(h = 2\)</span> classes with <span class="math inline">\(p_1 = 9/12\)</span>
+and <span class="math inline">\(p_2 = 3/12\)</span>, so that</p>
+<p><span class="math display">\[
+H(\text{node}) = - \frac{9}{12} \log_2\left( \frac{9}{12} \right)  \frac{3}{12} \log_2\left( \frac{3}{12} \right) \approx 0.8112
+\]</span></p>
+<p>In a node where there is a 50-50 split, we have</p>
+<p><span class="math display">\[
+H(\text{node}) = - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
+\]</span></p>
+<p>The following figure depicts several examples of sets and their entropy values.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-257"></span>
+<img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
+<p class="caption">
+Figure 25.12: Different sets with their entropy values
+</p>
+</div>
+</div>
+<div id="gini-impurity" class="section level3">
+<h3><span class="header-section-number">25.3.3</span> Gini Impurity</h3>
+<p>Let us return to our box example from the previous section. Let’s suppose I
+select a ball, and note what class it belongs to. I then ask you (without
+giving you any information about the box, other than the fact that there are
+<span class="math inline">\(\bigcirc\)</span>’s and <span class="math inline">\(\square\)</span>’s), and ask you to guess what my selected object
+belongs to. There are 4 possible outcomes to this situation:</p>
 <ul>
-<li>PLS regression is somewhat close to Principal Components regression (PCR).</li>
-<li>Like PCR, PLSR involves projecting the response onto uncorrelated components (i.e. linear combinations of predictors).</li>
-<li>Unlike PCR, the way PLS components are extracted is by taking into account the response variable.</li>
-<li>We can conveniently reexpress the solution in terms of the original predictors.</li>
-<li>PLSR is not based on any optimization criterion. Rather it is based on an interative algorithm (which converges)</li>
-<li>Simplicity in its algorithm: no need to invert any matrix, no need to diagonalize any matrix. All you need to do is compute simple regressions. In other words, you just need inner products.</li>
-<li>Missing data is allowed (but you need to modify the algorithm).</li>
-<li>Easily extendable to the multivariate case of various responses.</li>
-<li>Handles cases where we have more predictors than observations (<span class="math inline">\(p \gg n\)</span>).</li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
 </ul>
+<p>The Gini index pays attention to the <strong>misclassifications</strong>; that is, the
+situations in which your guess was wrong. For instance, in our example above,
+there are a total of 2 possible misclassifications.</p>
+<p>Now, suppose we know that we are in the second box (where there are 9
+<span class="math inline">\(\bigcirc\)</span>’s and 3 <span class="math inline">\(\square\)</span>’s). The Gini Index would be computed as follows:</p>
+<p><span class="math display">\[\begin{align*}
+\text{Gini Index} &amp; = \underbrace{ Prob(\bigcirc) }_{\text{me}} \underbrace{ Prob(\square) }_{\text{you}} + \underbrace{ Prob(\square) }_{\text{me}} \underbrace{ Prob(\bigcirc) }_{\text{you}} \\
+&amp; = \left( \frac{9}{12} \right) \left( \frac{3}{12} \right)  +  \left( \frac{3}{12} \right) \left( \frac{9}{12} \right)  = \frac{1}{8} = 0.375
+\end{align*}\]</span></p>
+<p>The general definition for the Gini Index is as follows:</p>
+<p><span class="math display">\[
+\sum_{k=1}^{h} Pr(k) \left[ 1- Pr(k) \right] = 1 - \sum_{k=1}^{h} Pr^2(k) = \sum_{k \neq \ell} Pr(k) Pr(\ell)
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-258"></span>
+<img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
+<p class="caption">
+Figure 25.13: Different sets with their gini impurities
+</p>
+</div>
 
-</div>
 </div>
 </div>
 </div>
@@ -790,8 +720,8 @@ grow as we add more and more PLS components into the regression equation:</p>
           </div>
         </div>
       </div>
-<a href="pcr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ridge.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hclus.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -365,6 +365,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2.1" data-path="hclus.html"><a href="hclus.html#dendrogram"><i class="fa fa-check"></i><b>24.2.1</b> Dendrogram</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>IX Tree-based Methods</b></span></li>
+<li class="chapter" data-level="25" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>25</b> Intro to Decision Trees</a><ul>
+<li class="chapter" data-level="25.1" data-path="trees.html"><a href="trees.html#introduction-2"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>25.2</b> Binary Trees</a><ul>
+<li class="chapter" data-level="25.2.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>25.2.1</b> The Process of Building a Tree</a></li>
+<li class="chapter" data-level="25.2.2" data-path="trees.html"><a href="trees.html#binary-partitions"><i class="fa fa-check"></i><b>25.2.2</b> Binary Partitions</a></li>
+</ul></li>
+<li class="chapter" data-level="25.3" data-path="trees.html"><a href="trees.html#measures-of-heterogeneity"><i class="fa fa-check"></i><b>25.3</b> Measures of Heterogeneity</a><ul>
+<li class="chapter" data-level="25.3.1" data-path="trees.html"><a href="trees.html#entropy"><i class="fa fa-check"></i><b>25.3.1</b> Entropy</a></li>
+<li class="chapter" data-level="25.3.2" data-path="trees.html"><a href="trees.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>25.3.2</b> The Math Behind Entropy</a></li>
+<li class="chapter" data-level="25.3.3" data-path="trees.html"><a href="trees.html#gini-impurity"><i class="fa fa-check"></i><b>25.3.3</b> Gini Impurity</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Made with bookdown</a></li>
 
@@ -424,7 +437,7 @@ Figure 11.1: General scheme for sampling approaches
 <p>What distinguishes each sampling approach is the size and way in which the
 random samples are generated to obtain the sets <span class="math inline">\(\mathcal{D}_{train-b}\)</span>. They
 can be random samples without replacement,
-they can be random samples with replacement. The samples</p>
+they can be random samples with replacement.</p>
 </div>
 <div id="monte-carlo-cross-validation" class="section level2">
 <h2><span class="header-section-number">11.2</span> Monte Carlo Cross Validation</h2>
@@ -452,8 +465,8 @@ to obtain <span class="math inline">\(E_{eval}(h^{-})\)</span>, an estimate of <
 <ol style="list-style-type: lower-alpha">
 <li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, by sampling <span class="math inline">\(n-r\)</span> elements <strong>without</strong>
 replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span>)</p></li>
-<li><p>Compute <span class="math inline">\(E_{eval-b} = \frac{1}{r} \sum_{i} err_i[ h^{-}_{b}(\mathbf{x_i}), y_i]\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span></p></li>
+<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span></p></li>
+<li><p>Compute <span class="math inline">\(E_{eval-b} = \frac{1}{r} \sum_{i} err_i \big( h^{-}_{b}(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span></p></li>
 </ol></li>
 <li><p>Obtain an overall value for <span class="math inline">\(E_{eval}\)</span> by averaging the <span class="math inline">\(E_{eval-b}\)</span>
 values:</p></li>
@@ -547,7 +560,7 @@ data points)</p>
 element from <span class="math inline">\(\mathcal{D}_{train}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
 <li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span> to obtain model <span class="math inline">\(h_{i}^{-}\)</span></p></li>
 <li><p>Use the point <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> that is left-out to compute
-<span class="math inline">\(E_{eval-i} = err[ h_{i}^{-}(\mathbf{x_i}), y_i]\)</span>.</p></li>
+<span class="math inline">\(E_{eval-i} = err \big( h_{i}^{-}(\mathbf{x_i}), y_i \big)\)</span>.</p></li>
 </ol></li>
 <li><p>Obtain the <strong>cross-validation error</strong> <span class="math inline">\(E_{cv}\)</span> by averaging the individual
 errors:</p></li>
