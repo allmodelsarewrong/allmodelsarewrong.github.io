@@ -376,6 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.3.1" data-path="trees.html"><a href="trees.html#entropy"><i class="fa fa-check"></i><b>25.3.1</b> Entropy</a></li>
 <li class="chapter" data-level="25.3.2" data-path="trees.html"><a href="trees.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>25.3.2</b> The Math Behind Entropy</a></li>
 <li class="chapter" data-level="25.3.3" data-path="trees.html"><a href="trees.html#gini-impurity"><i class="fa fa-check"></i><b>25.3.3</b> Gini Impurity</a></li>
+<li class="chapter" data-level="25.3.4" data-path="trees.html"><a href="trees.html#toy-example-2"><i class="fa fa-check"></i><b>25.3.4</b> Toy Example</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -414,7 +415,7 @@ between groups (description emphasis)?</p></li>
 (prediction emphasis)?</p></li>
 </ul>
 <p>For sake of illustration, let’s consider three classes in 2-dimensional space</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-188"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-193"></span>
 <img src="images/discrim/discrim_axes1.svg" alt="Three classes in 2-dim space" width="50%" />
 <p class="caption">
 Figure 19.1: Three classes in 2-dim space
@@ -423,7 +424,7 @@ Figure 19.1: Three classes in 2-dim space
 <p>We look for the best representation separating the classes. One option is to
 consider the axis associated with the predictor <span class="math inline">\(X_1\)</span>, that is, the horizontal
 axis in the figure below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-189"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-194"></span>
 <img src="images/discrim/discrim_axes2.svg" alt="Axis $X_1$ separates class 1 from groups 2 and 3" width="50%" />
 <p class="caption">
 Figure 19.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 from groups 2 and 3
@@ -433,7 +434,7 @@ Figure 19.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 fro
 classes 2 and 3. However, class 2 is largely confouded with class 3.</p>
 <p>Another option is consider the axis associated with the predictor <span class="math inline">\(X_2\)</span>,
 that is, the vertical axis in the figure below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-190"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-195"></span>
 <img src="images/discrim/discrim_axes3.svg" alt="Axis $X_1$ separates class 3 from groups 1 and 2" width="50%" />
 <p class="caption">
 Figure 19.3: Axis <span class="math inline">\(X_1\)</span> separates class 3 from groups 1 and 2
@@ -444,7 +445,7 @@ classes 1 and 2. However, class 1 is largely confouded with class 2.</p>
 <p>Is there an axis that “best” separates the three clouds?</p>
 <p>We can try to look for an optimal representation in the sense of finding
 an axis that best separates the clouds, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-191"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-196"></span>
 <img src="images/discrim/discrim_axes4.svg" alt="An axis the best separates all three classes" width="50%" />
 <p class="caption">
 Figure 19.4: An axis the best separates all three classes
@@ -456,7 +457,7 @@ Figure 19.4: An axis the best separates all three classes
 which provides the best separation between classes? To answer this question,
 we can look for an axis <span class="math inline">\(\Delta_u\)</span>, spanned by some vector <span class="math inline">\(\mathbf{u}\)</span>, such
 that the linear combination <span class="math inline">\(Z = u_1 X_1 + u_2 X_2\)</span> separates all three groups</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-192"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-197"></span>
 <img src="images/discrim/discrim_axes5.svg" alt="Looking for a discriminant axis" width="50%" />
 <p class="caption">
 Figure 19.5: Looking for a discriminant axis
@@ -470,7 +471,7 @@ Figure 19.5: Looking for a discriminant axis
 </ul>
 <p>On one hand, it would be nice to have <span class="math inline">\(\mathbf{u}\)</span>, such that the between-class
 dispersion is maximized:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-193"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-198"></span>
 <img src="images/discrim/discrim_maximize_between.svg" alt="Maximize between-class dispersion" width="50%" />
 <p class="caption">
 Figure 19.6: Maximize between-class dispersion
@@ -478,7 +479,7 @@ Figure 19.6: Maximize between-class dispersion
 </div>
 <p>On the other hand, it would also make sense to have <span class="math inline">\(\mathbf{u}\)</span>, such that
 the within-class dispersion is minimized:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-194"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-199"></span>
 <img src="images/discrim/discrim_minimize_within.svg" alt="Minimize within-class dispersion" width="50%" />
 <p class="caption">
 Figure 19.7: Minimize within-class dispersion
@@ -493,7 +494,7 @@ to meet the objective of discriminant analysis, simoultaneously:</p>
 </ul>
 <p>Let’s see a cartoon picture of this issue. Say we have two classes, each
 one with its centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-195"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-200"></span>
 <img src="images/discrim/discrim_double_goal1.svg" alt="Minimize within-class dispersion" width="50%" />
 <p class="caption">
 Figure 19.8: Minimize within-class dispersion
@@ -502,7 +503,7 @@ Figure 19.8: Minimize within-class dispersion
 <p>Maximizing the between-class separation, involves choosing <span class="math inline">\(\mathbf{u}_a\)</span>
 parallel to the segment linking the centroids. In other words, the direction
 of <span class="math inline">\(\mathbf{u}\)</span> is the one that crosses the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-196"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-201"></span>
 <img src="images/discrim/discrim_double_goal2.svg" alt="Maximize between-class dispersion" width="50%" />
 <p class="caption">
 Figure 19.9: Maximize between-class dispersion
@@ -511,14 +512,14 @@ Figure 19.9: Maximize between-class dispersion
 <p>Minimizing the within-class separation, involves finding <span class="math inline">\(\mathbf{u}_b\)</span>
 perpendicular to the principal axis of the ellipses. This type of <span class="math inline">\(\mathbf{u}\)</span><br />
 does not necessarily crosses through the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-197"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-202"></span>
 <img src="images/discrim/discrim_double_goal3.svg" alt="Minimize within-class dispersion" width="50%" />
 <p class="caption">
 Figure 19.10: Minimize within-class dispersion
 </p>
 </div>
 <p>In general, we end up with two possibilities <span class="math inline">\(\mathbf{u}_a \neq \mathbf{u}_b\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-198"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-203"></span>
 <img src="images/discrim/discrim_double_goal4.svg" alt="Double goal of discriminant analysis ... generally impossible" width="50%" />
 <p class="caption">
 Figure 19.11: Double goal of discriminant analysis … generally impossible

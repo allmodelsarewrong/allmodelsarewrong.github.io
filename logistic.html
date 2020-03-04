@@ -376,6 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.3.1" data-path="trees.html"><a href="trees.html#entropy"><i class="fa fa-check"></i><b>25.3.1</b> Entropy</a></li>
 <li class="chapter" data-level="25.3.2" data-path="trees.html"><a href="trees.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>25.3.2</b> The Math Behind Entropy</a></li>
 <li class="chapter" data-level="25.3.3" data-path="trees.html"><a href="trees.html#gini-impurity"><i class="fa fa-check"></i><b>25.3.3</b> Gini Impurity</a></li>
+<li class="chapter" data-level="25.3.4" data-path="trees.html"><a href="trees.html#toy-example-2"><i class="fa fa-check"></i><b>25.3.4</b> Toy Example</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -479,7 +480,7 @@ extend beyond the range <span class="math inline">\([0,1]\)</span>. Think about 
 <span class="math inline">\(\hat{y}_i\)</span> taking any number between 0 and 1 (which, in this context, makes no
 sense). We could also get negative predicted values, or even predicted values
 greater than 1! On the other hand, if we examine the residuals, then things don’t look great for the linear regression.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-157-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-162-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>So, we need a way to fix these problems.</p>
 </div>
 <div id="secodn-approach-harsh-thresholding" class="section level3">
@@ -542,11 +543,11 @@ coronary heart disease cases in each age group</p>
 #&gt; 8 60-69            10    0.8</code></pre>
 <p>And then graph these averages on the scatterplot, connecting the dots with a
 line:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-160-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-165-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sometimes, however, you may not have data points for a specific <span class="math inline">\(x\)</span>-value. So instead we can use groups of ages. For example, say we define a first group of ages to be 24 - 29 years. The corresponding average will be: <span class="math inline">\(avg(y_i | x_i = \text{group}_1)\)</span></p>
 <p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>. Which is exactly the <strong>regression function</strong>.</p>
 <p>By connecting the averages, we get an interesting sigmoid pattern</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-161-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-166-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>This pattern can be approximated by some mathematical functions, the most popular being the so-called <strong>logistic</strong> function:</p>
 <p><span class="math display">\[
 \text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
@@ -582,7 +583,7 @@ The most famous function—and the function we will use—is the
 Prob(y _i \mid \mathbf{X} ; \boldsymbol{\beta} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{1 + e^{\mathbf{b^\mathsf{T} x_i}}}
 \]</span>
 where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for individual <span class="math inline">\(i\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-167"></span>
 <img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="70%" />
 <p class="caption">
 Figure 17.1: Regression Model Diagram

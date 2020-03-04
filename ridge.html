@@ -376,6 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.3.1" data-path="trees.html"><a href="trees.html#entropy"><i class="fa fa-check"></i><b>25.3.1</b> Entropy</a></li>
 <li class="chapter" data-level="25.3.2" data-path="trees.html"><a href="trees.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>25.3.2</b> The Math Behind Entropy</a></li>
 <li class="chapter" data-level="25.3.3" data-path="trees.html"><a href="trees.html#gini-impurity"><i class="fa fa-check"></i><b>25.3.3</b> Gini Impurity</a></li>
+<li class="chapter" data-level="25.3.4" data-path="trees.html"><a href="trees.html#toy-example-2"><i class="fa fa-check"></i><b>25.3.4</b> Toy Example</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -400,24 +401,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="ridge" class="section level1">
 <h1><span class="header-section-number">15</span> Ridge Regression</h1>
-<p>From OLS: <span class="math inline">\(\mathbf{y} = \mathbf{X} (\mathbf{X^\mathsf{T} X})^{-1} \mathbf{X^\mathsf{T} y}\)</span>
-(provided the inverse exists). If <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is near-singular,
-finding its inverse could lead to trouble. For example, near-perfect
-multicollinearity corresponds to small eigenvalues, which corresponds to large
-variance (of the corresponding estimated coefficients). Hence, a natural idea
-arises: let’s try to modify <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> to avoid this danger of
+<p>From OLS we know that the predicted response is given by
+<span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} (\mathbf{X^\mathsf{T} X})^{-1} \mathbf{X^\mathsf{T} y}\)</span>
+(provided the inverse exists). We also know that if <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>
+is near-singular, finding its inverse could lead to trouble. For example,
+near-perfect multicollinearity corresponds to small eigenvalues of
+<span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>, which corresponds to large variance of the
+corresponding estimated coefficients. Hence, a natural idea arises: let’s try
+to modify <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> to avoid this danger of
 near-singularity.</p>
 <p>Specifically, let us append an extra term to <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>: that is,
-consider <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> .
-Note that <span class="math inline">\(\lambda\)</span> is <em>not</em> an eigenvalue here.
-Note that <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> and
+consider <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span>. Note that <span class="math inline">\(\lambda\)</span> is
+<em>not</em> an eigenvalue here; it is simply a positive constant.</p>
+<p>Note that <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> and
 <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> have the same eigenvectors; however, the eigenvalues
 of the former matrix will never be <span class="math inline">\(0\)</span>.
 Specifically, say <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> has eigenvalues
 <span class="math inline">\(\lambda_1, \lambda_2, \dots, \lambda_p\)</span>. The eigenvalues of
 <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> will therefore be
-<span class="math inline">\(\overset{*}{\lambda_1}, \overset{*}{\lambda_2}, \dots, \overset{*}{\lambda_p}\)</span> where
-<span class="math inline">\(\overset{*}{\lambda_j} = \lambda_j + \lambda\)</span>.</p>
+<span class="math inline">\(\overset{*}{\lambda_1}, \overset{*}{\lambda_2}, \dots, \overset{*}{\lambda_p}\)</span>
+where <span class="math inline">\(\overset{*}{\lambda_j} = \lambda_j + \lambda\)</span>.</p>
 <p>It turns out there is a minimization problem behind this method (of appending
 an extra term to the eigenvalues). In Ridge Regression, we have that</p>
 <p><span class="math display">\[
@@ -426,29 +429,101 @@ an extra term to the eigenvalues). In Ridge Regression, we have that</p>
 <p>Using the MSE for <span class="math inline">\(E_{in}[h(\mathbf{x})]\)</span>, we have
 <span class="math inline">\(E_{in}[h(\mathbf{x})] = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})\)</span>.
 Let us examine the geometric perspective of <span class="math inline">\(E_{in}\)</span> with respect to
-<span class="math inline">\(\mathbf{b}\)</span> (for simplicity, assume we have only two predictors <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>):</p>
-<p><strong>INSERT DIAGRAM</strong></p>
-<p>In OLS, we minimize <span class="math inline">\(E_{in}\)</span> unconditionally; that is, without restriction.
-In Ridge Regression, we are minimizing <span class="math inline">\(E_{in}(\mathbf{b})\)</span> subject to an
-additional constraint:</p>
+<span class="math inline">\(\mathbf{b}\)</span> (for simplicity, assume we have only two parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>):</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-152"></span>
+<img src="images/penalized/ridge-error-surface.svg" alt="Error Surface" width="95%" />
+<p class="caption">
+Figure 15.1: Error Surface
+</p>
+</div>
+<p>In OLS, we minimize <span class="math inline">\(E_{in}\)</span> unconditionally; that is, without any type of
+restriction. In contrast, in Ridge Regression we are minimizing
+<span class="math inline">\(E_{in}(\mathbf{b})\)</span> subject to one constraint:</p>
 <p><span class="math display">\[
-\text{Ridge Regression} \rightarrow \min_{\mathbf{b}} \left\{ \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})  \right\}  \quad \mathrm{s.t.} \quad \| \mathbf{b} \|_{2}^{2} = \mathbf{b^\mathsf{T} b} \leq c
+\min_{\mathbf{b}} \left\{ \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})  \right\}  \quad \mathrm{s.t.} \quad \| \mathbf{b} \|_{2}^{2} = \mathbf{b^\mathsf{T} b} \leq c
 \]</span></p>
-<p>for some “budget” <span class="math inline">\(c\)</span>. On the <span class="math inline">\(b_1, b_2\)</span> plane, what is the locus of points such
-that <span class="math inline">\(\mathbf{b^\mathsf{T}b} \leq c\)</span>? The answer is a disk of radius <span class="math inline">\(c\)</span>,
-centered at the origin. Hence, sketching the level curves (curves of constant RSS)
-as well as this restriction, we obtain the following picture (initially choosing
-a very large value of <span class="math inline">\(c\)</span>):</p>
-<p><strong>INSERT DIAGRAM</strong></p>
-<p>Of course, we could make our budget stricter by reducing the value of <span class="math inline">\(c\)</span> we choose:</p>
-<p><strong>INSERT DIAGRAM</strong></p>
+<p>for some “budget” <span class="math inline">\(c\)</span>.</p>
+<p>On the <span class="math inline">\(b_1, b_2\)</span> plane, what is the locus of points such that
+<span class="math inline">\(\mathbf{b^\mathsf{T}b} \leq c\)</span>? The answer is a disk of radius <span class="math inline">\(c\)</span>,
+centered at the origin. Hence, sketching the level curves (curves of constant
+errors) as well as this restriction, we obtain the following picture
+(initially choosing a very large value of <span class="math inline">\(c\)</span>):</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-153"></span>
+<img src="images/penalized/ridge-constraint2.svg" alt="Error Contours with Constraint" width="70%" />
+<p class="caption">
+Figure 15.2: Error Contours with Constraint
+</p>
+</div>
+<p>Of course, we could make our budget stricter by reducing the value of <span class="math inline">\(c\)</span> we
+choose:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-154"></span>
+<img src="images/penalized/ridge-constraint3.svg" alt="Error Contours with Constraint" width="70%" />
+<p class="caption">
+Figure 15.3: Error Contours with Constraint
+</p>
+</div>
+<p>Now, since our constraint region will be a ball of radius <span class="math inline">\(c\)</span> centered at the
+origin, we can see that the vector <span class="math inline">\(\mathbf{b}\)</span> will be parallel to the gradient
+of our constraint surface. In other words, we can think of the minimization (1)
+in the following terms: find the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> such that its distance
+from the origin is less than or equal to <span class="math inline">\(c\)</span>, whereas its distance to the
+minimum of the error surface is minimum.</p>
+<p>With this visualization, it is easy to see that <span class="math inline">\(\mathbf{b}^{*}\)</span> must lie on
+the boundary of the constraint region (i.e., in the 2-D case, on the circle of
+radius <span class="math inline">\(c\)</span> centered at the origin). Hence, the minimization boils down to the
+following: find the point on the circle of radius <span class="math inline">\(c\)</span> (centered at the origin)
+that is closest to the minimum of the error surface. Geometrically, it is easy
+to identify this point:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-155"></span>
+<img src="images/penalized/ridge-constraint4.svg" alt="Error Contours with Constraint" width="70%" />
+<p class="caption">
+Figure 15.4: Error Contours with Constraint
+</p>
+</div>
+<p>In other words, the optimal solution will be the point of first contact between
+the level curves of <span class="math inline">\(E_{in}\)</span> and the constraint circle. At this point, the
+gradient and normal vectors will be exactly antiparallel which, in mathematical
+terms, means <span class="math inline">\(\nabla E_{in}(\mathbf{b}^*) \propto - \mathbf{b}^{*}\)</span>. For
+convenience purposes, let us choose a proportionality constant of
+<span class="math inline">\(-2 (\lambda / n)\)</span>. That is, we want the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> such that</p>
+<p><span class="math display">\[
+\nabla E_{in}(\mathbf{b}^*) = - 2 \frac{\lambda}{n} \mathbf{b}^{*}  \ \Longleftrightarrow \  \nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*} = \mathbf{0}
+\]</span></p>
+<p>Now, the LHS of the above equation looks like the gradient of something…
+But what is that something? The answer turns out to be
+<span class="math inline">\(f(\mathbf{b}) = E_{in}(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}\)</span>. (You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span>
+is precisely the LHS of the equation above.)</p>
+<p>Let us rephrase what we have seen so far. From our initial minimization (1),
+we saw that its solution is given by the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> that solves
+<em>another</em> minimization problem:</p>
+<p><span class="math display">\[
+\min_{\mathbf{b}} \left\{ E_{in}(\mathbf{b}) + \frac{\lambda}{n} \mathbf{b}^\mathsf{T} \mathbf{b} \right\} 
+\]</span></p>
+<p>In other words, the minimizations (1) and (2) are exactly equivalent.</p>
+<p>From (2) (which is often referred to as the <strong>Lagrangian Formulation</strong> of the
+minimization), we can obtain the solution (namely, the ridge regression
+estimate of <span class="math inline">\(\mathbf{w}\)</span>):</p>
+<p><span class="math display">\[
+\mathbf{w} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}
+\]</span></p>
+<p>Note that, from the discussion at the beginning of this lecture, we see that
+the ridge regression estimate always exists, and is always unique (unlike the
+OLS estimate).</p>
+<p>As an aside, what happens if we choose <span class="math inline">\(c\)</span> to be very large? Geometrically, our
+picture looks like this:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-156"></span>
+<img src="images/penalized/ridge-constraint5.svg" alt="Error Contours with Constraint" width="70%" />
+<p class="caption">
+Figure 15.5: Error Contours with Constraint
+</p>
+</div>
+<p>The idea here is that the unconditional minimum of our error surface lies within the constraint; in other words, the constrained minimization problem gives us precisely the unconstrained minimum. This means that LASSO returns OLS in this case!</p>
 <p>Now, consider two points: <span class="math inline">\(\mathbf{b_1}\)</span> and <span class="math inline">\(\mathbf{b_2}\)</span>, both pictured below.
 Also consider the gradients of the error surface (<span class="math inline">\(\nabla E_{in}(\mathbf{b}_j)\)</span>)
 and the constraint surfaces at each point. We know that the gradient of the red
 circle (i.e. a normal vector) will point radially away from
 <span class="math inline">\(\mathbf{\overset{*}{b}}\)</span>, and we know that <span class="math inline">\(\nabla E_{in}(\mathbf{b}_j)\)</span> will
 point in the direction of steepest ascent along the error surface:</p>
-<p><strong>INSERT DIAGRAM</strong></p>
 
 </div>
 
