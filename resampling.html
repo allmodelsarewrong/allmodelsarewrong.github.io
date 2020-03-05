@@ -273,6 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>13.3.1</b> Transition Formula</a></li>
 <li class="chapter" data-level="13.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>13.3.2</b> Size of Coefficients</a></li>
 </ul></li>
+<li class="chapter" data-level="13.4" data-path="pcr.html"><a href="pcr.html#selecting-number-of-pcs"><i class="fa fa-check"></i><b>13.4</b> Selecting Number of PCs</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>14</b> Partial Least Squares Regression</a><ul>
 <li class="chapter" data-level="14.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>14.1</b> Motivation Example</a></li>
@@ -283,6 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>14.4.2</b> Size of Coefficients</a></li>
 <li class="chapter" data-level="14.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>14.4.3</b> Some Properties</a></li>
 </ul></li>
+<li class="chapter" data-level="14.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>14.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a></li>
 <li class="part"><span><b>VII Classification</b></span></li>
@@ -401,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="resampling" class="section level1">
 <h1><span class="header-section-number">11</span> Resample Approaches</h1>
-<p>In this chapter we discuss how to make the most of a limitted data. We
+<p>In this chapter we discuss how to make the most of a limitted data set. We
 describe several resampling techniques to generate multiple training sets,
 as well as multiple evaluation sets that we can use for both the training phase
 and the pre-selection phase.</p>
@@ -410,7 +412,7 @@ and the pre-selection phase.</p>
 <p>The idea behind most common (re)sampling approaches is to have a way to
 generate multiple sets from just one data set. In statistical learning, the
 training set is the one on which we usually apply resampling methods.</p>
-<p>The following figure depicts the general sampling regime of the approaches
+<p>The figure below depicts the general sampling regime of the approaches
 that are described in the next sections.</p>
 <p>Suppose we are interested in fitting a <span class="math inline">\(k\)</span>-Nearest-Neighbor (<span class="math inline">\(k\)</span>-NN) model.
 In particular, we want to fit a <span class="math inline">\(k\)</span>-NN model with <span class="math inline">\(k=3\)</span> neighbors. So let’s
