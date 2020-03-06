@@ -286,7 +286,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>14.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a></li>
+<li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a><ul>
+<li class="chapter" data-level="15.1" data-path="ridge.html"><a href="ridge.html#a-minimization-problem"><i class="fa fa-check"></i><b>15.1</b> A Minimization Problem</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>15.1.1</b> Constraining Regression Coefficients</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>VII Classification</b></span></li>
 <li class="chapter" data-level="16" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>16</b> Classification Methods</a></li>
 <li class="chapter" data-level="17" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a><ul>
@@ -800,7 +804,7 @@ Having defined the <span class="math inline">\(k\)</span> fold sets, we form the
 <ul>
 <li>For <span class="math inline">\(k = 1, \dots, K\)</span>
 <ul>
-<li>fit PLSR model <span class="math inline">\(h_{q,k}\)</span> with <span class="math inline">\(q\)</span>-PLS scores on <span class="math inline">\(\mathcal{D}_{train-k}\)</span></li>
+<li>fit PLSR model <span class="math inline">\(h_{q,k}\)</span> with <span class="math inline">\(q\)</span> PLS-scores on <span class="math inline">\(\mathcal{D}_{train-k}\)</span></li>
 <li>compute and store <span class="math inline">\(E_{eval-k} (h_{q,k})\)</span> using <span class="math inline">\(\mathcal{D}_{eval-k}\)</span></li>
 </ul></li>
 <li>end for <span class="math inline">\(k\)</span></li>

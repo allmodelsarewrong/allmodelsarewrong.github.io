@@ -286,7 +286,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>14.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a></li>
+<li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a><ul>
+<li class="chapter" data-level="15.1" data-path="ridge.html"><a href="ridge.html#a-minimization-problem"><i class="fa fa-check"></i><b>15.1</b> A Minimization Problem</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>15.1.1</b> Constraining Regression Coefficients</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>VII Classification</b></span></li>
 <li class="chapter" data-level="16" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>16</b> Classification Methods</a></li>
 <li class="chapter" data-level="17" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a><ul>
@@ -455,11 +459,11 @@ i.e. iris flowers. The four variables are</p>
 #&gt; </code></pre>
 <p>Let’s look at the distribution of the four input variables without making
 distinction between species of iris flowers:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-172-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-175-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Now let’s take into account the group structure according to the species:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-173-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-176-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>We can also look at density curves:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-174-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-177-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="distinguishing-species" class="section level3">
 <h3><span class="header-section-number">18.1.1</span> Distinguishing Species</h3>
 <p>Let us consider this question: Which predictor provides the “best” distinction
@@ -614,7 +618,7 @@ correlation ratios and F ratios</p>
 <div id="geometric-perspective" class="section level2">
 <h2><span class="header-section-number">18.3</span> Geometric Perspective</h2>
 <p>Data as a cloud of points in <span class="math inline">\(p\)</span>-dimensional space.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-184"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-187"></span>
 <img src="images/discrim/discrim_cloud1.svg" alt="Cloud of n points in p-dimensional space" width="50%" />
 <p class="caption">
 Figure 18.1: Cloud of n points in p-dimensional space
@@ -622,7 +626,7 @@ Figure 18.1: Cloud of n points in p-dimensional space
 </div>
 <p>We can look at the average individual, better known as the global centroid
 (i.e. the center of gravity of the cloud of points).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-185"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-188"></span>
 <img src="images/discrim/discrim_cloud2.svg" alt="The centroid of the cloud of points" width="50%" />
 <p class="caption">
 Figure 18.2: The centroid of the cloud of points
@@ -665,7 +669,7 @@ of spread or dispersion in the data.</p>
 <li><p>Let <span class="math inline">\(n_k\)</span> be the number of observations in the <span class="math inline">\(k\)</span>-th group <span class="math inline">\(C_k\)</span></p></li>
 <li><p>The number of individuals: <span class="math inline">\(n = n_1 + n_2 + \dots + n_K = \sum_{k=1}^{K} n_k\)</span></p></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-186"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-189"></span>
 <img src="images/discrim/discrim_cloud3.svg" alt="The objects are divided into classes or groups" width="50%" />
 <p class="caption">
 Figure 18.3: The objects are divided into classes or groups
@@ -673,14 +677,14 @@ Figure 18.3: The objects are divided into classes or groups
 </div>
 <p>Each class is denoted by <span class="math inline">\(C_k\)</span>, and it is supposed to be formed by <span class="math inline">\(n_k\)</span>
 individuals.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-187"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-190"></span>
 <img src="images/discrim/discrim_cloud4.svg" alt="Each class forms its own sub-cloud" width="50%" />
 <p class="caption">
 Figure 18.4: Each class forms its own sub-cloud
 </p>
 </div>
 <p>We can also look at the local or class centroids (one per class)</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-188"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-191"></span>
 <img src="images/discrim/discrim_cloud5.svg" alt="Each class has its own centroid" width="50%" />
 <p class="caption">
 Figure 18.5: Each class has its own centroid
@@ -696,7 +700,7 @@ for those observations in class <span class="math inline">\(k\)</span>:</p>
 \bar{x}_{jk} = \frac{1}{n_k} \sum_{i \in C_k} x_{ij}
 \]</span></p>
 <p>We can focus on the dispersion within the clouds</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-189"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-192"></span>
 <img src="images/discrim/discrim_cloud6.svg" alt="Dispersion within the sub-clouds" width="50%" />
 <p class="caption">
 Figure 18.6: Dispersion within the sub-clouds
@@ -723,7 +727,7 @@ to get the <strong>Within-class variance matrix</strong> <span class="math inlin
 \mathbf{W} = \sum_{k=1}^{K} \frac{n_k - 1}{n - 1} \mathbf{W_k}
 \]</span></p>
 <p>What if we focus on just the centroids?</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-190"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-193"></span>
 <img src="images/discrim/discrim_cloud7.svg" alt="Global and Group Centroids" width="50%" />
 <p class="caption">
 Figure 18.7: Global and Group Centroids
@@ -778,7 +782,7 @@ and <span class="math inline">\(\mathbf{Y}\)</span> be the <span class="math inl
 <li><p><span class="math inline">\(\text{BSS} = \mathbf{X^\mathsf{T} Y (Y^\mathsf{T} Y)^{-1} Y^\mathsf{T} X}\)</span></p></li>
 <li><p><span class="math inline">\(\text{WSS} = \mathbf{X^\mathsf{T} (I - Y (Y^\mathsf{T} Y)^{-1} Y^\mathsf{T}) X}\)</span></p></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-191"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-194"></span>
 <img src="images/discrim/discrim_cloud10.svg" alt="Dispersion Decomposition" width="85%" />
 <p class="caption">
 Figure 18.8: Dispersion Decomposition

@@ -286,7 +286,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>14.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a></li>
+<li class="chapter" data-level="15" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>15</b> Ridge Regression</a><ul>
+<li class="chapter" data-level="15.1" data-path="ridge.html"><a href="ridge.html#a-minimization-problem"><i class="fa fa-check"></i><b>15.1</b> A Minimization Problem</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>15.1.1</b> Constraining Regression Coefficients</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>VII Classification</b></span></li>
 <li class="chapter" data-level="16" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>16</b> Classification Methods</a></li>
 <li class="chapter" data-level="17" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a><ul>
@@ -428,19 +432,48 @@ an extra term to the eigenvalues). In Ridge Regression, we have that</p>
 <p><span class="math display">\[
 \mathbf{y}_{RR}  = \mathbf{X} (\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I} )^{-1} \mathbf{X^\mathsf{T} y}
 \]</span></p>
-<p>Using the MSE for <span class="math inline">\(E_{in}[h(\mathbf{x})]\)</span>, we have
-<span class="math inline">\(E_{in}[h(\mathbf{x})] = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})\)</span>.
-Let us examine the geometric perspective of <span class="math inline">\(E_{in}\)</span> with respect to
-<span class="math inline">\(\mathbf{b}\)</span> (for simplicity, assume we have only two parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>):</p>
+<div id="a-minimization-problem" class="section level2">
+<h2><span class="header-section-number">15.1</span> A Minimization Problem</h2>
+<p>As you know, in linear regression the overall error function <span class="math inline">\(E_{in}\)</span> that we
+are interested in minimizing is the mean squared error (<span class="math inline">\(\text{MSE}\)</span>).
+Moreover, we can look at the geometry of such error measure from the perspective
+of the parameters (i.e. the regression coefficients).
+From this perspective, we denote this error function as <span class="math inline">\(E(\mathbf{b})\)</span>,
+making explicit its dependency on the vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>.
+For illustration purposes, let’s consider two inputs <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and their corresponding parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. The error function <span class="math inline">\(E(\mathbf{b})\)</span>
+will generate a convex error surface with the shape of a bowl (see figure below).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-152"></span>
 <img src="images/penalized/ridge-error-surface.svg" alt="Error Surface" width="95%" />
 <p class="caption">
 Figure 15.1: Error Surface
 </p>
 </div>
-<p>In OLS, we minimize <span class="math inline">\(E_{in}\)</span> unconditionally; that is, without any type of
-restriction. In contrast, in Ridge Regression we are minimizing
-<span class="math inline">\(E_{in}(\mathbf{b})\)</span> subject to one constraint:</p>
+<p>Using the MSE for <span class="math inline">\(E_{in}[h(\mathbf{x})]\)</span>, we have
+<span class="math inline">\(E_{in}[h(\mathbf{x})] = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})\)</span>.</p>
+<p>In OLS, we minimize <span class="math inline">\(E(\mathbf{b})\)</span> unconditionally; that is, without any type
+of restriction. The associated solution, is indicated with a blue dot at the
+center of the elliptical contours of constant error.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-153"></span>
+<img src="images/penalized/ridge-constraint0.svg" alt="Contour Errors with OLS solution" width="70%" />
+<p class="caption">
+Figure 15.2: Contour Errors with OLS solution
+</p>
+</div>
+<div id="constraining-regression-coefficients" class="section level3">
+<h3><span class="header-section-number">15.1.1</span> Constraining Regression Coefficients</h3>
+<p>An alternative approach to minimize <span class="math inline">\(E(\mathbf{b})\)</span> unconditionally is to
+impose a restriction on the squared magnitude of the regression coefficients.
+In other words, we still want to minimize the mean squared error <span class="math inline">\(E(\mathbf{b})\)</span>
+but now we don’t let <span class="math inline">\(\mathbf{b}\)</span> take any kind of values. Instead, we are
+going to require the following condition on <span class="math inline">\(b_1, \dots, b_p\)</span>:</p>
+<p><span class="math display">\[
+\textsf{constraining coefficients: } \sum_{j=1}^{p} b_{j}^2 \leq c
+\]</span></p>
+<p>Here’s an easy way to think about—and remember—this condition: think of
+<span class="math inline">\(c\)</span> as a <em>budget</em> for how much you can spend on the size of all coefficients
+<span class="math inline">\(b_1, \dots, b_p\)</span> (or their squared values to be more precise).</p>
+<p>Adding this restriction to the MSE, we now have the following constrained
+minimization of <span class="math inline">\(E(\mathbf{b})\)</span>:</p>
 <p><span class="math display">\[
 \min_{\mathbf{b}} \left\{ \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})  \right\}  \quad \mathrm{s.t.} \quad \| \mathbf{b} \|_{2}^{2} = \mathbf{b^\mathsf{T} b} \leq c
 \]</span></p>
@@ -449,52 +482,88 @@ restriction. In contrast, in Ridge Regression we are minimizing
 <span class="math inline">\(\mathbf{b^\mathsf{T}b} \leq c\)</span>? The answer is a disk of radius <span class="math inline">\(c\)</span>,
 centered at the origin. Hence, sketching the level curves (curves of constant
 errors) as well as this restriction, we obtain the following picture
-(initially choosing a very large value of <span class="math inline">\(c\)</span>):</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-153"></span>
-<img src="images/penalized/ridge-constraint2.svg" alt="Error Contours with Constraint" width="70%" />
-<p class="caption">
-Figure 15.2: Error Contours with Constraint
-</p>
-</div>
-<p>Of course, we could make our budget stricter by reducing the value of <span class="math inline">\(c\)</span> we
-choose:</p>
+(for some value of <span class="math inline">\(c\)</span>):</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-154"></span>
-<img src="images/penalized/ridge-constraint3.svg" alt="Error Contours with Constraint" width="70%" />
+<img src="images/penalized/ridge-constraint1.svg" alt="Error Contours with Constraint" width="70%" />
 <p class="caption">
 Figure 15.3: Error Contours with Constraint
 </p>
 </div>
-<p>Now, since our constraint region will be a ball of radius <span class="math inline">\(c\)</span> centered at the
-origin, we can see that the vector <span class="math inline">\(\mathbf{b}\)</span> will be parallel to the gradient
-of our constraint surface. In other words, we can think of the minimization (1)
-in the following terms: find the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> such that its distance
-from the origin is less than or equal to <span class="math inline">\(c\)</span>, whereas its distance to the
-minimum of the error surface is minimum.</p>
-<p>With this visualization, it is easy to see that <span class="math inline">\(\mathbf{b}^{*}\)</span> must lie on
-the boundary of the constraint region (i.e., in the 2-D case, on the circle of
-radius <span class="math inline">\(c\)</span> centered at the origin). Hence, the minimization boils down to the
-following: find the point on the circle of radius <span class="math inline">\(c\)</span> (centered at the origin)
-that is closest to the minimum of the error surface. Geometrically, it is easy
-to identify this point:</p>
+<p>Depending on the chosen value for <span class="math inline">\(c\)</span>, we could end up with a big enough
+constrain that includes the OLS solution, like in the following picture:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-155"></span>
-<img src="images/penalized/ridge-constraint4.svg" alt="Error Contours with Constraint" width="70%" />
+<img src="images/penalized/ridge-constraint2.svg" alt="Error contours with a large budget" width="70%" />
 <p class="caption">
-Figure 15.4: Error Contours with Constraint
+Figure 15.4: Error contours with a large budget
 </p>
 </div>
-<p>In other words, the optimal solution will be the point of first contact between
-the level curves of <span class="math inline">\(E_{in}\)</span> and the constraint circle. At this point, the
-gradient and normal vectors will be exactly antiparallel which, in mathematical
-terms, means <span class="math inline">\(\nabla E_{in}(\mathbf{b}^*) \propto - \mathbf{b}^{*}\)</span>. For
-convenience purposes, let us choose a proportionality constant of
+<p>Of course, we could make our budget stricter by reducing the value of <span class="math inline">\(c\)</span> we
+choose:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-156"></span>
+<img src="images/penalized/ridge-constraint3.svg" alt="Error Contours with small budget" width="70%" />
+<p class="caption">
+Figure 15.5: Error Contours with small budget
+</p>
+</div>
+<p>Let’s consider one generic elliptical contour of constant error, a given
+budget <span class="math inline">\(c\)</span>, and a point <span class="math inline">\(\mathbf{b}\)</span> satisfying the budget constraint, like in
+the picture below.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-157"></span>
+<img src="images/penalized/ridge-constraint4.svg" alt="Generic error contour with candidate point" width="70%" />
+<p class="caption">
+Figure 15.6: Generic error contour with candidate point
+</p>
+</div>
+<p>As you can tell from the above diagram, the candidate point <span class="math inline">\(\mathbf{b}\)</span> is
+such that <span class="math inline">\(\mathbf{b^\mathsf{T} b} = c\)</span>. However, this point is not fully
+minimizing <span class="math inline">\(E(\mathbf{b})\)</span>, given the constraint. Visually speaking, we could
+find other candidate values for <span class="math inline">\(\mathbf{b}\)</span> along the red circumference that
+would give us smaller <span class="math inline">\(E(\mathbf{b})\)</span>.</p>
+<p>How do we know that the shown candidate point <span class="math inline">\(\mathbf{b}\)</span> can be improved?
+To answer this question we should visualize the gradient <span class="math inline">\(\nabla E(\mathbf{b})\)</span>
+which, as we know, will be pointing in the direction orthogonal to the contour
+ellipse—i.e. direction of largest change of <span class="math inline">\(E(\mathbf{b})\)</span>. In addition, we
+should also pay attention to the direction of the candidate point, illustrated
+with the red vector. Notice that this vector is normal (i.e. orthogonal) to the
+circumference of the constraint.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-158"></span>
+<img src="images/penalized/ridge-constraint5.svg" alt="Gradient of error surface associated to candidate point" width="70%" />
+<p class="caption">
+Figure 15.7: Gradient of error surface associated to candidate point
+</p>
+</div>
+<p>Notice also that the angle between the normal vector and the gradient is less
+than 180 degrees. This is an indication that we can find better <span class="math inline">\(\mathbf{b}\)</span>
+points that make the error smaller. But is there an optimal <span class="math inline">\(\mathbf{b^*}\)</span> that
+achieves the smallest <span class="math inline">\(E(\mathbf{b})\)</span> while satisfying the budget constraint?
+With this visualization, we get the intuition that <span class="math inline">\(\mathbf{b}^{*}\)</span> must lie on
+the boundary of the constraint region (i.e., in the 2-D case, on the circle of
+radius <span class="math inline">\(c\)</span> centered at the origin).</p>
+<p>It turns out that the optimal vector <span class="math inline">\(\mathbf{b^*}\)</span> corresponds to the one that
+is exactly the opposite of the gradient.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-159"></span>
+<img src="images/penalized/ridge-constraint6.svg" alt="Optimal point opposite to the gradient" width="70%" />
+<p class="caption">
+Figure 15.8: Optimal point opposite to the gradient
+</p>
+</div>
+<p>At this point, the gradient and normal vectors will be exactly antiparallel
+which, in mathematical terms, means:</p>
+<p><span class="math display">\[
+\nabla E_{in}(\mathbf{b}^*) \propto - \mathbf{b}^{*}
+\]</span></p>
+<p>For convenience purposes, let us choose a proportionality constant of
 <span class="math inline">\(-2 (\lambda / n)\)</span>. That is, we want the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> such that</p>
 <p><span class="math display">\[
 \nabla E_{in}(\mathbf{b}^*) = - 2 \frac{\lambda}{n} \mathbf{b}^{*}  \ \Longleftrightarrow \  \nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*} = \mathbf{0}
 \]</span></p>
 <p>Now, the LHS of the above equation looks like the gradient of something…
 But what is that something? The answer turns out to be
-<span class="math inline">\(f(\mathbf{b}) = E_{in}(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}\)</span>. (You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span>
-is precisely the LHS of the equation above.)</p>
+<span class="math inline">\(f(\mathbf{b}) = E_{in}(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}\)</span>. You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span>
+is precisely the LHS of the equation above, that is:</p>
+<p><span class="math display">\[
+\nabla f(\mathbf{b}^*) = \nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*}
+\]</span></p>
 <p>Let us rephrase what we have seen so far. From our initial minimization (1),
 we saw that its solution is given by the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> that solves
 <em>another</em> minimization problem:</p>
@@ -504,29 +573,16 @@ we saw that its solution is given by the vector <span class="math inline">\(\mat
 <p>In other words, the minimizations (1) and (2) are exactly equivalent.</p>
 <p>From (2) (which is often referred to as the <strong>Lagrangian Formulation</strong> of the
 minimization), we can obtain the solution (namely, the ridge regression
-estimate of <span class="math inline">\(\mathbf{w}\)</span>):</p>
+estimate of <span class="math inline">\(\mathbf{b}\)</span>):</p>
 <p><span class="math display">\[
-\mathbf{w} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}
+\mathbf{b} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}
 \]</span></p>
 <p>Note that, from the discussion at the beginning of this lecture, we see that
 the ridge regression estimate always exists, and is always unique (unlike the
 OLS estimate).</p>
-<p>As an aside, what happens if we choose <span class="math inline">\(c\)</span> to be very large? Geometrically, our
-picture looks like this:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-156"></span>
-<img src="images/penalized/ridge-constraint5.svg" alt="Error Contours with Constraint" width="70%" />
-<p class="caption">
-Figure 15.5: Error Contours with Constraint
-</p>
-</div>
-<p>The idea here is that the unconditional minimum of our error surface lies within the constraint; in other words, the constrained minimization problem gives us precisely the unconstrained minimum. This means that LASSO returns OLS in this case!</p>
-<p>Now, consider two points: <span class="math inline">\(\mathbf{b_1}\)</span> and <span class="math inline">\(\mathbf{b_2}\)</span>, both pictured below.
-Also consider the gradients of the error surface (<span class="math inline">\(\nabla E_{in}(\mathbf{b}_j)\)</span>)
-and the constraint surfaces at each point. We know that the gradient of the red
-circle (i.e. a normal vector) will point radially away from
-<span class="math inline">\(\mathbf{\overset{*}{b}}\)</span>, and we know that <span class="math inline">\(\nabla E_{in}(\mathbf{b}_j)\)</span> will
-point in the direction of steepest ascent along the error surface:</p>
 
+</div>
+</div>
 </div>
 
 
