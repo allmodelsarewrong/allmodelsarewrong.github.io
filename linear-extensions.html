@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Resample Approaches | All Models Are Wrong</title>
+  <title>16 Beyond Linear Regression | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Resample Approaches | All Models Are Wrong" />
+  <meta property="og:title" content="16 Beyond Linear Regression | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Resample Approaches | All Models Are Wrong" />
+  <meta name="twitter:title" content="16 Beyond Linear Regression | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="phases.html"/>
-<link rel="next" href="regular.html"/>
+<link rel="prev" href="ridge.html"/>
+<link rel="next" href="classif.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -413,195 +413,165 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="resampling" class="section level1">
-<h1><span class="header-section-number">11</span> Resample Approaches</h1>
-<p>In this chapter we discuss how to make the most of a limitted data set. We
-describe several resampling techniques to generate multiple training sets,
-as well as multiple evaluation sets that we can use for both the training phase
-and the pre-selection phase.</p>
-<div id="general-sampling-blueprint" class="section level2">
-<h2><span class="header-section-number">11.1</span> General Sampling Blueprint</h2>
-<p>The idea behind most common (re)sampling approaches is to have a way to
-generate multiple sets from just one data set. In statistical learning, the
-training set is the one on which we usually apply resampling methods.</p>
-<p>The figure below depicts the general sampling regime of the approaches
-that are described in the next sections.</p>
-<p>Suppose we are interested in fitting a <span class="math inline">\(k\)</span>-Nearest-Neighbor (<span class="math inline">\(k\)</span>-NN) model.
-In particular, we want to fit a <span class="math inline">\(k\)</span>-NN model with <span class="math inline">\(k=3\)</span> neighbors. So let’s
-denote this type of model as <span class="math inline">\(\mathcal{H}_1\)</span> hypothesis.
-The starting point is the training set <span class="math inline">\(\mathcal{D}_{train}\)</span>. Using a sampling
-mechanism we split the training set into two subsets. One of the subsets,
-that we denote as <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, is used to train a model, denoted
-<span class="math inline">\(h_{1,b}\)</span>. The other subset, denoted <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>, is used to
-evaluate <span class="math inline">\(h_{1,b}\)</span> by calculating <span class="math inline">\(E_{eval-b}\)</span>.</p>
-<p>The way the evaluation set is formed, is by taking those data points in
-<span class="math inline">\(\mathcal{D}_{train}\)</span>, that are not included in <span class="math inline">\(\mathcal{D}_{train-b}\)</span>,
-that is:
-<span class="math inline">\(\mathcal{D}_{eval-b} = \mathcal{D}_{train} \setminus \mathcal{D}_{train-b}\)</span></p>
-<p>This procedure is repeated
-<span class="math inline">\(B\)</span> times. At the end, we average all the evaluation errors to get a single
-measure indicating the typical performance for the particular type of trained
-models. In this example, this would be the typical performance of 3-NN
-models.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
-<img src="images/validation/sampling-methods1.svg" alt="General scheme for sampling approaches" width="95%" />
-<p class="caption">
-Figure 11.1: General scheme for sampling approaches
-</p>
-</div>
-<p>What distinguishes each sampling approach is the size and way in which the
-random samples are generated to obtain the sets <span class="math inline">\(\mathcal{D}_{train-b}\)</span>. They
-can be random samples without replacement,
-they can be random samples with replacement.</p>
-</div>
-<div id="monte-carlo-cross-validation" class="section level2">
-<h2><span class="header-section-number">11.2</span> Monte Carlo Cross Validation</h2>
-<p>The first sampling method that we discuss is Monte-Carlo Cross-Validation,
-sometimes known as Repeated Holdout Method.</p>
-<p>As the name indicates, this method repeatedly produces a holdout set,
-<span class="math inline">\(\mathcal{D}_{eval-b}\)</span>, to be used for evaluating the performance of a model.
-At each iteration (or repetition) <span class="math inline">\(b\)</span> we split <span class="math inline">\(\mathcal{D}_{train}\)</span> into <span class="math inline">\(\mathcal{D}_{train-b}\)</span> and <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>. We use the training subset
-to fit a particular model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on <span class="math inline">\(E_{eval-b}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
-<img src="images/validation/repeated-holdout.svg" alt="Several splits into training and evaluation sets" width="80%" />
-<p class="caption">
-Figure 11.2: Several splits into training and evaluation sets
-</p>
-</div>
-<p>After several repetitions, we average all the test errors <span class="math inline">\(E_{eval-b}\)</span>
-to obtain <span class="math inline">\(E_{eval}(h^{-})\)</span>, an estimate of <span class="math inline">\(E_{out}(h^{-})\)</span>.</p>
-<div id="repeated-holdout-algorithm" class="section level4 unnumbered">
-<h4>Repeated Holdout Algorithm</h4>
-<p>Here’s the conceptual algorithm for the repeated holdout method:</p>
-<ol style="list-style-type: decimal">
-<li><p>Compile the available training data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
-<li><p>Repeat the Holdout method <span class="math inline">\(B\)</span> times, where <span class="math inline">\(B\)</span> is a very large integer
-(for example, 500). At each iteration, obtain the following elements:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, by sampling <span class="math inline">\(n-r\)</span> elements <strong>without</strong>
-replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span></p></li>
-<li><p>Compute <span class="math inline">\(E_{eval-b} = \frac{1}{r} \sum_{i} err_i \big( h^{-}_{b}(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span></p></li>
-</ol></li>
-<li><p>Obtain an overall value for <span class="math inline">\(E_{eval}\)</span> by averaging the <span class="math inline">\(E_{eval-b}\)</span>
-values:</p></li>
-</ol>
+<div id="linear-extensions" class="section level1">
+<h1><span class="header-section-number">16</span> Beyond Linear Regression</h1>
+<p>In this part of the book we will talk about extensions of the linear model,
+as well as alternative approaches to relax the assumption of linearity.</p>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">16.1</span> Introduction</h2>
+<p>So far we have talked about regression models in their most basic way: linear
+regression models. So let’s take a step back and recall the general regression
+framework in which the main idea is to find a function <span class="math inline">\(f()\)</span> that takes in one
+or more input features, and returns a response value. In addition, we also
+suppose that there is a noise or error term to indicate the imperfect nature
+of our model:</p>
 <p><span class="math display">\[
-E_{eval} = \frac{1}{B} \sum_{b=1}^{B} E_{eval-b}
+y_i = f(\mathbf{x_i}) + \varepsilon_i
 \]</span></p>
-</div>
-</div>
-<div id="bootstrap-method" class="section level2">
-<h2><span class="header-section-number">11.3</span> Bootstrap Method</h2>
-<p>Another interesting validation procedure is the “Bootstrap Method”.</p>
-<p>This method is very similar to the Repeated Holdout method. The main difference
-is in the way <span class="math inline">\(\mathcal{D}_{train}\)</span> is split in each repetition. In the
-bootstrap method, as the name says, the samples consists of <em>bootstrap</em> samples.</p>
-<p>Recall that a bootstrap sample is a random sample of the data taken
-<strong>with replacement</strong>. This means that the bootstrap sample is the same size as
-elements in <span class="math inline">\(\mathcal{D}_{train}\)</span>. As a result, some samples will be represented
-multiple times in the bootstrap sample while other will not be selected at all.
-The samples not selected are usually referred to as the out-of-bag samples.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
-<img src="images/validation/bootstrap-method.svg" alt="Several splits with bootstrap samples into training and test sets" width="80%" />
-<p class="caption">
-Figure 11.3: Several splits with bootstrap samples into training and test sets
-</p>
-</div>
-<div id="bootstrap-algorithm" class="section level4 unnumbered">
-<h4>Bootstrap Algorithm</h4>
-<p>Here’s the conceptual algorithm for the bootstrap method:</p>
-<ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
-<li><p>Repeat the following steps for <span class="math inline">\(b = 1, 2, \dots B\)</span> where <span class="math inline">\(B\)</span> is a very large
-integer (for example, 500):</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span> by sampling <span class="math inline">\(n\)</span> times <strong>with</strong>
-replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>. (Note that <span class="math inline">\(\mathcal{D}_{train-b}\)</span>
-could contain repeated elements).</p></li>
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> by combining all of the elements in
-<span class="math inline">\(\mathcal{D}_{train}\)</span> that were not captured in <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.
-Hence, the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> will change at each iteration.
-(Note that <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> should <strong>not</strong> contain repeated values).</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_b\)</span> by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.</p></li>
-<li><p>Compute <span class="math inline">\(E_{eval} = \frac{1}{r_b} \sum_{i} err_i \big( h^{-}_b(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span> and <span class="math inline">\(r_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>.</p></li>
-</ol></li>
-<li><p>Obtain an overall value for bootstrap <span class="math inline">\(E_{eval}\)</span> by averaging the
-<span class="math inline">\(E_{eval-b}\)</span> values:</p></li>
-</ol>
+<p>Usually, we assume that the error terms have zero-men:
+<span class="math inline">\(\mathbb{E}(\varepsilon_i) = 0\)</span>, and constant variance:
+<span class="math inline">\(var(\varepsilon_i) = \sigma^2\)</span>.</p>
+<p>The theoretical essence in regression is to model <span class="math inline">\(f()\)</span> as the conditional
+expectation of <span class="math inline">\(y|\mathbf{x}\)</span>, which is precisely the so-called
+<strong>regresion function</strong>:</p>
 <p><span class="math display">\[
-\text{bootstrap } E_{eval} = \frac{1}{B} \sum_{b=1}^{B} E_{eval-b}
+\text{regression function} \longrightarrow \mathbb{E} (y|\mathbf{x}) = f(\mathbf{x})
 \]</span></p>
-<p>Bootstrapping enables us to construct confidence intervals for <span class="math inline">\(E_{out}\)</span>.
-We have that:</p>
-<p><span class="math display">\[ 
-\mathrm{SE}_{boot} = \sqrt{  \frac{1}{B - 1}  \sum_{b=1}^{B} \left(E_{eval-b} - E_{eval} \right)^2 }
-\]</span></p>
-<p>Empirical quantiles can be used.</p>
-</div>
-</div>
-<div id="k-fold-cross-validation" class="section level2">
-<h2><span class="header-section-number">11.4</span> <span class="math inline">\(K\)</span>-Fold Cross-Validation</h2>
-<p>The idea of the <em>classic</em> cross-validation method (not to confuse with monte
-carlo cross-validation) is to split the training data into <span class="math inline">\(K\)</span> sets of equal
-(or almost equal) size. Each of the resulting subsets is referred to as a
-<strong>fold</strong>. Usually, the way in which the folds are formed is by randomly
-splitting the initial data.</p>
-<p>The diagram below illustrates a 3-fold cross validation sampling scheme:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-98"></span>
-<img src="images/validation/cv-3fold.svg" alt="3-fold splits" width="85%" />
-<p class="caption">
-Figure 11.4: 3-fold splits
-</p>
-</div>
-<p>As you can tell, the training data is (randomly) divided into three sets of
-similar size: the 3-folds. Then, at each iteration <span class="math inline">\(b\)</span>, one of the folds is
-held out for evaluation purposes, i.e. <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>; the reamining
-folds are merged into <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, and used for training purposes.
-As usual, at the end of the iterations (<span class="math inline">\(b = K\)</span>), all evaluation errors
-<span class="math inline">\(E_{eval-b}\)</span> are aggregated into an average <span class="math inline">\(E_{eval}\)</span>, commonly known
-as the cross-validation error <span class="math inline">\(E_{cv}\)</span>.</p>
-<div id="leave-one-out-cross-validation-loocv" class="section level3">
-<h3><span class="header-section-number">11.4.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
-<p>One special case of <span class="math inline">\(K\)</span>-fold cross-validation is when each fold consists of a
-single data point, that is <span class="math inline">\(K = n\)</span>. This particular scheme is known as
-leave-one-out cross-validation (loocv). Let’s see how to carry out loocv.</p>
-<ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
-<li><p>Repeat the following for <span class="math inline">\(i = 1, 2, \dots, n\)</span> (where <span class="math inline">\(n\)</span> is the number of
-data points)</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generate the <span class="math inline">\(i\)</span>-th training set <span class="math inline">\(\mathcal{D}_i\)</span> by removing the <span class="math inline">\(i\)</span>-th
-element from <span class="math inline">\(\mathcal{D}_{train}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
-<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span> to obtain model <span class="math inline">\(h_{i}^{-}\)</span></p></li>
-<li><p>Use the point <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> that is left-out to compute
-<span class="math inline">\(E_{eval-i} = err \big( h_{i}^{-}(\mathbf{x_i}), y_i \big)\)</span>.</p></li>
-</ol></li>
-<li><p>Obtain the <strong>cross-validation error</strong> <span class="math inline">\(E_{cv}\)</span> by averaging the individual
-errors:</p></li>
-</ol>
+<p>One important thing to highlight is that the theoretical framework of regression
+says nothing about what the target function <span class="math inline">\(f()\)</span> should or could look like,
+which is good news because we have a lot of freedom to decide on almost any
+form for <span class="math inline">\(f()\)</span>. Again, here the term <em>function</em> is not the classic definition
+of a mathematical function. Instead, think of the notion of function as a
+machine that takes inputs <span class="math inline">\(\mathbf{x}\)</span>, and returns and output.</p>
+<p>Up to now we have been working with the most standard type of form for <span class="math inline">\(f()\)</span>
+which is a linear model:</p>
 <p><span class="math display">\[
-E_{cv} = \frac{1}{n} \sum_{i=1}^{n} err_i  = \frac{1}{n} \sum_{i=1}^{n} E_{eval-i}
+\hat{y}_i = b_0 + b_1 x_{i1} + b_2 x_{i2} + \dots + b_p x_{ip} = \mathbf{b^\mathsf{T} x_i}
 \]</span></p>
-<p>In this way, we are able to fit <span class="math inline">\(n\)</span> models with <span class="math inline">\(n - 1\)</span> points, while also
-generating <span class="math inline">\(n\)</span> testing datasets. So, this looks like the best of both worlds:
-we have a large training data set, <em>and</em> a lot of test datasets! But, there is
-still a cost: the individual errors are no longer independent.</p>
-<p>For illustrative purposes, consider a data set withonly three points:
-<span class="math inline">\(\mathcal{D} = \{p_1, p_2, p_3\}\)</span> (pictured below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-99"></span>
-<img src="images/validation/toy-loocv.png" alt="Illustration of loocv errors" width="80%" />
+<p>or its equivalen formula in vector-matrix notation:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{Xb}
+\]</span></p>
+<p>which we can represent graphically using a path diagram like this (assuming
+a cosntant term <span class="math inline">\(\mathbf{x_0} = \mathbf{1}\)</span>):</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-161"></span>
+<img src="images/ols/ols-path-diagram-betas0.svg" alt="Linear regression model in diagram form" width="40%" />
 <p class="caption">
-Figure 11.5: Illustration of loocv errors
+Figure 16.1: Linear regression model in diagram form
 </p>
 </div>
-<p>We would therefore repeat step (2) above <span class="math inline">\(n = 3\)</span> times, to obtain <span class="math inline">\(3\)</span> errors:
-<span class="math inline">\(e_1, \ e_2,\)</span> and <span class="math inline">\(e_3\)</span> [note that in the last figure, the red dashed line
-extends to touch the blue line; unfortunately, the point of intersection was
-too low to feasibly show on the graph. In other words, use your imagination:
-the red line touches the blue line].</p>
+<p>While a linear regression model like the one above is important, and can be
+used as a good starting point, is far too limiting. Therefore, we need to
+discuss some of the ways in which the standard linear regression model can be
+enriched and be made more flexible.</p>
+<div id="expanding-the-regression-horizon" class="section level3">
+<h3><span class="header-section-number">16.1.1</span> Expanding the Regression Horizon</h3>
+<p>There are several ways in which we can enrich and extend a linear regression
+model. Having said that, we will describe just a few of these ways. Trying to
+cover all possible extensions would require us to write a separate book.</p>
+<p>To make the discussion more organized, we have decided to classify the covered
+approaches into two major classes that we are calling: (1) parametric models,
+and (2) nonparametric models.</p>
+<p>At this point, we have two magic words that deserve our attention: <em>linear</em> and
+<em>(non)parametric</em>:</p>
+<ul>
+<li><p>When people talk about <em>linear</em> regression models, what do they exactly mean
+by “linear”?</p></li>
+<li><p>When people talk about <em>parametric -vs- nonparametric</em> models, what do they
+mean by this? What kind of parameters are they referring to?</p></li>
+</ul>
+<div id="linearity" class="section level4 unnumbered">
+<h4>Linearity</h4>
+<p>The standard linear regression model:</p>
+<p><span class="math display">\[
+f(X) = b_0 + b_1 X_1 + \dots + b_p X_p
+\]</span></p>
+<p>is linear two modes. On one hand, it
+is linear in the input variables <span class="math inline">\(X_1, \dots, X_p\)</span>. On the other hand, it is
+also linear in the parameters <span class="math inline">\(b_0, b_1, \dots, b_p\)</span>. As we said before,
+although a model ike this is very friendly to work with, its double linearity
+is very restrictive.</p>
+<p>In the regression world, the most general type of linearity is the one that
+applies to the regression coefficients or parameters <span class="math inline">\(b_0, b_1, \dots, b_p\)</span>.
+Here’s an example of a model that is nonlinear with respect to the predictors,
+but linear with respect to the parameters:</p>
+<p><span class="math display">\[
+f(X) = b_0 + b_1 X_1 + b_2 X_2 + b_3 X_1^2 + b_4 X_2^2
+\]</span></p>
+<p>In contrast, the model below is nonlinear in both the predictors and the
+parameters:</p>
+<p><span class="math display">\[
+f(X) = b_0 + exp(X_1^{b_1}) + \sqrt{b_2 X_2}
+\]</span></p>
+<p>So, when using the term “linear model”, we are referring to a model that is
+linear in its coefficients or parameters, not necessarily in the input features.</p>
+</div>
+<div id="parametric-and-nonparametric" class="section level4 unnumbered">
+<h4>Parametric and Nonparametric</h4>
+<p>The word “parametric”, and its sibling “nonparametric”, are those kind of terms
+commonly used in various branches of statistics. For better or worse, they form
+part of those terms that people assign different meanings to. Depending on who
+you talk to, some people will give you a definition of the term “nonparametric”
+in the sense of distribution-free methods—or so called nonparametric statistics.
+This is NOT the meaning that we use in this book for nonparametric.</p>
+<p>So what do we mean by parametric and nonparametric?</p>
+<p>By parametric, we refer to a functional form of <span class="math inline">\(f()\)</span> that is fully described
+by a finite set of parameters, like in the standard linear model
+<span class="math inline">\(f(X) = b_0 + b_1 X_1 + \dots + b_p X_p\)</span>.</p>
+<p>In this book we use the notion of nonparametric models to imply a more relaxed
+way to specify a function <span class="math inline">\(f()\)</span> without directly imposing a known functional
+form. Somewhat contradictory, nonparametric does not necessarily mean that a
+model has no parameters. As we’ll see, it turns out that nonparametric models
+do have parameters (or hyperparameters).</p>
+<p>A common example of a nonparametric method is <span class="math inline">\(K\)</span>-Nearest-Neighbors or <span class="math inline">\(K\)</span>-NN
+for short. The functional form of <span class="math inline">\(f()\)</span> is way more relaxed, and all we do is
+use an average of the response values <span class="math inline">\(y_i\)</span> for the closest <span class="math inline">\(K\)</span> points <span class="math inline">\(x_i\)</span>
+to a query value <span class="math inline">\(x_0\)</span>:</p>
+<p><span class="math display">\[
+\hat{y}_0 = \frac{1}{K} \sum_{i \in N(x_0)} y_i
+\]</span></p>
+<p>where the notation <span class="math inline">\(N(x_0)\)</span> indicates the set of <span class="math inline">\(K\)</span> closest neighbors to <span class="math inline">\(x_0\)</span>.</p>
+<p>Notice that <span class="math inline">\(K\)</span>-NN does not impose any functional form of how to combine the
+<span class="math inline">\(X\)</span>-input feature(s). In this sense, we say that this is a nonparametric model.</p>
+<p>Now that we have provide some clarifications on the meanings of terms such as
+“linear”, “parametric”, and “nonparametric”, we can continue with our
+introduction of ways in which we can extend linear models beyond linearity,
+as well as extensions of models in a more relaxed (nonparametric) sense.</p>
+</div>
+</div>
+</div>
+<div id="transforming-features" class="section level2">
+<h2><span class="header-section-number">16.2</span> Transforming Features</h2>
+<p>Let us consider parametric models first. A first option to make a linear model
+more sophisticated is by means of applying transformaitons to some or all of
+the input features. This is not a new idea. In fact, we have alredy used this
+strategy when we studied <a href="pcr">Principal Commponents Regression</a> and
+<a href="pls">Partial Least Squares Regression</a>.</p>
+<p>Consider a linear model that uses some type of dimension reduction approach.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
+<img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
+<p class="caption">
+Figure 16.2: PCs as linear combinations of input variables
+</p>
+</div>
+<p>We can think of any given component <span class="math inline">\(Z_h\)</span> as a transformation applied on all
+the <span class="math inline">\(X\)</span>-input variables, that is:</p>
+<p><span class="math display">\[
+Z_h = v_{1h} X_1 + \dots + v_{ph} X_p \quad \longrightarrow \quad Z_h = \phi_h (X_1, \dots, X_p)
+\]</span></p>
+<p>We an explicitly think of a function <span class="math inline">\(\phi_h : \mathbb{R}^p \rightarrow \mathbb{R}\)</span> that transforms the inputs into a new synthetic feature.
+In the case of PCR and PLSR, the tranasformation functions <span class="math inline">\(\phi_h\)</span> happen to be
+linear functions.</p>
+<p><strong>INSERT PATH DIAGRAM</strong></p>
+<p><span class="math display">\[
+\phi_1 (\mathbf{x}) = \mathbf{z_1}, \phi_2 (\mathbf{x}) = \mathbf{z_2}, \dots , \phi_r (\mathbf{x}) = \mathbf{z_r} 
+\]</span></p>
+<p>The matrix <span class="math inline">\(\mathbf{Z}\)</span> can be represented by a matrix <span class="math inline">\(\mathbf{\Phi}\)</span></p>
+<p>Then, the predicted response is given by:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{\Phi} (\mathbf{\Phi}^\mathsf{T} \mathbf{\Phi})^{-1} \mathbf{\Phi}^\mathsf{T} \mathbf{y}
+\]</span></p>
 
-</div>
 </div>
 </div>
 
@@ -612,8 +582,8 @@ the red line touches the blue line].</p>
           </div>
         </div>
       </div>
-<a href="phases.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="regular.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ridge.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classif.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
