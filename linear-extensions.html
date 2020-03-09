@@ -420,7 +420,7 @@ as well as alternative approaches to relax the assumption of linearity.</p>
 <div id="introduction-2" class="section level2">
 <h2><span class="header-section-number">16.1</span> Introduction</h2>
 <p>So far we have talked about regression models in their most basic way: linear
-regression models. So let’s take a step back and recall the general regression
+regression models. So let’s circle back to the general regression
 framework in which the main idea is to find a function <span class="math inline">\(f()\)</span> that takes in one
 or more input features, and returns a response value. In addition, we also
 suppose that there is a noise or error term to indicate the imperfect nature
@@ -442,17 +442,17 @@ says nothing about what the target function <span class="math inline">\(f()\)</s
 which is good news because we have a lot of freedom to decide on almost any
 form for <span class="math inline">\(f()\)</span>. Again, here the term <em>function</em> is not the classic definition
 of a mathematical function. Instead, think of the notion of function as a
-machine that takes inputs <span class="math inline">\(\mathbf{x}\)</span>, and returns and output.</p>
+machine that takes inputs <span class="math inline">\(\mathbf{x}\)</span>, and returns an output.</p>
 <p>Up to now we have been working with the most standard type of form for <span class="math inline">\(f()\)</span>
 which is a linear model:</p>
 <p><span class="math display">\[
 \hat{y}_i = b_0 + b_1 x_{i1} + b_2 x_{i2} + \dots + b_p x_{ip} = \mathbf{b^\mathsf{T} x_i}
 \]</span></p>
-<p>or its equivalen formula in vector-matrix notation:</p>
+<p>or its equivalent formula in vector-matrix notation:</p>
 <p><span class="math display">\[
 \mathbf{\hat{y}} = \mathbf{Xb}
 \]</span></p>
-<p>which we can represent graphically using a path diagram like this (assuming
+<p>which we can graphically represent using a path diagram like this (assuming
 a cosntant term <span class="math inline">\(\mathbf{x_0} = \mathbf{1}\)</span>):</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-161"></span>
 <img src="images/ols/ols-path-diagram-betas0.svg" alt="Linear regression model in diagram form" width="40%" />
@@ -468,7 +468,7 @@ enriched and be made more flexible.</p>
 <h3><span class="header-section-number">16.1.1</span> Expanding the Regression Horizon</h3>
 <p>There are several ways in which we can enrich and extend a linear regression
 model. Having said that, we will describe just a few of these ways. Trying to
-cover all possible extensions would require us to write a separate book.</p>
+cover all possible extensions would require us to write a whole separate book.</p>
 <p>To make the discussion more organized, we have decided to classify the covered
 approaches into two major classes that we are calling: (1) parametric models,
 and (2) nonparametric models.</p>
@@ -516,8 +516,10 @@ in the sense of distribution-free methods—or so called nonparametric statistic
 This is NOT the meaning that we use in this book for nonparametric.</p>
 <p>So what do we mean by parametric and nonparametric?</p>
 <p>By parametric, we refer to a functional form of <span class="math inline">\(f()\)</span> that is fully described
-by a finite set of parameters, like in the standard linear model
-<span class="math inline">\(f(X) = b_0 + b_1 X_1 + \dots + b_p X_p\)</span>.</p>
+by a finite set of parameters, like in the standard linear model</p>
+<p><span class="math display">\[
+f(X) = b_0 + b_1 X_1 + \dots + b_p X_p
+\]</span></p>
 <p>In this book we use the notion of nonparametric models to imply a more relaxed
 way to specify a function <span class="math inline">\(f()\)</span> without directly imposing a known functional
 form. Somewhat contradictory, nonparametric does not necessarily mean that a

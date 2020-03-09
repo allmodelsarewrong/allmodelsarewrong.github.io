@@ -415,49 +415,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="ridge" class="section level1">
 <h1><span class="header-section-number">15</span> Ridge Regression</h1>
-<p>From OLS we know that the predicted response is given by
-<span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} (\mathbf{X^\mathsf{T} X})^{-1} \mathbf{X^\mathsf{T} y}\)</span>
-(provided the inverse exists). We also know that if <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>
+<p>From OLS we know that the predicted response is given by</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{X} (\mathbf{X^\mathsf{T} X})^{-1} \mathbf{X^\mathsf{T} y}
+\]</span></p>
+<p>(provided the inverse exists). We also know that if <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>
 is near-singular, finding its inverse could lead to trouble. For example,
 near-perfect multicollinearity corresponds to small eigenvalues of
 <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>, which corresponds to large variance of the
-corresponding estimated coefficients. Hence, a natural idea arises: let’s try
-to modify <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> to avoid this danger of
-near-singularity.</p>
-<p>Specifically, let us append an extra term to <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>: that is,
-consider <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span>. Note that <span class="math inline">\(\lambda\)</span> is
-<em>not</em> an eigenvalue here; it is simply a positive constant.</p>
-<p>Note that <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> and
-<span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> have the same eigenvectors; however, the eigenvalues
-of the former matrix will never be <span class="math inline">\(0\)</span>.
-Specifically, say <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> has eigenvalues
+corresponding estimated coefficients.</p>
+<p>Hence, a natural idea arises: let’s try to modify <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>
+to avoid this danger of near-singularity. Specifically, let us add a constant
+positive term to diagonal of <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>, here’s how:</p>
+<p><span class="math display">\[
+\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}
+\]</span></p>
+<p>Note that <span class="math inline">\(\lambda\)</span> is <em>not</em> an eigenvalue here; it is simply a positive constant. In what way the addition of <span class="math inline">\(\lambda &gt; 0\)</span> to the diagonal of
+<span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> changes the structure of this matrix?</p>
+<p>By properties of eigenstructures, it turns out that
+<span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> and <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span>
+have the same eigenvectors; however, the eigenvalues
+of the former matrix will never be <span class="math inline">\(0\)</span>.</p>
+<p>Specifically, say <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> has eigenvalues
 <span class="math inline">\(\lambda_1, \lambda_2, \dots, \lambda_p\)</span>. The eigenvalues of
 <span class="math inline">\(\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I}\)</span> will therefore be
 <span class="math inline">\(\overset{*}{\lambda_1}, \overset{*}{\lambda_2}, \dots, \overset{*}{\lambda_p}\)</span>
 where <span class="math inline">\(\overset{*}{\lambda_j} = \lambda_j + \lambda\)</span>.</p>
-<p>It turns out there is a minimization problem behind this method (of appending
-an extra term to the eigenvalues). In Ridge Regression, we have that</p>
+<p>Another interesting aspect is that there is actually a minimization problem
+behind this method (of appending an extra term to the eigenvalues). In Ridge
+Regression, we have that the predicted output is:</p>
 <p><span class="math display">\[
-\mathbf{y}_{RR}  = \mathbf{X} (\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I} )^{-1} \mathbf{X^\mathsf{T} y}
+\mathbf{\hat{y}}_{RR}  = \mathbf{X} (\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I} )^{-1} \mathbf{X^\mathsf{T} y}
 \]</span></p>
+<p>To understand where this estimator comes from, let’s consider the geometry of
+the MSE function in a regression context.</p>
 <div id="a-new-minimization-problem" class="section level2">
 <h2><span class="header-section-number">15.1</span> A New Minimization Problem</h2>
 <p>As you know, in linear regression the overall error function <span class="math inline">\(E_{in}\)</span> that we
 are interested in minimizing is the mean squared error (<span class="math inline">\(\text{MSE}\)</span>).
 Moreover, we can look at the geometry of such error measure from the perspective
 of the parameters (i.e. the regression coefficients).
-From this perspective, we denote this error function as <span class="math inline">\(E(\mathbf{b})\)</span>,
+From this perspective, we denote this error function as <span class="math inline">\(E_{in}(\mathbf{b})\)</span>,
 making explicit its dependency on the vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>.
-For illustration purposes, let’s consider two inputs <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and their corresponding parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. The error function <span class="math inline">\(E(\mathbf{b})\)</span>
-will generate a convex error surface with the shape of a bowl (see figure below).</p>
+For illustration purposes, let’s consider two inputs <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and their corresponding parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. The error function <span class="math inline">\(E_{in}(\mathbf{b})\)</span>
+will generate a convex error surface with the shape of a bowl, or paraboloid
+(see figure below).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-152"></span>
 <img src="images/penalized/ridge-error-surface.svg" alt="Error Surface" width="95%" />
 <p class="caption">
 Figure 15.1: Error Surface
 </p>
 </div>
-<p>Using the MSE for <span class="math inline">\(E_{in}[h(\mathbf{x})]\)</span>, we have
-<span class="math inline">\(E_{in}[h(\mathbf{x})] = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})\)</span>.</p>
+<p>As usual we can express MSE for <span class="math inline">\(E_{in}(\mathbf{b})\)</span> as follows:</p>
+<p><span class="math display">\[
+E_{in}(\mathbf{b}) = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})
+\]</span></p>
 <p>In OLS, we minimize <span class="math inline">\(E(\mathbf{b})\)</span> unconditionally; that is, without any type
 of restriction. The associated solution, is indicated with a blue dot at the
 center of the elliptical contours of constant error.</p>
@@ -469,19 +481,19 @@ Figure 15.2: Contour Errors with OLS solution
 </div>
 <div id="constraining-regression-coefficients" class="section level3">
 <h3><span class="header-section-number">15.1.1</span> Constraining Regression Coefficients</h3>
-<p>An alternative approach to minimize <span class="math inline">\(E(\mathbf{b})\)</span> unconditionally is to
+<p>An alternative approach to minimize <span class="math inline">\(E_{in}(\mathbf{b})\)</span> unconditionally is to
 impose a restriction on the squared magnitude of the regression coefficients.
-In other words, we still want to minimize the mean squared error <span class="math inline">\(E(\mathbf{b})\)</span>
-but now we don’t let <span class="math inline">\(\mathbf{b}\)</span> take any kind of values. Instead, we are
-going to require the following condition on <span class="math inline">\(b_1, \dots, b_p\)</span>:</p>
+In other words, we still want to minimize the mean squared error
+<span class="math inline">\(E_{in}(\mathbf{b})\)</span> but now we don’t let <span class="math inline">\(\mathbf{b}\)</span> take any kind of values.
+Instead, we are going to require the following condition on <span class="math inline">\(b_1, \dots, b_p\)</span>:</p>
 <p><span class="math display">\[
-\textsf{constraining coefficients: } \sum_{j=1}^{p} b_{j}^2 \leq c
+\textsf{constraining coefficients:} \quad \sum_{j=1}^{p} b_{j}^2 \leq c
 \]</span></p>
 <p>Here’s an easy way to think about—and remember—this condition: think of
 <span class="math inline">\(c\)</span> as a <em>budget</em> for how much you can spend on the size of all coefficients
 <span class="math inline">\(b_1, \dots, b_p\)</span> (or their squared values to be more precise).</p>
 <p>Adding this restriction to the MSE, we now have the following constrained
-minimization of <span class="math inline">\(E(\mathbf{b})\)</span>:</p>
+minimization of <span class="math inline">\(E_{in}(\mathbf{b})\)</span>:</p>
 <p><span class="math display">\[
 \min_{\mathbf{b}} \left\{ \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})  \right\}  \quad \mathrm{s.t.} \quad \| \mathbf{b} \|_{2}^{2} = \mathbf{b^\mathsf{T} b} \leq c
 \]</span></p>
@@ -570,9 +582,12 @@ which, in mathematical terms, means:</p>
 \nabla E_{in}(\mathbf{b}^*) = - 2 \frac{\lambda}{n} \mathbf{b}^{*}  \ \Longleftrightarrow \  \nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*} = \mathbf{0}
 \]</span></p>
 <p>Now, the LHS of the above equation looks like the gradient of something…
-But what is that something? The answer turns out to be
-<span class="math inline">\(f(\mathbf{b}) = E_{in}(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}\)</span>. You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span>
-is precisely the LHS of the equation above, that is:</p>
+But what is that something? The answer turns out to be:</p>
+<p><span class="math display">\[
+f(\mathbf{b}) = E_{in}(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}
+\]</span></p>
+<p>You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span> is precisely the LHS of the
+equation above, that is:</p>
 <p><span class="math display">\[
 \nabla f(\mathbf{b}^*) = \nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*}
 \]</span></p>
@@ -589,7 +604,7 @@ estimate of <span class="math inline">\(\mathbf{b}\)</span>):</p>
 <p><span class="math display">\[
 \mathbf{b} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}
 \]</span></p>
-<p>Note that, from the discussion at the beginning of this lecture, we see that
+<p>Note that, from the discussion at the beginning of this chapter, we see that
 the ridge regression estimate always exists, and is always unique (unlike the
 OLS estimate).</p>
 
