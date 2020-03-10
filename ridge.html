@@ -685,13 +685,49 @@ constraint <span class="math inline">\(c\)</span>, results in a small <span clas
 closer <span class="math inline">\(\mathbf{b}_{RR}\)</span> to the OLS solution. Conversely, imposing a small
 budget <span class="math inline">\(c\)</span>, causes <span class="math inline">\(\lambda\)</span> to become large. The larger the <span class="math inline">\(\lambda\)</span>, the
 closer the ridge coefficients to zero.</p>
+<p><span class="math display">\[
+\uparrow c \quad \Longrightarrow \quad \downarrow \lambda \\
+\downarrow c \quad \Longrightarrow \quad \uparrow \lambda
+\]</span></p>
 </div>
 <div id="how-to-find-lambda" class="section level3">
 <h3><span class="header-section-number">15.3.1</span> How to find <span class="math inline">\(\lambda\)</span>?</h3>
 <p>In ridge regression, <span class="math inline">\(\lambda\)</span> is a tuning parameter, and therefore it cannot
 be found analytically. Instead, you have to implement a trial and error process
 with various values for <span class="math inline">\(\lambda\)</span>, and determine which seems to be a good one.
-How? Typically with cross-validation, or other type of resampling approach.</p>
+How? Typically with cross-validation, or other type of resampling approach.
+Here’s a description of the steps to be carried out.</p>
+<p>Assumet that we have a training data set consisting of <span class="math inline">\(n\)</span> data points:
+<span class="math inline">\(\mathcal{D}_{train} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>.
+Using <span class="math inline">\(K\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(K\)</span> folds:</p>
+<p><span class="math display">\[
+\mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-K}
+\]</span></p>
+<p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-k}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-k}\)</span>.
+Having defined the <span class="math inline">\(k\)</span> fold sets, we form the corresponding <span class="math inline">\(K\)</span> retraining sets:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{D}_{train-1} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-1}\)</span></li>
+<li><span class="math inline">\(\mathcal{D}_{train-2} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-2}\)</span></li>
+<li><span class="math inline">\(\dots\)</span></li>
+<li><span class="math inline">\(\mathcal{D}_{train-K} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-K}\)</span></li>
+</ul>
+<p>The cross-validation procedure then repeats the following loops:</p>
+<ul>
+<li>For <span class="math inline">\(\lambda_b = 0.001, 0.002, \dots, \lambda_B\)</span>
+<ul>
+<li>For <span class="math inline">\(k = 1, \dots, K\)</span>
+<ul>
+<li>fit RR model <span class="math inline">\(h_{b,k}\)</span> with <span class="math inline">\(\lambda_b\)</span> on <span class="math inline">\(\mathcal{D}_{train-k}\)</span></li>
+<li>compute and store <span class="math inline">\(E_{eval-k} (h_{b,k})\)</span> using <span class="math inline">\(\mathcal{D}_{eval-k}\)</span></li>
+</ul></li>
+<li>end for <span class="math inline">\(k\)</span></li>
+<li>compute and store <span class="math inline">\(E_{cv_{b}} = \frac{1}{K} \sum_k E_{eval-k}(h_{b,k})\)</span></li>
+</ul></li>
+<li>end for <span class="math inline">\(\lambda_b\)</span></li>
+<li>Compare all cross-validation errors <span class="math inline">\(E_{cv_1}, E_{cv_2}, \dots, E_{cv_B}\)</span> and choose the smallest of them, say <span class="math inline">\(E_{cv_{b^*}}\)</span></li>
+<li>Use <span class="math inline">\(\lambda^*\)</span> to fit the (finalist) Ridge Regression model:
+<span class="math inline">\(\mathbf{\hat{y}} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda^* \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}\)</span></li>
+</ul>
 
 </div>
 </div>
