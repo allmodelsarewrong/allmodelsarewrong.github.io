@@ -291,6 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>15.1.1</b> Constraining Regression Coefficients</a></li>
 </ul></li>
 <li class="chapter" data-level="15.2" data-path="ridge.html"><a href="ridge.html#a-new-minimization-solution"><i class="fa fa-check"></i><b>15.2</b> A New Minimization Solution</a></li>
+<li class="chapter" data-level="15.3" data-path="ridge.html"><a href="ridge.html#what-does-rr-accomplish"><i class="fa fa-check"></i><b>15.3</b> What does RR accomplish?</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="ridge.html"><a href="ridge.html#how-to-find-lambda"><i class="fa fa-check"></i><b>15.3.1</b> How to find <span class="math inline">\(\lambda\)</span>?</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
 <li class="chapter" data-level="16" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>16</b> Beyond Linear Regression</a><ul>
@@ -429,7 +432,7 @@ number of clusters is generally defined a priori. The main methods are:</p>
 <p>Imagine we are in <span class="math inline">\(\mathbb{R}^n\)</span> (or <span class="math inline">\(\mathbb{R}^p\)</span>, depending on if we are
 looking at things from the individuals perspective or variables perspective).
 For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-233"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
 <img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
 <p class="caption">
 Figure 24.1: Toy data set
@@ -439,7 +442,7 @@ Figure 24.1: Toy data set
 Typically, the way centroids are initialized is by randomly selecting two
 objects. Sometimes, however, a more “educated” initialization may be possible
 when we have additional information about where the cluster may be located.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
 <img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
 <p class="caption">
 Figure 24.2: Arbitrary centroids
@@ -448,7 +451,7 @@ Figure 24.2: Arbitrary centroids
 <p>Given a new data point, we compute the distances from this point to the two
 centroids, and classify the point to the cluster to which the closest centroid
 belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
 <img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
 <p class="caption">
 Figure 24.3: Distance of an object to both centroids
@@ -456,14 +459,14 @@ Figure 24.3: Distance of an object to both centroids
 </div>
 <p>The distances of all objects to the centroids are computed as well, and the
 objects get assigned to the group of the closest centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
 <img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
 <p class="caption">
 Figure 24.4: Assigning objects to closest centroid
 </p>
 </div>
 <p>Now, with this new grouped data, we have to recompute the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
 <img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
 <p class="caption">
 Figure 24.5: Update centroids
@@ -471,14 +474,14 @@ Figure 24.5: Update centroids
 </div>
 <p>We repeat this procedure, that is, calculate distances of all objects to the
 centroids, and re-assigning objects to clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
 <img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
 <p class="caption">
 Figure 24.6: Reassigning objects
 </p>
 </div>
 <p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
 <img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
 <p class="caption">
 Figure 24.7: Recalculate centroids
@@ -487,7 +490,7 @@ Figure 24.7: Recalculate centroids
 <p>After enough iterations, the centroids will not move too much between each
 iteration. At this point we will say the algorithm as converged, and we stop
 (and the resulting clusters will be the ones we use).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
 <img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
 <p class="caption">
 Figure 24.8: Rinse and repeat until convergence

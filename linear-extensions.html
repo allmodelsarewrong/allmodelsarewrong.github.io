@@ -291,6 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>15.1.1</b> Constraining Regression Coefficients</a></li>
 </ul></li>
 <li class="chapter" data-level="15.2" data-path="ridge.html"><a href="ridge.html#a-new-minimization-solution"><i class="fa fa-check"></i><b>15.2</b> A New Minimization Solution</a></li>
+<li class="chapter" data-level="15.3" data-path="ridge.html"><a href="ridge.html#what-does-rr-accomplish"><i class="fa fa-check"></i><b>15.3</b> What does RR accomplish?</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="ridge.html"><a href="ridge.html#how-to-find-lambda"><i class="fa fa-check"></i><b>15.3.1</b> How to find <span class="math inline">\(\lambda\)</span>?</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
 <li class="chapter" data-level="16" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>16</b> Beyond Linear Regression</a><ul>
@@ -454,7 +457,7 @@ which is a linear model:</p>
 \]</span></p>
 <p>which we can graphically represent using a path diagram like this (assuming
 a cosntant term <span class="math inline">\(\mathbf{x_0} = \mathbf{1}\)</span>):</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-161"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
 <img src="images/ols/ols-path-diagram-betas0.svg" alt="Linear regression model in diagram form" width="40%" />
 <p class="caption">
 Figure 16.1: Linear regression model in diagram form
@@ -550,7 +553,7 @@ the input features. This is not a new idea. In fact, we have alredy used this
 strategy when we studied <a href="pcr">Principal Commponents Regression</a> and
 <a href="pls">Partial Least Squares Regression</a>.</p>
 <p>Consider a linear model that uses some type of dimension reduction approach.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-163"></span>
 <img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
 <p class="caption">
 Figure 16.2: PCs as linear combinations of input variables
