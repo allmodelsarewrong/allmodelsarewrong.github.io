@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>27 Intro to Decision Trees | All Models Are Wrong</title>
+  <title>17 Nonparametric Regression | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="27 Intro to Decision Trees | All Models Are Wrong" />
+  <meta property="og:title" content="17 Nonparametric Regression | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="27 Intro to Decision Trees | All Models Are Wrong" />
+  <meta name="twitter:title" content="17 Nonparametric Regression | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="hclus.html"/>
-
+<link rel="prev" href="linear-extensions.html"/>
+<link rel="next" href="classif.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -425,441 +425,191 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trees" class="section level1">
-<h1><span class="header-section-number">27</span> Intro to Decision Trees</h1>
-<p>In this chapter we introduce decision trees, which are one the most popular and
-intuitive supervised learning tools.</p>
-<div id="introduction-3" class="section level2">
-<h2><span class="header-section-number">27.1</span> Introduction</h2>
-<p>Trees are used in classification and regression tasks by detecting a set of
-rules allowing the analyst to assign the individuals in data into a class
-or assign it a predicted value.</p>
-<p>The reason they are called trees is because the set of rules can organized
-into a hierarchical <em>tree</em>. Moreover, this structure can be visually
-displayed as an inverted tree diagram (although the tree is generally displayed
-upside down) like in the image below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-266"></span>
-<img src="images/trees/tree-diagram1.svg" alt="Diagram of a tree structure" width="85%" />
+<div id="nonparametric" class="section level1">
+<h1><span class="header-section-number">17</span> Nonparametric Regression</h1>
+<p>In this chapter we describe some approaches for nonparametric regression.
+Full disclaimer: most of what we talk about in this chapter is going to
+center on the case when we have one predictor: <span class="math inline">\(p = 1\)</span>. We’ll make a couple
+of comments here and there about extensions to the multivariate case. But most
+things covered are for univariate regression. Why? Doing nonparametric
+regression in higher dimensions becomes very quickly statistically and
+computationally inefficient.</p>
+<div id="conditional-averages" class="section level2">
+<h2><span class="header-section-number">17.1</span> Conditional Averages</h2>
+<p>Consider the following example. This example has to do with NBA players in the
+2018 season. More precisely, we are looking at two variables: years of
+experience, and salary (in millions of dollars). Let’s assume that salary is
+the response <span class="math inline">\(Y\)</span>, and experience is the predictor <span class="math inline">\(X\)</span>. The image below depicts
+the scatterplot between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-166"></span>
+<img src="images/nonparam/experience-salary-scatter1.png" alt="NBA players: Salary -vs- Experience" width="70%" />
 <p class="caption">
-Figure 27.1: Diagram of a tree structure
+Figure 17.1: NBA players: Salary -vs- Experience
 </p>
 </div>
-<p>Decision trees have three types of nodes: root, internal, and leaf nodes.</p>
+<p>As you can tell, the relationship between Experience and Salary does not seem
+to be linear.</p>
+<p>Say we are interested in predicting the salary for a player with four years of
+experience. One approach is to</p>
+<p><span class="math display">\[
+\text{Predicted Salary} = Avg(\text{Salary } | \text{ Experience = 4 years})
+\]</span></p>
+<p>A natural thing to do is to look at the salaries <span class="math inline">\(y_i\)</span> of all players that
+have 4 years of experience: <span class="math inline">\(x_i = 4 \text{ years}\)</span>,</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-167"></span>
+<img src="images/nonparam/experience-salary-scatter2.png" alt="Salaries of players with 4 years of Experience" width="70%" />
+<p class="caption">
+Figure 17.2: Salaries of players with 4 years of Experience
+</p>
+</div>
+<p>and then aggregate such
+salaries into a single value, for example, using the average:</p>
+<p><span class="math display">\[
+\hat{y}_0 = Avg(y_i | x_i = 4)
+\]</span></p>
+<p>This is an empirical way to compute the conceptal definition of regression,
+which as we know, is defined in terms of conditional expectation:</p>
+<p><span class="math display">\[
+\textsf{regression function:} \quad \hat{f}(x_0) = \mathbb{E}(y | X = x_0) = \hat{y}_0
+\]</span></p>
+<p>We can compute all the average salaries for each value of years of experience,
+and make another plot with such averages:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-168"></span>
+<img src="images/nonparam/experience-salary-scatter3.png" alt="Average Salaries by years of Experience" width="70%" />
+<p class="caption">
+Figure 17.3: Average Salaries by years of Experience
+</p>
+</div>
+<p>Taking a further step, we can enrich the graph by connecting the dots of
+average salaries, in order to get a nonparametric regerssion line, displayed in
+the following image:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-169"></span>
+<img src="images/nonparam/experience-salary-scatter4.png" alt="Average Salaries by years of Experience" width="70%" />
+<p class="caption">
+Figure 17.4: Average Salaries by years of Experience
+</p>
+</div>
+<p>Notice that this approach is surprisingly simple, and it does match the
+conceptual idea of regression as a conditional expectation. In this example,
+we are approximating such expectation with conditional averages: averages of
+salaries, conditioning by years of experience.</p>
+<p>But this approach is not perfect. Consider for example the case of players
+with 17 years of experience playing in the NBA. The data from the 2018 season
+contains only one player with 17 years of experience. With just one data point,
+the predicted salary will be unreliable.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-170"></span>
+<img src="images/nonparam/experience-salary-scatter5.png" alt="Only one player with 17 years of experience" width="70%" />
+<p class="caption">
+Figure 17.5: Only one player with 17 years of experience
+</p>
+</div>
+</div>
+<div id="looking-at-the-neighbors" class="section level2">
+<h2><span class="header-section-number">17.2</span> Looking at the Neighbors</h2>
+<p>Because we only have one player with 17 years of experience, we need to find
+a way of using more of the data points in <span class="math inline">\(X\)</span> to improve the prediction.</p>
+<p>Looking at the scatterplot, there are four players that are very close to the
+one with 17 years of experience. So why not use the salaries of all these<br />
+players to calculate a predicted salary for someone with 17 years of experience?</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-171"></span>
+<img src="images/nonparam/experience-salary-scatter6.png" alt="Four closest players to 17 years of experience" width="70%" />
+<p class="caption">
+Figure 17.6: Four closest players to 17 years of experience
+</p>
+</div>
+<p>Let’s formalize this strategy with the following two core ideas:</p>
 <ul>
-<li><p>There is exactly one root node that contains the entire set of elements in the sample; the root node has no incoming branches, and it may have zero, two, or more outgoing branches.</p></li>
-<li><p>Internal nodes, each of which is hoped to contain as many elements as possible belonging to one class; each internal node has one incoming branch and two (or more) outgoing branches.</p></li>
-<li><p>Leaf or terminal nodes which, unlike internal nodes, have no outgoing branches.</p></li>
+<li><p><strong>Neighborhood</strong>: we are invoking the notion of neighboring points <span class="math inline">\(x_i\)</span> for a
+given query point <span class="math inline">\(x_0\)</span>.</p></li>
+<li><p><strong>Averaging Mechanism</strong>: we also need some sort of mechanism that allows us to
+aggregate the <span class="math inline">\(y_i\)</span> values into a <em>typical</em> or average value.</p></li>
 </ul>
-<p>The root node can be regarded as the starting node. The branches are the lines
-connecting the nodes. Every node that is preceded by a higher level node is
-called a “child” node. A node that gives origin to two (or more) child nodes is
-called a parent node. Terminal nodes are nodes without children. The most
-common way of visually representing a tree is by means of the classical
-node-link diagram that connects nodes together with line segments.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-267"></span>
-<img src="images/trees/tree-diagram2.svg" alt="Common elements of a tree diagram" width="85%" />
-<p class="caption">
-Figure 27.2: Common elements of a tree diagram
-</p>
+<p>In the following sections we describe a number of methods that involve some
+handling both ideas of neighborhood and averaging mechanism.</p>
 </div>
-</div>
-<div id="binary-trees" class="section level2">
-<h2><span class="header-section-number">27.2</span> Binary Trees</h2>
-<p>One special kind of decision trees are binary trees. They are called <em>binary</em>
-because the nodes are only partitioned in two (see diagram below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-268"></span>
-<img src="images/trees/tree-binary-diagram1.svg" alt="Example of a binary tree diagram" width="85%" />
-<p class="caption">
-Figure 27.3: Example of a binary tree diagram
-</p>
-</div>
-<p>The usual process to build an ordinary binary decision tree is as follows.
-First, a search among all the predictor variables is done in order to find the
-single variable which best splits the data in two groups. In other words, one
-must find the segmentation variable that splits the data in two subsets so that
-they are as different as possible with respect to the response variable. This
-process is applied separately to each subgroup, and so on recursively until the
-subgroups either reach a minimum size or until no improvement can be made.
-In each dichotomy the two parts are the most contrasting according to the
-response variable.</p>
-<div id="the-process-of-building-a-tree" class="section level3">
-<h3><span class="header-section-number">27.2.1</span> The Process of Building a Tree</h3>
-<p>Let us begin with the general idea behind trees. The main idea is to build a
-tree structure by successively (i.e. recursively) dividing the set of objects
-with the help of features <span class="math inline">\(X_1, \dots, X_p\)</span>, in order to obtain the terminal
-nodes (i.e. final segments) that are as homogeneous as possible (with respect
-to the response).</p>
-<p>The tree building process requires three main components</p>
+<div id="nearest-neighbor-estimates" class="section level2">
+<h2><span class="header-section-number">17.3</span> Nearest Neighbor Estimates</h2>
+<p>Perhaps the most popular approach that takes into account heighboring points
+to make predictions is <span class="math inline">\(K\)</span> Nearest Neighbors, or <strong>KNN</strong> for short.</p>
+<p>In KNN, we define a neighborhood <span class="math inline">\(N_k(x_0)\)</span> of <span class="math inline">\(k\)</span> closest points around a
+query point <span class="math inline">\(x_0\)</span>. This neighborhood will give us a set of points <span class="math inline">\((x_i, y_i)\)</span>,
+for <span class="math inline">\(i \in N_k(x_0)\)</span>, that will be taken into account to compute <span class="math inline">\(\hat{y}_0\)</span>.
+To keep the notation simpler, sometimes we will use <span class="math inline">\(N_0 = N_k(x_0)\)</span>.</p>
+<p><span class="math display">\[
+\hat{f}(x_0) = \frac{1}{K} \sum_{i \in N_0} y_i = \hat{y}_0
+\]</span></p>
+<p>How do we measure the closeness between two points <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_i\)</span>? In the
+univariate case, we typically use the absolute distance:</p>
+<p><span class="math display">\[
+d(x_0, x_i) = |x_0 - x_i|
+\]</span></p>
+<p>In the multivariate case, common options for distances are Euclidean distance,
+and Manhattan distance (but many other distances are also available).</p>
+<p><span class="math display">\[
+\textsf{Euclidean:} \quad d(x_0, x_i) = \sqrt{\sum_{j=1}^{p} (x_{0j} - x_{ij})^2} \\
+\textsf{Manhattan:} \quad d(x_0, x_i) = \sum_{j=1}^{p} |x_{0j} - x_{ij}|
+\]</span></p>
+<p>For instance, say we have a data set of <span class="math inline">\(n = 10\)</span> objects:</p>
+<p><span class="math display">\[
+\mathcal{D} = \{ (x_1, y_1), (x_2, y_2), \dots, (x_9, y_9), (x_{10}, y_{10})  \}
+\]</span></p>
+<p>and suppose that we have a given query point <span class="math inline">\(x_0\)</span> for which we want to compute
+its predicted response <span class="math inline">\(\hat{y}_0\)</span>. Let’s also assume that we are considering
+the <span class="math inline">\(K = 3\)</span> closest neighbors to <span class="math inline">\(x_0\)</span>. What we have to do is compute all the
+distances <span class="math inline">\(d_i = d(x_0, x_i)\)</span> between the query point and the <span class="math inline">\(n\)</span> data points:</p>
+<p><span class="math display">\[
+\textsf{set of distances:} \quad (d_1, d_2, d_3, \dots, d_9, d_{10})
+\]</span></p>
+<p>and then select the 3 closest <span class="math inline">\(x_i\)</span> points to <span class="math inline">\(x_0\)</span>. For illustrations
+purposes, let’s pretend that <span class="math inline">\(d_5\)</span>, <span class="math inline">\(d_2\)</span>, and <span class="math inline">\(d_7\)</span> are the closest distances
+to <span class="math inline">\(x_0\)</span>, in that order. This results in the neighbor indices
+<span class="math inline">\(N_3 (x_0) = (2, 5, 7)\)</span>, and the corresponding <span class="math inline">\(y_i\)</span>-values: <span class="math inline">\((y_2, y_5, y_7)\)</span>.
+The predicted value <span class="math inline">\(\hat{y}_0\)</span> is then computed as:</p>
+<p><span class="math display">\[
+\frac{y_2 + y_5 + y_7}{3} = \hat{y}_0
+\]</span></p>
+<div id="knn-estimator" class="section level3">
+<h3><span class="header-section-number">17.3.1</span> KNN Estimator</h3>
+<p>In general, the KNN estimator can be seen as an average</p>
+<p><span class="math display">\[
+\hat{f}(x_0) = \frac{1}{K} \sum_{i \in N_0} y_i \quad \longrightarrow \quad \hat{f}(x_0) = \sum_{i \in N_0} w_i(x_0) \hspace{1mm} y_i
+\]</span></p>
+<p>where <span class="math inline">\(w_i (x_0)\)</span> is a weight of the form:</p>
+<p><span class="math display">\[
+w_i (x_0) = 
+\begin{cases}
+\frac{1}{K} \quad \text{if} &amp; i \in N_k (x_0) \\
+0 \quad \text{else}
+\end{cases}
+\]</span></p>
+<p>Here are some important remarks:</p>
 <ul>
-<li>Establish the set of admissible divisions for each node: compute all possible
-binary splits</li>
-<li>Define a criterion to find the “best” node split: some optimization criterion
-to be optimized</li>
-<li>some measure of heterogeneity (within a given node)</li>
-<li>Define a rule to declare a given node as internal node or leaf node</li>
+<li><p>Notice that the function that “generates” the weights <span class="math inline">\(w_i (x_0)\)</span> is
+discontinuous, which explains why the fitted curve is jagged.</p></li>
+<li><p>Notice also that the formulation of <span class="math inline">\(\hat{f}(x_0)\)</span> as a weighted average of
+neighboring <span class="math inline">\(y_i\)</span> is linear with respect to the response <span class="math inline">\(Y\)</span>.</p></li>
+<li><p>KNN, compared to a parametric model, is very difficult to interpret, since
+there are no coefficients or analytical parameters.</p></li>
+<li><p>The parameter <span class="math inline">\(k\)</span> is a tuning or hyperparameter.</p></li>
+<li><p>Large values for <span class="math inline">\(k\)</span> result in more inflexible fits (i.e. more bias), but<br />
+also less variance.</p></li>
+<li><p>Small values for <span class="math inline">\(k\)</span> result in more flexible fits (i.e. less bias), at the
+expense of increasing the variance.</p></li>
 </ul>
-<p>Establishing the set of admissible splits for each node is related with the
-nature of the segmentation variables in the data. The number and type of
-possible binary splits will vary depending on the scale (e.g., binary, nominal,
-ordinal, and continuous) of the predictor variables. Further discussion is
-given in the next section.</p>
-<p>The second aspect to build a segmentation tree is the definition of a node
-splitting rule. This rule is necessary to find at each internal node a test for
-splitting the data into subgroups. Since finding a split involves finding the
-predictor variable that is the most discriminating, the splitting test helps to
-rank variables according to their discriminating power.</p>
-<p>The last component of the tree building process has to do with the definition
-of a node termination rule. In essence, there are two different ways to deal
-with this issue: 1) pre-pruning and 2) post-pruning. Pre-pruning implies that
-the decision of when to stop the growth of a tree is made prospectively.
-Post-pruning refers to reducing the size of a fully expanded tree by pruning
-some of its branches retrospectively.</p>
-</div>
-<div id="binary-partitions" class="section level3">
-<h3><span class="header-section-number">27.2.2</span> Binary Partitions</h3>
-<p>In binary segmentation trees, the set of admissible splits for each node
-depends on the nature of the segmentation variables in the data. Predictor
-variables can be of different type. In practice, most variables are of
-categorical nature although sometimes continuous variables may be present.
-We can divide them in four classes:</p>
-<ol style="list-style-type: decimal">
-<li>Binary variables</li>
-<li>Ordinal variables</li>
-<li>Nominal variables</li>
-<li>Continuous variables</li>
-</ol>
-<p>The number of possible binary splits for each type of segmentation variable is
-described below.</p>
-<div id="binary-variables" class="section level4 unnumbered">
-<h4>Binary variables</h4>
-<p>Because binary variables have two values, they only generate one binary
-partition. For example, the variable <em>Gender</em> with two values, female and male,
-can only de divided in one possible way.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-269"></span>
-<img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
-<p class="caption">
-Figure 27.4: Example of a binary partition for a binary variable
-</p>
-</div>
-</div>
-<div id="nominal-variables" class="section level4 unnumbered">
-<h4>Nominal Variables</h4>
-<p>A nominal variable may have many categories and the number of binary splits
-depends on the number of distinct categories for the corresponding variable.
-The total number of possible binary partitions for a nominal variable with <span class="math inline">\(q\)</span>
-categories is <span class="math inline">\(2^{q-1} - 1\)</span>. For example, suppose a variable <em>Color</em> with three
-categories: Green, White and Red. The number of binary splits is
-<span class="math inline">\(2^{3-1} - 1 = 3\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-270"></span>
-<img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
-<p class="caption">
-Figure 27.5: Example of binary splits for a nominal variable
-</p>
-</div>
-</div>
-<div id="oridnal-variables" class="section level4 unnumbered">
-<h4>Oridnal Variables</h4>
-<p>Binary splits for ordinal variables must respect the order property of the
-categories, that is, the grouping of categories must preserve the order among
-the values. The total number of binary partitions for an ordinal variable with
-<span class="math inline">\(q\)</span> categories is <span class="math inline">\(q-1\)</span>. For example, the <em>Apparel size</em> may have four
-categories: small (S), medium (M), large (L) and extra-large (XL). In this
-case, the number of binary splits will be <span class="math inline">\(4-1 = 3\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-271"></span>
-<img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
-<p class="caption">
-Figure 27.6: Example of binary splits for an ordinal variable
-</p>
-</div>
-</div>
-<div id="continuous-variables" class="section level4 unnumbered">
-<h4>Continuous variables</h4>
-<p>The treatment for continuous variables depends on the number of different
-values the variable takes. Suppose a continuous variable with <span class="math inline">\(q\)</span> different
-values. If we consider that <span class="math inline">\(q\)</span> is “adequate” in some sense, we can treat the
-continuous variable like an ordinal variable. If we consider <span class="math inline">\(q\)</span> to be large we
-may group its values and reduced their number in <span class="math inline">\(q^*\)</span> (<span class="math inline">\(q^*&lt;q\)</span>). In both cases,
-the variable is treated as an ordinal variable and the number of binary splits
-will be <span class="math inline">\(q-1\)</span> or <span class="math inline">\(q^*-1\)</span>. For example, imagine the continuous variable <em>Age</em>
-(measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
-splits is <span class="math inline">\(5 - 1 = 4\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-272"></span>
-<img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
-<p class="caption">
-Figure 27.7: Example of binary splits for a continuous variable
-</p>
-</div>
-</div>
-</div>
-</div>
-<div id="measures-of-heterogeneity" class="section level2">
-<h2><span class="header-section-number">27.3</span> Measures of Heterogeneity</h2>
-<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> points
-and <span class="math inline">\(2\)</span> classes (with <span class="math inline">\(7\)</span> objects of each class). Suppose this node splits in
-the following manner:</p>
-<p><span class="math display">\[
-\textbf{[Tree; left node with 5 circles 2 triangles, right with opposite]}
-\]</span></p>
-<p>We have an intuitive feeling that the parent node has more heterogeneity than
-its child nodes. In fact, this is a general result: a split cannot result in
-child nodes with more heterogeneity than the parent node. Stated differently,
-you can never do worse than the parent node.</p>
-<p>Most measures of heterogeneity (and therefore homogeneity) relate to
-proportions. Let’s spitball some ideas as to how to do this:</p>
-<ul>
-<li><p><span class="math inline">\(\mathrm{prop}(\bigcirc) - \mathrm{prop}(\Delta)\)</span>; you would need to assign
-some sort of interpretation to the value <span class="math inline">\(0\)</span> in this case.</p></li>
-<li><p>Entropy (infromation, as viewed from a computer science standpoint). Could
-also refer to this as a measure of “disorder” within a node.</p></li>
-<li><p>Impurity (how mixed, diverse)</p></li>
-</ul>
-<div id="entropy" class="section level3">
-<h3><span class="header-section-number">27.3.1</span> Entropy</h3>
-<p>In the parent node, there is an equal probability of being a <span class="math inline">\(\bigcirc\)</span> as
-there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node, there is a higher chance
-of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is true of the right node).</p>
-<p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
-all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-273"></span>
-<img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
-<p class="caption">
-Figure 27.8: Set of 12 objects of same type
-</p>
-</div>
-<p>If we randomly select an object from this box, we have zero uncertainty about
-its class: in other words, there is <strong>zero entropy</strong> associated with this
-situation.</p>
-<p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
-<img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
-<p class="caption">
-Figure 27.9: Set with two different types of objects
-</p>
-</div>
-<p>If we were to draw an object from this box, there would be <em>some</em> amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.</p>
-<p>Finally, in the most extreme case, say we have 12 objects of different classes:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
-<img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
-<p class="caption">
-Figure 27.10: Set with 12 different types of objects
-</p>
-</div>
-<p>We are quite uncertain as to the classes of objects drawn from this box;
-that is, we have <strong>maximum entropy</strong>.</p>
-<p>In Short: the intuition behind entropy relates to how “mixed” a box is, with
-respect to the classes contained inside. If a box is “pure” (i.e. has only one
-class), it has zero entropy where as if a box is “highly impure” (i.e. has many
-different classes), it has some nonzero amount of entropy.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
-<img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
-<p class="caption">
-Figure 27.11: Set with 12 different types of objects
-</p>
-</div>
-<p>Now, let’s see how we can link our idea of entropy with the idea of
-<em>probability</em>. From the examples above, we can see the following relationship:</p>
-<p><span class="math display">\[
-\begin{array}{lcl} \text{large probability} &amp; \Rightarrow &amp; \text{small entropy value} \\ 
-\text{small probability} &amp; \Rightarrow &amp; \text{large entropy value} \\ 
-\end{array}
-\]</span></p>
-<p>Hence, it makes sense to try and model entropy as a function of <span class="math inline">\(P\)</span>, the probability of selecting a certain class. From our discussion above, we see
-that our entropy function should be small when <span class="math inline">\(P\)</span> is around 1, and large when
-<span class="math inline">\(P\)</span> is around <span class="math inline">\(0\)</span>.</p>
-<p>There are quite a few functions that display this behavior. The one we will use
-is the logarithm, of any base <span class="math inline">\(b\)</span>. Note that</p>
-<p><span class="math display">\[
-\log_b(P) : [0, 1] \to (-\infty, 0)
-\]</span></p>
-<p>That is, since our probability values are restricted to lie in the unit interval,
-the entropy will lie somewhere on the negative real axis.</p>
-</div>
-<div id="the-math-behind-entropy" class="section level3">
-<h3><span class="header-section-number">27.3.2</span> The Math Behind Entropy</h3>
-<p>Letting <span class="math inline">\(H(\text{node})\)</span> denote the entropy of a particular node, we use the
-following definition:</p>
-<p><span class="math display">\[
-H(\text{node}) = - \sum_{k=1}^{h} p_k \log_2(p_k)
-\]</span></p>
-<p>where <span class="math inline">\(p_k\)</span> denotes the probability of randomly selecting an object that comes
-from class <span class="math inline">\(k\)</span>. Note that convention dictates that we use a log of base 2. The
-reason rationale behind picking <span class="math inline">\(2\)</span> comes from information theory, as base-2
-logs can be interpreted in terms of bits.</p>
-<p>Let’s see if this definition of entropy is consistent with our intuition. For
-example, let us consider a <strong>pure</strong> node; that is, a node in which all
-objects share the same class. In this case <span class="math inline">\(p_k = 1\)</span>, and we have only one
-class so</p>
-<p><span class="math display">\[
-H(\text{node}) = -(1) \cdot \log_2(1) = 0 \cdot 0 = 0
-\]</span></p>
-<p>Now, for our second example above, we have <span class="math inline">\(h = 2\)</span> classes with <span class="math inline">\(p_1 = 9/12\)</span>
-and <span class="math inline">\(p_2 = 3/12\)</span>, so that</p>
-<p><span class="math display">\[
-H(\text{node}) = - \frac{9}{12} \log_2\left( \frac{9}{12} \right)  \frac{3}{12} \log_2\left( \frac{3}{12} \right) \approx 0.8112
-\]</span></p>
-<p>In a node where there is a 50-50 split, we have</p>
-<p><span class="math display">\[
-H(\text{node}) = - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
-\]</span></p>
-<p>The following figure depicts several examples of sets and their entropy values.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
-<img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
-<p class="caption">
-Figure 27.12: Different sets with their entropy values
-</p>
-</div>
-</div>
-<div id="gini-impurity" class="section level3">
-<h3><span class="header-section-number">27.3.3</span> Gini Impurity</h3>
-<p>Let us return to our box example from the previous section. Let’s suppose I
-select a ball, and note what class it belongs to. I then ask you (without
-giving you any information about the box, other than the fact that there are
-<span class="math inline">\(\bigcirc\)</span>’s and <span class="math inline">\(\square\)</span>’s), and ask you to guess what my selected object
-belongs to. There are 4 possible outcomes to this situation:</p>
-<ul>
-<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
-<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
-<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
-<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
-</ul>
-<p>The Gini index pays attention to the <strong>misclassifications</strong>; that is, the
-situations in which your guess was wrong. For instance, in our example above,
-there are a total of 2 possible misclassifications.</p>
-<p>Now, suppose we know that we are in the second box (where there are 9
-<span class="math inline">\(\bigcirc\)</span>’s and 3 <span class="math inline">\(\square\)</span>’s). The Gini Index would be computed as follows:</p>
-<p><span class="math display">\[\begin{align*}
-\text{Gini Index} &amp; = \underbrace{ Prob(\bigcirc) }_{\text{me}} \underbrace{ Prob(\square) }_{\text{you}} + \underbrace{ Prob(\square) }_{\text{me}} \underbrace{ Prob(\bigcirc) }_{\text{you}} \\
-&amp; = \left( \frac{9}{12} \right) \left( \frac{3}{12} \right)  +  \left( \frac{3}{12} \right) \left( \frac{9}{12} \right)  = \frac{1}{8} = 0.375
-\end{align*}\]</span></p>
-<p>The general definition for the Gini Index is as follows:</p>
-<p><span class="math display">\[
-\sum_{k=1}^{h} Pr(k) \left[ 1- Pr(k) \right] = 1 - \sum_{k=1}^{h} Pr^2(k) = \sum_{k \neq \ell} Pr(k) Pr(\ell)
-\]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
-<img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
-<p class="caption">
-Figure 27.13: Different sets with their gini impurities
-</p>
-</div>
-</div>
-<div id="toy-example-2" class="section level3">
-<h3><span class="header-section-number">27.3.4</span> Toy Example</h3>
-<p>Let us return to our credit data example.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="left">gender</th>
-<th align="left">job</th>
-<th align="left">region</th>
-<th align="left">status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>a</td>
-<td align="left">male</td>
-<td align="left">yes</td>
-<td align="left">A</td>
-<td align="left">good</td>
-</tr>
-<tr class="even">
-<td>b</td>
-<td align="left">female</td>
-<td align="left">yes</td>
-<td align="left">B</td>
-<td align="left">good</td>
-</tr>
-<tr class="odd">
-<td>c</td>
-<td align="left">male</td>
-<td align="left">no</td>
-<td align="left">C</td>
-<td align="left">good</td>
-</tr>
-<tr class="even">
-<td>d</td>
-<td align="left">female</td>
-<td align="left">yes</td>
-<td align="left">B</td>
-<td align="left">good</td>
-</tr>
-<tr class="odd">
-<td>e</td>
-<td align="left">male</td>
-<td align="left">no</td>
-<td align="left">A</td>
-<td align="left">bad</td>
-</tr>
-<tr class="even">
-<td>f</td>
-<td align="left">female</td>
-<td align="left">no</td>
-<td align="left">B</td>
-<td align="left">bad</td>
-</tr>
-<tr class="odd">
-<td>g</td>
-<td align="left">male</td>
-<td align="left">yes</td>
-<td align="left">C</td>
-<td align="left">bad</td>
-</tr>
-<tr class="even">
-<td>h</td>
-<td align="left">female</td>
-<td align="left">no</td>
-<td align="left">C</td>
-<td align="left">bad</td>
-</tr>
-</tbody>
-</table>
-<p>Let us encode <span class="math inline">\(\text{good}\)</span> as a circle <span class="math inline">\(\bigcirc\)</span>, and let us encode
-<span class="math inline">\(\text{bad}\)</span> as a square <span class="math inline">\(\square\)</span>. Our root node then contains 8 objects,
-with a 50-50 split in credit scores:</p>
-<p><strong>INSERT TREE IMAGE</strong></p>
-<p>The entropy of the root node would therefore be</p>
-<p><span class="math display">\[
-H(t) = - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right) }_{\text{good}} - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right)  }_{\text{bad}} = 1
-\]</span></p>
-<div id="partition-by-gender" class="section level4 unnumbered">
-<h4>Partition by Gender</h4>
-<p>Now, say we choose to partition by gender, Our parent node would then split as
-follows:</p>
-<p><span class="math display">\[
-\textbf{[Node Splits]}
-\]</span></p>
-<p>Each of these child nodes have the same entropy:</p>
-<p><span class="math display">\[
-H(\text{left}) =  -\frac{1}{2} \log_2\left( \frac{1}{2} \right)  -\frac{1}{2} \log_2\left( \frac{1}{2} \right)  = 1 = H(\text{right})
-\]</span></p>
-<p>Now, we want to compare the combined entropies of these two child nodes and the
-entropy of the root node. That is, we compare</p>
-<p><span class="math display">\[
-H(t) \ \text{|vs|} \ \left( \frac{4}{8} \right) H(\text{left}) + \left( \frac{4}{8} \right) H(\text{right})
-\]</span></p>
-<p>Hence, let us define the <strong>information gain</strong> by the quantity</p>
-<p><span class="math display">\[\begin{align*}
-\Delta I &amp; = H(t) - \left[ \left( \frac{4}{8} \right) H(\text{left}) + \left( \frac{4}{8} \right) H(\text{right})  \right] \\
-&amp; = 1 - \left[ \frac{4}{8} + \frac{4}{8} \right] = 1 - 1 = 0 
-\end{align*}\]</span></p>
-<p>In this way, we see that gender is not a good predictor to base our partitions
-on!</p>
-<p><em>As an Exercise to the Reader:</em> Try computing information gain when we use
-<span class="math inline">\(\text{job}\)</span> as the splitting variable. The procedure will be very similar to
-the computations above.</p>
 
 </div>
 </div>
 </div>
-</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="hclus.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="linear-extensions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classif.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
