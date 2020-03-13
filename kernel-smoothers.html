@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Resample Approaches | All Models Are Wrong</title>
+  <title>19 Kernel Smoothers | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Resample Approaches | All Models Are Wrong" />
+  <meta property="og:title" content="19 Kernel Smoothers | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Resample Approaches | All Models Are Wrong" />
+  <meta name="twitter:title" content="19 Kernel Smoothers | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="phases.html"/>
-<link rel="next" href="regular.html"/>
+<link rel="prev" href="knn.html"/>
+<link rel="next" href="classif.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -438,195 +438,170 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="resampling" class="section level1">
-<h1><span class="header-section-number">11</span> Resample Approaches</h1>
-<p>In this chapter we discuss how to make the most of a limitted data set. We
-describe several resampling techniques to generate multiple training sets,
-as well as multiple evaluation sets that we can use for both the training phase
-and the pre-selection phase.</p>
-<div id="general-sampling-blueprint" class="section level2">
-<h2><span class="header-section-number">11.1</span> General Sampling Blueprint</h2>
-<p>The idea behind most common (re)sampling approaches is to have a way to
-generate multiple sets from just one data set. In statistical learning, the
-training set is the one on which we usually apply resampling methods.</p>
-<p>The figure below depicts the general sampling regime of the approaches
-that are described in the next sections.</p>
-<p>Suppose we are interested in fitting a <span class="math inline">\(k\)</span>-Nearest-Neighbor (<span class="math inline">\(k\)</span>-NN) model.
-In particular, we want to fit a <span class="math inline">\(k\)</span>-NN model with <span class="math inline">\(k=3\)</span> neighbors. So let’s
-denote this type of model as <span class="math inline">\(\mathcal{H}_1\)</span> hypothesis.
-The starting point is the training set <span class="math inline">\(\mathcal{D}_{train}\)</span>. Using a sampling
-mechanism we split the training set into two subsets. One of the subsets,
-that we denote as <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, is used to train a model, denoted
-<span class="math inline">\(h_{1,b}\)</span>. The other subset, denoted <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>, is used to
-evaluate <span class="math inline">\(h_{1,b}\)</span> by calculating <span class="math inline">\(E_{eval-b}\)</span>.</p>
-<p>The way the evaluation set is formed, is by taking those data points in
-<span class="math inline">\(\mathcal{D}_{train}\)</span>, that are not included in <span class="math inline">\(\mathcal{D}_{train-b}\)</span>,
-that is:
-<span class="math inline">\(\mathcal{D}_{eval-b} = \mathcal{D}_{train} \setminus \mathcal{D}_{train-b}\)</span></p>
-<p>This procedure is repeated
-<span class="math inline">\(B\)</span> times. At the end, we average all the evaluation errors to get a single
-measure indicating the typical performance for the particular type of trained
-models. In this example, this would be the typical performance of 3-NN
-models.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
-<img src="images/validation/sampling-methods1.svg" alt="General scheme for sampling approaches" width="95%" />
-<p class="caption">
-Figure 11.1: General scheme for sampling approaches
-</p>
-</div>
-<p>What distinguishes each sampling approach is the size and way in which the
-random samples are generated to obtain the sets <span class="math inline">\(\mathcal{D}_{train-b}\)</span>. They
-can be random samples without replacement,
-they can be random samples with replacement.</p>
-</div>
-<div id="monte-carlo-cross-validation" class="section level2">
-<h2><span class="header-section-number">11.2</span> Monte Carlo Cross Validation</h2>
-<p>The first sampling method that we discuss is Monte-Carlo Cross-Validation,
-sometimes known as Repeated Holdout Method.</p>
-<p>As the name indicates, this method repeatedly produces a holdout set,
-<span class="math inline">\(\mathcal{D}_{eval-b}\)</span>, to be used for evaluating the performance of a model.
-At each iteration (or repetition) <span class="math inline">\(b\)</span> we split <span class="math inline">\(\mathcal{D}_{train}\)</span> into <span class="math inline">\(\mathcal{D}_{train-b}\)</span> and <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>. We use the training subset
-to fit a particular model <span class="math inline">\(h^{-}_{b}\)</span>, and then validate it on <span class="math inline">\(E_{eval-b}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
-<img src="images/validation/repeated-holdout.svg" alt="Several splits into training and evaluation sets" width="80%" />
-<p class="caption">
-Figure 11.2: Several splits into training and evaluation sets
-</p>
-</div>
-<p>After several repetitions, we average all the test errors <span class="math inline">\(E_{eval-b}\)</span>
-to obtain <span class="math inline">\(E_{eval}(h^{-})\)</span>, an estimate of <span class="math inline">\(E_{out}(h^{-})\)</span>.</p>
-<div id="repeated-holdout-algorithm" class="section level4 unnumbered">
-<h4>Repeated Holdout Algorithm</h4>
-<p>Here’s the conceptual algorithm for the repeated holdout method:</p>
-<ol style="list-style-type: decimal">
-<li><p>Compile the available training data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
-<li><p>Repeat the Holdout method <span class="math inline">\(B\)</span> times, where <span class="math inline">\(B\)</span> is a very large integer
-(for example, 500). At each iteration, obtain the following elements:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, by sampling <span class="math inline">\(n-r\)</span> elements <strong>without</strong>
-replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_{b}\)</span>, by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span></p></li>
-<li><p>Compute <span class="math inline">\(E_{eval-b} = \frac{1}{r} \sum_{i} err_i \big( h^{-}_{b}(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span></p></li>
-</ol></li>
-<li><p>Obtain an overall value for <span class="math inline">\(E_{eval}\)</span> by averaging the <span class="math inline">\(E_{eval-b}\)</span>
-values:</p></li>
-</ol>
+<div id="kernel-smoothers" class="section level1">
+<h1><span class="header-section-number">19</span> Kernel Smoothers</h1>
+<div id="introduction-4" class="section level2">
+<h2><span class="header-section-number">19.1</span> Introduction</h2>
+<p>In the previous chapter, we described the KNN estimator as the arithmetic mean
+or average of the <span class="math inline">\(y_i\)</span> values associated to the <span class="math inline">\(k\)</span> closest <span class="math inline">\(x_i\)</span> observations
+to the query point <span class="math inline">\(x_0\)</span>:</p>
 <p><span class="math display">\[
-E_{eval} = \frac{1}{B} \sum_{b=1}^{B} E_{eval-b}
+\hat{f}(x_0) = \frac{1}{k} \sum_{i \in \mathcal{N}_0} y_i \quad \longrightarrow \quad \hat{f}(x_0) = \sum_{i \in \mathcal{N}_0} w_i(x_0) \hspace{1mm} y_i
 \]</span></p>
+<p>As you can tell, such estimate can be expressed in a generic form of a weighted
+average of <span class="math inline">\(y_i\)</span> (with <span class="math inline">\(i \in \mathcal{N}_0\)</span>), in which the weights are all
+constant <span class="math inline">\(w_i(x_0) = 1/k\)</span>.</p>
+<p>This way of handling the weights <span class="math inline">\(w_i(x_0)\)</span> gives the same importance to the
+<span class="math inline">\(k\)</span> nearest neighbors of <span class="math inline">\(x_0\)</span>, regardless of how close or how far they are
+from the query point. Which sometimes could be problematic.</p>
+<p>Consider the figure below. Suppose that we are interested in predicting
+<span class="math inline">\(y_0\)</span> using <span class="math inline">\(k\)</span> closest neighbors.
+The local information of <span class="math inline">\(x_i\)</span> is concentrated around the actual observed
+<span class="math inline">\(x_0\)</span>.</p>
+<p><strong>INSERT IMAGE</strong></p>
+<p>However, if we consider more neighbors <span class="math inline">\(k\)</span>, now some of the <span class="math inline">\(x_i\)</span> values are
+considerably farther from the query point <span class="math inline">\(x_0\)</span>:</p>
+<p><strong>INSERT IMAGE</strong></p>
+<p>Instead of giving the same importance to all the neighbors, we could instead
+give them variable importances depending on their proximity to <span class="math inline">\(x_0\)</span>. Those
+values <span class="math inline">\(x_i\)</span> that are closer to <span class="math inline">\(x_0\)</span> should receive more importance via a
+bigger weight. Those values <span class="math inline">\(x_i\)</span> that are farther from <span class="math inline">\(x_0\)</span> should receive
+less importance vis a smaller weight.</p>
+<p>Consequently, we can modify the formula of the KNN estimator that uses a
+constant average, and replace the constant weights with variable weights.
+This modification will result in an estimator that computes <span class="math inline">\(\hat{f}(x_0)\)</span>
+as a weighted average.</p>
 </div>
-</div>
-<div id="bootstrap-method" class="section level2">
-<h2><span class="header-section-number">11.3</span> Bootstrap Method</h2>
-<p>Another interesting validation procedure is the “Bootstrap Method”.</p>
-<p>This method is very similar to the Repeated Holdout method. The main difference
-is in the way <span class="math inline">\(\mathcal{D}_{train}\)</span> is split in each repetition. In the
-bootstrap method, as the name says, the samples consists of <em>bootstrap</em> samples.</p>
-<p>Recall that a bootstrap sample is a random sample of the data taken
-<strong>with replacement</strong>. This means that the bootstrap sample is the same size as
-elements in <span class="math inline">\(\mathcal{D}_{train}\)</span>. As a result, some samples will be represented
-multiple times in the bootstrap sample while other will not be selected at all.
-The samples not selected are usually referred to as the out-of-bag samples.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
-<img src="images/validation/bootstrap-method.svg" alt="Several splits with bootstrap samples into training and test sets" width="80%" />
-<p class="caption">
-Figure 11.3: Several splits with bootstrap samples into training and test sets
-</p>
-</div>
-<div id="bootstrap-algorithm" class="section level4 unnumbered">
-<h4>Bootstrap Algorithm</h4>
-<p>Here’s the conceptual algorithm for the bootstrap method:</p>
-<ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
-<li><p>Repeat the following steps for <span class="math inline">\(b = 1, 2, \dots B\)</span> where <span class="math inline">\(B\)</span> is a very large
-integer (for example, 500):</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{train-b}\)</span> by sampling <span class="math inline">\(n\)</span> times <strong>with</strong>
-replacement from <span class="math inline">\(\mathcal{D}_{train}\)</span>. (Note that <span class="math inline">\(\mathcal{D}_{train-b}\)</span>
-could contain repeated elements).</p></li>
-<li><p>Generate <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> by combining all of the elements in
-<span class="math inline">\(\mathcal{D}_{train}\)</span> that were not captured in <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.
-Hence, the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> will change at each iteration.
-(Note that <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> should <strong>not</strong> contain repeated values).</p></li>
-<li><p>Generate <span class="math inline">\(h^{-}_b\)</span> by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.</p></li>
-<li><p>Compute <span class="math inline">\(E_{eval} = \frac{1}{r_b} \sum_{i} err_i \big( h^{-}_b(\mathbf{x_i}), y_i \big)\)</span> where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span> and <span class="math inline">\(r_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>.</p></li>
-</ol></li>
-<li><p>Obtain an overall value for bootstrap <span class="math inline">\(E_{eval}\)</span> by averaging the
-<span class="math inline">\(E_{eval-b}\)</span> values:</p></li>
-</ol>
+<div id="kernel-smoothers-1" class="section level2">
+<h2><span class="header-section-number">19.2</span> Kernel Smoothers</h2>
+<p>We are looking for a weighted average estimator</p>
 <p><span class="math display">\[
-\text{bootstrap } E_{eval} = \frac{1}{B} \sum_{b=1}^{B} E_{eval-b}
+\hat{f}(x_0) = \sum_{i \in N_0} w_i(x_0) \hspace{1mm} y_i
 \]</span></p>
-<p>Bootstrapping enables us to construct confidence intervals for <span class="math inline">\(E_{out}\)</span>.
-We have that:</p>
-<p><span class="math display">\[ 
-\mathrm{SE}_{boot} = \sqrt{  \frac{1}{B - 1}  \sum_{b=1}^{B} \left(E_{eval-b} - E_{eval} \right)^2 }
-\]</span></p>
-<p>Empirical quantiles can be used.</p>
-</div>
-</div>
-<div id="k-fold-cross-validation" class="section level2">
-<h2><span class="header-section-number">11.4</span> <span class="math inline">\(K\)</span>-Fold Cross-Validation</h2>
-<p>The idea of the <em>classic</em> cross-validation method (not to confuse with monte
-carlo cross-validation) is to split the training data into <span class="math inline">\(K\)</span> sets of equal
-(or almost equal) size. Each of the resulting subsets is referred to as a
-<strong>fold</strong>. Usually, the way in which the folds are formed is by randomly
-splitting the initial data.</p>
-<p>The diagram below illustrates a 3-fold cross validation sampling scheme:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-98"></span>
-<img src="images/validation/cv-3fold.svg" alt="3-fold splits" width="85%" />
-<p class="caption">
-Figure 11.4: 3-fold splits
-</p>
-</div>
-<p>As you can tell, the training data is (randomly) divided into three sets of
-similar size: the 3-folds. Then, at each iteration <span class="math inline">\(b\)</span>, one of the folds is
-held out for evaluation purposes, i.e. <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>; the reamining
-folds are merged into <span class="math inline">\(\mathcal{D}_{train-b}\)</span>, and used for training purposes.
-As usual, at the end of the iterations (<span class="math inline">\(b = K\)</span>), all evaluation errors
-<span class="math inline">\(E_{eval-b}\)</span> are aggregated into an average <span class="math inline">\(E_{eval}\)</span>, commonly known
-as the cross-validation error <span class="math inline">\(E_{cv}\)</span>.</p>
-<div id="leave-one-out-cross-validation-loocv" class="section level3">
-<h3><span class="header-section-number">11.4.1</span> Leave-One-Out Cross Validation (LOOCV)</h3>
-<p>One special case of <span class="math inline">\(K\)</span>-fold cross-validation is when each fold consists of a
-single data point, that is <span class="math inline">\(K = n\)</span>. This particular scheme is known as
-leave-one-out cross-validation (loocv). Let’s see how to carry out loocv.</p>
-<ol style="list-style-type: decimal">
-<li><p>Compile the available data into a set <span class="math inline">\(\mathcal{D}_{train} = \{(\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>.</p></li>
-<li><p>Repeat the following for <span class="math inline">\(i = 1, 2, \dots, n\)</span> (where <span class="math inline">\(n\)</span> is the number of
-data points)</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Generate the <span class="math inline">\(i\)</span>-th training set <span class="math inline">\(\mathcal{D}_i\)</span> by removing the <span class="math inline">\(i\)</span>-th
-element from <span class="math inline">\(\mathcal{D}_{train}\)</span>; that is, <span class="math inline">\(\mathcal{D}_i = \mathcal{D} \backslash \{ (\mathbf{x_i}, y_i) \}\)</span>.</p></li>
-<li><p>Fit your model to <span class="math inline">\(\mathcal{D}_i\)</span> to obtain model <span class="math inline">\(h_{i}^{-}\)</span></p></li>
-<li><p>Use the point <span class="math inline">\((\mathbf{x_i}, y_i)\)</span> that is left-out to compute
-<span class="math inline">\(E_{eval-i} = err \big( h_{i}^{-}(\mathbf{x_i}), y_i \big)\)</span>.</p></li>
-</ol></li>
-<li><p>Obtain the <strong>cross-validation error</strong> <span class="math inline">\(E_{cv}\)</span> by averaging the individual
-errors:</p></li>
-</ol>
+<p>in which the weights <span class="math inline">\(w_i(x_0)\)</span> take into account the proximity of <span class="math inline">\(x_i\)</span> to
+<span class="math inline">\(x_0\)</span>.</p>
+<p>One very interesting option for determining weights is with <strong>Kernel functions</strong>.
+These are functions that take into account the density of <span class="math inline">\(X\)</span>-points.</p>
+<div id="kernel-functions" class="section level3">
+<h3><span class="header-section-number">19.2.1</span> Kernel Functions</h3>
+<p>What is a kernel? The term “kernel” is somewhat of an umbrella term in the
+stattistical and machine world. You will often hear people talking about
+kernel functions, kernel methods, kernel regression, kernel classifiers, just
+to mention a few of them. With respect to nonparametric regression, and in
+particular with linear smoothers, a <em>kernel</em> is a function that has special
+properties. Before looking at those properties, we should say that the type of
+kernel we are referring to in this chapter, is different (although related)
+from terms such as Mercer kernels, and the so-called kernel trick.</p>
+<p>A one-dimensional smoothing kernel is a symmetric function <span class="math inline">\(K(u) : \mathbb{R} \rightarrow \mathbb{R}\)</span> with the following properties:</p>
+<ul>
+<li><p>finite support: <span class="math inline">\(K(u) = 0\)</span> for <span class="math inline">\(|u| \geq 1\)</span></p></li>
+<li><p>symmetry: <span class="math inline">\(K(u) = K(-u)\)</span></p></li>
+<li><p>positive values: <span class="math inline">\(K(u) &gt; 0\)</span> for <span class="math inline">\(|u| &lt; 1\)</span></p></li>
+<li><p>normalization: <span class="math inline">\(\int K(x) dx = 1\)</span></p></li>
+<li><p>zero-midpoint: <span class="math inline">\(\int x K(x) dx = 0\)</span></p></li>
+<li><p><span class="math inline">\(\int x^2 K(x) dx &gt; 0\)</span></p></li>
+</ul>
+<p>Some of the common Kernel functions are:</p>
 <p><span class="math display">\[
-E_{cv} = \frac{1}{n} \sum_{i=1}^{n} err_i  = \frac{1}{n} \sum_{i=1}^{n} E_{eval-i}
+\begin{aligned}
+  \text{Uniform} &amp; \qquad K(u) = \frac{1}{2}, \quad \text{for } |u| \leq 1 \\
+  &amp; \\
+  \text{Gaussian} &amp; \qquad K(u) = \frac{1}{\sqrt{2 \pi}} exp(-u^2 / 2) \\
+  &amp; \\
+  \text{Epanechnikov} &amp; \qquad K(u) = \frac{3}{4} (1 - u^2), \quad \text{for } |u| \leq 1\\
+  &amp; \\
+  \text{Biweight} &amp; \qquad K(u) = \frac{15}{16} (1 - u^2)^2, \quad \text{for } |u| \leq 1 \\
+  &amp; \\
+  \text{Triweight} &amp; \qquad K(u) = \frac{35}{32} (1 - u^2)^3, \quad \text{for } |u| \leq 1 \\
+\end{aligned}
 \]</span></p>
-<p>In this way, we are able to fit <span class="math inline">\(n\)</span> models with <span class="math inline">\(n - 1\)</span> points, while also
-generating <span class="math inline">\(n\)</span> testing datasets. So, this looks like the best of both worlds:
-we have a large training data set, <em>and</em> a lot of test datasets! But, there is
-still a cost: the individual errors are no longer independent.</p>
-<p>For illustrative purposes, consider a data set withonly three points:
-<span class="math inline">\(\mathcal{D} = \{p_1, p_2, p_3\}\)</span> (pictured below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-99"></span>
-<img src="images/validation/toy-loocv.png" alt="Illustration of loocv errors" width="80%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
+<img src="images/nonparam/Kernels.svg" alt="Various Kernels (source: wikipedia)" width="70%" />
 <p class="caption">
-Figure 11.5: Illustration of loocv errors
+Figure 19.1: Various Kernels (source: wikipedia)
 </p>
 </div>
-<p>We would therefore repeat step (2) above <span class="math inline">\(n = 3\)</span> times, to obtain <span class="math inline">\(3\)</span> errors:
-<span class="math inline">\(e_1, \ e_2,\)</span> and <span class="math inline">\(e_3\)</span> [note that in the last figure, the red dashed line
-extends to touch the blue line; unfortunately, the point of intersection was
-too low to feasibly show on the graph. In other words, use your imagination:
-the red line touches the blue line].</p>
+<p>In case you are curious, Wikipedia’s entry about kernel functions has many more
+options: <a href="https://en.wikipedia.org/wiki/Kernel_(statistics)" class="uri">https://en.wikipedia.org/wiki/Kernel_(statistics)</a></p>
+</div>
+<div id="weights-from-kernels" class="section level3">
+<h3><span class="header-section-number">19.2.2</span> Weights from Kernels</h3>
+<p>Choosing any type of one-dimensional kernel, we can construct weights</p>
+<p><span class="math display">\[
+w_i (x_0) = \frac{K \big(\frac{x_i - x_0}{h} \big)}{\sum_{i}^{n} K \big( \frac{x_i - x_0}{h} \big)}
+\]</span></p>
+<p>Weights obtained in this way have the property that they add up to 1:</p>
+<p><span class="math display">\[
+\sum_{i}^{n} w_i (x_0) = 1
+\]</span></p>
+</div>
+<div id="kernel-estimator" class="section level3">
+<h3><span class="header-section-number">19.2.3</span> Kernel Estimator</h3>
+<p>The kernel estimator is</p>
+<p><span class="math display">\[
+\hat{f}(x_0) = \frac{\sum_{i=1}^{n} y_i K \big(\frac{x_i - x_0}{h} \big)}{\sum_{i=1}^{n} K \big(\frac{x_i - x_0}{h} \big)} = \sum_{i=1}^{n} w_i(x_0) y_i
+\]</span></p>
+<p>The kernel estimator minimizes a localized squared error</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} K \left( \frac{x_i - x_0}{h} \right) (y_i - \theta)^2
+\]</span></p>
+<p>It can be shown that the estimator <span class="math inline">\(\theta = \hat{f}()\)</span> is given by:</p>
+<p><span class="math display">\[
+\hat{f}(x_0) = \frac{\sum_{i=1}^{n} y_i K \big(\frac{x_i - x_0}{h} \big)}{\sum_{i=1}^{n} K \big(\frac{x_i - x_0}{h} \big)} = \sum_{i=1}^{n} w_i(x_0) y_i
+\]</span></p>
+<p>This estimator is also known as the <strong>Nadaraya-Watson</strong> (NW) estimator, and it
+is a local constant estimator.</p>
+<p>Why do we say <span class="math inline">\(\hat{f}()\)</span> is a local constant estimator? Because it is a local
+weighted average of the <span class="math inline">\(y_i\)</span>’s.</p>
+<p>If we use the Epanechnikov kernel, it turns out that the NW estimator is
+optimal. But this is not something to get obsessed about. In practice, you can
+use any flavor of kernel function, and be able to obtain similar results.</p>
+</div>
+</div>
+<div id="local-polynomial-estimators" class="section level2">
+<h2><span class="header-section-number">19.3</span> Local Polynomial Estimators</h2>
+<p>Let’s bring back the kernel estimator which minimizes a localized squared
+error function:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} K \left( \frac{x_i - x_0}{h} \right) (y_i - \theta)^2
+\]</span></p>
+<p>Instead of using a local weighted average of <span class="math inline">\(y_i\)</span>’s, which is basically a
+local constant fit, why not use a more flexible fit such as a local linear
+fit, or more general, a local polynomial fit?</p>
+<p>This is precisely what local polynomial estimators are for.</p>
+<p>If we use a polynomial of degree 1, that is a line, the local minimization
+problem becomes:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} K \left( \frac{x_i - x_0}{h} \right) \big( y_i - b_{0,x_0} - b_{1,x_0} (x_i - x_0) \big)^2
+\]</span></p>
+<p>The estimated <span class="math inline">\(\hat{f}(x_0) \approx b_{0,x_0} + b_{1,x_0} (x - x_0)\)</span>.</p>
+<p>If we arrange the terms in an <span class="math inline">\(n \times 2\)</span> matrix <span class="math inline">\(\mathbf{X_0}\)</span>, and a
+<span class="math inline">\(n \times n\)</span> matrix of weights <span class="math inline">\(\mathbf{W}\)</span></p>
+<p><span class="math display">\[
+\mathbf{X_0} = 
+\
+\begin{bmatrix} 
+1 &amp; x_{1} - x_0 \\
+1 &amp; x_{2} - x_0 \\
+\vdots &amp; \vdots \\
+1 &amp; x_{n} - x_0 \\
+\end{bmatrix},
+\\
+\quad
+\\
+\mathbf{W_0} = 
+\begin{bmatrix} 
+K_h (x_1 - x_0) &amp; 0 &amp; \dots &amp; 0\\
+0 &amp; K_h (x_2 - x_0) &amp; \dots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \dots &amp; K_h (x_n - x_0) \\
+\end{bmatrix}
+\]</span></p>
+<p>then:</p>
+<p><span class="math display">\[
+\mathbf{b}_{x_0} = (\mathbf{X_0}^\mathsf{T} \mathbf{W_0 X_0})^{-1} \mathbf{X_0}^\mathsf{T} \mathbf{W_0 y}
+\]</span></p>
 
-</div>
 </div>
 </div>
 
@@ -637,8 +612,8 @@ the red line touches the blue line].</p>
           </div>
         </div>
       </div>
-<a href="phases.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="regular.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="knn.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="classif.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
