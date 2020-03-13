@@ -313,6 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>18.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
 <li class="chapter" data-level="18.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>18.2.1</b> Distance Measures</a></li>
 <li class="chapter" data-level="18.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>18.2.2</b> KNN Estimator</a></li>
+<li class="chapter" data-level="18.2.3" data-path="knn.html"><a href="knn.html#how-to-find-k"><i class="fa fa-check"></i><b>18.2.3</b> How to find <span class="math inline">\(k\)</span>?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>19</b> Kernel Smoothers</a><ul>
@@ -472,8 +473,11 @@ have CHD than older people. Hence, there seems to be some information about
 \]</span></p>
 <div id="first-approach-fitting-a-line" class="section level3">
 <h3><span class="header-section-number">21.1.1</span> First Approach: Fitting a Line</h3>
-<p>As a naive first approach, we could try to fit a linear model:
-$ = b_0 + b_1  =  $ where:</p>
+<p>As a naive first approach, we could try to fit a linear model:</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = b_0 + b_1 \mathbf{x} = \mathbf{Xb}
+\]</span></p>
+<p>where:</p>
 <p><span class="math display">\[
 \mathbf{X} = 
 \begin{pmatrix} 
@@ -533,25 +537,36 @@ If <span class="math inline">\(\hat{y}_0 \geq 0.5\)</span>, classify it as “1,
 \hat{y}_i =
 \begin{cases}
 1 \quad \text{if} &amp; b_0 + b_1 x_i \geq c \\
+&amp; \\
 0 \quad \text{if} &amp; b_0 + b_1 x_i &lt; c
 \end{cases}
 \]</span></p>
 <p>We can further arrange the terms above: <span class="math inline">\(\hat{f}(x_i) = b_0 + b_1 x_i - c\)</span></p>
 <p><span class="math display">\[\begin{align*}
 \hat{f}(x_i) &amp;= b_0 + b_1 x_i - c \\
-&amp;= b_{0}^{&#39;} + b_1 x_i, \qquad b_{0}^{&#39;} = b_0 - c 
+&amp;= (b_0 - c) +b_1 x_i \\ 
+&amp;= b_{0}^{&#39;} + b_1 x_i
 \end{align*}\]</span></p>
-<p>By paying attention to the sign of the signal, we can transform our fitted model into: <span class="math inline">\(\text{sign}(\mathbf{b^\mathsf{T}x})\)</span>.</p>
+<p>By paying attention to the sign of the signal, we can transform our fitted
+model into:</p>
+<p><span class="math display">\[
+\hat{y} = \text{sign}(\mathbf{b^\mathsf{T}x})
+\]</span></p>
+<p>that is:</p>
 <p><span class="math display">\[
 \hat{y}_i =
 \begin{cases}
 1 \quad \text{if} &amp; \text{sign}(b_{0}^{&#39;} + b_1 x_i) \geq 0 \\
+&amp; \\
 0 \quad \text{if} &amp; \text{sign}(b_{0}^{&#39;} + b_1 x_i) &lt; 0
 \end{cases}
 \]</span></p>
-<p>This transformation imposes a harsh threshold on the signal. Notice that the signal is still linear but we apply a non-linear transformation <span class="math inline">\(\phi(x) = \text{sign}(x)\)</span>.</p>
-<p><strong>Insert image of harsh threshold</strong></p>
-<p>I like to think about this transformation is a quick fix. It’s definitely not something to be proud of, but you could use it to get the job done—although in a quick-dirty fashion.</p>
+<p>This transformation imposes a harsh threshold on the signal. Notice that the signal is still linear but we apply a non-linear transformation</p>
+<p><span class="math display">\[
+\phi(x) = \text{sign}(x)
+\]</span></p>
+<p><img src="allmodelsarewrong_files/figure-html/chd_sign_line-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
+<p>Think of this transformation as a quick fix. It’s definitely not something to be proud of, but you could use it to get the job done—although in a quick-dirty fashion.</p>
 </div>
 <div id="third-approach-conditional-means" class="section level3">
 <h3><span class="header-section-number">21.1.3</span> Third Approach: Conditional Means</h3>
@@ -561,9 +576,14 @@ linear regression model, but it’s far from ideal.</p>
 The idea is very simple and clever. Say you are looking at patients <span class="math inline">\(x = 24\)</span>
 years old, and you count the relative frequency of chd cases. In other words,
 you count the proportion of chd cases among individuals 24 years old. This is
-nothing else than computing the conditional mean: <span class="math inline">\(avg(y_i | x_i = 24)\)</span>.</p>
-<p>Following this idea, we could compute all conditional means for all age values:
-<span class="math inline">\((\bar{y}|x_i = 25), (\bar{y}|x_i = 26), \dots, (\bar{y}|x_i = 69)\)</span>.</p>
+nothing else than computing the conditional mean:</p>
+<p><span class="math display">\[
+avg(y_i | x_i = 24)
+\]</span></p>
+<p>Following this idea, we could compute all conditional means for all age values:</p>
+<p><span class="math display">\[
+(\bar{y}|x_i = 25), \quad (\bar{y}|x_i = 26), \quad \dots, \quad (\bar{y}|x_i = 69)
+\]</span></p>
 <pre><code>#&gt; age_group
 #&gt; 20-29 30-34 35-39 40-44 45-49 50-54 55-59 60-69 
 #&gt;    10    15    12    15    13     8    17    10</code></pre>
@@ -583,7 +603,10 @@ coronary heart disease cases in each age group</p>
 <p>And then graph these averages on the scatterplot, connecting the dots with a
 line:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-183-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Sometimes, however, you may not have data points for a specific <span class="math inline">\(x\)</span>-value. So instead we can use groups of ages. For example, say we define a first group of ages to be 24 - 29 years. The corresponding average will be: <span class="math inline">\(avg(y_i | x_i = \text{group}_1)\)</span></p>
+<p>Sometimes, however, you may not have data points for a specific <span class="math inline">\(x\)</span>-value. So instead we can use groups of ages. For example, say we define a first group of ages to be 24 - 29 years. The corresponding average will be:</p>
+<p><span class="math display">\[
+avg(y_i | x_i = \text{group}_1)
+\]</span></p>
 <p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>. Which is exactly the <strong>regression function</strong>.</p>
 <p>By connecting the averages, we get an interesting sigmoid pattern</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-184-1.png" width="70%" style="display: block; margin: auto;" /></p>
@@ -620,8 +643,8 @@ The most famous function—and the function we will use—is the
 <p>In other words, we have the following model:</p>
 <p><span class="math display">\[
 Prob(y _i \mid \mathbf{X} ; \boldsymbol{\beta} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{1 + e^{\mathbf{b^\mathsf{T} x_i}}}
-\]</span>
-where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for individual <span class="math inline">\(i\)</span>.</p>
+\]</span></p>
+<p>where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for individual <span class="math inline">\(i\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-185"></span>
 <img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="70%" />
 <p class="caption">
@@ -630,7 +653,11 @@ Figure 21.1: Regression Model Diagram
 </div>
 <p>Hence we have:</p>
 <p><span class="math display">\[
-Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = \begin{cases} h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 1 - h(\mathbf{x_i}) &amp; \to y_i = 0 \\ \end{cases}
+Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
+\begin{cases} 
+h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 
+&amp; \\
+1 - h(\mathbf{x_i}) &amp; \to y_i = 0 \\ \end{cases}
 \]</span></p>
 <p>where <span class="math inline">\(h\)</span> denotes the logistic function.</p>
 <div id="the-criterion-being-optimized" class="section level3">
@@ -645,8 +672,12 @@ also depends on <span class="math inline">\(\mathbf{X}\)</span>, and also comput
 <span class="math inline">\(\ell(\mathbf{b})\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
 Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \\
-&amp; = \prod_{i=1}^{n} h(\mathbf{b^\mathsf{T} x_i})^{y_i} \left[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) \right]^{1 - y_i} \\
-\ell(\mathbf{b}) := \ln[L(\mathbf{b}) ]&amp; = \sum_{i=1}^{n} \ln\left[ P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \right] \\
+&amp; = \prod_{i=1}^{n} h(\mathbf{b^\mathsf{T} x_i})^{y_i} \left[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) \right]^{1 - y_i}
+\end{align*}\]</span></p>
+<p>Taking the logarithm (log-likelihood):</p>
+<p><span class="math display">\[\begin{align*}
+\ell(\mathbf{b}) &amp;= \ln[L(\mathbf{b}) ] \\
+&amp;= \sum_{i=1}^{n} \ln\left[ P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \right] \\
 &amp; = \sum_{i=1}^{n} \left\{ y_i \ln[h(\mathbf{b^\mathsf{T} x_i})] + (1 - y_i) \ln[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) ]  \right\} \\
 &amp; = \sum_{i=1}^{n} \left[ y_i \ln\left( \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } } \right) + (1 - y_i) \ln \left( 1 -  \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } }  \right) \right] \\
 &amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{b^\mathsf{T} x_i} - \ln \left( 1 + e ^{\mathbf{b^\mathsf{T} x_i} } \right) \right] 
@@ -673,8 +704,11 @@ estimate of <span class="math inline">\(\mathbf{b}\)</span>, we require an itera
 Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = \begin{cases} h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 1 - h(\mathbf{x_i}) &amp; \to y_i = -1 \\ \end{cases}
 \]</span></p>
 <p>We also need a new way of combining these expression (like we did inside the
-likelihood expression). They key observation is to note the following:
-<span class="math inline">\(h(-s) = 1 - h(s)\)</span>. With this, we begin computing the likelihood:</p>
+likelihood expression). They key observation is to note the following:</p>
+<p><span class="math display">\[
+h(-s) = 1 - h(s)
+\]</span></p>
+<p>With this, we begin computing the likelihood:</p>
 <p><span class="math display">\[\begin{align*}
 Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \\
 &amp; = \prod_{i=1}^{n} \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right) \\
@@ -685,9 +719,13 @@ Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P
 <p><span class="math display">\[\begin{align*}
 &amp; \min_{\mathbf{b}} \left\{ - \frac{1}{n} \sum_{i=1}^{n}  \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right]   \right\} \  \Leftrightarrow  \ \boxed{  \min_{\mathbf{b}} \left\{ \underbrace{ \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left( 1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } \right) }_{\text{pointwise error}} }_{E_{in}(\mathbf{b})} \right\}  }
 \end{align*}\]</span></p>
-<p>The product <span class="math inline">\(y_i \mathbf{b^\mathsf{T} x_i} =: y_i \mathbf{s}\)</span>
-(where <span class="math inline">\(\mathbf{s}\)</span> represents “signal”) can be understood using the following
-table:</p>
+<p>Focus on the product term:</p>
+<p><span class="math display">\[
+y_i \mathbf{b^\mathsf{T} x_i} =: y_i \mathbf{s}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{s}\)</span> represents “signal”. This term can be understood using the
+following table:</p>
+<p><img src="images/logistic/logistic-signal-table.svg" width="65%" style="display: block; margin: auto;" /></p>
 <p>We can think of the term <span class="math inline">\(\mathbf{b^\mathsf{T} x_i}\)</span> as a numeric value ranging
 from “very small” to “very large”. A small signal means that the probability
 <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be small. Conversely, a large signal
