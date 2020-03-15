@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>21</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="21.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>21.1</b> Motivation</a><ul>
 <li class="chapter" data-level="21.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>21.1.1</b> First Approach: Fitting a Line</a></li>
-<li class="chapter" data-level="21.1.2" data-path="logistic.html"><a href="logistic.html#secodn-approach-harsh-thresholding"><i class="fa fa-check"></i><b>21.1.2</b> Secodn Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="21.1.2" data-path="logistic.html"><a href="logistic.html#second-approach-harsh-thresholding"><i class="fa fa-check"></i><b>21.1.2</b> Second Approach: Harsh Thresholding</a></li>
 <li class="chapter" data-level="21.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>21.1.3</b> Third Approach: Conditional Means</a></li>
 </ul></li>
 <li class="chapter" data-level="21.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>21.2</b> Logistic Regression Model</a><ul>
@@ -450,10 +450,13 @@ we’ll start with the famous logistic regression.</p>
 <h2><span class="header-section-number">21.1</span> Motivation</h2>
 <p>Let’s consider a classic example: predicting heart attack. The data consists of
 a number of individuals (patients) with some medical variables.</p>
-<p>Consider the following (very famous) example, found in Hosmer and Lemeshow
+<p>The following (very famous) example is based on data found in Hosmer and Lemeshow
 (edition from 2000) in which we wish to predict coronary heart disease (<em>chd</em>).
-The data is relatively small (<span class="math inline">\(n = 100\)</span> patients), and we start with considering
-only one predictor: <span class="math inline">\(age\)</span>.</p>
+The data is relatively small (<span class="math inline">\(n = 100\)</span> patients), and we start by considering
+only one predictor: <em>age</em>.</p>
+<p>The following display shows a few data points in the data set. The predictor
+variable <em>age</em> is expressed in whole years. The response <em>chd</em> is a binary
+variable with 0 indicating absence of <em>chd</em>, and 1 indicating presence of <em>chd</em>.</p>
 <pre><code>#&gt;   age chd
 #&gt; 1  20   0
 #&gt; 2  23   0
@@ -461,21 +464,28 @@ only one predictor: <span class="math inline">\(age\)</span>.</p>
 #&gt; 4  25   0
 #&gt; 5  25   1
 #&gt; 6  26   0</code></pre>
-<p>For illustration purposes, let’s consider the response <span class="math inline">\(\mathbf{y}\)</span> and only one predictor <span class="math inline">\(\mathbf{x}\)</span>. If we graph a scatterplot we get:</p>
+<p>If we graph a scatterplot we get the following image. We have added a little
+bit of <em>jitter</em> effect to the dots, in order to better visualize their spread.</p>
 <p><img src="allmodelsarewrong_files/figure-html/chd_scatter3-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
-<p>With respect to the x-axis, we have values ranging from small x’s to large x’s.
-In contrast, the response is a binary response, so there are only 0’s or 1’s. As you can tell, the distribution of points does not seem to uniform along the x-axis. Moreover, for a given response value, say <span class="math inline">\(y_i = 0\)</span> there are more small values <span class="math inline">\(x\)</span> than large ones. And viceversa, for <span class="math inline">\(y_i = 1\)</span>, there are more large values <span class="math inline">\(x\)</span> than small ones.</p>
+<p>With respect to the x-axis (age), we have values ranging from small x’s to
+large x’s. In contrast, the response is a binary response, so there are only 0’s
+or 1’s. As you can tell, the distribution of points does not seem uniform
+along the x-axis. Moreover, for a given response value, say <span class="math inline">\(y_i = 0\)</span> there are
+more small values <span class="math inline">\(x\)</span> than large ones. And viceversa, for <span class="math inline">\(y_i = 1\)</span>, there are
+more large values <span class="math inline">\(x\)</span> than small ones.</p>
 <p>In other words, we can see that (in general) younger people are less likely to
-have CHD than older people. Hence, there seems to be some information about
+have <em>chd</em> than older people. Hence, there seems to be some information about
 <em>chd</em> in <em>age</em>. The goal is to fit a model that predicts <em>chd</em> from <em>age</em>:</p>
-<p><span class="math display">\[
-\text{chd} = f(\text{age}) + \varepsilon
+<p><span class="math display" id="eq:702-01">\[
+\textsf{chd} = f(\textsf{age}) + \varepsilon
+\tag{21.1}
 \]</span></p>
 <div id="first-approach-fitting-a-line" class="section level3">
 <h3><span class="header-section-number">21.1.1</span> First Approach: Fitting a Line</h3>
 <p>As a naive first approach, we could try to fit a linear model:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-02">\[
 \mathbf{\hat{y}} = b_0 + b_1 \mathbf{x} = \mathbf{Xb}
+\tag{21.2}
 \]</span></p>
 <p>where:</p>
 <p><span class="math display">\[
@@ -491,8 +501,8 @@ have CHD than older people. Hence, there seems to be some information about
 b_0 \\ b_1 \\ 
 \end{pmatrix}
 \]</span></p>
-<p>So let’s see what happens if we use least squares to fit such line.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="logistic.html#cb32-1"></a><span class="co"># fit line</span></span>
+<p>So let’s see what happens if we use least squares to fit a line for this model.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="logistic.html#cb32-1"></a><span class="co"># fit line via OLS</span></span>
 <span id="cb32-2"><a href="logistic.html#cb32-2"></a>reg =<span class="st"> </span><span class="kw">lm</span>(chd <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> dat)</span>
 <span id="cb32-3"><a href="logistic.html#cb32-3"></a><span class="kw">summary</span>(reg)</span>
 <span id="cb32-4"><a href="logistic.html#cb32-4"></a><span class="co">#&gt; </span></span>
@@ -513,60 +523,89 @@ b_0 \\ b_1 \\
 <span id="cb32-19"><a href="logistic.html#cb32-19"></a><span class="co">#&gt; Residual standard error: 0.429 on 98 degrees of freedom</span></span>
 <span id="cb32-20"><a href="logistic.html#cb32-20"></a><span class="co">#&gt; Multiple R-squared:  0.264,  Adjusted R-squared:  0.2565 </span></span>
 <span id="cb32-21"><a href="logistic.html#cb32-21"></a><span class="co">#&gt; F-statistic: 35.15 on 1 and 98 DF,  p-value: 4.575e-08</span></span></code></pre></div>
-<p>There seems to be some sort of positive relation between <em>age</em> and <em>chd</em>. To
-better see this, let’s take a look at the scatterplot, and see how the fitted
-line looks like:</p>
+<p>Looking at the estimated coefficients, in particular the coefficient of <em>age</em>,
+there seems to be some sort of positive relation between <em>age</em> and <em>chd</em>.
+Which, in this example, it does make sense and matches what we previously
+stated about younger patients are less likely to have <em>chd</em> (<span class="math inline">\(y = 0\)</span>),
+whereas older patients are more likely to have <em>chd</em> (<span class="math inline">\(y = 1\)</span>).
+To better see this, let’s take a look at the scatterplot, and see how the
+fitted line looks like:</p>
 <p><img src="allmodelsarewrong_files/figure-html/chd_reg_line-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
 <p>This model yields a very awkward fit, with a couple of issues going on.
-For one thing, the line, and consequently the predicted values <span class="math inline">\(\hat{y}_i\)</span>,
-extend beyond the range <span class="math inline">\([0,1]\)</span>. Think about it: we could obtain fitted values
+For one thing, the regression line, and consequently the predicted values
+<span class="math inline">\(\hat{y}_i\)</span>, extend beyond the range <span class="math inline">\([0,1]\)</span>.
+Think about it: we could obtain fitted values
 <span class="math inline">\(\hat{y}_i\)</span> taking any number between 0 and 1 (which, in this context, makes no
 sense). We could also get negative predicted values, or even predicted values
-greater than 1! On the other hand, if we examine the residuals, then things don’t look great for the linear regression.</p>
+greater than 1! (which also does not make sense). On the other hand, if we
+examine the residuals, then things don’t look great for the linear regression.</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-180-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>So, we need a way to fix these problems.</p>
 </div>
-<div id="secodn-approach-harsh-thresholding" class="section level3">
-<h3><span class="header-section-number">21.1.2</span> Secodn Approach: Harsh Thresholding</h3>
+<div id="second-approach-harsh-thresholding" class="section level3">
+<h3><span class="header-section-number">21.1.2</span> Second Approach: Harsh Thresholding</h3>
 <p>One idea to try to solve the issues from the regression line would be to set
-some threshold <span class="math inline">\(c\)</span> (for example, <span class="math inline">\(c = 0.5\)</span>) and look at how the signal compares
-to it, which will allow us to create a decision rule. That is, for a given
+some threshold <span class="math inline">\(c\)</span> (for example, <span class="math inline">\(c = 0.5\)</span>) and look at how the predict
+<span class="math inline">\(\hat{y}_i\)</span> compares to it:</p>
+<p><span class="math display">\[
+\hat{y}_i = b_0 + b_1 x_i \quad -vs- \quad c
+\]</span></p>
+<p>If we think of the linear expression <span class="math inline">\(b_0 + b_1 x_i\)</span> as the <strong>signal</strong>,
+we are basically comparing such signal against a specific threshold <span class="math inline">\(c\)</span>.
+Which in turn will allow us to create a decision rule. That is, for a given
 <em>age</em> value <span class="math inline">\(x_0\)</span>, compare its predicted value to the threshold.
 If <span class="math inline">\(\hat{y}_0 \geq 0.5\)</span>, classify it as “1,” otherwise classify it as “0.”</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-03">\[
 \hat{y}_i =
 \begin{cases}
 1 \quad \text{if} &amp; b_0 + b_1 x_i \geq c \\
 &amp; \\
 0 \quad \text{if} &amp; b_0 + b_1 x_i &lt; c
 \end{cases}
+\tag{21.3}
 \]</span></p>
-<p>We can further arrange the terms above: <span class="math inline">\(\hat{f}(x_i) = b_0 + b_1 x_i - c\)</span></p>
-<p><span class="math display">\[\begin{align*}
+<p>We can further arrange the terms above to get the following expression:</p>
+<p><span class="math display" id="eq:702-04">\[
+\hat{f}(x_i) = b_0 + b_1 x_i - c = \hat{y}_i
+\tag{21.4}
+\]</span></p>
+<p>and then merge the two constant terms <span class="math inline">\(b_0\)</span> and <span class="math inline">\(c\)</span> into a single constant
+denoted as <span class="math inline">\(b_{0}^{&#39;}\)</span>:</p>
+<p><span class="math display" id="eq:702-05">\[\begin{align*}
 \hat{f}(x_i) &amp;= b_0 + b_1 x_i - c \\
 &amp;= (b_0 - c) +b_1 x_i \\ 
 &amp;= b_{0}^{&#39;} + b_1 x_i
+\tag{21.5}
 \end{align*}\]</span></p>
+<p>In vector notation, the above equation—the so-called <em>signal</em>—becomes:</p>
+<p><span class="math display" id="eq:702-06">\[
+\hat{y} = \mathbf{b^\mathsf{T}x}
+\tag{21.6}
+\]</span></p>
 <p>By paying attention to the sign of the signal, we can transform our fitted
 model into:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-07">\[
 \hat{y} = \text{sign}(\mathbf{b^\mathsf{T}x})
+\tag{21.7}
 \]</span></p>
 <p>that is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-08">\[
 \hat{y}_i =
 \begin{cases}
 1 \quad \text{if} &amp; \text{sign}(b_{0}^{&#39;} + b_1 x_i) \geq 0 \\
 &amp; \\
 0 \quad \text{if} &amp; \text{sign}(b_{0}^{&#39;} + b_1 x_i) &lt; 0
 \end{cases}
+\tag{21.8}
 \]</span></p>
-<p>This transformation imposes a harsh threshold on the signal. Notice that the signal is still linear but we apply a non-linear transformation</p>
-<p><span class="math display">\[
+<p>This transformation imposes a harsh threshold on the signal. Notice that the
+signal is still linear but we apply a non-linear transformation to it:</p>
+<p><span class="math display" id="eq:702-09">\[
 \phi(x) = \text{sign}(x)
+\tag{21.9}
 \]</span></p>
 <p><img src="allmodelsarewrong_files/figure-html/chd_sign_line-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
-<p>Think of this transformation as a quick fix. It’s definitely not something to be proud of, but you could use it to get the job done—although in a quick-dirty fashion.</p>
+<p>Think of this transformation as a quick fix. It’s definitely not something to be proud of, but we could use it to get the job done—although in a quick-dirty fashion.</p>
 </div>
 <div id="third-approach-conditional-means" class="section level3">
 <h3><span class="header-section-number">21.1.3</span> Third Approach: Conditional Means</h3>
@@ -574,21 +613,37 @@ model into:</p>
 linear regression model, but it’s far from ideal.</p>
 <p>An alternative approach involves calculating conditional means. How does that work?
 The idea is very simple and clever. Say you are looking at patients <span class="math inline">\(x = 24\)</span>
-years old, and you count the relative frequency of chd cases. In other words,
-you count the proportion of chd cases among individuals 24 years old. This is
+years old, and you count the relative frequency of <em>chd</em> cases. In other words,
+you count the proportion of <em>chd</em> cases among individuals 24 years old. This is
 nothing else than computing the conditional mean:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-10">\[
 avg(y_i | x_i = 24)
+\tag{21.10}
 \]</span></p>
 <p>Following this idea, we could compute all conditional means for all age values:</p>
 <p><span class="math display">\[
 (\bar{y}|x_i = 25), \quad (\bar{y}|x_i = 26), \quad \dots, \quad (\bar{y}|x_i = 69)
 \]</span></p>
+<p>Sometimes, however, we may not have data points for a specific <span class="math inline">\(x\)</span>-value. So
+instead we can use groups of ages. For example, say we define a first group of
+ages to be 20 - 29 years. And then calculate the proportion of <em>chd</em> cases in
+this group. The corresponding average will be:</p>
+<p><span class="math display" id="eq:702-11">\[
+avg(y_i | x_i \in \{ 20 - 29 \text{ years}\})
+\tag{21.11}
+\]</span></p>
+<p>In general, for a given group of age, we calculate the proportion of <em>chd</em>
+cases as:</p>
+<p><span class="math display" id="eq:702-12">\[
+avg(y_i | x_i = \text{age group})
+\tag{21.12}
+\]</span></p>
+<p>Following our example, we can specify the following age groups:</p>
 <pre><code>#&gt; age_group
 #&gt; 20-29 30-34 35-39 40-44 45-49 50-54 55-59 60-69 
 #&gt;    10    15    12    15    13     8    17    10</code></pre>
-<p>Now that we have age by groups, we can get the proportion of
-coronary heart disease cases in each age group</p>
+<p>Now that we have age by groups, we can get the proportion of coronary heart
+disease cases in each age group. The results are displayed in the table below.</p>
 <pre><code>#&gt; # A tibble: 8 x 3
 #&gt;   age_group count_chd prop_chd
 #&gt;   &lt;fct&gt;         &lt;int&gt;    &lt;dbl&gt;
@@ -600,136 +655,207 @@ coronary heart disease cases in each age group</p>
 #&gt; 6 50-54             8    0.625
 #&gt; 7 55-59            17    0.765
 #&gt; 8 60-69            10    0.8</code></pre>
-<p>And then graph these averages on the scatterplot, connecting the dots with a
-line:</p>
+<p>Likewise, we can graph these averages on a scatterplot:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-183-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Sometimes, however, you may not have data points for a specific <span class="math inline">\(x\)</span>-value. So instead we can use groups of ages. For example, say we define a first group of ages to be 24 - 29 years. The corresponding average will be:</p>
-<p><span class="math display">\[
-avg(y_i | x_i = \text{group}_1)
-\]</span></p>
-<p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>. Which is exactly the <strong>regression function</strong>.</p>
+<p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>.
+Which is exactly the <strong>regression function</strong>.</p>
 <p>By connecting the averages, we get an interesting sigmoid pattern</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-184-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>This pattern can be approximated by some mathematical functions, the most popular being the so-called <strong>logistic</strong> function:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-13">\[
 \text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
+\tag{21.13}
 \]</span></p>
-<p><img src="allmodelsarewrong_files/figure-html/logistic-curves-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-185-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sometimes you may also find the logistic equation in an alternative form:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+f(s) = \frac{e^{s}}{1 + e^{s}} \quad \longleftrightarrow \quad f(s) = \frac{1}{1 + e^{-s}}
+\]</span></p>
+<p>Replacing the the signal <span class="math inline">\(s\)</span> by a linear model <span class="math inline">\(\beta_0 + \beta_1 x\)</span>, we have:</p>
+<p><span class="math display" id="eq:702-14">\[\begin{align*}
 f(x) &amp;= \frac{e^{\beta_0 + \beta_1 x}}{1 + e^{\beta_0 + \beta_1 x}} \\
 &amp;= \frac{1}{\frac{1 + e^{\beta_0 + \beta_1 x}}{e^{\beta_0 + \beta_1 x}}} \\
 &amp;= \frac{1}{\frac{1}{e^{\beta_0 + \beta_1 x}} + 1} \\
 &amp;= \frac{1}{1 + e^{-(\beta_0 + \beta_1 x})}
+\tag{21.14}
 \end{align*}\]</span></p>
-<p>Since probability values range inside <span class="math inline">\([0,1]\)</span>, instead of using a line to try to approximate these values, we should use a more adequate curve. This is the reason why sigmoid-like curves, such as the logistic function, are preferred for this purpose.</p>
+<p>The following figure shows different logistic functions for different <span class="math inline">\(\beta\)</span>
+values:</p>
+<p><img src="allmodelsarewrong_files/figure-html/logistic-curves-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Since probability values range inside <span class="math inline">\([0,1]\)</span>, instead of using a line to try
+to approximate these values, we should use a more adequate curve. This is the
+reason why sigmoid-like curves, such as the logistic function, are preferred
+for this purpose.</p>
 </div>
 </div>
 <div id="logistic-regression-model" class="section level2">
 <h2><span class="header-section-number">21.2</span> Logistic Regression Model</h2>
 <p>We consider the following model:</p>
-<p><span class="math display">\[
-Prob(y \mid x; \mathbf{b}) = f(x)
+<p><span class="math display" id="eq:702-15">\[
+Prob(y \mid \mathbf{x}; \mathbf{b}) = f(\mathbf{x})
+\tag{21.15}
 \]</span></p>
-<p>We don’t get to observe the true probability; rather, we observe the noisy target
-<span class="math inline">\(y_i\)</span>, <em>generated/affected</em> by the probability <span class="math inline">\(f(x)\)</span>. How will we model the
-probability? We would ideally like a mathematical function that looks like the
-sigmoid shape from the toy example above; that is, use a <strong>sigmoid</strong> function.
-The most famous function—and the function we will use—is the
-<strong>logistic function</strong> defined in the previous section</p>
-<p><span class="math display">\[
+<p>We don’t get to observe the true probability; rather, we observe the noisy
+target <span class="math inline">\(y_i\)</span>, that is generated (or affected) by the probability <span class="math inline">\(f(x)\)</span>.
+How will we model the probability? We would ideally like to use a mathematical
+function that looks like the sigmoid shape from the toy example above; that is,
+use a sigmoid function. The most famous function—and the function we will
+use—is the <strong>logistic function</strong>:</p>
+<p><span class="math display" id="eq:702-16">\[
 \text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
+\tag{21.16}
 \]</span></p>
 <p>In other words, we have the following model:</p>
-<p><span class="math display">\[
-Prob(y _i \mid \mathbf{X} ; \boldsymbol{\beta} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{1 + e^{\mathbf{b^\mathsf{T} x_i}}}
+<p><span class="math display" id="eq:702-17">\[
+Prob(y _i \mid \mathbf{x} ; \mathbf{b} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{1 + e^{\mathbf{b^\mathsf{T} x_i}}}
+\tag{21.17}
 \]</span></p>
-<p>where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of observations for individual <span class="math inline">\(i\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-185"></span>
-<img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="70%" />
+<p>where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of features for individual <span class="math inline">\(i\)</span>.</p>
+<p>Using the same kind of diagrams depicted for various regression models, we
+can put logistic regression in this visual format as follows:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-186"></span>
+<img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="80%" />
 <p class="caption">
 Figure 21.1: Regression Model Diagram
 </p>
 </div>
-<p>Hence we have:</p>
-<p><span class="math display">\[
+<p>Starting with the input features, we form a linear combination, the so-called
+linear signal <span class="math inline">\(\mathbf{s} = \mathbf{Xb}\)</span>, that gets passed to a
+logistic function <span class="math inline">\(\phi()\)</span>. This is a nonlinear transformation of the linear
+signal, which allows us to interpret the response as a true probability value.</p>
+<p>Hence we have that the probabilities are given by:</p>
+<p><span class="math display" id="eq:702-18">\[
 Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
 \begin{cases} 
-h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 
+h(\mathbf{x_i})&amp;  \textsf{for } y_i = 1 \\ 
 &amp; \\
-1 - h(\mathbf{x_i}) &amp; \to y_i = 0 \\ \end{cases}
+1 - h(\mathbf{x_i}) &amp; \textsf{for } y_i = 0 \\ \end{cases}
+\tag{21.18}
 \]</span></p>
-<p>where <span class="math inline">\(h\)</span> denotes the logistic function.</p>
+<p>where <span class="math inline">\(h()\)</span> denotes the logistic function <span class="math inline">\(\phi()\)</span>:</p>
+<p><span class="math display">\[
+h(\mathbf{x}) = \phi(\mathbf{b^\mathsf{T} x})
+\]</span></p>
 <div id="the-criterion-being-optimized" class="section level3">
 <h3><span class="header-section-number">21.2.1</span> The Criterion Being Optimized</h3>
 <p>We will not be using the MSE as our error measure (since doing so would make no
 sense in this particular context). Instead, we will use an “error” based on
 Maximum Likelihood Estimation. In order to do so, we must assume that our model
-is true; that is, that <span class="math inline">\(h(x) = f(x)\)</span>; given that assumption, we ask “how likely
-is it that we observe the data we already observed (i.e. <span class="math inline">\(y_i\)</span>)?”</p>
+is true; that is:</p>
+<p><span class="math display">\[
+\textsf{assuming this is true} \quad h(x) = f(x)
+\]</span></p>
+<p>we ask “how likely is it that we observe the data we already observed (i.e. <span class="math inline">\(y_i\)</span>)?”</p>
 <p>We start with the likelihood function <span class="math inline">\(L(\mathbf{b})\)</span>. Note that <span class="math inline">\(L\)</span> <em>implicitly</em>
-also depends on <span class="math inline">\(\mathbf{X}\)</span>, and also compute the log-likelihood
+also depends on all <span class="math inline">\(X\)</span>-inputs, and also compute the log-likelihood
 <span class="math inline">\(\ell(\mathbf{b})\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
 Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \\
 &amp; = \prod_{i=1}^{n} h(\mathbf{b^\mathsf{T} x_i})^{y_i} \left[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) \right]^{1 - y_i}
 \end{align*}\]</span></p>
 <p>Taking the logarithm (log-likelihood):</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:702-19">\[\begin{align*}
 \ell(\mathbf{b}) &amp;= \ln[L(\mathbf{b}) ] \\
 &amp;= \sum_{i=1}^{n} \ln\left[ P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \right] \\
 &amp; = \sum_{i=1}^{n} \left\{ y_i \ln[h(\mathbf{b^\mathsf{T} x_i})] + (1 - y_i) \ln[ 1 - h(\mathbf{b^\mathsf{T} x_i} ) ]  \right\} \\
 &amp; = \sum_{i=1}^{n} \left[ y_i \ln\left( \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } } \right) + (1 - y_i) \ln \left( 1 -  \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } }  \right) \right] \\
-&amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{b^\mathsf{T} x_i} - \ln \left( 1 + e ^{\mathbf{b^\mathsf{T} x_i} } \right) \right] 
+&amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{b^\mathsf{T} x_i} - \ln \left( 1 + e ^{\mathbf{b^\mathsf{T} x_i} } \right) \right]
+\tag{21.19}
 \end{align*}\]</span></p>
-<p>Now, here is the bad news: differentiating and setting equal to 0 yields and
-equation for which no closed-form solution exists. To find the maximum likelihood
-estimate of <span class="math inline">\(\mathbf{b}\)</span>, we require an iterative method: for example, the <strong>Newton-Raphson method</strong>, or <strong>gradient ascent</strong>.</p>
-<p><span class="math display">\[\begin{align*}
+<p>Now, here is the not so good news: differentiating and setting equal to 0 yields
+and equation for which no closed-form solution exists. To find the maximum
+likelihood estimate of <span class="math inline">\(\mathbf{b}\)</span>, we require an iterative method:
+for example, the <strong>Newton-Raphson method</strong>, or <strong>gradient ascent</strong>.</p>
+<p><span class="math display" id="eq:702-20">\[\begin{align*}
 \nabla \ell(\mathbf{b}) &amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{x_i} - \left( \frac{e^{\mathbf{b^\mathsf{T} x_i}} }{1 + e^{\mathbf{b^\mathsf{T} x_i} } } \right) \mathbf{x_i} \right] \\
 &amp; = \sum_{i=1}^{n} \left[ y_i \mathbf{x_i} - \phi(\mathbf{b^\mathsf{T} x_i} ) \mathbf{x_i}  \right]  \\
 &amp; = \sum_{i=1}^{n} \left[ y_i - \phi(\mathbf{b^\mathsf{T} x_i} )  \right] \mathbf{x_i} 
+\tag{21.20}
 \end{align*}\]</span></p>
 <p>Hence, in gradient ascent, we would use:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:702-21">\[
 \mathbf{b}^{(s + 1)} = \mathbf{b}^{(s)} + \alpha \nabla \ell(\mathbf{b}^{(s)})
+\tag{21.21}
 \]</span></p>
 </div>
 <div id="another-way-to-solve-logistic-regression" class="section level3">
 <h3><span class="header-section-number">21.2.2</span> Another Way to Solve Logistic Regression</h3>
 <p>The overall picture stills stands:</p>
-<p><img src="images/logistic/logistic-pathdiag1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Now, however, we change our probability expression a bit:</p>
-<p><span class="math display">\[
-Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = \begin{cases} h(\mathbf{x_i})&amp;  \to y_i = 1 \\ 1 - h(\mathbf{x_i}) &amp; \to y_i = -1 \\ \end{cases}
+<p><img src="images/logistic/logistic-pathdiag1.svg" width="80%" style="display: block; margin: auto;" /></p>
+<p>Now, however, we will change our probability expression a bit. How? By recoding
+the response variable <span class="math inline">\(y_i\)</span>. Specifically, what is used to be <span class="math inline">\(y_i = 0\)</span>
+let’s now encode it as <span class="math inline">\(y_i = -1\)</span>.</p>
+<p><span class="math display" id="eq:702-22">\[
+Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
+\begin{cases} 
+h(\mathbf{x_i}) &amp;  \textsf{for } y_i = 1 \\ 
+&amp; \\
+1 - h(\mathbf{x_i}) &amp; \textsf{for } y_i = -1 \\ 
+\end{cases}
+\tag{21.22}
 \]</span></p>
-<p>We also need a new way of combining these expression (like we did inside the
-likelihood expression). They key observation is to note the following:</p>
+<p>Recall that <span class="math inline">\(h()\)</span> is the logistic function <span class="math inline">\(\phi()\)</span>:</p>
 <p><span class="math display">\[
-h(-s) = 1 - h(s)
+h(\mathbf{x}) = \phi(\mathbf{b^\mathsf{T} x})
 \]</span></p>
-<p>With this, we begin computing the likelihood:</p>
-<p><span class="math display">\[\begin{align*}
+<p>They key observation is to note the following property of the logistic function:</p>
+<p><span class="math display" id="eq:702-23">\[
+\phi(-s) = 1 - \phi(s)
+\tag{21.23}
+\]</span></p>
+<p>Taking into account this property, we can update the expression of the
+conditional probability:</p>
+<p><span class="math display" id="eq:702-24">\[
+Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
+\begin{cases} 
+h(\mathbf{x_i}) = \phi(y_i \mathbf{b^\mathsf{T} x}) &amp;  \textsf{for } y_i = 1 \\ 
+&amp; \\
+1 - h(\mathbf{x_i}) = \phi(y_i \mathbf{b^\mathsf{T} x}) &amp; \textsf{for } y_i = -1 \\ 
+\end{cases}
+\tag{21.24}
+\]</span></p>
+<p>Notice that this allows us to simplify things in a very convenient way. This
+implies that we only need one case regardless of the value of <span class="math inline">\(y_i\)</span>:</p>
+<p><span class="math display" id="eq:702-25">\[
+Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = \phi(y_i \mathbf{b^\mathsf{T} x})
+\tag{21.25}
+\]</span></p>
+<p>With this, we begin computing the likelihood as we previously did:</p>
+<p><span class="math display" id="eq:702-26">\[\begin{align*}
 Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P(y_i \mid \mathbf{b^\mathsf{T} x_i} ) \\
 &amp; = \prod_{i=1}^{n} \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right) \\
+\tag{21.26}
+\end{align*}\]</span></p>
+<p>and then the log-likelihood:</p>
+<p><span class="math display" id="eq:702-27">\[\begin{align*}
 \ell(\mathbf{b}) : = \ln[L(\mathbf{\beta})] &amp; = \sum_{i=1}^{n} \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right] \\
 &amp; \Rightarrow \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right] }_{\text{logit}}
+\tag{21.27}
 \end{align*}\]</span></p>
-<p>In other words, we can perform the following <strong>minimization</strong> problem:</p>
+<p>Here comes an important trick. Instead of maximizing the log-likelihood,
+we can minimize the negative of the loglikelihood.
+In other words, we can perform the following <strong>minimization</strong> problem:</p>
+<p><span class="math display" id="eq:702-28">\[
+\min_{\mathbf{b}} \left\{ - \frac{1}{n} \sum_{i=1}^{n}  \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right]   \right\}
+\tag{21.28}
+\]</span></p>
+<p>Doing some algebra, it can be proved that the above criterion is equivalent
+to the right hand side of the expression below:</p>
 <p><span class="math display">\[\begin{align*}
-&amp; \min_{\mathbf{b}} \left\{ - \frac{1}{n} \sum_{i=1}^{n}  \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right]   \right\} \  \Leftrightarrow  \ \boxed{  \min_{\mathbf{b}} \left\{ \underbrace{ \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left( 1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } \right) }_{\text{pointwise error}} }_{E_{in}(\mathbf{b})} \right\}  }
+&amp; \min_{\mathbf{b}} \left\{ - \frac{1}{n} \sum_{i=1}^{n}  \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right]   \right\} \  \Leftrightarrow  \  \min_{\mathbf{b}} \left\{ \underbrace{ \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left( 1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } \right) }_{\text{pointwise error}} }_{E_{in}(\mathbf{b})} \right\}
 \end{align*}\]</span></p>
-<p>Focus on the product term:</p>
-<p><span class="math display">\[
+<p>Focus on the product term between the response and the linear signal:</p>
+<p><span class="math display" id="eq:702-29">\[
 y_i \mathbf{b^\mathsf{T} x_i} =: y_i \mathbf{s}
+\tag{21.29}
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{s}\)</span> represents “signal”. This term can be understood using the
 following table:</p>
 <p><img src="images/logistic/logistic-signal-table.svg" width="65%" style="display: block; margin: auto;" /></p>
-<p>We can think of the term <span class="math inline">\(\mathbf{b^\mathsf{T} x_i}\)</span> as a numeric value ranging
-from “very small” to “very large”. A small signal means that the probability
-<span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be small. Conversely, a large signal
-means that <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be large.
+<p>We can think of the signal term <span class="math inline">\(\mathbf{b^\mathsf{T} x_i}\)</span> as a numeric value
+or “score” ranging from “very small” to “very large”. A small signal means that
+the probability <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be small. Conversely, a
+large signal means that <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> will be large.
 In turn, the term <span class="math inline">\(y_i\)</span> can be either <span class="math inline">\(-1\)</span> or <span class="math inline">\(+1\)</span>.</p>
 <p>If we have a correct prediction, we would expect a small probability
 <span class="math inline">\(\phi(\mathbf{b^\mathsf{T} x_i})\)</span> to agree with <span class="math inline">\(y_i = -1\)</span>. Likewise, we would
@@ -747,10 +873,19 @@ will consequently give you a large error.</p></li>
 </ul>
 <p>We will also refer to our <span class="math inline">\(E_{in}(\mathbf{b})\)</span> quantity as the
 <strong>mean cross-entropy error</strong>. Technically it isn’t a “cross-entropy” measure in
-the classification sense, however we will ignore that technicality for now.
-We find:</p>
-<p><span class="math display">\[
+the classification sense, however we will ignore that technicality for now.</p>
+<p>How do we find <span class="math inline">\(\mathbf{b}\)</span> that minimizes the criterion:</p>
+<p><span class="math display" id="eq:702-30">\[
+\min_{\mathbf{b}} \left\{ \underbrace{ \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left( 1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } \right) }_{\text{pointwise error}} }_{E_{in}(\mathbf{b})} \right\}
+\tag{21.30}
+\]</span></p>
+<p>This expression does not have a closed analytical solution. So in order to
+find the minimum, we need to apply iterative optimization methods. For example,
+gradient descent. Consequently, calculating the gradient of the above
+expression, we find:</p>
+<p><span class="math display" id="eq:702-31">\[
 \nabla E_{in}(\mathbf{b}) = - \frac{1}{n} \sum_{i=1}^{n} \left( \frac{1}{1 + e^{-y_i \mathbf{b^\mathsf{T} x_i} } }  \right) y_i \mathbf{x_i}
+\tag{21.31}
 \]</span></p>
 <p>and we would use <a href="gradient.html#gradient">gradient descent</a> to compute the minimum.</p>
 

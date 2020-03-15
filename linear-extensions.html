@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>21</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="21.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>21.1</b> Motivation</a><ul>
 <li class="chapter" data-level="21.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>21.1.1</b> First Approach: Fitting a Line</a></li>
-<li class="chapter" data-level="21.1.2" data-path="logistic.html"><a href="logistic.html#secodn-approach-harsh-thresholding"><i class="fa fa-check"></i><b>21.1.2</b> Secodn Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="21.1.2" data-path="logistic.html"><a href="logistic.html#second-approach-harsh-thresholding"><i class="fa fa-check"></i><b>21.1.2</b> Second Approach: Harsh Thresholding</a></li>
 <li class="chapter" data-level="21.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>21.1.3</b> Third Approach: Conditional Means</a></li>
 </ul></li>
 <li class="chapter" data-level="21.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>21.2</b> Logistic Regression Model</a><ul>
@@ -475,10 +475,11 @@ which is good news because we have a lot of freedom to decide on almost any
 form for <span class="math inline">\(f()\)</span>, and consequently, on any form for <span class="math inline">\(\hat{f}()\)</span>. Again, here the
 term <em>function</em> is not the classic definition of a mathematical function.
 Instead, think of the notion of function as a machine that takes input features
-<span class="math inline">\(\mathbf{x}\)</span>, and returns an output.</p>
+<span class="math inline">\(\mathbf{x}\)</span>, and returns an output <span class="math inline">\(y\)</span>.</p>
 <p>Up to now, we have been working with the most standard type of form for
 <span class="math inline">\(\hat{f}()\)</span> which is a linear model. The estimated regression is simply a
-linear combination of the <span class="math inline">\(p\)</span> input features:</p>
+linear combination of the <span class="math inline">\(p\)</span> input features, possibly including a constant
+term <span class="math inline">\(b_0\)</span>:</p>
 <p><span class="math display" id="eq:601-03">\[\begin{align*}
 \hat{y}_i &amp;= b_0 + b_1 x_{i1} + b_2 x_{i2} + \dots + b_p x_{ip} \\
 &amp;= \mathbf{b^\mathsf{T} x_i}
@@ -490,7 +491,7 @@ linear combination of the <span class="math inline">\(p\)</span> input features:
 \tag{16.4}
 \]</span></p>
 <p>which we can graphically represent using a path diagram like the one shown
-below (assuming a constant term <span class="math inline">\(\mathbf{x_0} = \mathbf{1}\)</span>):</p>
+below (assuming a constant input term <span class="math inline">\(\mathbf{x_0} = \mathbf{1}\)</span>):</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
 <img src="images/ols/ols-path-diagram-betas0.svg" alt="Linear regression model in diagram form" width="40%" />
 <p class="caption">
@@ -531,7 +532,7 @@ f(\mathbf{x_i}) = b_0 + b_1 x_{i1} + \dots + b_p x_{ip} + \varepsilon_i
 is linear in the input variables <span class="math inline">\(X_1, \dots, X_p\)</span>. On the other hand, it is
 also linear in the parameters <span class="math inline">\(b_0, b_1, \dots, b_p\)</span>. As we said before,
 although a model like this is very friendly to work with, its double linearity
-is very restrictive.</p>
+may be fairly restrictive.</p>
 <p>In the regression world, the most general type of linearity is the one that
 applies to the regression coefficients or parameters <span class="math inline">\(b_0, b_1, \dots, b_p\)</span>.
 Here’s an example of a model that is nonlinear with respect to the predictors,
@@ -568,18 +569,20 @@ way to specify a function <span class="math inline">\(f()\)</span> without direc
 form. Somewhat contradictory, nonparametric does not necessarily mean that a
 model has no parameters. As we’ll see, it turns out that nonparametric models
 do have parameters (or hyperparameters).</p>
-<p>A common example of a nonparametric method is <span class="math inline">\(K\)</span>-Nearest-Neighbors (KNN).
+<p>A common example of a nonparametric method is <span class="math inline">\(k\)</span>-Nearest-Neighbors (KNN).
 The functional form of <span class="math inline">\(f()\)</span> is way more relaxed, and all we do is to
-use an average of the response values <span class="math inline">\(y_i\)</span> for the closest <span class="math inline">\(K\)</span> points <span class="math inline">\(x_i\)</span>
+use an average of the response values <span class="math inline">\(y_i\)</span> for the closest <span class="math inline">\(k\)</span> points <span class="math inline">\(x_i\)</span>
 to a query value <span class="math inline">\(x_0\)</span>:</p>
 <p><span class="math display" id="eq:601-08">\[
-\hat{y}_0 = \frac{1}{K} \sum_{i \in N_k(x_0)} y_i
+\hat{y}_0 = \frac{1}{k} \sum_{i \in \mathcal{N}_k(x_0)} y_i
 \tag{16.8}
 \]</span></p>
-<p>where the notation <span class="math inline">\(N_K(x_0)\)</span> indicates the set of <span class="math inline">\(K\)</span> closest neighbors to <span class="math inline">\(x_0\)</span>.</p>
+<p>where the notation <span class="math inline">\(\mathcal{N}_K(x_0)\)</span> indicates the set of <span class="math inline">\(K\)</span> closest
+neighbors to <span class="math inline">\(x_0\)</span>.</p>
 <p>Notice that KNN does not impose any functional form that specifies how to
-combine the <span class="math inline">\(X\)</span>-input feature(s). In this sense, we say that this is a nonparametric model.</p>
-<p>Now that we have provide some clarifications on the meanings of terms such as
+combine the <span class="math inline">\(X\)</span>-input feature(s). In this sense, we say that this is a
+nonparametric model.</p>
+<p>Now that we have provided some clarifications on the meanings of terms such as
 “linear”, “parametric”, and “nonparametric”, we can continue with our
 introduction of ways in which we can extend linear models beyond linearity,
 as well as extensions of models in a more relaxed (nonparametric) sense.</p>
@@ -592,7 +595,9 @@ more sophisticated is by means of applying transformations to some or all of
 the input features. This is not a new idea. In fact, we have alredy used this
 strategy when we studied <a href="pcr">Principal Components Regression</a> and
 <a href="pls">Partial Least Squares Regression</a>.</p>
-<p>Consider a linear model that uses some type of dimension reduction approach.</p>
+<p>Consider a linear model that uses some type of dimension reduction approach.
+The general recipe is to obtain new variables by using linear combinations
+of the input features, illustrated in the following diagram.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-163"></span>
 <img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
 <p class="caption">
