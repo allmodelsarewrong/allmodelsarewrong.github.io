@@ -607,7 +607,7 @@ x_{i} - \bar{x} &amp;= x_{i} - (\bar{x}_{k} - \bar{x}_{k}) - \bar{x} \\
 <p><span class="math display" id="eq:703-10">\[
 \underbrace{\sum_{k=1}^{K} \sum_{i \in C_k} (x_{ik} - \bar{x})^2}_{\text{tss}} = 
 \underbrace{\sum_{k=1}^{K} n_k (\bar{x}_k - \bar{x})^2}_{\text{bss}} + 
-\underbrace{\sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2}_{\text{wss}}
+\underbrace{\sum_{k=1}^{K} \sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2}_{\text{wss}}
 \tag{22.10}
 \]</span></p>
 <p>In summary:</p>
@@ -693,7 +693,7 @@ Figure 22.1: Cloud of n points in p-dimensional space
 </p>
 </div>
 <p>One of the things that we can do is to look at the average individual, denoted
-by <span class="math inline">\(\mathbf{g}\)</span>, andl also known as the global centroid (i.e. the center of
+by <span class="math inline">\(\mathbf{g}\)</span>, also known as the global centroid (i.e. the center of
 gravity of the cloud of points).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-205"></span>
 <img src="images/discrim/discrim_cloud2.svg" alt="The centroid of the cloud of points" width="50%" />
@@ -732,14 +732,14 @@ of spread or dispersion in the data.</p>
 \]</span></p>
 <div id="clouds-from-class-structure" class="section level3">
 <h3><span class="header-section-number">22.3.1</span> Clouds from Class Structure</h3>
-<p>Here’s some notation that we’ll be using while covering discriminant methods:</p>
+<p>Here’s some notation that we’ll be using while covering some discriminant methods:</p>
 <ul>
 <li><p>Let <span class="math inline">\(n_k\)</span> be the number of observations in the <span class="math inline">\(k\)</span>-th class</p></li>
 <li><p>Let <span class="math inline">\(x_{ijk}\)</span> represent the <span class="math inline">\(i\)</span>-th observation, of the
 <span class="math inline">\(j\)</span>-th variable, in the <span class="math inline">\(k\)</span>-th class</p></li>
 <li><p>Let <span class="math inline">\(x_{ik}\)</span> represent <span class="math inline">\(i\)</span>-th observation in class <span class="math inline">\(k\)</span></p></li>
 <li><p>Let <span class="math inline">\(x_{jk}\)</span> represent <span class="math inline">\(j\)</span>-th variable in class <span class="math inline">\(k\)</span></p></li>
-<li><p>Let <span class="math inline">\(n_k\)</span> be the number of observations in the <span class="math inline">\(k\)</span>-th group <span class="math inline">\(C_k\)</span></p></li>
+<li><p>Let <span class="math inline">\(n_k\)</span> be the number of observations in the <span class="math inline">\(k\)</span>-th class <span class="math inline">\(C_k\)</span></p></li>
 <li><p>The number of individuals: <span class="math inline">\(n = n_1 + n_2 + \dots + n_K = \sum_{k=1}^{K} n_k\)</span></p></li>
 </ul>
 <p>Let’s now take into the account the class structure given by the response variable.</p>
@@ -796,10 +796,11 @@ Figure 22.6: Dispersion within the sub-clouds
 <p>where <span class="math inline">\(\mathbf{X_k}\)</span> is the data matrix of the <span class="math inline">\(k\)</span>-th class</p>
 <p>We can combine the class dispersion to obtain a Within-class Sums of Squares
 (<span class="math inline">\(\text{WSS}\)</span>) matrix:</p>
-<p><span class="math display" id="eq:703-24">\[
-\text{WSS} = \sum_{k=1}^{K} \mathbf{X_{k}^{\mathsf{T}} X_k}
+<p><span class="math display" id="eq:703-24">\[\begin{align*}
+\text{WSS} &amp;= \sum_{k=1}^{K} \mathbf{X_{k}^{\mathsf{T}} X_k} \\
+&amp;= \sum_{k=1}^{K} \text{CSS}_k
 \tag{22.24}
-\]</span></p>
+\end{align*}\]</span></p>
 <p>Likewise, we can combine the class variances <span class="math inline">\(\mathbf{W_k}\)</span> as a weighted average
 to get the <strong>Within-class variance matrix</strong> <span class="math inline">\(\mathbf{W}\)</span>:</p>
 <p><span class="math display" id="eq:703-25">\[
