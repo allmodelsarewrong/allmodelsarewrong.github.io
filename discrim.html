@@ -341,11 +341,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22" data-path="discrim.html"><a href="discrim.html"><i class="fa fa-check"></i><b>22</b> Preamble for Discriminant Analysis</a><ul>
 <li class="chapter" data-level="22.1" data-path="discrim.html"><a href="discrim.html#motivation-2"><i class="fa fa-check"></i><b>22.1</b> Motivation</a><ul>
 <li class="chapter" data-level="22.1.1" data-path="discrim.html"><a href="discrim.html#distinguishing-species"><i class="fa fa-check"></i><b>22.1.1</b> Distinguishing Species</a></li>
+<li class="chapter" data-level="22.1.2" data-path="discrim.html"><a href="discrim.html#sum-of-squares-decomposition"><i class="fa fa-check"></i><b>22.1.2</b> Sum of Squares Decomposition</a></li>
 </ul></li>
 <li class="chapter" data-level="22.2" data-path="discrim.html"><a href="discrim.html#derived-ratios-from-sum-of-squares"><i class="fa fa-check"></i><b>22.2</b> Derived Ratios from Sum-of-Squares</a><ul>
 <li class="chapter" data-level="22.2.1" data-path="discrim.html"><a href="discrim.html#correlation-ratio"><i class="fa fa-check"></i><b>22.2.1</b> Correlation Ratio</a></li>
 <li class="chapter" data-level="22.2.2" data-path="discrim.html"><a href="discrim.html#f-ratio"><i class="fa fa-check"></i><b>22.2.2</b> F-Ratio</a></li>
-<li class="chapter" data-level="22.2.3" data-path="discrim.html"><a href="discrim.html#example-with-iris-data"><i class="fa fa-check"></i><b>22.2.3</b> Example with Iris data</a></li>
 </ul></li>
 <li class="chapter" data-level="22.3" data-path="discrim.html"><a href="discrim.html#geometric-perspective"><i class="fa fa-check"></i><b>22.3</b> Geometric Perspective</a><ul>
 <li class="chapter" data-level="22.3.1" data-path="discrim.html"><a href="discrim.html#clouds-from-class-structure"><i class="fa fa-check"></i><b>22.3.1</b> Clouds from Class Structure</a></li>
@@ -443,18 +443,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">22</span> Preamble for Discriminant Analysis</h1>
 <div id="motivation-2" class="section level2">
 <h2><span class="header-section-number">22.1</span> Motivation</h2>
-<p>Let’s consider the famous Iris Data set. Famous data set collected by Edgar
-Anderson (1935), and used by Ronald Fisher (1936) in his paper about
-Discriminant Analysis.</p>
-<p>This data consists of <span class="math inline">\(p\)</span> = 4 predictors measured on <span class="math inline">\(n\)</span> = 150 Observations,
-i.e. iris flowers. The four variables are</p>
+<p>Let’s consider the famous Iris data set collected by Edgar
+Anderson (1935), and used by
+<a href="https://en.wikipedia.org/wiki/Ronald_Fisher">Ronald Fisher</a> (1936) in his
+paper about Discriminant Analysis.</p>
+<p>This data consists of 5 variables measured on <span class="math inline">\(n = 150\)</span> iris flowers. There
+are <span class="math inline">\(p\)</span> = 4 predictors, and one response. The four variables are:</p>
 <ul>
 <li><code>Sepal.Length</code></li>
 <li><code>Sepal.Width</code></li>
 <li><code>Petal.Length</code></li>
 <li><code>Petal.Width</code></li>
 </ul>
-<p>The response is the species with three values:</p>
+<p>The response is a categorical (i.e. qualitative) variables that indicates the
+species of iris flower with three categories:</p>
 <ul>
 <li><code>setosa</code></li>
 <li><code>versicolor</code></li>
@@ -494,14 +496,21 @@ i.e. iris flowers. The four variables are</p>
 <p>Let’s look at the distribution of the four input variables without making
 distinction between species of iris flowers:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-192-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>As you can tell from the above conditional boxplots, all predictors have
+different ranges, as well as different types of distributions.</p>
 <p>Now let’s take into account the group structure according to the species:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-193-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>We can also look at density curves:</p>
+<p>You should be able to observe that the boxplot of some predictors are fairly
+different between iris species. For example, take a look at the boxplots of
+<code>Petal.Length</code>, and the boxplots of <code>Petal.Width</code>. In contrast, predictors like
+<code>Sepal.Length</code> and <code>Sepal.Width</code> have boxplots that are not as different as
+those of <code>Petal.Length</code>.</p>
+<p>The same differences can be seen if we take a look at density curves:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-194-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="distinguishing-species" class="section level3">
 <h3><span class="header-section-number">22.1.1</span> Distinguishing Species</h3>
-<p>Let us consider this question: Which predictor provides the “best” distinction
-between Species?</p>
+<p>Let us consider the following question:</p>
+<p><strong>Which predictor provides the “best” distinction between Species?</strong></p>
 <ul>
 <li>In classification problems, the response variable <span class="math inline">\(Y\)</span> provides a group or
 class structure to the data.</li>
@@ -513,79 +522,98 @@ between one class and the others.</li>
 <p>Let’s begin with a single predictor <span class="math inline">\(X\)</span> and a categorical response <span class="math inline">\(Y\)</span> measured
 on <span class="math inline">\(n\)</span> individuals. Let’s take into account the class structure conveyed by <span class="math inline">\(Y\)</span></p>
 <ul>
-<li>Assume there are <span class="math inline">\(K\)</span> groups</li>
+<li>Assume there are <span class="math inline">\(K\)</span> classes (or categories)</li>
 <li>Let <span class="math inline">\(C_k\)</span> represent the <span class="math inline">\(k\)</span>-th class in <span class="math inline">\(Y\)</span></li>
 <li>Let <span class="math inline">\(n_k\)</span> be the number of observations in class <span class="math inline">\(C_k\)</span>,</li>
 </ul>
 <p>Then:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-01">\[
 n = n_1 + n_2 + \dots + n_K = \sum_{k=1}^{K} n_k
+\tag{22.1}
 \]</span></p>
 <p>The (global) mean value of <span class="math inline">\(X\)</span> is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-02">\[
 \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\tag{22.2}
 \]</span></p>
 <p>Each class <span class="math inline">\(k\)</span> will have its mean <span class="math inline">\(\bar{x}_k\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-03">\[
 \bar{x}_k = \frac{1}{n_k} \sum_{i \in C_k} x_{ik}
+\tag{22.3}
 \]</span></p>
 <pre><code>#&gt; overall mean of Sepal.Length
 #&gt; [1] 5.843333</code></pre>
-<p>Recall that the (global) dispersion in <span class="math inline">\(X\)</span> is given by the
-<strong>total sum of squares</strong> (tss):</p>
-<p><span class="math display">\[
+<p>Recall that a measure of (global) dispersion in <span class="math inline">\(X\)</span> is given by the
+<strong>total sum of squares</strong> (<span class="math inline">\(\text{tss}\)</span>):</p>
+<p><span class="math display" id="eq:703-04">\[
 \text{tss} = \sum_{i=1}^{n} (x_i - \bar{x})^2
+\tag{22.4}
 \]</span></p>
 <pre><code>#&gt; total sums-of-squares of Sepal.Length
 #&gt; [1] 102.1683</code></pre>
 <p>Each class <span class="math inline">\(k\)</span> will also have its own sum-of-squares <span class="math inline">\(\text{ss}_k\)</span></p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-05">\[
 \text{ss}_k = \sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2
+\tag{22.5}
 \]</span></p>
 <p>One way to look for systematic differences between the classes is to compare
 their means. If there’s no group difference in <span class="math inline">\(X\)</span>, then the group means
-<span class="math inline">\(\bar{x}_{k}\)</span> should be similar. If there is really a diffrence, it is likely that one or more of the mean values will differ.</p>
+<span class="math inline">\(\bar{x}_{k}\)</span> should be similar. If there is really a difference, it is likely
+that one or more of the mean values will differ.</p>
 <p>A useful measure to compare differences among the <span class="math inline">\(k\)</span> means is the deviation
-from the overall mean: <span class="math inline">\(\bar{x}_{k} - \bar{x}\)</span></p>
-<p>An effective summary of these deviations is the so-called
-<strong>between-group sum of squares</strong> (bss) given by:</p>
+from the overall mean:</p>
 <p><span class="math display">\[
-\text{bss} = \sum_{k=1}^{K} n_k (x_{k} - \bar{x})^2
+\bar{x}_{k} - \bar{x}
+\]</span></p>
+<p>An effective summary of these deviations is the so-called
+<strong>between-group sum of squares</strong> (<span class="math inline">\(\text{bss}\)</span>) given by:</p>
+<p><span class="math display" id="eq:703-06">\[
+\text{bss} = \sum_{k=1}^{K} n_k (\bar{x}_{k} - \bar{x})^2
+\tag{22.6}
 \]</span></p>
 <pre><code>#&gt; between sums-of-squares of Sepal.Length
 #&gt; [1] 63.21213</code></pre>
-<p>To assess the relative magnitude of the between sum of squares (bss), we
-need to compare it to a measure of the “background” variation.</p>
+<p>To assess the relative magnitude of the between sum of squares (<span class="math inline">\(\text{bss}\)</span>),
+we need to compare it to a measure of the “background” variation.</p>
 <p>Such a measure of background variation can be formed by combining the group
-variances into a pooled-estimate called <strong>within-group sum of squares</strong> (wss):</p>
-<p><span class="math display">\[
+variances into a pooled-estimate called <strong>within-group sum of squares</strong>
+(<span class="math inline">\(\text{wss}\)</span>):</p>
+<p><span class="math display" id="eq:703-07">\[
 \text{wss} = \sum_{k=1}^{K} \sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2 = 
 \text{ss}_1 + \dots + \text{ss}_K
+\tag{22.7}
 \]</span></p>
 <pre><code>#&gt; within sums-of-squares of Sepal.Length
 #&gt; [1] 38.9562</code></pre>
 <p>So far we have three types of sums of squares:</p>
-<p><span class="math display">\[\begin{align*}
-\textit{total} \quad \text{tss} &amp;= \sum_{i=1}^{n} (x_i - \bar{x})^2\\
-\textit{between} \quad \text{bss} &amp;= \sum_{k=1}^{K} n_k (x_{k} - \bar{x})^2 \\
-\textit{within} \quad \text{wss} &amp;= \sum_{k=1}^{K} \sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2
+<p><span class="math display" id="eq:703-08">\[\begin{align*}
+\textsf{total} \quad \text{tss} &amp;= \sum_{i=1}^{n} (x_i - \bar{x})^2\\
+\textsf{between} \quad \text{bss} &amp;= \sum_{k=1}^{K} n_k (\bar{x}_{k} - \bar{x})^2 \\
+\textsf{within} \quad \text{wss} &amp;= \sum_{k=1}^{K} \sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2
+\tag{22.8}
 \end{align*}\]</span></p>
-<p>An important aspect has to do with looking at the squared deviations:
-<span class="math inline">\((x_{i} - \bar{x})^2\)</span> in terms of the class structure.</p>
+</div>
+<div id="sum-of-squares-decomposition" class="section level3">
+<h3><span class="header-section-number">22.1.2</span> Sum of Squares Decomposition</h3>
+<p>An important aspect has to do with looking at the squared deviations,
+<span class="math inline">\((x_{i} - \bar{x})^2\)</span>, in terms of the class structure.</p>
 <p>A useful trick is to rewrite the deviation terms <span class="math inline">\(x_{i} - \bar{x}\)</span> as:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:703-09">\[\begin{align*}
 x_{i} - \bar{x} &amp;= x_{i} - (\bar{x}_{k} - \bar{x}_{k}) - \bar{x} \\
  &amp;= (x_{i} - \bar{x}_{k}) + (\bar{x}_{k} - \bar{x})
+\tag{22.9}
 \end{align*}\]</span></p>
-<p>We can decompose <span class="math inline">\(\texttt{tss}\)</span> in terms of <span class="math inline">\(\texttt{bss}\)</span> and <span class="math inline">\(\texttt{wss}\)</span>:</p>
-<p><span class="math display">\[
+<p>We can decompose <span class="math inline">\(\text{tss}\)</span> in terms of <span class="math inline">\(\text{bss}\)</span> and <span class="math inline">\(\text{wss}\)</span> as follows:</p>
+<p><span class="math display" id="eq:703-10">\[
 \underbrace{\sum_{k=1}^{K} \sum_{i \in C_k} (x_{ik} - \bar{x})^2}_{\text{tss}} = 
 \underbrace{\sum_{k=1}^{K} n_k (\bar{x}_k - \bar{x})^2}_{\text{bss}} + 
 \underbrace{\sum_{i \in C_k} (x_{ik} - \bar{x}_k)^2}_{\text{wss}}
+\tag{22.10}
 \]</span></p>
 <p>In summary:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-11">\[
 \text{tss} = \text{bss} + \text{wss}
+\tag{22.11}
 \]</span></p>
 </div>
 </div>
@@ -601,8 +629,9 @@ x_{i} - \bar{x} &amp;= x_{i} - (\bar{x}_{k} - \bar{x}_{k}) - \bar{x} \\
 <p>The correlation ratio is a measure of the relationship between the
 dispersion within groups and the dispersion across all individuals.</p>
 <p>Correlation ratio <span class="math inline">\(\eta^2\)</span> (originally proposed by Karl Pearson) is given by:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-12">\[
 \eta^2(X,Y) = \frac{\text{bss}}{\text{tss}}
+\tag{22.12}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(\eta^2\)</span> takes vaues between 0 and 1.</li>
@@ -610,37 +639,38 @@ dispersion within groups and the dispersion across all individuals.</p>
 means of the different groups.</li>
 <li><span class="math inline">\(\eta^2 = 1\)</span> refers to no dispersion within the respective groups.</li>
 </ul>
-<pre><code>#&gt; correlation ratio
+<pre><code>#&gt; correlation ratio of Sepal Length and Species
 #&gt; [1] 0.6187057</code></pre>
 </div>
 <div id="f-ratio" class="section level3">
 <h3><span class="header-section-number">22.2.2</span> F-Ratio</h3>
-<p>With <span class="math inline">\(\text{tss} = \text{bss} + \text{wss}\)</span>, we can also calculate:</p>
-<p><span class="math inline">\(F\)</span> ratio (proposed by R.A. Fisher):</p>
-<p><span class="math display">\[
+<p>With <span class="math inline">\(\text{tss} = \text{bss} + \text{wss}\)</span>, we can also calculate the
+<span class="math inline">\(F\)</span>-ratio (proposed by R.A. Fisher):</p>
+<p><span class="math display" id="eq:703-13">\[
 F = \frac{\text{bss} / (K-1)}{\text{wss} / (n-K)}
+\tag{22.13}
 \]</span></p>
 <p>The larger the value of both ratios, the more variability is there between
 groups than within groups.</p>
-<pre><code>#&gt; F-ratio
+<pre><code>#&gt; F-ratio of Sepal Length and Species
 #&gt; [1] 119.2645</code></pre>
-<p>The <span class="math inline">\(F\)</span> ratio can be used for hypothesis testing purposes. More formally,
+<p>The <span class="math inline">\(F\)</span>-ratio can be used for hypothesis testing purposes. More formally,
 a null hypothesis postulates that the population means do not differ
 (<span class="math inline">\(H_0: \mu_1 = \mu_2 = \dots = \mu_K = \mu)\)</span> versus the alternative
 hypothesis <span class="math inline">\(H_1\)</span> that one or more population means differ among the <span class="math inline">\(K\)</span>
 normally distributed populations.</p>
 <p>Assuming or knowing that the variances of each sampled population are the
 same <span class="math inline">\(\sigma^2\)</span>, a test statistic to assess the null hypothesis is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-14">\[
 F = \frac{\text{bss} / (K-1)}{\text{wss} / (n-K)}
+\tag{22.14}
 \]</span></p>
 <p>which has an <span class="math inline">\(F\)</span>-distribution with <span class="math inline">\(K-1\)</span> and <span class="math inline">\(n-K\)</span> degrees of freedom under the
 null hypothesis.</p>
-</div>
-<div id="example-with-iris-data" class="section level3">
-<h3><span class="header-section-number">22.2.3</span> Example with Iris data</h3>
-<p>Let’s compute the decompositions for all predictors, and obtain the
-correlation ratios and F ratios</p>
+<div id="example-with-iris-data" class="section level4 unnumbered">
+<h4>Example with Iris data</h4>
+<p>Let’s compute the dispersion decompositions for all predictors, and obtain the
+correlation ratios and <span class="math inline">\(F\)</span>-ratios</p>
 <pre><code>#&gt; correlation ratios
 #&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #&gt;    0.6187057    0.4007828    0.9413717    0.9288829</code></pre>
@@ -649,17 +679,22 @@ correlation ratios and F ratios</p>
 #&gt;    119.26450     49.16004   1180.16118    960.00715</code></pre>
 </div>
 </div>
+</div>
 <div id="geometric-perspective" class="section level2">
 <h2><span class="header-section-number">22.3</span> Geometric Perspective</h2>
-<p>Data as a cloud of points in <span class="math inline">\(p\)</span>-dimensional space.</p>
+<p>As we’ve been doing throughout most chapters in the book, let’s provide a
+geometric perspective of what’s going on with the data, and the classification
+setting behind discriminant analysis. As usual, assume that the objects form
+a cloud of points in <span class="math inline">\(p\)</span>-dimensional space.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-204"></span>
 <img src="images/discrim/discrim_cloud1.svg" alt="Cloud of n points in p-dimensional space" width="50%" />
 <p class="caption">
 Figure 22.1: Cloud of n points in p-dimensional space
 </p>
 </div>
-<p>We can look at the average individual, better known as the global centroid
-(i.e. the center of gravity of the cloud of points).</p>
+<p>One of the things that we can do is to look at the average individual, denoted
+by <span class="math inline">\(\mathbf{g}\)</span>, andl also known as the global centroid (i.e. the center of
+gravity of the cloud of points).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-205"></span>
 <img src="images/discrim/discrim_cloud2.svg" alt="The centroid of the cloud of points" width="50%" />
 <p class="caption">
@@ -668,32 +703,36 @@ Figure 22.2: The centroid of the cloud of points
 </div>
 <p>The global centroid <span class="math inline">\(\mathbf{g}\)</span> is the point of averages which
 consists of the point formed with all the variable means:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-15">\[
 \mathbf{g} = [\bar{x}_1, \bar{x}_2, \dots, \bar{x}_p]
+\tag{22.15}
 \]</span></p>
 <p>where:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-16">\[
 \bar{x}_j = \frac{1}{n} \sum_{i=1}^{n} x_{ij}
+\tag{22.16}
 \]</span></p>
 <p>If all variables are mean-centered, the centroid is the origin</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-17">\[
 \mathbf{g} = \underbrace{[0, 0, \dots, 0]}_{p \text{ times}}
+\tag{22.17}
 \]</span></p>
 <p>Taking the global centroid as a point of reference, we can look at the amount
 of spread or dispersion in the data.</p>
-<p>Assuming centered variables, a matrix of total dispersion is given by the
-<strong>Total Sums of Squares</strong> (TSS):</p>
-<p><span class="math display">\[
+<p>Assuming centered features, a matrix of total dispersion is given by the
+<strong>Total Sums of Squares</strong> (<span class="math inline">\(\text{TSS}\)</span>):</p>
+<p><span class="math display" id="eq:703-18">\[
 \text{TSS} = \mathbf{X^\mathsf{T} X}
+\tag{22.18}
 \]</span></p>
 <p>Alternatively, we can get the (sample) variance-covariance matrix <span class="math inline">\(\mathbf{V}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-19">\[
 \mathbf{V} = \frac{1}{n-1} \mathbf{X^\mathsf{T} X}
+\tag{22.19}
 \]</span></p>
 <div id="clouds-from-class-structure" class="section level3">
 <h3><span class="header-section-number">22.3.1</span> Clouds from Class Structure</h3>
-<p>Let’s now take into the account the class structure given by the response variable.</p>
-<p>Here’s some notation that we’ll be using while covering classification methods:</p>
+<p>Here’s some notation that we’ll be using while covering discriminant methods:</p>
 <ul>
 <li><p>Let <span class="math inline">\(n_k\)</span> be the number of observations in the <span class="math inline">\(k\)</span>-th class</p></li>
 <li><p>Let <span class="math inline">\(x_{ijk}\)</span> represent the <span class="math inline">\(i\)</span>-th observation, of the
@@ -703,6 +742,7 @@ of spread or dispersion in the data.</p>
 <li><p>Let <span class="math inline">\(n_k\)</span> be the number of observations in the <span class="math inline">\(k\)</span>-th group <span class="math inline">\(C_k\)</span></p></li>
 <li><p>The number of individuals: <span class="math inline">\(n = n_1 + n_2 + \dots + n_K = \sum_{k=1}^{K} n_k\)</span></p></li>
 </ul>
+<p>Let’s now take into the account the class structure given by the response variable.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-206"></span>
 <img src="images/discrim/discrim_cloud3.svg" alt="The objects are divided into classes or groups" width="50%" />
 <p class="caption">
@@ -726,12 +766,14 @@ Figure 22.5: Each class has its own centroid
 </div>
 <p>The class centroid <span class="math inline">\(\mathbf{g_k}\)</span> is the point of averages
 for those observations in class <span class="math inline">\(k\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-20">\[
 \mathbf{g_k} = [\bar{x}_{1k}, \bar{x}_{2k}, \dots, \bar{x}_{pk}]
+\tag{22.20}
 \]</span></p>
 <p>where:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-21">\[
 \bar{x}_{jk} = \frac{1}{n_k} \sum_{i \in C_k} x_{ij}
+\tag{22.21}
 \]</span></p>
 <p>We can focus on the dispersion within the clouds</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-209"></span>
@@ -741,24 +783,28 @@ Figure 22.6: Dispersion within the sub-clouds
 </p>
 </div>
 <p>Each group will have an associated spread or dispersion matrix given by a
-<strong>Class Sums of Squares</strong> (CSS):</p>
-<p><span class="math display">\[
+<strong>Class Sums of Squares</strong> (<span class="math inline">\(\text{CSS}\)</span>):</p>
+<p><span class="math display" id="eq:703-22">\[
 \text{CSS}_k = \mathbf{X_{k}^{\mathsf{T}} X_k}
+\tag{22.22}
 \]</span></p>
 <p>Equivalently, there is an associated variance matrix <span class="math inline">\(\mathbf{W_k}\)</span> for each class</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-23">\[
 \mathbf{W_k} = \frac{1}{n_k - 1} \mathbf{X_{k}^{\mathsf{T}} X_k}
+\tag{22.23}
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{X_k}\)</span> is the data matrix of the <span class="math inline">\(k\)</span>-th class</p>
 <p>We can combine the class dispersion to obtain a Within-class Sums of Squares
-(WSS) matrix:</p>
-<p><span class="math display">\[
+(<span class="math inline">\(\text{WSS}\)</span>) matrix:</p>
+<p><span class="math display" id="eq:703-24">\[
 \text{WSS} = \sum_{k=1}^{K} \mathbf{X_{k}^{\mathsf{T}} X_k}
+\tag{22.24}
 \]</span></p>
 <p>Likewise, we can combine the class variances <span class="math inline">\(\mathbf{W_k}\)</span> as a weighted average
 to get the <strong>Within-class variance matrix</strong> <span class="math inline">\(\mathbf{W}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-25">\[
 \mathbf{W} = \sum_{k=1}^{K} \frac{n_k - 1}{n - 1} \mathbf{W_k}
+\tag{22.25}
 \]</span></p>
 <p>What if we focus on just the centroids?</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-210"></span>
@@ -769,29 +815,30 @@ Figure 22.7: Global and Group Centroids
 </div>
 <p>Note that the global centroid <span class="math inline">\(\mathbf{g}\)</span> can be expressed as a
 weighted average of the group centroids:</p>
-<p><span class="math display">\[
-\mathbf{g} = \frac{n_1}{n} \mathbf{g_1} + \frac{n_2}{n} \mathbf{g_2} + \dots + \frac{n_K}{n} \mathbf{g_K}
-\]</span></p>
-<p><span class="math display">\[
-\mathbf{g} = \sum_{k=1}^{K} \left ( \frac{n_k}{n} \right ) \mathbf{g_k}
-\]</span></p>
+<p><span class="math display" id="eq:703-26">\[\begin{align*}
+\mathbf{g} &amp;= \frac{n_1}{n} \mathbf{g_1} + \frac{n_2}{n} \mathbf{g_2} + \dots + \frac{n_K}{n} \mathbf{g_K} \\
+&amp;= \sum_{k=1}^{K} \left ( \frac{n_k}{n} \right ) \mathbf{g_k}
+\tag{22.26}
+\end{align*}\]</span></p>
 <p>Focusing on just the centroids, we can get its corresponding matrix of dispersion
-given by the <strong>Between Sums of Squares</strong> (BSS):</p>
-<p><span class="math display">\[
+given by the <strong>Between Sums of Squares</strong> (<span class="math inline">\(\text{BSS}\)</span>):</p>
+<p><span class="math display" id="eq:703-27">\[
 \text{BSS} = \sum_{k=1}^{K} n_k (\mathbf{g_k - g})(\mathbf{g_k - g})^\mathsf{T}
+\tag{22.27}
 \]</span></p>
 <p>Equivalently, there is an associated <strong>Between-class variance matrix</strong>
 <span class="math inline">\(\mathbf{B}\)</span></p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:703-28">\[
 \mathbf{B} = \sum_{k=1}^{K} \frac{n_k}{n - 1} (\mathbf{g_k - g})(\mathbf{g_k - g})^\mathsf{T}
+\tag{22.28}
 \]</span></p>
 <div id="three-types-of-dispersions" class="section level4 unnumbered">
 <h4>Three types of Dispersions</h4>
 <p>Let’s recap. We have three types of sums-of-squares matrices:</p>
 <ul>
-<li>TSS: Total Sums of Squares</li>
-<li>WSS: Within-class Sums of Squares</li>
-<li>BSS: Between-class Sums of Squares</li>
+<li><span class="math inline">\(\text{TSS}\)</span>: Total Sums of Squares</li>
+<li><span class="math inline">\(\text{WSS}\)</span>: Within-class Sums of Squares</li>
+<li><span class="math inline">\(\text{BSS}\)</span>: Between-class Sums of Squares</li>
 </ul>
 <p>Alternatively, we also have three types of variance matrices:</p>
 <ul>
@@ -806,7 +853,7 @@ given by the <strong>Between Sums of Squares</strong> (BSS):</p>
 <p>It can be shown (Huygens theorem) for both, sums-of-squares and variances,
 that the total dispersion (TSS or <span class="math inline">\(\mathbf{V}\)</span>) can be decomposed as:</p>
 <ul>
-<li><p>TSS = BSS + WSS</p></li>
+<li><p><span class="math inline">\(\text{TSS} = \text{BSS} + \text{WSS}\)</span></p></li>
 <li><p><span class="math inline">\(\mathbf{V} = \mathbf{B} + \mathbf{W}\)</span></p></li>
 </ul>
 <p>Let <span class="math inline">\(\mathbf{X}\)</span> be the <span class="math inline">\(n \times p\)</span> mean-centered matrix of predictors,
