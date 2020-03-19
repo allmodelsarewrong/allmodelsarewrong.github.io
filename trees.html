@@ -353,7 +353,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>23</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.0.1</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>23.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="23.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>23.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>23.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="23.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>23.3.2</b> F-ratio Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>23.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.4.1</b> A Special PCA</a></li>
+<li class="chapter" data-level="23.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>23.4.2</b> Predictive Idea</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
@@ -452,7 +461,7 @@ or assign it a predicted value.</p>
 into a hierarchical <em>tree</em>. Moreover, this structure can be visually
 displayed as an inverted tree diagram (although the tree is generally displayed
 upside down) like in the image below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-271"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
 <img src="images/trees/tree-diagram1.svg" alt="Diagram of a tree structure" width="85%" />
 <p class="caption">
 Figure 29.1: Diagram of a tree structure
@@ -470,7 +479,7 @@ called a “child” node. A node that gives origin to two (or more) child nodes
 called a parent node. Terminal nodes are nodes without children. The most
 common way of visually representing a tree is by means of the classical
 node-link diagram that connects nodes together with line segments.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-272"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
 <img src="images/trees/tree-diagram2.svg" alt="Common elements of a tree diagram" width="85%" />
 <p class="caption">
 Figure 29.2: Common elements of a tree diagram
@@ -481,7 +490,7 @@ Figure 29.2: Common elements of a tree diagram
 <h2><span class="header-section-number">29.2</span> Binary Trees</h2>
 <p>One special kind of decision trees are binary trees. They are called <em>binary</em>
 because the nodes are only partitioned in two (see diagram below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-273"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
 <img src="images/trees/tree-binary-diagram1.svg" alt="Example of a binary tree diagram" width="85%" />
 <p class="caption">
 Figure 29.3: Example of a binary tree diagram
@@ -549,7 +558,7 @@ described below.</p>
 <p>Because binary variables have two values, they only generate one binary
 partition. For example, the variable <em>Gender</em> with two values, female and male,
 can only de divided in one possible way.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
 <img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
 <p class="caption">
 Figure 29.4: Example of a binary partition for a binary variable
@@ -564,7 +573,7 @@ The total number of possible binary partitions for a nominal variable with <span
 categories is <span class="math inline">\(2^{q-1} - 1\)</span>. For example, suppose a variable <em>Color</em> with three
 categories: Green, White and Red. The number of binary splits is
 <span class="math inline">\(2^{3-1} - 1 = 3\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
 <img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
 <p class="caption">
 Figure 29.5: Example of binary splits for a nominal variable
@@ -579,7 +588,7 @@ the values. The total number of binary partitions for an ordinal variable with
 <span class="math inline">\(q\)</span> categories is <span class="math inline">\(q-1\)</span>. For example, the <em>Apparel size</em> may have four
 categories: small (S), medium (M), large (L) and extra-large (XL). In this
 case, the number of binary splits will be <span class="math inline">\(4-1 = 3\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-279"></span>
 <img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
 <p class="caption">
 Figure 29.6: Example of binary splits for an ordinal variable
@@ -597,7 +606,7 @@ the variable is treated as an ordinal variable and the number of binary splits
 will be <span class="math inline">\(q-1\)</span> or <span class="math inline">\(q^*-1\)</span>. For example, imagine the continuous variable <em>Age</em>
 (measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
 splits is <span class="math inline">\(5 - 1 = 4\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-280"></span>
 <img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
 <p class="caption">
 Figure 29.7: Example of binary splits for a continuous variable
@@ -634,7 +643,7 @@ there is to be a <span class="math inline">\(\Delta\)</span>. However, in the le
 of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is true of the right node).</p>
 <p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
 all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
 <img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
 <p class="caption">
 Figure 29.8: Set of 12 objects of same type
@@ -644,7 +653,7 @@ Figure 29.8: Set of 12 objects of same type
 its class: in other words, there is <strong>zero entropy</strong> associated with this
 situation.</p>
 <p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-279"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
 <img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
 <p class="caption">
 Figure 29.9: Set with two different types of objects
@@ -652,7 +661,7 @@ Figure 29.9: Set with two different types of objects
 </div>
 <p>If we were to draw an object from this box, there would be <em>some</em> amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.</p>
 <p>Finally, in the most extreme case, say we have 12 objects of different classes:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-280"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
 <img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
 <p class="caption">
 Figure 29.10: Set with 12 different types of objects
@@ -664,7 +673,7 @@ that is, we have <strong>maximum entropy</strong>.</p>
 respect to the classes contained inside. If a box is “pure” (i.e. has only one
 class), it has zero entropy where as if a box is “highly impure” (i.e. has many
 different classes), it has some nonzero amount of entropy.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-284"></span>
 <img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
 <p class="caption">
 Figure 29.11: Set with 12 different types of objects
@@ -716,7 +725,7 @@ H(\text{node}) = - \frac{9}{12} \log_2\left( \frac{9}{12} \right)  \frac{3}{12} 
 H(\text{node}) = - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
 \]</span></p>
 <p>The following figure depicts several examples of sets and their entropy values.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
 <img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
 <p class="caption">
 Figure 29.12: Different sets with their entropy values
@@ -749,7 +758,7 @@ there are a total of 2 possible misclassifications.</p>
 <p><span class="math display">\[
 \sum_{k=1}^{h} Pr(k) \left[ 1- Pr(k) \right] = 1 - \sum_{k=1}^{h} Pr^2(k) = \sum_{k \neq \ell} Pr(k) Pr(\ell)
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-286"></span>
 <img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
 <p class="caption">
 Figure 29.13: Different sets with their gini impurities

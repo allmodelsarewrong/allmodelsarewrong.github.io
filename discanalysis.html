@@ -353,7 +353,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>23</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.0.1</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>23.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="23.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>23.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>23.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="23.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>23.3.2</b> F-ratio Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>23.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.4.1</b> A Special PCA</a></li>
+<li class="chapter" data-level="23.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>23.4.2</b> Predictive Idea</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
@@ -514,16 +523,19 @@ f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k^2}} \hspace{1mm} \exp\left\{ -\frac{1}{2}
 <p><span class="math display">\[
 f_k(\mathbf{x}) = \frac{1}{(2 \pi)^{p/2} | \mathbf{\Sigma_k} |^{1/2} } \exp\left\{  - \frac{1}{2} (\mathbf{x} - \boldsymbol{\mu_k})^{\mathsf{T}} \mathbf{\Sigma_k}^{-1} (\mathbf{x} - \boldsymbol{\mu_k})  \right\}
 \]</span></p>
-<p>where <span class="math inline">\(\mathsf{\Sigma_k}\)</span> denotes the variance-covariance matrix associated
+<p>where <span class="math inline">\(\mathbf{\Sigma_k}\)</span> denotes the variance-covariance matrix associated
 with <span class="math inline">\(C_k\)</span>, and <span class="math inline">\(\boldsymbol{\mu_k}\)</span> denotes the centroid of <span class="math inline">\(C_k\)</span>. Note that
-the exponent of the likelihood is simple the Mahalanobis distance between
-<span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\boldsymbol{\mu_k}\)</span>.</p>
+the exponent of the likelihood is simply the Mahalanobis distance between
+<span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\boldsymbol{\mu_k}\)</span>:</p>
+<p><span class="math display">\[
+d^2(\mathbf{x}, \boldsymbol{\mu_k}) = (\mathbf{x} - \boldsymbol{\mu_k})^{\mathsf{T}} \mathbf{\Sigma_k}^{-1} (\mathbf{x} - \boldsymbol{\mu_k})
+\]</span></p>
 </div>
 <div id="multivariate-estimations" class="section level3">
 <h3><span class="header-section-number">24.2.3</span> Multivariate Estimations</h3>
-<p>For <span class="math inline">\(\hat{\mu}\)</span>, we can use the centroid of <span class="math inline">\(C_k\)</span>; i.e. the average individual
-of class <span class="math inline">\(k\)</span>. For <span class="math inline">\(\mathbf{\widehat{\Sigma}_k}\)</span>, we can use the within-variance
-matrix:</p>
+<p>For <span class="math inline">\(\boldsymbol{\hat{\mu}_k}\)</span>, we can use the centroid of <span class="math inline">\(C_k\)</span>; i.e. the
+average individual of class <span class="math inline">\(k\)</span>. For <span class="math inline">\(\mathbf{\widehat{\Sigma}_k}\)</span>, we can use
+the within-variance matrix:</p>
 <p><span class="math display">\[
 \mathbf{\widehat{\Sigma}_k} = \frac{1}{n-1} \mathbf{X_k}^\mathsf{T} \mathbf{X_k}
 \]</span></p>

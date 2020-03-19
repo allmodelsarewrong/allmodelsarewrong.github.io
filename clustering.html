@@ -353,7 +353,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>23</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.0.1</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>23.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="23.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>23.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>23.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="23.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>23.3.2</b> F-ratio Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>23.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.4.1</b> A Special PCA</a></li>
+<li class="chapter" data-level="23.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>23.4.2</b> Predictive Idea</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
@@ -443,7 +452,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">26</span> Clustering</h1>
 <p>In this part of the book, we go back to unsupervised learning methods. In
 particular, the so-called clustering methods.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-232"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
 <img src="images/cluster/four-corners-clustering.svg" alt="Clustering Corner" width="85%" />
 <p class="caption">
 Figure 26.1: Clustering Corner
@@ -506,7 +515,7 @@ defining a hierarchy of partitions.</p></li>
 somewhat obvious from the data at first glance. Of course, there will be cases
 where there are no natural groups; in such a case, we might say we have
 “artificial” groups.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-233"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
 <img src="images/cluster/clustering-structures.svg" alt="Some Typical Clustering Structures" width="70%" />
 <p class="caption">
 Figure 26.2: Some Typical Clustering Structures
@@ -551,7 +560,7 @@ to the individuals to be clustered (although you could also cluster variables).<
 usual, suppose that the individuals form a cloud of points in a <span class="math inline">\(p\)</span>-dimensional
 space, and that we also have the centroid or average individual, like in the
 following figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
 <img src="images/cluster/clusters-cloud2.svg" alt="Cloud of n points in p-dim space" width="50%" />
 <p class="caption">
 Figure 26.3: Cloud of n points in p-dim space
@@ -566,7 +575,7 @@ distances from the centroid given by:</p>
 \]</span></p>
 <p>Now suppose that we have some group structure in which objects are divided into
 several clusters <span class="math inline">\(C_1, C_2, \dots, C_K\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
 <img src="images/cluster/clusters-cloud3.svg" alt="Each cluster forms its own cloud" width="50%" />
 <p class="caption">
 Figure 26.4: Each cluster forms its own cloud
@@ -575,7 +584,7 @@ Figure 26.4: Each cluster forms its own cloud
 <p>Because each cluster <span class="math inline">\(C_k\)</span> will form its own cloud of points, we can make the
 visual representation more pattent by using different shapes for the points.
 Likewise, we suppose that each cluster has its own centroid <span class="math inline">\(\mathbf{g_k}\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
 <img src="images/cluster/clusters-cloud5.svg" alt="Each cluster has a certain within dispersion" width="50%" />
 <p class="caption">
 Figure 26.5: Each cluster has a certain within dispersion
@@ -589,7 +598,7 @@ is a Cluster Sum of Squared distances (<span class="math inline">\(\text{CSSD}\)
 \text{CSSD} = \sum_{i \in C_k} d^2(\mathbf{x_i}, \mathbf{g_k})
 \tag{26.2}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
 <img src="images/cluster/clusters-cloud6.svg" alt="Dispersion within each cluster" width="50%" />
 <p class="caption">
 Figure 26.6: Dispersion within each cluster
@@ -605,7 +614,7 @@ sum of squared distances <span class="math inline">\(\text{WSSD}\)</span>:</p>
 <div id="between-cluster-dispersion" class="section level4 unnumbered">
 <h4>Between Cluster Dispersion</h4>
 <p>Let’s now turn our attention to the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
 <img src="images/cluster/clusters-cloud7.svg" alt="Focusing on the centroids" width="50%" />
 <p class="caption">
 Figure 26.7: Focusing on the centroids
@@ -618,7 +627,7 @@ between-cluster dispersion the <span class="math inline">\(\text{BSSD}\)</span> 
 \text{BSSD} = \sum_{k=1}^{K} n_k d^2(\mathbf{g_k}, \mathbf{g})
 \tag{26.4}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-242"></span>
 <img src="images/cluster/clusters-cloud8.svg" alt="Dispersion between the centroids" width="50%" />
 <p class="caption">
 Figure 26.8: Dispersion between the centroids
@@ -657,7 +666,7 @@ in clustering, we will want to minimize <span class="math inline">\(\text{WSSD}\
 #&gt; 4  0.3  0.6
 #&gt; 5  0.4  1.0</code></pre>
 <p>Here’s the scatterplot:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
 <img src="images/cluster/aggregation1.svg" alt="Toy data set" width="60%" />
 <p class="caption">
 Figure 26.9: Toy data set
@@ -677,7 +686,7 @@ d^{2}_{i\ell} = d^2(\mathbf{x_i}, \mathbf{x_{\ell}}) = \sum_{j=1}^{p} (x_{ij} - 
 4  0.52  0.53  0.10  0.00      
 5  1.09  0.72  0.25  0.17  0.00</code></pre>
 <p>We could consider two possible clustering partitions or configurations:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-243"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-246"></span>
 <img src="images/cluster/aggregation2.svg" alt="Two possible clustering configurations" width="60%" />
 <p class="caption">
 Figure 26.10: Two possible clustering configurations

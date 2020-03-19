@@ -353,7 +353,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>23</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.0.1</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>23.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="23.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>23.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>23.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="23.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>23.3.2</b> F-ratio Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>23.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.4.1</b> A Special PCA</a></li>
+<li class="chapter" data-level="23.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>23.4.2</b> Predictive Idea</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
@@ -441,38 +450,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="cda" class="section level1">
 <h1><span class="header-section-number">23</span> Canonical Discriminant Analysis</h1>
-<p>We can formulate the classfication problem in a geometric way. We seek to find
-the linear combination of the predictors such that the
-between-class variance is maximized relative to the within-class variance.
-In other words, we want to find the combination of the predictors that gives
-maximum separation between the centroids of the data while at the same time
-minimizing the variation within each class of data.</p>
-<p>In this geometric approach, we have two aspects:</p>
+<p>In this chapter we talk about <strong>Canonical Discriminant Analysis</strong> (CDA),
+which is a special case of Linear Discriminant Analysis (LDA). The main reason
+why we introduce CDA separately, is because this method has a somewhat
+hybrid learning nature with two aspects:</p>
 <ul>
-<li><p><strong>Semi-supervised</strong>: How to find a representation of the objects which provides the best separation
-between groups (description emphasis)?</p></li>
-<li><p><strong>Supervised</strong>: How to find the rules for assigning the objects to their groups
-(prediction emphasis)?</p></li>
+<li><p><strong>Semi-supervised</strong>: On one hand, CDA has an unsupervised or descriptive
+aspect that aims to tackle the following question. How to find a representation
+of the objects which provides the best separation between classes?</p></li>
+<li><p><strong>Supervised</strong>: On the other hand, CDA also has a decisively supervised
+aspect that tackles the question: How to find the rules for assigning a class
+to a given object?</p></li>
 </ul>
-<p>For sake of illustration, let’s consider three classes in 2-dimensional space</p>
+<p>We begin with the semi-supervised part of CDA, approaching its exploratory
+nature from a purely geometric approach. This discussion covers most of the
+material in this chapter. And then at the end, we present its supervised aspect, describing how to use CDA for classification purposes.</p>
+<div id="cda-semi-supervised-aspect" class="section level2">
+<h2><span class="header-section-number">23.1</span> CDA: Semi-Supervised Aspect</h2>
+<p>We can formulate the classfication problem behind CDA in a geometric way. For
+sake of illustration, let’s consider three classes in a 2-dimensional space,
+like depicted in the figure below.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-213"></span>
 <img src="images/discrim/discrim_axes1.svg" alt="Three classes in 2-dim space" width="50%" />
 <p class="caption">
 Figure 23.1: Three classes in 2-dim space
 </p>
 </div>
-<p>We look for the best representation separating the classes. One option is to
+<p>From an exploratory/descriptive perspective, we are looking for a good low
+dimensional representation that separates the three classes. One option is to
 consider the axis associated with the predictor <span class="math inline">\(X_1\)</span>, that is, the horizontal
-axis in the figure below:</p>
+axis in the next figure:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-214"></span>
 <img src="images/discrim/discrim_axes2.svg" alt="Axis $X_1$ separates class 1 from groups 2 and 3" width="50%" />
 <p class="caption">
 Figure 23.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 from groups 2 and 3
 </p>
 </div>
-<p>If we project the individuals onto this axis <span class="math inline">\(X_1\)</span>, class 1 is well separated from
-classes 2 and 3. However, class 2 is largely confouded with class 3.</p>
-<p>Another option is consider the axis associated with the predictor <span class="math inline">\(X_2\)</span>,
+<p>If we project the individuals onto the <span class="math inline">\(X_1\)</span> axis, class 1 is well separated
+from classes 2 and 3. However, class 2 is largely confounded with class 3.</p>
+<p>Another option is to consider the axis associated with the predictor <span class="math inline">\(X_2\)</span>,
 that is, the vertical axis in the figure below:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-215"></span>
 <img src="images/discrim/discrim_axes3.svg" alt="Axis $X_1$ separates class 3 from groups 1 and 2" width="50%" />
@@ -480,9 +496,10 @@ that is, the vertical axis in the figure below:</p>
 Figure 23.3: Axis <span class="math inline">\(X_1\)</span> separates class 3 from groups 1 and 2
 </p>
 </div>
-<p>If we project the individuals onto this axis <span class="math inline">\(X_2\)</span>, class 3 is well separated from
-classes 1 and 2. However, class 1 is largely confouded with class 2.</p>
-<p>Is there an axis that “best” separates the three clouds?</p>
+<p>As you can tell, if we project the individuals onto this axis <span class="math inline">\(X_2\)</span>, class 3 is
+well separated from classes 1 and 2. However, class 1 is largely confounded with
+class 2.</p>
+<p>Is there an axis or dimension that “best” separates the three clouds?</p>
 <p>We can try to look for an optimal representation in the sense of finding
 an axis that best separates the clouds, like in the following diagram:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-216"></span>
@@ -491,43 +508,56 @@ an axis that best separates the clouds, like in the following diagram:</p>
 Figure 23.4: An axis the best separates all three classes
 </p>
 </div>
-<div id="looking-for-a-discriminant-axis" class="section level3">
-<h3><span class="header-section-number">23.0.1</span> Looking for a discriminant axis</h3>
-<p>How to find a low dimensional representation of the objects
-which provides the best separation between classes? To answer this question,
-we can look for an axis <span class="math inline">\(\Delta_u\)</span>, spanned by some vector <span class="math inline">\(\mathbf{u}\)</span>, such
-that the linear combination <span class="math inline">\(Z = u_1 X_1 + u_2 X_2\)</span> separates all three groups</p>
+<p>To summarize, the exploratory aspect of canonical discriminant analysis has to
+do with seeking a low dimensional representation in which the class of objects
+are well separated.</p>
+</div>
+<div id="looking-for-a-discriminant-axis" class="section level2">
+<h2><span class="header-section-number">23.2</span> Looking for a discriminant axis</h2>
+<p>How do we find a low dimensional representation of the objects which provides
+the best separation between classes? To answer this question, we can look for
+an axis <span class="math inline">\(\Delta_u\)</span>, spanned by some vector <span class="math inline">\(\mathbf{u}\)</span>, such that the linear
+combination</p>
+<p><span class="math display">\[
+Z = u_1 X_1 + u_2 X_2
+\]</span></p>
+<p>separates all three groups in an adequate way.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-217"></span>
 <img src="images/discrim/discrim_axes5.svg" alt="Looking for a discriminant axis" width="50%" />
 <p class="caption">
 Figure 23.5: Looking for a discriminant axis
 </p>
 </div>
-<p>The idea is to look for a linear combination of the predictors,
-<span class="math inline">\(\mathbf{z} = \mathbf{Xu}\)</span>, that <em>ideally</em> could:</p>
+<p>Algebraically, the idea is to look for a linear combination of the predictors:</p>
+<p><span class="math display">\[
+\mathbf{z} = \mathbf{Xu}
+\]</span></p>
+<p>that <em>ideally</em> could achieve the following two goals:</p>
 <ul>
-<li><p>Minimize within-groups dispersion: <span class="math inline">\(min \{ \mathbf{u^\mathsf{T} W u \}}\)</span></p></li>
-<li><p>Maximize between-groups dispersion: <span class="math inline">\(max \{ \mathbf{u^\mathsf{T} B u \}}\)</span></p></li>
+<li><p>Minimize within-class dispersion (<span class="math inline">\(\text{wss}\)</span>): <span class="math inline">\(\quad min \{ \mathbf{u^\mathsf{T} W u \}}\)</span></p></li>
+<li><p>Maximize between-class dispersion (<span class="math inline">\(\text{bss}\)</span>): <span class="math inline">\(\quad max \{ \mathbf{u^\mathsf{T} B u \}}\)</span></p></li>
 </ul>
 <p>On one hand, it would be nice to have <span class="math inline">\(\mathbf{u}\)</span>, such that the between-class
-dispersion is maximized:</p>
+dispersion is maximized. This corresponds to a situation in which the class
+centroids are well separated:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-218"></span>
-<img src="images/discrim/discrim_maximize_between.svg" alt="Maximize between-class dispersion" width="50%" />
+<img src="images/discrim/discrim_maximize_between.svg" alt="Maximize between-class dispersion" width="60%" />
 <p class="caption">
 Figure 23.6: Maximize between-class dispersion
 </p>
 </div>
 <p>On the other hand, it would also make sense to have <span class="math inline">\(\mathbf{u}\)</span>, such that
-the within-class dispersion is minimized:</p>
+the within-class dispersion is minimized. This implies having classes in which,
+on average, the “inner” variation is small (i.e. concentrated local dispersion)</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-219"></span>
-<img src="images/discrim/discrim_minimize_within.svg" alt="Minimize within-class dispersion" width="50%" />
+<img src="images/discrim/discrim_minimize_within.svg" alt="Minimize within-class dispersion" width="60%" />
 <p class="caption">
 Figure 23.7: Minimize within-class dispersion
 </p>
 </div>
+<p>Can we find such a mythical vector <span class="math inline">\(\mathbf{u}\)</span>?</p>
 <p>We have not so good news. It is generally impossible to find an axis
-<span class="math inline">\(\Delta_u\)</span>, spanned by <span class="math inline">\(\mathbf{u}\)</span>, which in order
-to meet the objective of discriminant analysis, simoultaneously:</p>
+<span class="math inline">\(\Delta_u\)</span>, spanned by <span class="math inline">\(\mathbf{u}\)</span>, which simoultaneously:</p>
 <ul>
 <li>maximizes the between-groups variance</li>
 <li>minimizes the within-groups variance</li>
@@ -535,7 +565,7 @@ to meet the objective of discriminant analysis, simoultaneously:</p>
 <p>Let’s see a cartoon picture of this issue. Say we have two classes, each
 one with its centroid.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-220"></span>
-<img src="images/discrim/discrim_double_goal1.svg" alt="Minimize within-class dispersion" width="50%" />
+<img src="images/discrim/discrim_double_goal1.svg" alt="Minimize within-class dispersion" width="40%" />
 <p class="caption">
 Figure 23.8: Minimize within-class dispersion
 </p>
@@ -544,41 +574,56 @@ Figure 23.8: Minimize within-class dispersion
 parallel to the segment linking the centroids. In other words, the direction
 of <span class="math inline">\(\mathbf{u}\)</span> is the one that crosses the centroids:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-221"></span>
-<img src="images/discrim/discrim_double_goal2.svg" alt="Maximize between-class dispersion" width="50%" />
+<img src="images/discrim/discrim_double_goal2.svg" alt="Maximize between-class dispersion" width="40%" />
 <p class="caption">
 Figure 23.9: Maximize between-class dispersion
 </p>
 </div>
 <p>Minimizing the within-class separation, involves finding <span class="math inline">\(\mathbf{u}_b\)</span>
-perpendicular to the principal axis of the ellipses. This type of <span class="math inline">\(\mathbf{u}\)</span><br />
+perpendicular to the principal axis of the ellipses. This type of <span class="math inline">\(\mathbf{u}\)</span>
 does not necessarily crosses through the centroids:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
-<img src="images/discrim/discrim_double_goal3.svg" alt="Minimize within-class dispersion" width="50%" />
+<img src="images/discrim/discrim_double_goal3.svg" alt="Minimize within-class dispersion" width="40%" />
 <p class="caption">
 Figure 23.10: Minimize within-class dispersion
 </p>
 </div>
 <p>In general, we end up with two possibilities <span class="math inline">\(\mathbf{u}_a \neq \mathbf{u}_b\)</span>:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
-<img src="images/discrim/discrim_double_goal4.svg" alt="Double goal of discriminant analysis ... generally impossible" width="50%" />
+<img src="images/discrim/discrim_double_goal4.svg" alt="Double goal of discriminant analysis ... generally impossible" width="40%" />
 <p class="caption">
 Figure 23.11: Double goal of discriminant analysis … generally impossible
 </p>
 </div>
-<p>Impossible simultaneity (in general):</p>
+<p>Let’s summarize the geometric motivation behind canonical discriminant analysis.
+We seek to find the linear combination of the predictors such
+that the between-class variance is maximized relative to the within-class
+variance. In other words, we want to find the combination of the predictors
+that gives maximum separation between the centroids of the data while at the
+same time minimizing the variation within each class of data. In general,
+accomplishing these two goals in a simultaneous way is impossible.</p>
+</div>
+<div id="looking-for-a-compromise-criterion" class="section level2">
+<h2><span class="header-section-number">23.3</span> Looking for a Compromise Criterion</h2>
+<p>So far we have an impossible simultaneity involving a minimization criterion,
+as well as a maximization criterion:</p>
 <p><span class="math display">\[
-min \{ \mathbf{u^\mathsf{T} W u} \} \Longrightarrow  \mathbf{W u} = \alpha \mathbf{u} 
-\]</span></p>
-<p><span class="math display">\[
+min \{ \mathbf{u^\mathsf{T} W u} \} \Longrightarrow  \mathbf{W u} = \alpha \mathbf{u} \\
+\textsf{and} \\
 max \{ \mathbf{u^\mathsf{T} B u} \} \Longrightarrow  \mathbf{B u} = \beta \mathbf{u}
 \]</span></p>
 <p>What can we do about this simultaneous impossibility?</p>
-<p>We should look then for a compromise.
-This is where the variance decomposition comes handy:
-<span class="math inline">\(\mathbf{V} = \mathbf{W} + \mathbf{B}\)</span></p>
+<p>Well, we need to look for is a compromise. This is where the variance
+decomposition discussed in the <a href="discrim.html#discrim">previous chapter</a> comes handy:</p>
+<p><span class="math display">\[
+\mathbf{V} = \mathbf{W} + \mathbf{B}
+\]</span></p>
+<p>Doing some algebra, it can be shown that the quadratic form
+<span class="math inline">\(\mathbf{u^\mathsf{T} V u}\)</span> can be decomposed as:</p>
 <p><span class="math display">\[
 \mathbf{u^\mathsf{T} V u} = \mathbf{u^\mathsf{T} W u} + \mathbf{u^\mathsf{T} B u}
 \]</span></p>
+<p>Again, we are pursuing a dual goal that is, in general, hard to accomplish:</p>
 <p><span class="math display">\[
 \mathbf{u^\mathsf{T} V u} = \underbrace{\mathbf{u^\mathsf{T} W u}}_{\text{minimize}} + \underbrace{\mathbf{u^\mathsf{T} B u}}_{\text{maximize}}
 \]</span></p>
@@ -588,13 +633,25 @@ max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right 
 \quad \textsf{OR} \quad
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} \right \}
 \]</span></p>
-<p>We look for <span class="math inline">\(\mathbf{u}\)</span> such that:</p>
+<p>which are actually associated to the two ratios described in the previous
+chapter: correlation ratio <span class="math inline">\(\eta^2\)</span>, and <span class="math inline">\(F\)</span>-ratio:</p>
+<p><span class="math display">\[
+\eta^2 \leftrightarrow \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}}, 
+\qquad
+F \leftrightarrow\frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} 
+\]</span></p>
+<p>Which option to choose? The good news is that both options are equivalent, so
+using any one of them should give you similar—although not exactly identical—results.</p>
+<div id="correlation-ratio-criterion" class="section level3">
+<h3><span class="header-section-number">23.3.1</span> Correlation Ratio Criterion</h3>
+<p>Suppose we decide to work with the first criterion. We look for <span class="math inline">\(\mathbf{u}\)</span>
+such that:</p>
 <p><span class="math display">\[
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
 \]</span></p>
 <p>This criterion is scale invariant, meaning that we use any scale variation of
-<span class="math inline">\(\mathbf{u}\)</span>: i.e. <span class="math inline">\(\alpha \mathbf{u}\)</span></p>
-<p>Thus:</p>
+<span class="math inline">\(\mathbf{u}\)</span>: i.e. <span class="math inline">\(\alpha \mathbf{u}\)</span>. For convenience, we can impose a
+normalizing restriction: <span class="math inline">\(\mathbf{u^\mathsf{T} V u} = 1\)</span>. Consequently:</p>
 <p><span class="math display">\[
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
 \Longleftrightarrow max \{\mathbf{u^\mathsf{T} B u}\} \quad \text{s.t.} \quad 
@@ -604,9 +661,9 @@ max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right 
 <p><span class="math display">\[
 L(\mathbf{u}) = \mathbf{u^\mathsf{T} B u} - \lambda (\mathbf{u^\mathsf{T} V u} - 1)
 \]</span></p>
-<p>Deriving w.r.t <span class="math inline">\(\mathbf{u}\)</span> and equation to zero:</p>
+<p>Deriving w.r.t <span class="math inline">\(\mathbf{u}\)</span> and equating to zero:</p>
 <p><span class="math display">\[
-\frac{\partial L(\mathbf{u})}{\partial \mathbf{u}} = 2 \mathbf{Bu} - 2 \lambda \mathbf{Vu} = 0
+\frac{\partial L(\mathbf{u})}{\partial \mathbf{u}} = 2 \mathbf{Bu} - 2 \lambda \mathbf{Vu} = \mathbf{0}
 \]</span></p>
 <p>The optimal vector <span class="math inline">\(\mathbf{u}\)</span> is such that:</p>
 <p><span class="math display">\[
@@ -616,22 +673,170 @@ L(\mathbf{u}) = \mathbf{u^\mathsf{T} B u} - \lambda (\mathbf{u^\mathsf{T} V u} -
 <p><span class="math display">\[
 \mathbf{V^{-1}Bu} = \lambda \mathbf{u}
 \]</span></p>
-<p>that is, the optimal vector <span class="math inline">\(\mathbf{u}\)</span> is eigenvector of <span class="math inline">\(\mathbf{V^{-1}B}\)</span></p>
-<p>The vector <span class="math inline">\(\mathbf{u}\)</span> verifies <span class="math inline">\(\mathbf{Bu} = \lambda \mathbf{Vu}\)</span>
-subject to <span class="math inline">\(\mathbf{u^\mathsf{T} V u} = 1\)</span></p>
-<p>If we replace <span class="math inline">\(\mathbf{V}\)</span> by <span class="math inline">\(\mathbf{B + W}\)</span> then we have:</p>
+<p>that is, the optimal vector <span class="math inline">\(\mathbf{u}\)</span> is eigenvector of <span class="math inline">\(\mathbf{V^{-1}B}\)</span>.
+Keep in mind that, in general, <span class="math inline">\(\mathbf{V^{-1}B}\)</span> is not symmetric.</p>
+</div>
+<div id="f-ratio-criterion" class="section level3">
+<h3><span class="header-section-number">23.3.2</span> F-ratio Criterion</h3>
+<p>If we decide to work with the criterion associated to the <span class="math inline">\(F\)</span>-ratio, then the
+criterion to be maximized is:</p>
 <p><span class="math display">\[
-\mathbf{Bu} = \rho \mathbf{Wu} \quad \text{with} \quad \rho = \frac{\lambda}{1 - \lambda}
+max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} \right \} 
+\Longleftrightarrow max \{\mathbf{u^\mathsf{T} B u}\} \quad \text{s.t.} \quad 
+\mathbf{u^\mathsf{T} W u} = 1
 \]</span></p>
-<p>It can be shown that <span class="math inline">\(\mathbf{u}\)</span> is also eigenvector of <span class="math inline">\(\mathbf{W^{-1}B}\)</span></p>
+<p>Applying the same Lagrangian procedure, with a multiplier <span class="math inline">\(\rho\)</span>, we have that
+<span class="math inline">\(\mathbf{u}\)</span> is such a vector that:</p>
+<p><span class="math display">\[
+\mathbf{Bu} = \rho \mathbf{Wu}
+\]</span></p>
+<p>and if <span class="math inline">\(\mathbf{W}\)</span> is invertible (which it is in most cases), then it can be
+shown that <span class="math inline">\(\mathbf{u}\)</span> is also eigenvector of <span class="math inline">\(\mathbf{W^{-1}B}\)</span>, associated
+to eigenvalue <span class="math inline">\(\rho\)</span>:</p>
 <p><span class="math display">\[
 \mathbf{W^{-1}Bu} = \rho \mathbf{u}
 \]</span></p>
-<p>Keep in mind that <span class="math inline">\(\mathbf{W^{-1}B}\)</span> is not symmetric.</p>
-<p>The problem is that most software routines that diagonilize a matrix (find its
-eigenvalue decomposition) use the Jacobi method, which works with symmetric
-matrices.</p>
+<p>Likewise, keep in mind that, in general, <span class="math inline">\(\mathbf{W^{-1}B}\)</span> is not symmetric.</p>
+<p>The relationship between the eigenvalues <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\rho\)</span> is:</p>
+<p><span class="math display">\[
+\rho = \frac{\lambda}{1 - \lambda}
+\]</span></p>
+<p>Why is it important to keep in mind that, in general, both matrices
+<span class="math inline">\(\mathbf{V^{-1}B}\)</span> and <span class="math inline">\(\mathbf{W^{-1}B}\)</span> are not symmetric? Because most
+software routines that diagonilize a matrix (to find its eigenvalue
+decomposition) use the
+<a href="https://en.wikipedia.org/wiki/Jacobi_eigenvalue_algorithm">Jacobi method</a>,
+which works with symmetric matrices.</p>
+</div>
+</div>
+<div id="cda-supervised-aspect" class="section level2">
+<h2><span class="header-section-number">23.4</span> CDA: Supervised Aspect</h2>
+<p>The supervised learning aspect of CDA has to do with: how do we use it for
+classification purposes? More specifically, how to establish a decision rule
+that let us predict the class of an object?</p>
+<p>The first things we need to do</p>
+<p>In general, consider two vectors
+<span class="math inline">\(\mathbf{a}, \mathbf{b} \in \mathbb{R}^{p \times 1}\)</span>. Recall that the inner
+product of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> is defined to be</p>
+<p><span class="math display">\[
+\langle \mathbf{a}, \mathbf{b} \rangle = \mathbf{a}^\mathsf{T} \mathbf{b}
+\]</span></p>
+<p>Note that we can equivalently write</p>
+<p><span class="math display">\[
+\langle \mathbf{a}, \mathbf{b} \rangle = \mathbf{a}^\mathsf{T} \mathbf{I_n} \mathbf{b}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{I_p}\)</span> denotes the <span class="math inline">\(p \times p\)</span> identity matrix. This notation
+allows us to generalize inner products: for a symmetric matrix <span class="math inline">\(\mathbf{M}\)</span>
+(called the <strong>metric matrix</strong>) of conformable dimensions, we define the
+inner product of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>, under metric <span class="math inline">\(\mathbf{M}\)</span>, to be</p>
+<p><span class="math display">\[
+\langle \mathbf{a}, \mathbf{b} \rangle_{\mathbf{M}} = \mathbf{a}^\mathsf{T} \mathbf{M} \mathbf{b}
+\]</span></p>
+<p>With this new notion of an inner product, we can also expand our definition of
+<strong>distance</strong>. Recall that the squared Euclidean distance between two vectors
+<span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(\mathbf{x}_{\ell}\)</span> is defined as</p>
+<p><span class="math display">\[\begin{align*}
+\text{Euclidean:} \quad d^2(i, \ell) &amp;= (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}} (\mathbf{x_i} - \mathbf{x_\ell}) \\
+&amp;= (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}}  \mathbf{I_n} (\mathbf{x_i} - \mathbf{x_\ell})
+\end{align*}\]</span></p>
+<p>Now, we can play the same game as we did for the inner product and replace
+<span class="math inline">\(\mathbf{I_n}\)</span> with any metric matrix <span class="math inline">\(\mathbf{M}\)</span> to obtain a generalized
+distance metric:</p>
+<p><span class="math display">\[
+d^2_{\mathbf{M}} (i, \ell)  = (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}}  \mathbf{M} (\mathbf{x_i} - \mathbf{x_\ell})
+\]</span></p>
+<p>How does this relate to CDA? Well, what happens if we use <span class="math inline">\(\mathbf{W}^{-1}\)</span> as
+our metric matrix? The answer is we end up with the <strong>Mahalanobis Distance</strong></p>
+<p><span class="math display">\[
+d^2_{\mathbf{W}^{-1}} (i, \ell) = (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}} \mathbf{W}^{-1} (\mathbf{x_i} - \mathbf{x_\ell})
+\]</span></p>
+<p>As such, the matrix <span class="math inline">\(\mathbf{W}^{-1}\)</span> is often referred to as the
+<strong>Mahalanobis Metric</strong>. Level curves of constant Mahalanobis distance turn out
+to be rotated ellipses. In this way, the distance between two points depends
+on how spread out their respective classes are.</p>
+<div id="a-special-pca" class="section level3">
+<h3><span class="header-section-number">23.4.1</span> A Special PCA</h3>
+<p>What do <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{W^{-1}}\)</span> correspond in geometric terms?
+The vector <span class="math inline">\(\mathbf{u}\)</span> is the axis from the PCA on the cloud of centroids
+<span class="math inline">\(\mathbf{g_k}\)</span>, but it is an axis on which the points are projected obliquely,
+not orthogonally.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
+<img src="images/discrim/discrim_metrics1.svg" alt="Oblique Projection" width="50%" />
+<p class="caption">
+Figure 23.12: Oblique Projection
+</p>
+</div>
+<p>Without this obliqueness, corresponding to the equivalent metrics
+<span class="math inline">\(\mathbf{V^{-1}}\)</span> and <span class="math inline">\(\mathbf{W^{-1}}\)</span>, this would be a simple PCA, in which
+the classes would be less well separated.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-225"></span>
+<img src="images/discrim/discrim_metrics2.svg" alt="Orthogonal Projection" width="50%" />
+<p class="caption">
+Figure 23.13: Orthogonal Projection
+</p>
+</div>
+<p>With <span class="math inline">\(\mathbf{W^{-1}}\)</span>, the separation of two points depends not only on a
+Euclidean measurement, but also on the variance and correlation of the variables.</p>
+<ul>
+<li><span class="math inline">\(\mathbf{u}\)</span> is the vector associated to the so-called <strong>canonical axis</strong></li>
+<li>When the first canonical axis has been determined, we search for a 2nd one</li>
+<li>The second axis should be the most discriminant and uncorrelated with the
+first one</li>
+<li>This procedure is repeated until the number of axis reaches the minimum of:
+<span class="math inline">\(K - 1\)</span> and <span class="math inline">\(p\)</span></li>
+</ul>
+<p>In fact, it is not the canonical axes that are manipulated directly, but the
+<em>canonical variables</em> or vectors associated to the canonical axes.</p>
+</div>
+<div id="predictive-idea" class="section level3">
+<h3><span class="header-section-number">23.4.2</span> Predictive Idea</h3>
+<p>Each observation <span class="math inline">\(\mathbf{x_i}\)</span> is assigned to the class <span class="math inline">\(C_k\)</span> for which the
+distance to the centroid <span class="math inline">\(\mathbf{g_k}\)</span> is minimal, the distance being
+calculated using the Mahalanobis metric <span class="math inline">\(\mathbf{W^{-1}}\)</span></p>
+<p><span class="math display">\[\begin{align*}
+d^2(\mathbf{x_i, g_k}) &amp;= \mathbf{(x_i - g_k)^\mathsf{T} W^{-1} (x_i - g_k)} \\
+&amp;= \mathbf{x_{i}^{\mathsf{T}} W^{-1} x_i} - 2 \mathbf{g_{k}^{\mathsf{T}} W^{-1} x_i + g_{k}^{\mathsf{T}} W^{-1} g_k}
+\end{align*}\]</span></p>
+<p>Note that minimizing <span class="math inline">\(d^2(\mathbf{x_i, g_k})\)</span> is equivalent to maximizing:</p>
+<p><span class="math display">\[
+2 \mathbf{g_{k}^{\mathsf{T}} W^{-1} x_i + g_{k}^{\mathsf{T}} W^{-1} g_k}
+\]</span></p>
+<p>Let <span class="math inline">\(\alpha_k\)</span> be:</p>
+<p><span class="math display">\[
+\alpha_k = \mathbf{g_{k}^{\mathsf{T}} W^{-1} g_k}
+\]</span></p>
+<p>Note that this is a constant that does not depend on <span class="math inline">\(\mathbf{x_i}\)</span>.
+Thus, for each of the <span class="math inline">\(k\)</span> groups we have a <strong>discriminant linear function</strong>
+that is found after inversion of the matrix <span class="math inline">\(\mathbf{W}\)</span>.</p>
+<p>Classification is based on the concept of distance from a point to a centroid.
+An important quantity is the so-called Mahalanobis <span class="math inline">\(D^2\)</span>, which is the square
+of the distance between the two centroids:</p>
+<p><span class="math display">\[
+D^2 = d^2(\mathbf{g_1, g_2}) = \mathbf{(g_1 - g_2)^\mathsf{T} W^{-1} (g_1 - g_2)}
+\]</span></p>
+<p>The Mahalanobis <span class="math inline">\(D^2\)</span> measures the (squares) distance between the two classes to
+be discriminated, and thus it also measures the quality of the discrimination:
+a higher value means better discrimination.</p>
+<p>The rule of classification in Canonical Discriminant Analysis is a geometric
+rule. Moreover, it is a linear rule. This is the reason why we consider CDA
+to be a special member of the family of Linear Discriminant Analysis.</p>
+<p>We assign each object <span class="math inline">\(\mathbf{x_i}\)</span> to the class it is nearest to, using the
+<span class="math inline">\(\mathbf{W^{-1}}\)</span> metric to calculate the distance of the object from the
+centroid of the group, in other words by carrying out an oblique projection of
+<span class="math inline">\(\mathbf{x_i}\)</span> on the discriminant axis.</p>
+<p>There is an underlying assumption behind the geometric rule of CDA. This rule
+should not be used if the two classes have different <em>a priori</em> probabilities
+or variances (we discuss this in the next chapter).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
+<img src="images/discrim/discrim_limitations.svg" alt="To which class should we assign the new object?" width="40%" />
+<p class="caption">
+Figure 23.14: To which class should we assign the new object?
+</p>
+</div>
+<p>In the next chapter we shift gears by introducing a probabilistic approach,
+as opposed to the geometric distance-based approach of CDA.</p>
 
+</div>
 </div>
 </div>
             </section>

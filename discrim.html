@@ -353,7 +353,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>23</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.0.1</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>23.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="23.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>23.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="23.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>23.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>23.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="23.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>23.3.2</b> F-ratio Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>23.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.4.1</b> A Special PCA</a></li>
+<li class="chapter" data-level="23.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>23.4.2</b> Predictive Idea</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
@@ -441,12 +450,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="discrim" class="section level1">
 <h1><span class="header-section-number">22</span> Preamble for Discriminant Analysis</h1>
+<p>We now turn out attention to a different kind of classification methods that
+belong to a general framework known as Dicriminant Analysis.
+In this chapter, we introduce some preliminary concepts that should allow you
+to have a better understanding of some underlying ideas behind discriminant
+analysis methods. The starting point involves discussing some aspects that are
+typically studied in
+<a href="https://en.wikipedia.org/wiki/Analysis_of_variance">Analysis of Variance</a>
+(ANOVA). Overall, we focus on certain notions and formulas to measure variation
+(or dispersion) within classes <em>and</em> between classes. Now, keep in mind that we
+won’t describe any inferential aspects that are commonly used in statistical
+tests for comparing means of classes.</p>
 <div id="motivation-2" class="section level2">
 <h2><span class="header-section-number">22.1</span> Motivation</h2>
 <p>Let’s consider the famous Iris data set collected by Edgar
 Anderson (1935), and used by
 <a href="https://en.wikipedia.org/wiki/Ronald_Fisher">Ronald Fisher</a> (1936) in his
-paper about Discriminant Analysis.</p>
+seminal paper about Discriminant Analysis:
+<em>The use of multiple measurements in taxonomic problems</em>.</p>
 <p>This data consists of 5 variables measured on <span class="math inline">\(n = 150\)</span> iris flowers. There
 are <span class="math inline">\(p\)</span> = 4 predictors, and one response. The four variables are:</p>
 <ul>
