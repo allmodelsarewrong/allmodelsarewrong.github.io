@@ -358,10 +358,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="23.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>23.3</b> Looking for a Compromise Criterion</a><ul>
 <li class="chapter" data-level="23.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>23.3.1</b> Correlation Ratio Criterion</a></li>
 <li class="chapter" data-level="23.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>23.3.2</b> F-ratio Criterion</a></li>
+<li class="chapter" data-level="23.3.3" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.3.3</b> A Special PCA</a></li>
 </ul></li>
 <li class="chapter" data-level="23.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>23.4</b> CDA: Supervised Aspect</a><ul>
-<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>23.4.1</b> A Special PCA</a></li>
+<li class="chapter" data-level="23.4.1" data-path="cda.html"><a href="cda.html#distance-behind-cda"><i class="fa fa-check"></i><b>23.4.1</b> Distance behind CDA</a></li>
 <li class="chapter" data-level="23.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>23.4.2</b> Predictive Idea</a></li>
+<li class="chapter" data-level="23.4.3" data-path="cda.html"><a href="cda.html#cda-classifier"><i class="fa fa-check"></i><b>23.4.3</b> CDA CLassifier</a></li>
+<li class="chapter" data-level="23.4.4" data-path="cda.html"><a href="cda.html#limitations-of-cda-classifier"><i class="fa fa-check"></i><b>23.4.4</b> Limitations of CDA classifier</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
@@ -450,9 +453,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="logistic" class="section level1">
 <h1><span class="header-section-number">21</span> Logistic Regression</h1>
-<p>So far we’ve been dealing with predicting a quantitative response, using mostly
-linear models. But what about predicting a qualitative or categorical response?
-We now turn our attention to predicting a discrete (aka categorical) response.</p>
+<p>So far we’ve been dealing with the prediction of a quantitative response, using
+mostly linear models. But what about predicting a qualitative or categorical
+response? We now turn our attention to predicting a discrete (aka categorical)
+response.</p>
 <p>To have a gentle transition from regression models into classification models,
 we’ll start with the famous logistic regression.</p>
 <div id="motivation-1" class="section level2">
@@ -476,7 +480,7 @@ variable with 0 indicating absence of <em>chd</em>, and 1 indicating presence of
 <p>If we graph a scatterplot we get the following image. We have added a little
 bit of <em>jitter</em> effect to the dots, in order to better visualize their spread.</p>
 <p><img src="allmodelsarewrong_files/figure-html/chd_scatter3-1.png" width=".95\linewidth" height=".65\linewidth" style="display: block; margin: auto;" /></p>
-<p>With respect to the x-axis (age), we have values ranging from small x’s to
+<p>With respect to the x-axis (<em>age</em>), we have values ranging from small x’s to
 large x’s. In contrast, the response is a binary response, so there are only 0’s
 or 1’s. As you can tell, the distribution of points does not seem uniform
 along the x-axis. Moreover, for a given response value, say <span class="math inline">\(y_i = 0\)</span> there are
@@ -747,12 +751,12 @@ h(\mathbf{x}) = \phi(\mathbf{b^\mathsf{T} x})
 \]</span></p>
 <div id="the-criterion-being-optimized" class="section level3">
 <h3><span class="header-section-number">21.2.1</span> The Criterion Being Optimized</h3>
-<p>We will not be using the MSE as our error measure (since doing so would make no
-sense in this particular context). Instead, we will use an “error” based on
-Maximum Likelihood Estimation. In order to do so, we must assume that our model
-is true; that is:</p>
+<p>We will not be using Mean Squared Error (MSE) as our error measure (since doing
+so would make no sense in this particular context). Instead, we will use an
+“error” based on Maximum Likelihood Estimation. In order to do so, we must
+assume that our model is true; that is:</p>
 <p><span class="math display">\[
-\textsf{assuming this is true} \quad h(x) = f(x)
+\textsf{assuming} \quad h(x) = f(x)
 \]</span></p>
 <p>we ask “how likely is it that we observe the data we already observed (i.e. <span class="math inline">\(y_i\)</span>)?”</p>
 <p>We start with the likelihood function <span class="math inline">\(L(\mathbf{b})\)</span>. Note that <span class="math inline">\(L\)</span> <em>implicitly</em>
@@ -792,7 +796,7 @@ for example, the <strong>Newton-Raphson method</strong>, or <strong>gradient asc
 <p>The overall picture stills stands:</p>
 <p><img src="images/logistic/logistic-pathdiag1.svg" width="80%" style="display: block; margin: auto;" /></p>
 <p>Now, however, we will change our probability expression a bit. How? By recoding
-the response variable <span class="math inline">\(y_i\)</span>. Specifically, what is used to be <span class="math inline">\(y_i = 0\)</span>
+the response variable <span class="math inline">\(y_i\)</span>. Specifically, what it used to be <span class="math inline">\(y_i = 0\)</span>
 let’s now encode it as <span class="math inline">\(y_i = -1\)</span>.</p>
 <p><span class="math display" id="eq:702-22">\[
 Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
@@ -841,6 +845,9 @@ Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P
 &amp; \Rightarrow \frac{1}{n} \sum_{i=1}^{n} \underbrace{ \ln\left[ \phi\left( y_i \mathbf{b^\mathsf{T} x_i} \right)  \right] }_{\text{logit}}
 \tag{21.27}
 \end{align*}\]</span></p>
+<p>Notice that we are adding the constant <span class="math inline">\(1/n\)</span>. The inclusion of this term does
+not modify the maximization of the loglikelihood. But it will help us in the
+next step to have a matheematically convenient expression.</p>
 <p>Here comes an important trick. Instead of maximizing the log-likelihood,
 we can minimize the negative of the loglikelihood.
 In other words, we can perform the following <strong>minimization</strong> problem:</p>
@@ -858,8 +865,8 @@ to the right hand side of the expression below:</p>
 y_i \mathbf{b^\mathsf{T} x_i} =: y_i \mathbf{s}
 \tag{21.29}
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{s}\)</span> represents “signal”. This term can be understood using the
-following table:</p>
+<p>where <span class="math inline">\(\mathbf{s}\)</span> represents “signal”. To better understand this term let us
+use the following table:</p>
 <p><img src="images/logistic/logistic-signal-table.svg" width="65%" style="display: block; margin: auto;" /></p>
 <p>We can think of the signal term <span class="math inline">\(\mathbf{b^\mathsf{T} x_i}\)</span> as a numeric value
 or “score” ranging from “very small” to “very large”. A small signal means that
