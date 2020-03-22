@@ -646,7 +646,7 @@ P(X = \mathbf{x} \mid y = k) = \frac{P(y = k , X = \mathbf{x})}{P(y = k)}
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-P(y = k \mid X = \mathbf{x}) = \frac{P(X = \mathbf{x} , y = k)}{P(y = k)}
+P(y = k \mid X = \mathbf{x}) = \frac{P(X = \mathbf{x} , y = k)}{P(X = \mathbf{x})}
 \]</span></p>
 <p>solving for the join distribution <span class="math inline">\(P(X = \mathbf{x} , y = k)\)</span> we have that:</p>
 <p><span class="math display">\[
@@ -690,8 +690,9 @@ wrong class. Under this mindset, it seems a good idea to classify an object
 large as possible. That is, classify <span class="math inline">\(\mathbf{x_i}\)</span> to the most likely class,
 given its predictors.</p>
 <p>An error occurs when an input vector of class <span class="math inline">\(\mathcal{C_1}\)</span> is misclassified
-as belonging to class <span class="math inline">\(\mathcal{C_2}\)</span>, or vice versa. Mathematically, an input
-<span class="math inline">\(\mathbf{x}\)</span> in decision region <span class="math inline">\(\mathcal{R_1}\)</span> is labeled as <span class="math inline">\(\mathcal{C_2}\)</span>:
+as belonging to class <span class="math inline">\(\mathcal{C_2}\)</span>, or vice versa. Mathematically, a
+classification error involves having an input <span class="math inline">\(\mathbf{x}\)</span> in decision region
+<span class="math inline">\(\mathcal{R_1}\)</span> being labeled as <span class="math inline">\(\mathcal{C_2}\)</span>:
 <span class="math inline">\((\mathbf{x} \in \mathcal{R_1}, \mathcal{{C_2}})\)</span>, and vice versa
 <span class="math inline">\((\mathbf{x} \in \mathcal{R_2}, \mathcal{{C_1}})\)</span>. The probability of this
 classification error is given by:</p>
