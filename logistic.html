@@ -377,18 +377,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
-<li class="chapter" data-level="24.2" data-path="discanalysis.html"><a href="discanalysis.html#estimations"><i class="fa fa-check"></i><b>24.2</b> Estimations</a><ul>
+<li class="chapter" data-level="24.2" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>24.2</b> Normal Distributions</a><ul>
 <li class="chapter" data-level="24.2.1" data-path="discanalysis.html"><a href="discanalysis.html#univariate-data-boldsymbolp-1"><i class="fa fa-check"></i><b>24.2.1</b> Univariate Data (<span class="math inline">\(\boldsymbol{p = 1}\)</span>)</a></li>
 <li class="chapter" data-level="24.2.2" data-path="discanalysis.html"><a href="discanalysis.html#multivariate-data-boldsymbolp-1"><i class="fa fa-check"></i><b>24.2.2</b> Multivariate Data (<span class="math inline">\(\boldsymbol{p &gt; 1}\)</span>)</a></li>
-<li class="chapter" data-level="24.2.3" data-path="discanalysis.html"><a href="discanalysis.html#multivariate-estimations"><i class="fa fa-check"></i><b>24.2.3</b> Multivariate Estimations</a></li>
 </ul></li>
-<li class="chapter" data-level="24.3" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>24.3</b> Discriminant Functions</a></li>
-<li class="chapter" data-level="24.4" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>24.4</b> Quadratic Discriminant Analysis (QDA)</a></li>
-<li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>24.5</b> Linear Discriminant Analysis</a></li>
-<li class="chapter" data-level="24.6" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>24.6</b> Canonical Discriminant Analysis</a></li>
-<li class="chapter" data-level="24.7" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>24.7</b> Naive Bayes</a></li>
-<li class="chapter" data-level="24.8" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>24.8</b> Fifth Case</a></li>
-<li class="chapter" data-level="24.9" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.9</b> Comparing the Cases</a></li>
+<li class="chapter" data-level="24.3" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>24.3</b> Estimating Parameters of Normal Distributions</a></li>
+<li class="chapter" data-level="24.4" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>24.4</b> Discriminant Functions</a></li>
+<li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>24.5</b> Quadratic Discriminant Analysis (QDA)</a></li>
+<li class="chapter" data-level="24.6" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>24.6</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="24.6.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>24.6.1</b> Canonical Discriminant Analysis</a></li>
+<li class="chapter" data-level="24.6.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>24.6.2</b> Naive Bayes</a></li>
+<li class="chapter" data-level="24.6.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>24.6.3</b> Fifth Case</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.7</b> Comparing the Cases</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>25</b> Performance of Classifiers</a><ul>
 <li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#error-for-binary-response"><i class="fa fa-check"></i><b>25.1</b> Error for Binary Response</a></li>
@@ -560,7 +561,7 @@ Think about it: we could obtain fitted values
 sense). We could also get negative predicted values, or even predicted values
 greater than 1! (which also does not make sense). On the other hand, if we
 examine the residuals, then things don’t look great for the linear regression.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-188-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-189-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>So, we need a way to fix these problems.</p>
 </div>
 <div id="second-approach-harsh-thresholding" class="section level3">
@@ -677,17 +678,17 @@ disease cases in each age group. The results are displayed in the table below.</
 #&gt; 7 55-59            17    0.765
 #&gt; 8 60-69            10    0.8</code></pre>
 <p>Likewise, we can graph these averages on a scatterplot:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-191-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-192-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Theoretically, we are modeling the conditional expectations: <span class="math inline">\(\mathbb{E}(y|x)\)</span>.
 Which is exactly the <strong>regression function</strong>.</p>
 <p>By connecting the averages, we get an interesting sigmoid pattern</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-192-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-193-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>This pattern can be approximated by some mathematical functions, the most popular being the so-called <strong>logistic</strong> function:</p>
 <p><span class="math display" id="eq:702-13">\[
 \text{logistic function:} \qquad f(s) = \frac{e^{s}}{1 + e^{s}}
 \tag{21.13}
 \]</span></p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-193-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-194-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Sometimes you may also find the logistic equation in an alternative form:</p>
 <p><span class="math display">\[
 f(s) = \frac{e^{s}}{1 + e^{s}} \quad \longleftrightarrow \quad f(s) = \frac{1}{1 + e^{-s}}
@@ -734,7 +735,7 @@ Prob(y _i \mid \mathbf{x} ; \mathbf{b} ) = \frac{e^{\mathbf{b^\mathsf{T} x_i}}}{
 <p>where here <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of features for individual <span class="math inline">\(i\)</span>.</p>
 <p>Using the same kind of diagrams depicted for various regression models, we
 can put logistic regression in this visual format as follows:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-194"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-195"></span>
 <img src="images/logistic/logistic-pathdiag1.svg" alt="Regression Model Diagram" width="80%" />
 <p class="caption">
 Figure 21.1: Regression Model Diagram

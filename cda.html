@@ -377,18 +377,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
 <li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
-<li class="chapter" data-level="24.2" data-path="discanalysis.html"><a href="discanalysis.html#estimations"><i class="fa fa-check"></i><b>24.2</b> Estimations</a><ul>
+<li class="chapter" data-level="24.2" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>24.2</b> Normal Distributions</a><ul>
 <li class="chapter" data-level="24.2.1" data-path="discanalysis.html"><a href="discanalysis.html#univariate-data-boldsymbolp-1"><i class="fa fa-check"></i><b>24.2.1</b> Univariate Data (<span class="math inline">\(\boldsymbol{p = 1}\)</span>)</a></li>
 <li class="chapter" data-level="24.2.2" data-path="discanalysis.html"><a href="discanalysis.html#multivariate-data-boldsymbolp-1"><i class="fa fa-check"></i><b>24.2.2</b> Multivariate Data (<span class="math inline">\(\boldsymbol{p &gt; 1}\)</span>)</a></li>
-<li class="chapter" data-level="24.2.3" data-path="discanalysis.html"><a href="discanalysis.html#multivariate-estimations"><i class="fa fa-check"></i><b>24.2.3</b> Multivariate Estimations</a></li>
 </ul></li>
-<li class="chapter" data-level="24.3" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>24.3</b> Discriminant Functions</a></li>
-<li class="chapter" data-level="24.4" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>24.4</b> Quadratic Discriminant Analysis (QDA)</a></li>
-<li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>24.5</b> Linear Discriminant Analysis</a></li>
-<li class="chapter" data-level="24.6" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>24.6</b> Canonical Discriminant Analysis</a></li>
-<li class="chapter" data-level="24.7" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>24.7</b> Naive Bayes</a></li>
-<li class="chapter" data-level="24.8" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>24.8</b> Fifth Case</a></li>
-<li class="chapter" data-level="24.9" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.9</b> Comparing the Cases</a></li>
+<li class="chapter" data-level="24.3" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>24.3</b> Estimating Parameters of Normal Distributions</a></li>
+<li class="chapter" data-level="24.4" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>24.4</b> Discriminant Functions</a></li>
+<li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>24.5</b> Quadratic Discriminant Analysis (QDA)</a></li>
+<li class="chapter" data-level="24.6" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>24.6</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="24.6.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>24.6.1</b> Canonical Discriminant Analysis</a></li>
+<li class="chapter" data-level="24.6.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>24.6.2</b> Naive Bayes</a></li>
+<li class="chapter" data-level="24.6.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>24.6.3</b> Fifth Case</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.7</b> Comparing the Cases</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>25</b> Performance of Classifiers</a><ul>
 <li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#error-for-binary-response"><i class="fa fa-check"></i><b>25.1</b> Error for Binary Response</a></li>
@@ -481,7 +482,7 @@ material in this chapter. And then at the end, we present its supervised aspect,
 <p>We can formulate the classfication problem behind CDA in a geometric way. For
 sake of illustration, let’s consider three classes in a 2-dimensional space,
 like depicted in the figure below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-221"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
 <img src="images/discrim/discrim_axes1.svg" alt="Three classes in 2-dim space" width="50%" />
 <p class="caption">
 Figure 23.1: Three classes in 2-dim space
@@ -491,7 +492,7 @@ Figure 23.1: Three classes in 2-dim space
 dimensional representation that separates the three classes. One option is to
 consider the axis associated with the predictor <span class="math inline">\(X_1\)</span>, that is, the horizontal
 axis in the next figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
 <img src="images/discrim/discrim_axes2.svg" alt="Axis $X_1$ separates class 1 from groups 2 and 3" width="50%" />
 <p class="caption">
 Figure 23.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 from groups 2 and 3
@@ -501,7 +502,7 @@ Figure 23.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 fro
 from classes 2 and 3. However, class 2 is largely confounded with class 3.</p>
 <p>Another option is to consider the axis associated with the predictor <span class="math inline">\(X_2\)</span>,
 that is, the vertical axis in the figure below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
 <img src="images/discrim/discrim_axes3.svg" alt="Axis $X_1$ separates class 3 from groups 1 and 2" width="50%" />
 <p class="caption">
 Figure 23.3: Axis <span class="math inline">\(X_1\)</span> separates class 3 from groups 1 and 2
@@ -513,7 +514,7 @@ class 2.</p>
 <p>Is there an axis or dimension that “best” separates the three clouds?</p>
 <p>We can try to look for an optimal representation in the sense of finding
 an axis that best separates the clouds, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-224"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-225"></span>
 <img src="images/discrim/discrim_axes4.svg" alt="An axis the best separates all three classes" width="50%" />
 <p class="caption">
 Figure 23.4: An axis the best separates all three classes
@@ -533,7 +534,7 @@ combination</p>
 Z = u_1 X_1 + u_2 X_2
 \]</span></p>
 <p>separates all three groups in an adequate way.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-225"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
 <img src="images/discrim/discrim_axes5.svg" alt="Looking for a discriminant axis" width="50%" />
 <p class="caption">
 Figure 23.5: Looking for a discriminant axis
@@ -551,7 +552,7 @@ Figure 23.5: Looking for a discriminant axis
 <p>On one hand, it would be nice to have <span class="math inline">\(\mathbf{u}\)</span>, such that the between-class
 dispersion is maximized. This corresponds to a situation in which the class
 centroids are well separated:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-226"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-227"></span>
 <img src="images/discrim/discrim_maximize_between.svg" alt="Maximize between-class dispersion" width="60%" />
 <p class="caption">
 Figure 23.6: Maximize between-class dispersion
@@ -560,7 +561,7 @@ Figure 23.6: Maximize between-class dispersion
 <p>On the other hand, it would also make sense to have <span class="math inline">\(\mathbf{u}\)</span>, such that
 the within-class dispersion is minimized. This implies having classes in which,
 on average, the “inner” variation is small (i.e. concentrated local dispersion)</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-227"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-228"></span>
 <img src="images/discrim/discrim_minimize_within.svg" alt="Minimize within-class dispersion" width="60%" />
 <p class="caption">
 Figure 23.7: Minimize within-class dispersion
@@ -575,7 +576,7 @@ Figure 23.7: Minimize within-class dispersion
 </ul>
 <p>Let’s see a cartoon picture of this issue. Say we have two classes, each
 one with its centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-228"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-229"></span>
 <img src="images/discrim/discrim_double_goal1.svg" alt="Minimize within-class dispersion" width="40%" />
 <p class="caption">
 Figure 23.8: Minimize within-class dispersion
@@ -584,7 +585,7 @@ Figure 23.8: Minimize within-class dispersion
 <p>Maximizing the between-class separation, involves choosing <span class="math inline">\(\mathbf{u}_a\)</span>
 parallel to the segment linking the centroids. In other words, the direction
 of <span class="math inline">\(\mathbf{u}\)</span> is the one that crosses the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-229"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-230"></span>
 <img src="images/discrim/discrim_double_goal2.svg" alt="Maximize between-class dispersion" width="40%" />
 <p class="caption">
 Figure 23.9: Maximize between-class dispersion
@@ -593,14 +594,14 @@ Figure 23.9: Maximize between-class dispersion
 <p>Minimizing the within-class separation, involves finding <span class="math inline">\(\mathbf{u}_b\)</span>
 perpendicular to the principal axis of the ellipses. This type of <span class="math inline">\(\mathbf{u}\)</span>
 does not necessarily crosses through the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-230"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-231"></span>
 <img src="images/discrim/discrim_double_goal3.svg" alt="Minimize within-class dispersion" width="40%" />
 <p class="caption">
 Figure 23.10: Minimize within-class dispersion
 </p>
 </div>
 <p>In general, we end up with two possibilities <span class="math inline">\(\mathbf{u}_a \neq \mathbf{u}_b\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-231"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-232"></span>
 <img src="images/discrim/discrim_double_goal4.svg" alt="Double goal of discriminant analysis ... generally impossible" width="40%" />
 <p class="caption">
 Figure 23.11: Double goal of discriminant analysis … generally impossible
@@ -725,7 +726,7 @@ which works with symmetric matrices.</p>
 The vector <span class="math inline">\(\mathbf{u}\)</span> is the axis from the PCA on the cloud of centroids
 <span class="math inline">\(\mathbf{g_1}, \mathbf{g_2}, \dots, \mathbf{g_K}\)</span>, but it is an axis on which
 the points are projected <strong>obliquely</strong>, not orthogonally.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-232"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-233"></span>
 <img src="images/discrim/discrim_metrics1.svg" alt="Oblique Projection" width="50%" />
 <p class="caption">
 Figure 23.12: Oblique Projection
@@ -735,7 +736,7 @@ Figure 23.12: Oblique Projection
 <span class="math inline">\(\mathbf{V^{-1}}\)</span> and <span class="math inline">\(\mathbf{W^{-1}}\)</span>, this would be a simple PCA performed
 on the centroids, in which the classes would be less well separated, because of
 an orthogonal projection.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-233"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
 <img src="images/discrim/discrim_metrics2.svg" alt="Orthogonal Projection" width="50%" />
 <p class="caption">
 Figure 23.13: Orthogonal Projection
@@ -820,7 +821,7 @@ into account the correlational structure of the variables.</p>
 <p>The following figure illustrates what this distance is doing compared to the
 Euclidean distance. Suppose we have two points <span class="math inline">\(\mathbf{x_i}\)</span> and
 <span class="math inline">\(\mathbf{x_\ell}\)</span> lying on the same density ellipsoid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
 <img src="images/discrim/discrim-euclidean-mahalanobis.svg" alt="Euclidean -vs- Mahalanobis distances" width="70%" />
 <p class="caption">
 Figure 23.14: Euclidean -vs- Mahalanobis distances
@@ -865,7 +866,7 @@ negative of those terms that depend on <span class="math inline">\(k\)</span>:</
 suppose that we have three unclassified individuals A, B, and C. In canonical
 discriminant analysis we compute the Mahalanobis distances of the unclassified
 objects to the three centroids.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
 <img src="images/discrim/discrim-cda-prediction1.svg" alt="Mahalanobis distance of an object to the class centroids" width="60%" />
 <p class="caption">
 Figure 23.15: Mahalanobis distance of an object to the class centroids
@@ -882,7 +883,7 @@ distance is minimal. An equivalent approach is to look for the maximum of:</p>
 <li><span class="math inline">\(2 \mathbf{g_2}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_2}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_2}\)</span></li>
 <li><span class="math inline">\(2 \mathbf{g_3}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_3}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_3}\)</span></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
 <img src="images/discrim/discrim-cda-prediction2.svg" alt="Assign class for which Mahalanobis distance is minimal" width="60%" />
 <p class="caption">
 Figure 23.16: Assign class for which Mahalanobis distance is minimal
@@ -894,7 +895,7 @@ Figure 23.16: Assign class for which Mahalanobis distance is minimal
 <p>There is an underlying assumption behind the geometric rule of CDA. This rule
 should not be used if the two classes have different <em>a priori</em> probabilities
 or variances (we discuss this in the next chapter).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
 <img src="images/discrim/discrim_limitations.svg" alt="To which class should we assign the new object?" width="50%" />
 <p class="caption">
 Figure 23.17: To which class should we assign the new object?
