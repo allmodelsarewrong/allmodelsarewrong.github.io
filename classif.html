@@ -376,20 +376,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>24</b> Discriminant Analysis</a><ul>
-<li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a></li>
-<li class="chapter" data-level="24.2" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>24.2</b> Normal Distributions</a><ul>
-<li class="chapter" data-level="24.2.1" data-path="discanalysis.html"><a href="discanalysis.html#univariate-data-boldsymbolp-1"><i class="fa fa-check"></i><b>24.2.1</b> Univariate Data (<span class="math inline">\(\boldsymbol{p = 1}\)</span>)</a></li>
-<li class="chapter" data-level="24.2.2" data-path="discanalysis.html"><a href="discanalysis.html#multivariate-data-boldsymbolp-1"><i class="fa fa-check"></i><b>24.2.2</b> Multivariate Data (<span class="math inline">\(\boldsymbol{p &gt; 1}\)</span>)</a></li>
+<li class="chapter" data-level="24.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>24.1</b> Probabilistic DA</a><ul>
+<li class="chapter" data-level="24.1.1" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>24.1.1</b> Normal Distributions</a></li>
+<li class="chapter" data-level="24.1.2" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>24.1.2</b> Estimating Parameters of Normal Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="24.3" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>24.3</b> Estimating Parameters of Normal Distributions</a></li>
-<li class="chapter" data-level="24.4" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>24.4</b> Discriminant Functions</a></li>
-<li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>24.5</b> Quadratic Discriminant Analysis (QDA)</a></li>
-<li class="chapter" data-level="24.6" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>24.6</b> Linear Discriminant Analysis</a><ul>
-<li class="chapter" data-level="24.6.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>24.6.1</b> Canonical Discriminant Analysis</a></li>
-<li class="chapter" data-level="24.6.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>24.6.2</b> Naive Bayes</a></li>
-<li class="chapter" data-level="24.6.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>24.6.3</b> Fifth Case</a></li>
+<li class="chapter" data-level="24.2" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>24.2</b> Discriminant Functions</a></li>
+<li class="chapter" data-level="24.3" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>24.3</b> Quadratic Discriminant Analysis (QDA)</a></li>
+<li class="chapter" data-level="24.4" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>24.4</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>24.4.1</b> Canonical Discriminant Analysis</a></li>
+<li class="chapter" data-level="24.4.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>24.4.2</b> Naive Bayes</a></li>
+<li class="chapter" data-level="24.4.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>24.4.3</b> Fifth Case</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.7</b> Comparing the Cases</a></li>
+<li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.5</b> Comparing the Cases</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>25</b> Performance of Classifiers</a><ul>
 <li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#error-for-binary-response"><i class="fa fa-check"></i><b>25.1</b> Error for Binary Response</a></li>
@@ -574,9 +572,9 @@ Figure 20.5: To which class we assign new individuals?
 </div>
 <p>It would be nice to have a mechanism or <strong>rule</strong> to classifiy observations.
 For example, we could end up with the following classifications. Customer <span class="math inline">\(a\)</span>
-could be assignd to class <em>good</em>. Customer <span class="math inline">\(d\)</span> could also be assigned to class
-<em>good</em> with high confidence. In turn, customer <span class="math inline">\(c\)</span> coud be assigned to class
-<em>bad</em>. What about customer <span class="math inline">\(b\)</span>? We could be uncertain to which class this
+could be assignd to class <em>bad</em>. Customer <span class="math inline">\(d\)</span> could also be assigned to class
+<em>bad</em> with high confidence. In turn, customer <span class="math inline">\(c\)</span> coud be assigned to class
+<em>good</em>. What about customer <span class="math inline">\(b\)</span>? We could be uncertain to which class this
 individual belongs.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-181"></span>
 <img src="images/classif/cloud_credit3.svg" alt="Some possible classifications" width="60%" />
@@ -585,7 +583,7 @@ Figure 20.6: Some possible classifications
 </p>
 </div>
 <p>Having a classification rule allows us to divide the input space into regions
-<span class="math inline">\(\mathcal{R_k}\)</span> called <strong>decision regions</strong> (one for each class). The boundaries
+<span class="math inline">\(\mathcal{R}_k\)</span> called <strong>decision regions</strong> (one for each class). The boundaries
 between decision regions would establish <strong>decision boundaries</strong> or decision
 surfaces.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-182"></span>
@@ -600,7 +598,7 @@ another decision rule could result in a nonlinear decision surface.</p>
 <div id="two-class-problem" class="section level3">
 <h3><span class="header-section-number">20.1.3</span> Two-class Problem</h3>
 <p>In our credit application example we have customers belonging to one of two
-classes: <span class="math inline">\(\mathcal{C_1} =\)</span> <em>good</em>, and <span class="math inline">\(\mathcal{C_2} =\)</span> <em>bad</em>.</p>
+classes: <span class="math inline">\(\mathcal{C}_1 =\)</span> <em>good</em>, and <span class="math inline">\(\mathcal{C}_2 =\)</span> <em>bad</em>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-183"></span>
 <img src="images/classif/cloud_credit1.svg" alt="Cloud of n customers in p-dimensional space" width="60%" />
 <p class="caption">
@@ -614,8 +612,9 @@ start exploring the class-conditional distribution of</p>
 <p><span class="math display">\[
 P(X = \mathbf{x} \mid y = k)
 \]</span></p>
-<p>For instance, we may ask “How does <span class="math inline">\(X_j \mid y = 1\)</span> compare with <span class="math inline">\(X_j \mid y = 2\)</span>?”
-Similarly, “How does <span class="math inline">\(X_q \mid y = 1\)</span> compare with <span class="math inline">\(X_q \mid y = 2\)</span>?”</p>
+<p>For instance, we may ask “How does <span class="math inline">\(X_j \mid y = 1\)</span> compare with
+<span class="math inline">\(X_j \mid y = 2\)</span>?” Similarly, “How does <span class="math inline">\(X_q \mid y = 1\)</span> compare with
+<span class="math inline">\(X_q \mid y = 2\)</span>?”</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-184"></span>
 <img src="images/classif/density_classes1.svg" alt="Exploring conditional distributions" width="70%" />
 <p class="caption">
@@ -656,7 +655,12 @@ P(X = \mathbf{x} \mid y = k) = \frac{P(y = k , X = \mathbf{x})}{P(y = k)}
 <p><span class="math display">\[
 P(y = k \mid X = \mathbf{x}) = \frac{P(X = \mathbf{x} , y = k)}{P(X = \mathbf{x})}
 \]</span></p>
-<p>solving for the join distribution <span class="math inline">\(P(X = \mathbf{x} , y = k)\)</span> we have that:</p>
+<p>And consider the joint distribution</p>
+<p><span class="math display">\[\begin{align*}
+P(X = \mathbf{x} , y = k) &amp;= P(y = k \mid X = \mathbf{x}) P(X = \mathbf{x}) \\
+&amp;= P(X = \mathbf{x} \mid y = k) P(y = k)
+\end{align*}\]</span></p>
+<p>Solving for the joint distribution <span class="math inline">\(P(X = \mathbf{x} , y = k)\)</span> we have that:</p>
 <p><span class="math display">\[
 P(X = \mathbf{x} \mid y = k) P(y = k) \hspace{1mm} = \hspace{1mm} P(y = k \mid X = \mathbf{x}) P(X = \mathbf{x})
 \]</span></p>
@@ -695,39 +699,40 @@ and prior probabilities <span class="math inline">\(\pi_k\)</span>.</p>
 that makes good predictions. In a classification setting this translates into
 minimizing the probability of assigning an individual <span class="math inline">\(\mathbf{x_i}\)</span> to the
 wrong class. Under this mindset, it seems a good idea to classify an object
-<span class="math inline">\(\mathbf{x_i}\)</span> to the class <span class="math inline">\(k\)</span> that makes <span class="math inline">\(P(y=k \mid X=\mathbf{x_0})\)</span> as
+<span class="math inline">\(\mathbf{x_i}\)</span> to the class <span class="math inline">\(k\)</span> that makes <span class="math inline">\(P(y=k \mid X=\mathbf{x_i})\)</span> as
 large as possible. That is, classify <span class="math inline">\(\mathbf{x_i}\)</span> to the most likely class,
 given its predictors.</p>
-<p>An error occurs when an input vector of class <span class="math inline">\(\mathcal{C_1}\)</span> is misclassified
-as belonging to class <span class="math inline">\(\mathcal{C_2}\)</span>, or vice versa. Mathematically, a
+<p>An error occurs when an input vector of class <span class="math inline">\(\mathcal{C}_1\)</span> is misclassified
+as belonging to class <span class="math inline">\(\mathcal{C}_2\)</span>, or vice versa. Mathematically, a
 classification error involves having an input <span class="math inline">\(\mathbf{x}\)</span> in decision region
-<span class="math inline">\(\mathcal{R_1}\)</span> being labeled as <span class="math inline">\(\mathcal{C_2}\)</span>:
-<span class="math inline">\((\mathbf{x} \in \mathcal{R_1}, \mathcal{{C_2}})\)</span>, and vice versa
-<span class="math inline">\((\mathbf{x} \in \mathcal{R_2}, \mathcal{{C_1}})\)</span>. The probability of this
+<span class="math inline">\(\mathcal{R}_1\)</span> being labeled as <span class="math inline">\(\mathcal{C}_2\)</span>:
+<span class="math inline">\((\mathbf{x} \in \mathcal{R}_1, \mathcal{C}_2)\)</span>, and vice versa
+<span class="math inline">\((\mathbf{x} \in \mathcal{R}_2, \mathcal{C}_1)\)</span>. The probability of this
 classification error is given by:</p>
 <p><span class="math display">\[
-P(error) = P(\mathbf{x} \in  \mathcal{R_1}, \mathcal{{C_2}}) + P(\mathbf{x} \in  \mathcal{R_2}, \mathcal{{C_1}})
+P(error) = P(\mathbf{x} \in  \mathcal{R}_1, \mathcal{C}_2) + P(\mathbf{x} \in  \mathcal{R}_2, \mathcal{C}_1)
 \]</span></p>
 <p>In order to minimize <span class="math inline">\(P(error)\)</span> we should find a way to assign <span class="math inline">\(\mathbf{x_i}\)</span>
 to whichever class renders this probability to a minimum. Thus, if
-<span class="math inline">\(P(\mathbf{x}, \mathcal{C_1}) &gt; P(\mathbf{x}, \mathcal{C_2})\)</span> for a certain
-input vector <span class="math inline">\(\mathbf{x}\)</span>, then we label <span class="math inline">\(\mathbf{x}\)</span> as <span class="math inline">\(\mathcal{C_1}\)</span>.</p>
+<span class="math inline">\(P(\mathbf{x}, \mathcal{C}_1) &gt; P(\mathbf{x}, \mathcal{C}_2)\)</span> for a certain
+input vector <span class="math inline">\(\mathbf{x}\)</span>, then we label <span class="math inline">\(\mathbf{x}\)</span> as <span class="math inline">\(\mathcal{C}_1\)</span>.</p>
 <p>Alternatively, minimizing <span class="math inline">\(P(error)\)</span> is equivalent to maximizing <span class="math inline">\(P(correct)\)</span></p>
 <p><span class="math display">\[
-P(correct) = P(\mathbf{x} \in  \mathcal{R_1}, \mathcal{{C_1}}) + P(\mathbf{x} \in  \mathcal{R_2}, \mathcal{{C_2}})
+P(correct) = P(\mathbf{x} \in  \mathcal{R}_1, \mathcal{C}_1) + P(\mathbf{x} \in  \mathcal{R}_2, \mathcal{C}_2)
 \]</span></p>
 <p>In general, for <span class="math inline">\(K\)</span> classes the probability of correct classification is:</p>
 <p><span class="math display">\[
-P(correct) = \sum_{k=1}^{K} P(\mathbf{x} \in  \mathcal{R_k}, \mathcal{{C_k}})
+P(correct) = \sum_{k=1}^{K} P(\mathbf{x} \in  \mathcal{R}_k, \mathcal{C}_k)
 \]</span></p>
-<p>which is maximized by choosing decision regions <span class="math inline">\(\mathcal{R_k}\)</span> such that each
+<p>which is maximized by choosing decision regions <span class="math inline">\(\mathcal{R}_k\)</span> such that each
 <span class="math inline">\(\mathbf{x}\)</span> is assigned to the class for which the joint distribution
-<span class="math inline">\(P(\mathbf{x}, \mathcal{C_k})\)</span> is largest. Using the product rule</p>
+<span class="math inline">\(P(\mathbf{x}, \mathcal{C}_k)\)</span> is largest. Using the product rule, we get that
+this joint probability is:</p>
 <p><span class="math display">\[
-P(\mathbf{x}, \mathcal{C_k}) = P(\mathcal{C_k} \mid \mathbf{x}) P(\mathbf{x})
+P(\mathbf{x}, \mathcal{C}_k) = P(\mathcal{C}_k \mid \mathbf{x}) P(\mathbf{x})
 \]</span></p>
-<p>we should assign <span class="math inline">\(\mathbf{x}\)</span> to the most likely class, given its input
-features <span class="math inline">\(P(\mathcal{C_k} \mid \mathbf{x})\)</span>. This is the so-called
+<p>We should assign <span class="math inline">\(\mathbf{x}\)</span> to the most likely class, given its input
+features <span class="math inline">\(P(\mathcal{C}_k \mid \mathbf{x})\)</span>. This is the so-called
 <strong>Bayes Classifier</strong>.</p>
 <p>Note that the Bayes formula</p>
 <p><span class="math display">\[
