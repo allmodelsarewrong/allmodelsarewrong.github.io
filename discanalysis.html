@@ -468,7 +468,7 @@ mathematical framework in what we will call <strong>Probabilistic Discriminant A
 <p>We start with the notion of the <strong>Bayes Classifier</strong>, which is explained in
 more detail in the introductory chapter about <a href="classif.html#classif">Classification</a>.
 Suppose we have a response with <span class="math inline">\(K\)</span> classes
-<span class="math inline">\((\mathcal{C_1}, \dots, \mathcal{C_K})\)</span>, and further suppose we have <span class="math inline">\(p\)</span>
+<span class="math inline">\((\mathcal{C}_1, \dots, \mathcal{C}_K)\)</span>, and further suppose we have <span class="math inline">\(p\)</span>
 predictors. The Bayes Classifier gives us the following classification rule:</p>
 <p><span class="math display">\[
 \text{assign } \mathbf{x_i} \text{ to the class for which } P( y_i = k \mid \mathbf{x_i}) \text{ is the largest}
@@ -513,7 +513,7 @@ f_k(x) = \frac{1}{\sqrt{2 \pi \sigma_k^2}} \hspace{1mm} \exp\left\{ -\frac{1}{2}
 <p>In the case of multivariate data, we use a multivariate normal distribution for
 our class-conditional density:</p>
 <p><span class="math display">\[
-\mathbf{x} \mid \mathcal{C_k} \sim \textit{MVN}(\boldsymbol{\mu_k}, \mathbf{\Sigma_k})
+\mathbf{x} \mid \mathcal{C}_k \sim \textit{MVN}(\boldsymbol{\mu_k}, \mathbf{\Sigma_k})
 \]</span></p>
 <p>Thus, the density function is given by:</p>
 <p><span class="math display">\[
@@ -547,12 +547,12 @@ of any <em>practical</em> use, we need to estimate some of these quantities:</p>
 <p><span class="math display">\[
 \hat{\pi}_k = \frac{n_k}{n}
 \]</span></p>
-<p>where <span class="math inline">\(n_k = |\mathcal{C_k}|\)</span> denotes the size of class <span class="math inline">\(k\)</span> and <span class="math inline">\(n\)</span> denotes the
+<p>where <span class="math inline">\(n_k = |\mathcal{C}_k|\)</span> denotes the size of class <span class="math inline">\(k\)</span> and <span class="math inline">\(n\)</span> denotes the
 total number of data points.</p>
 </div>
 <div id="mean-vectors" class="section level4 unnumbered">
 <h4>Mean Vectors</h4>
-<p>For <span class="math inline">\(\boldsymbol{\hat{\mu}_k}\)</span>, we can use the centroid of <span class="math inline">\(C_k\)</span>; i.e. the
+<p>For <span class="math inline">\(\boldsymbol{\hat{\mu}_k}\)</span>, we can use the centroid of <span class="math inline">\(\mathcal{C}_k\)</span>; i.e. the
 average individual of class <span class="math inline">\(k\)</span>.</p>
 <p><span class="math display">\[
 \boldsymbol{\hat{\mu}_k} = \mathbf{g_k}
@@ -625,7 +625,7 @@ covariance matrices are the same:</p>
 <p>In other words, ignoring terms that do not depend on <span class="math inline">\(k\)</span>, we obtain
 (again, w.r.t. <span class="math inline">\(\mathbf{x}\)</span>)</p>
 <p><span class="math display">\[
-\delta_k(\mathbf{x}) =  \underbrace{ \ln\left(  \hat{\pi}_k \right) }_{\text{constant}}  - \frac{1}{2} \left[ - \underbrace{ 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} + \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}  \right]
+\delta_k(\mathbf{x}) =  \underbrace{ \ln\left(  \hat{\pi}_k \right) }_{\text{constant}}  - \frac{1}{2} \left[ - \underbrace{ 2 \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}_k} }_{\text{linear}} + \underbrace{  \boldsymbol{\hat{\mu}_k}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}_k} }_{\text{constant}}  \right]
 \]</span></p>
 <p>That is, our discriminant function is now linear w.r.t. <span class="math inline">\(\mathbf{x}\)</span>; hence,
 we end up with <strong>Linear Discriminant Analysis (LDA)</strong> in its most general form.</p>
@@ -642,7 +642,7 @@ matrices are the same across classes, as well as the prior probabilities:</p>
 \]</span></p>
 <p>which becomes, after ignoring <span class="math inline">\(k\)</span>-independent terms,</p>
 <p><span class="math display">\[
-\delta_k(\mathbf{x}) =  \underbrace{  \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{linear}} - \frac{1}{2}  \underbrace{  \boldsymbol{\hat{\mu}}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}} }_{\text{constant}}
+\delta_k(\mathbf{x}) =  \underbrace{  \mathbf{x}^\mathsf{T} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}_k} }_{\text{linear}} - \frac{1}{2}  \underbrace{  \boldsymbol{\hat{\mu}_k}^{\mathsf{T}} \mathbf{\hat{\Sigma}^{-1}} \boldsymbol{\hat{\mu}_k} }_{\text{constant}}
 \]</span></p>
 <p>Now, what is going in with this first term? It is simply the distance between
 <span class="math inline">\(\mathbf{x}\)</span> and the centroid of <span class="math inline">\(\mathcal{C_k}\)</span>, using the within-class
