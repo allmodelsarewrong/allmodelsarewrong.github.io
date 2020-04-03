@@ -390,14 +390,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.5</b> Comparing the Cases</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>25</b> Performance of Classifiers</a><ul>
-<li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#error-for-binary-response"><i class="fa fa-check"></i><b>25.1</b> Error for Binary Response</a></li>
-<li class="chapter" data-level="25.2" data-path="classperformance.html"><a href="classperformance.html#categorical-response"><i class="fa fa-check"></i><b>25.2</b> Categorical Response</a></li>
-<li class="chapter" data-level="25.3" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>25.3</b> Confusion Matrices</a></li>
-<li class="chapter" data-level="25.4" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>25.4</b> Binary Response: Example</a><ul>
-<li class="chapter" data-level="25.4.1" data-path="classperformance.html"><a href="classperformance.html#types-of-errors-application-for-savings-account"><i class="fa fa-check"></i><b>25.4.1</b> Types of Errors: Application for Savings Account</a></li>
-<li class="chapter" data-level="25.4.2" data-path="classperformance.html"><a href="classperformance.html#another-example-loans"><i class="fa fa-check"></i><b>25.4.2</b> Another Example: Loans</a></li>
-<li class="chapter" data-level="25.4.3" data-path="classperformance.html"><a href="classperformance.html#the-ideal-situation"><i class="fa fa-check"></i><b>25.4.3</b> The Ideal Situation</a></li>
+<li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#classification-error-measures"><i class="fa fa-check"></i><b>25.1</b> Classification Error Measures</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="classperformance.html"><a href="classperformance.html#errors-for-binary-response"><i class="fa fa-check"></i><b>25.1.1</b> Errors for Binary Response</a></li>
+<li class="chapter" data-level="25.1.2" data-path="classperformance.html"><a href="classperformance.html#error-for-categorical-response"><i class="fa fa-check"></i><b>25.1.2</b> Error for Categorical Response</a></li>
 </ul></li>
+<li class="chapter" data-level="25.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>25.2</b> Confusion Matrices</a></li>
+<li class="chapter" data-level="25.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>25.3</b> Binary Response Example</a><ul>
+<li class="chapter" data-level="25.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>25.3.1</b> Application for Checking Account</a></li>
+<li class="chapter" data-level="25.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>25.3.2</b> Application for Loan</a></li>
+</ul></li>
+<li class="chapter" data-level="25.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>25.4</b> Decision Rules and Errors</a></li>
+<li class="chapter" data-level="25.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>25.5</b> ROC Curves</a></li>
 </ul></li>
 <li class="part"><span><b>IX Unsupervised II: Clustering</b></span></li>
 <li class="chapter" data-level="26" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>26</b> Clustering</a><ul>
@@ -474,7 +477,7 @@ number of clusters is generally defined a priori. The main methods are:</p>
 <p>Imagine we are in <span class="math inline">\(\mathbb{R}^n\)</span> (or <span class="math inline">\(\mathbb{R}^p\)</span>, depending on if we are
 looking at things from the individuals perspective or variables perspective).
 For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-262"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
 <img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
 <p class="caption">
 Figure 27.1: Toy data set
@@ -484,7 +487,7 @@ Figure 27.1: Toy data set
 Typically, the way centroids are initialized is by randomly selecting two
 objects. Sometimes, however, a more “educated” initialization may be possible
 when we have additional information about where the cluster may be located.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-263"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-279"></span>
 <img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
 <p class="caption">
 Figure 27.2: Arbitrary centroids
@@ -493,7 +496,7 @@ Figure 27.2: Arbitrary centroids
 <p>Given a new data point, we compute the distances from this point to the two
 centroids, and classify the point to the cluster to which the closest centroid
 belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-264"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-280"></span>
 <img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
 <p class="caption">
 Figure 27.3: Distance of an object to both centroids
@@ -501,14 +504,14 @@ Figure 27.3: Distance of an object to both centroids
 </div>
 <p>The distances of all objects to the centroids are computed as well, and the
 objects get assigned to the group of the closest centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-265"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
 <img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
 <p class="caption">
 Figure 27.4: Assigning objects to closest centroid
 </p>
 </div>
 <p>Now, with this new grouped data, we have to recompute the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-266"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
 <img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
 <p class="caption">
 Figure 27.5: Update centroids
@@ -516,14 +519,14 @@ Figure 27.5: Update centroids
 </div>
 <p>We repeat this procedure, that is, calculate distances of all objects to the
 centroids, and re-assigning objects to clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-267"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
 <img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
 <p class="caption">
 Figure 27.6: Reassigning objects
 </p>
 </div>
 <p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-268"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-284"></span>
 <img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
 <p class="caption">
 Figure 27.7: Recalculate centroids
@@ -532,7 +535,7 @@ Figure 27.7: Recalculate centroids
 <p>After enough iterations, the centroids will not move too much between each
 iteration. At this point we will say the algorithm as converged, and we stop
 (and the resulting clusters will be the ones we use).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-269"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
 <img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
 <p class="caption">
 Figure 27.8: Rinse and repeat until convergence

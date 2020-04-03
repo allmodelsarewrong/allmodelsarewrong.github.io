@@ -390,14 +390,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>24.5</b> Comparing the Cases</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>25</b> Performance of Classifiers</a><ul>
-<li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#error-for-binary-response"><i class="fa fa-check"></i><b>25.1</b> Error for Binary Response</a></li>
-<li class="chapter" data-level="25.2" data-path="classperformance.html"><a href="classperformance.html#categorical-response"><i class="fa fa-check"></i><b>25.2</b> Categorical Response</a></li>
-<li class="chapter" data-level="25.3" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>25.3</b> Confusion Matrices</a></li>
-<li class="chapter" data-level="25.4" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>25.4</b> Binary Response: Example</a><ul>
-<li class="chapter" data-level="25.4.1" data-path="classperformance.html"><a href="classperformance.html#types-of-errors-application-for-savings-account"><i class="fa fa-check"></i><b>25.4.1</b> Types of Errors: Application for Savings Account</a></li>
-<li class="chapter" data-level="25.4.2" data-path="classperformance.html"><a href="classperformance.html#another-example-loans"><i class="fa fa-check"></i><b>25.4.2</b> Another Example: Loans</a></li>
-<li class="chapter" data-level="25.4.3" data-path="classperformance.html"><a href="classperformance.html#the-ideal-situation"><i class="fa fa-check"></i><b>25.4.3</b> The Ideal Situation</a></li>
+<li class="chapter" data-level="25.1" data-path="classperformance.html"><a href="classperformance.html#classification-error-measures"><i class="fa fa-check"></i><b>25.1</b> Classification Error Measures</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="classperformance.html"><a href="classperformance.html#errors-for-binary-response"><i class="fa fa-check"></i><b>25.1.1</b> Errors for Binary Response</a></li>
+<li class="chapter" data-level="25.1.2" data-path="classperformance.html"><a href="classperformance.html#error-for-categorical-response"><i class="fa fa-check"></i><b>25.1.2</b> Error for Categorical Response</a></li>
 </ul></li>
+<li class="chapter" data-level="25.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>25.2</b> Confusion Matrices</a></li>
+<li class="chapter" data-level="25.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>25.3</b> Binary Response Example</a><ul>
+<li class="chapter" data-level="25.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>25.3.1</b> Application for Checking Account</a></li>
+<li class="chapter" data-level="25.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>25.3.2</b> Application for Loan</a></li>
+</ul></li>
+<li class="chapter" data-level="25.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>25.4</b> Decision Rules and Errors</a></li>
+<li class="chapter" data-level="25.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>25.5</b> ROC Curves</a></li>
 </ul></li>
 <li class="part"><span><b>IX Unsupervised II: Clustering</b></span></li>
 <li class="chapter" data-level="26" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>26</b> Clustering</a><ul>
@@ -525,7 +528,7 @@ methods.</li>
 <li>Matches the purpose of clustering most closely.</li>
 <li>Ward distance defined as the reduction in between-cluster sum of squares.</li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-272"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
 <img src="images/cluster/aggregation-criteria.svg" alt="Aggregation Criteria" width="60%" />
 <p class="caption">
 Figure 28.1: Aggregation Criteria
@@ -552,7 +555,7 @@ d   9  25   4   0  13
 e  10   2   9  13   0</code></pre>
 <p>Here’s a scatterplot of the data set, and the unique distances between
 individuals:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-291"></span>
 <img src="images/cluster/hclus0.svg" alt="Five objects and their distances" width="85%" />
 <p class="caption">
 Figure 28.2: Five objects and their distances
@@ -562,7 +565,7 @@ Figure 28.2: Five objects and their distances
 we see this is the pair <span class="math inline">\((\textsf{a}, \textsf{c})\)</span>. In other words, the first aggregation occurs
 with objects <span class="math inline">\(\textsf{a}\)</span> and <span class="math inline">\(\textsf{c}\)</span>. We now treat this pair as a single
 point, and recompute distances:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-292"></span>
 <img src="images/cluster/hclus1.svg" alt="The two closest objects" width="85%" />
 <p class="caption">
 Figure 28.3: The two closest objects
@@ -576,7 +579,7 @@ the distance between cluster <span class="math inline">\(\textsf{ac}\)</span> an
 the distance between a cluster and a point? Well, this is where the two
 approaches of hierarchical clustering come in. Again, we will consider only
 agglomerative methods.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-293"></span>
 <img src="images/cluster/hclus2.svg" alt="Distance between a cluster and other objects?" width="85%" />
 <p class="caption">
 Figure 28.4: Distance between a cluster and other objects?
@@ -594,7 +597,7 @@ d^2(\textsf{ac}, \textsf{b}) = min \{ d^2(\textsf{a},\textsf{b}), d^2(\textsf{c}
 <li><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \min\{9, 4\} = 4\)</span></li>
 <li><span class="math inline">\(d^2(\textsf{ac}, \textsf{e}) = \min\{10, 9\} = 9\)</span></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-294"></span>
 <img src="images/cluster/hclus3.svg" alt="Aggregation Criteria" width="85%" />
 <p class="caption">
 Figure 28.5: Aggregation Criteria
@@ -603,7 +606,7 @@ Figure 28.5: Aggregation Criteria
 <p>Once we have the distances, we look for the next pair of objects that are
 closest to each other. In this case, those objects are <span class="math inline">\(\textsf{b}\)</span> and
 <span class="math inline">\(\textsf{e}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-279"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-295"></span>
 <img src="images/cluster/hclus4.svg" alt="Second cluster" width="85%" />
 <p class="caption">
 Figure 28.6: Second cluster
@@ -611,7 +614,7 @@ Figure 28.6: Second cluster
 </div>
 <p>So now we have two clusters <span class="math inline">\(\textsf{ac}\)</span> and <span class="math inline">\(\textsf{be}\)</span>, and a third
 individual object <span class="math inline">\(\textsf{d}\)</span>. The matrix of distances is updated as follows:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-280"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-296"></span>
 <img src="images/cluster/hclus5.svg" alt="Second cluster" width="85%" />
 <p class="caption">
 Figure 28.7: Second cluster
@@ -619,7 +622,7 @@ Figure 28.7: Second cluster
 </div>
 <p>We then select the smallest distance which corresponds to the distance
 between cluster <span class="math inline">\(\textsf{ac}\)</span> and individual <span class="math inline">\(\textsf{d}\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-297"></span>
 <img src="images/cluster/hclus6.svg" alt="Third cluster" width="85%" />
 <p class="caption">
 Figure 28.8: Third cluster
@@ -627,14 +630,14 @@ Figure 28.8: Third cluster
 </div>
 <p>At this step, we have two clusters left: <span class="math inline">\(\textsf{acd}\)</span> and <span class="math inline">\(\textsf{be}\)</span>.
 These two groups have a distance of 9:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-298"></span>
 <img src="images/cluster/hclus7.svg" alt="Three partitions" width="85%" />
 <p class="caption">
 Figure 28.9: Three partitions
 </p>
 </div>
 <p>The last step involves merging both clusters into a single overall cluster:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-299"></span>
 <img src="images/cluster/hclus8.svg" alt="Single cluster with all objects" width="85%" />
 <p class="caption">
 Figure 28.10: Single cluster with all objects
@@ -643,7 +646,7 @@ Figure 28.10: Single cluster with all objects
 <div id="dendrogram" class="section level3">
 <h3><span class="header-section-number">28.2.1</span> Dendrogram</h3>
 <p>The process of forming clusters can be visualized with a dendrogram.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-284-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-300-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
