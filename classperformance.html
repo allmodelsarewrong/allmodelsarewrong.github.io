@@ -400,7 +400,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>25.3.2</b> Application for Loan</a></li>
 </ul></li>
 <li class="chapter" data-level="25.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>25.4</b> Decision Rules and Errors</a></li>
-<li class="chapter" data-level="25.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>25.5</b> ROC Curves</a></li>
+<li class="chapter" data-level="25.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>25.5</b> ROC Curves</a><ul>
+<li class="chapter" data-level="25.5.1" data-path="classperformance.html"><a href="classperformance.html#graphing-roc-curves"><i class="fa fa-check"></i><b>25.5.1</b> Graphing ROC curves</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>IX Unsupervised II: Clustering</b></span></li>
 <li class="chapter" data-level="26" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>26</b> Clustering</a><ul>
@@ -656,11 +658,11 @@ there is a tradeoff; in general, minimizing false acceptance rates increases
 false rejection rates, and vice-versa. We discuss this issue in the last
 section of this chapter.</p>
 <p>One interesting aspect in classification has to do with the importance of
-classification errors. In our hypothetical example: Do both types of errors
-“false accept” and “false reject” are equally important? As you can imagine,
+classification errors. In our hypothetical example: Are both types of errors,
+“false accept” and “false reject”, equally important? As you can imagine,
 there may be situations in which a false acceptance is “worse” (in some way)
-than a false rejection, and vice versa. We explore these considerations in the
-next sections.</p>
+than a false rejection, and vice versa. We explore these considerations with
+a couple of examples in the next sections.</p>
 <div id="application-for-checking-account" class="section level3">
 <h3><span class="header-section-number">25.3.1</span> Application for Checking Account</h3>
 <p>Let’s further investigate the different types of errors that may occur in a
@@ -692,34 +694,36 @@ open such account, this customer is rejected.</p>
 (theoretically) an unsuited customer for the bank, still gets approved to open
 an account.</p>
 <p>Which type of error is worse from the bank’s point of view?</p>
-<p>The answer is: a false rejection! This is because this “good” customer would
+<p>The answer is: a false rejection! This is because the “good” customer would
 likely be able to go across the street and open up an account at the rival
 bank; that is, the initial bank has lost a potential customer. As for the
-false accept, this is a type of error that bank can better tolerate, and the
-lucky customer will receive the cash bonus.</p>
+false accept, this is a type of error that the bank can better tolerate, and
+the lucky customer will receive the cash bonus.</p>
 <p>Hence, when constructing the confusion matrix, we might want to assign
 different penalties to the different errors. For example we can give a penalty
-of 10 for a false reject, and a penalty of 1 for a false accept.</p>
+of 5 for a false reject, and a penalty of 1 for a false accept.</p>
 <p><img src="images/classif/accept-reject3.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Note that the values <span class="math inline">\(1\)</span> and <span class="math inline">\(10\)</span> were somewhat arbitrary; the actual values
+<p>Note that the values 1 and 5 were somewhat arbitrary; the actual values
 are less important as the relative <em>magnitude</em> of them (for example we could
 have just as easily used <span class="math inline">\(20\)</span> and <span class="math inline">\(50\)</span>, respectively, instead).</p>
 </div>
 <div id="application-for-loan" class="section level3">
 <h3><span class="header-section-number">25.3.2</span> Application for Loan</h3>
-<p>Now, suppose that the application process in question is for a mortgage loan.</p>
+<p>Now, suppose that the application process in question is for a loan
+(e.g. mortgage loan, or car loan).</p>
 <p><img src="images/classif/customer-bank3.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>The two types of errors still stand: false rejection and false acceptance.</p>
 <p><img src="images/classif/accept-reject1.svg" width="70%" style="display: block; margin: auto;" /></p>
+<p>Compared to the previous example about the checking account, now the two
+errors have different interpretations and consequences:</p>
 <ul>
 <li><p><strong>False Rejection</strong>: The bank loses money that they could have gathered
 through interest from the customer.</p></li>
 <li><p><strong>False Acceptance</strong>: The bank loses money because the customer will
 ultimately default and not pay back the loan.</p></li>
 </ul>
-<p>In this case, which error is more costly (from the bank’s point of view)?</p>
-<p><img src="images/classif/customer-bank3.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>It shouldn’t be difficult to notice that a false acceptance is worse than
+<p>Same question: which error is more costly (from the bank’s point of view)?</p>
+<p>It shouldn’t be too difficult to notice that a false acceptance is worse than
 a false rejection. If the bank grants a loan to someone who won’t be able to
 pay it back in the long run, the bank will lose money (likely more money than
 they would have gained through interest from somebody who could have paid their
@@ -735,18 +739,17 @@ user.</p>
 </div>
 <div id="decision-rules-and-errors" class="section level2">
 <h2><span class="header-section-number">25.4</span> Decision Rules and Errors</h2>
-<p>Another aspect that we need to discuss is when dealing with classifiers that
+<p>Another aspect that we need to discuss involves dealing with classifiers that
 produce a class assignment proabability, or a score that is used to make a
-decision. An example of this type of classifier is logistic regression.</p>
-<p>Recall that in logistic regreesion we model the posterior probabilities of the
+decision. A typical example is logistic regression.</p>
+<p>Recall that in logistic regression we model the posterior probabilities of the
 response given the data as:</p>
-<p><span class="math display" id="eq:702-18">\[
+<p><span class="math display">\[
 Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
 \begin{cases} 
 h(\mathbf{x_i})&amp;  \textsf{for } y_i = 1 \\ 
 &amp; \\
 1 - h(\mathbf{x_i}) &amp; \textsf{for } y_i = 0 \\ \end{cases}
-\tag{21.18}
 \]</span></p>
 <p>where <span class="math inline">\(h()\)</span> denotes the logistic function <span class="math inline">\(\phi()\)</span>:</p>
 <p><span class="math display">\[
@@ -756,8 +759,8 @@ h(\mathbf{x}) = \phi(\mathbf{b^\mathsf{T} x})
 with the probability <span class="math inline">\(P(y \mid \mathbf{x})\)</span> or with a score given by the linear
 signal <span class="math inline">\(s = \mathbf{b^\mathsf{T} x}\)</span>.</p>
 <p>Suppose that <span class="math inline">\(y = 1\)</span> corresponds to <span class="math inline">\(\text{accept}\)</span> and <span class="math inline">\(y = 0\)</span> corresponds to
-<span class="math inline">\(\text{reject}\)</span>. If we look at the logistic function of the linear signal,
-we can get a graph like the one below:</p>
+<span class="math inline">\(\text{reject}\)</span>. If we look at the graph of <span class="math inline">\(P(y)\)</span> and the logistic function of
+the linear signal, we can get a picture like this:</p>
 <p><img src="images/classif/prob-signal-threshold0.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p><span class="math display">\[
 P(y = 1) = \frac{e^{\mathbf{b^\mathsf{T} x}} }{1 + e^{\mathbf{b^\mathsf{T} x}} }
@@ -794,44 +797,115 @@ against the “worst” type of error (in this case, false acceptances).</p>
 acceptance.</p>
 <p><img src="images/classif/prob-signal-threshold3.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>The bank would be “lowering the bar”, being less strict with the
-profile of accepted customers. The bank would be running a higher risk by
-giving loans to customers that may be more likely to default.</p>
+profile of accepted customers. Consequently, the bank would be running a higher
+risk by giving loans to customers that may be more likely to default.</p>
 <p><strong>Note that the confusion matrix will change depending on the value of <span class="math inline">\(\tau\)</span> we pick.</strong></p>
 </div>
 <div id="roc-curves" class="section level2">
 <h2><span class="header-section-number">25.5</span> ROC Curves</h2>
 <p>So, then, what value of <span class="math inline">\(\tau\)</span> should we pick? To answer this question, we will
-use a <strong>ROC curve</strong> which stands for Receiving Operating Characteristic. We
-introduce the following notations:</p>
-<p><img src="images/classif/roc-table1.svg" width="70%" style="display: block; margin: auto;" /></p>
+use a <strong>ROC curve</strong> which stands for Receiving Operating Characteristic curve.
+Keep in mind that ROC curves are only applicable to binary responses.
+We introduce the following notations in a confusion matrix:</p>
+<p><img src="images/classif/roc-table1.svg" width="65%" style="display: block; margin: auto;" /></p>
+<p>The general form of the confusion matrix is the same. The entries on the
+diagonal have to do with observations correctly classified. In turn, the
+off-diagonal entries have to do observations incorrectly classified. The
+difference is the way in which categories are encoded: <span class="math inline">\(\text{accept}\)</span> is
+now encoded as positive, while <span class="math inline">\(\text{reject}\)</span> is encoded as negative. By the
+way, this encoding is arbitrary, and you can choose to label
+<span class="math inline">\(\text{accept}\)</span> as negative, and <span class="math inline">\(\text{reject}\)</span> as positive.</p>
 <p>A more common notation involves further abbreviating each of the names in
-the cells as follows:</p>
+the cells of a confusion matrix as follows:</p>
 <p><img src="images/classif/roc-table2.svg" width="35%" style="display: block; margin: auto;" /></p>
 <p>where <span class="math inline">\(\text{TP}\)</span> stands for “true positive,” <span class="math inline">\(\text{FP}\)</span> stands for “false
 positive,” <span class="math inline">\(\text{FN}\)</span> stands for “false negative,” and <span class="math inline">\(\text{TN}\)</span> stands for
-“true negative.”</p>
+“true negative.” With these values, we can obtain the following rates.</p>
 <p>We define the <strong>True Positive Rate</strong> (<span class="math inline">\(\text{TPR}\)</span>; sometimes
 called the <strong>sensitivity</strong>) as</p>
 <p><span class="math display">\[
-\textsf{sensitivity:} \quad \mathrm{TPR} = \frac{\text{TP}}{\text{TP} + \text{FN} }
+\textsf{sensitivity:} \quad \mathrm{TPR} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\]</span></p>
+<p>Notice that TPR can be regarded as a conditional probability:</p>
+<p><span class="math display">\[
+\text{TPR} \quad \longleftrightarrow \quad P(+\hat{y} \mid +y)
 \]</span></p>
 <p>Similarly, we define the <strong>True Negative Rate</strong> (<span class="math inline">\(\text{TNR}\)</span>; sometimes called
 the <strong>specificity</strong>) as</p>
 <p><span class="math display">\[
-\textsf{specificity:} \quad \mathrm{TNR} = \frac{\text{TN}}{\text{TP} + \text{FN} }
+\textsf{specificity:} \quad \mathrm{TNR} = \frac{\text{TN}}{\text{TN} + \text{FP}}
 \]</span></p>
-<p>Ideally, we would like to have a classifier of decision rule that simultaneously
+<p>As with TPR, we can also regard TNR as a conditional probability:</p>
+<p><span class="math display">\[
+\text{TNR} \quad \longleftrightarrow \quad P(-\hat{y} \mid -y)
+\]</span></p>
+<p>Additionally, we can also get the corresponding False Negative Rate (FNR)
+defined as one minus sensitivity:</p>
+<p><span class="math display">\[
+\mathrm{FNR} = 1 - \text{TPR} = \frac{\text{FN}}{\text{TP} + \text{FN}}
+\]</span></p>
+<p>as well as the False Positive Rate (FPR) defined as one minus specificity:</p>
+<p><span class="math display">\[
+\mathrm{FPR} = 1 - \text{TNR} = \frac{\text{FP}}{\text{TN} + \text{FP}}
+\]</span></p>
+<p>Ideally, we would like to have a classifier or decision rule that simultaneously
 minimizes both the false acceptance and false rejection rates. However,
 there is a tradeoff; in general, minimizing false acceptance rates increases
-false rejection rates, and vice-versa.</p>
-<p>A ROC curve is used to show in a visual way the tradeoff between sensitivity
+false rejection rates, and vice-versa. Why? Because increasing the sensitivity
+of a classifier results in more observations being predicted as positive.</p>
+<p>Returning to the loan application example, and assuming again that
+<span class="math inline">\(\text{acceptance}\)</span> is the positive level, sensitivity measures how often
+the accepted customers in the test set were actually classified as accepted.</p>
+<div id="graphing-roc-curves" class="section level3">
+<h3><span class="header-section-number">25.5.1</span> Graphing ROC curves</h3>
+<p>Now that we have introduced the required notation and terminology commonly
+employed with Receiver Operating Characteristic curves, let’s properly
+describe this graphic tool.</p>
+<p>The ROC curve is one visual tool used to measure the performance of a two-class
+classifier that uses prediction scores or discriminant functions.
+The ingredients to plot the ROC curve are True Positive Rate (sensitivity) and
+False Positive Rate (1 - specificity), for a set of thresholds <span class="math inline">\(\tau\)</span> used to
+convert classification scores into predicted responses. To be more precise,
+a ROC curve is used to show in a visual way the tradeoff between sensitivity
 and specificity for every possible cut-off or threshould value <span class="math inline">\(\tau\)</span>, for
-a classification score or class probability.</p>
-<p>In addition, the are under the ROC curve gives an idea about the benefit of
+a binary classification score.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-261"></span>
+<img src="images/classif/roc-curve1.svg" alt="Example of a ROC Curve" width="50%" />
+<p class="caption">
+Figure 25.1: Example of a ROC Curve
+</p>
+</div>
+<p>In addition, the area under the ROC curve gives an idea about the benefit of
 using the decision rule under consideration.</p>
-<p>The best threshold is the one that has the highest sensitivity (TPR) together
+<div id="example" class="section level4 unnumbered">
+<h4>Example</h4>
+<p>The following figure shows the ROC curves for two discriminant analysis
+classifiers applied to a simulated data set with two predictors and a two-class
+response. One of the classifiers is a linear discriminant model (LDA), while
+the other one is a quadratic discriminant model (QDA). Given a candidate
+threshold value <span class="math inline">\(\tau\)</span>, the TPR and FPR are graphed against each other. With a
+large set of thresholds, graphed pairs of TPR and FPR result in a ROC curve.</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-262-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>In the figure above, the ROC curve associated to the QDA indicates that this
+method has better sensitivity and specificity performance than LDA.</p>
+<p>One of the purposes of the plot is to give us guidance for selecting a
+threshold that maximizes the tradeoff between sensitivity and specificity.
+The best threshold is the one that has the highest sensitivity (TPR) together
 with the lowest FPR.</p>
+<p>The following diagram depicts three possible ROC curve profiles, with a
+data set of <span class="math inline">\(n=100\)</span> individuals belonging to two classes of equal size.
+The left frame shows a ROC cruve from a classifier that produces perfect
+classifications. This is the best possible ideal scenario. The frame in the
+middle shows a ROC curve that coincides with the diagonal (dashed line)
+indicating that the classifier has no discriminant capacity, and is no better
+than classifying observations at random (e.g. assign classes flipping a coin).
+Finally, the frame on the right illustrates another extreme case in which the
+classifier has perfect misclassification performance; this is the worst possible
+scenario for a classifier.</p>
+<p><img src="images/classif/roc-curves.svg" width="95%" style="display: block; margin: auto;" /></p>
 
+</div>
+</div>
 </div>
 </div>
 
