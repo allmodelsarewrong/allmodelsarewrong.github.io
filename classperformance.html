@@ -505,9 +505,9 @@ use the absolute error as a pointwise error measure:</p>
 <p>or we could also use squared error:</p>
 <p><span class="math display">\[
 (y_i - \hat{y}_i)^2 = \begin{cases} 
-0 &amp; \text{if agreement} \\
+0 &amp; \text{if agree} \\
  &amp; \\
- 1 &amp; \text{if disagreement} \\ \end{cases}
+ 1 &amp; \text{if disagree} \\ \end{cases}
 \]</span></p>
 <p>Again, keep in mind that the above error functions are valid as long as the
 predictions are binary, <span class="math inline">\(\hat{y}_i \in \{0, 1\}\)</span>, which is not always the
@@ -517,27 +517,30 @@ case for all classifiers.</p>
 If we used squared error, we would get the following:</p>
 <p><span class="math display">\[
 (y_i - \hat{y}_i)^2 = \begin{cases} 
-0 &amp; \text{if agreement} \\
+0 &amp; \text{if agree} \\
  &amp; \\
- 4 &amp; \text{if disagreement} \\ \end{cases}
+ 4 &amp; \text{if disagree} \\ \end{cases}
 \]</span></p>
 <p>Alternatively, under the same assumption that <span class="math inline">\(y_i \in \{-1, 1\}\)</span>, we could
 consider the product between the observed response and its predicted value:</p>
 <p><span class="math display">\[
 y_i \times \hat{y}_i = \begin{cases} 
--1 &amp; \text{if agreement} \\ 
+ +1 &amp; \text{if agree} \\
  &amp; \\
-+1 &amp; \text{if agreement} \\ \end{cases}
+-1 &amp; \text{if disagree} \\
+\end{cases}
 \]</span></p>
 <p>The point that we are trying to make is that there are many different choices
 for pointwise error measures.</p>
 <p>Perhaps the most common option of pointwise error is the <strong>binary error</strong>,
 defined to be:</p>
 <p><span class="math display">\[
-[\![ \hat{y}_i \neq y_i ]\!] \to \begin{cases} 
-1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\ 
+[\![ \hat{y}_i \neq y_i ]\!] \to 
+\begin{cases} 
+0 \  (\text{or FALSE}) &amp; \text{if agree} \\ 
 &amp; \\
-0 \  (\text{or FALSE}) &amp; \text{if agree} \\ \end{cases}
+1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\
+\end{cases}
 \]</span></p>
 <p>This type of error function is adequate for classification purposes, and it
 works well for the case in which we have a binary response, as wel as when we
@@ -561,10 +564,12 @@ y &amp; a &amp; b &amp; c &amp; d &amp; b \\ \hline \hat{y} &amp; a &amp; a &amp
 the predicted values. In this case, it makes sense to use the <strong>binary error</strong>
 as our pointwise error measure previously defined:</p>
 <p><span class="math display">\[
-[\![ \hat{y}_i \neq y_i ]\!] \to \begin{cases} 
-1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\ 
+[\![ \hat{y}_i \neq y_i ]\!] \to 
+\begin{cases} 
+0 \  (\text{or FALSE}) &amp; \text{if agree} \\
 &amp; \\
-0 \  (\text{or FALSE}) &amp; \text{if agree} \\ \end{cases}
+1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\ 
+\end{cases}
 \]</span></p>
 <p>As in the binary-response case discussed in the previous section, averaging
 these pointwise errors over our observations yields the misclassification error
@@ -885,7 +890,7 @@ response. One of the classifiers is a linear discriminant model (LDA), while
 the other one is a quadratic discriminant model (QDA). Given a candidate
 threshold value <span class="math inline">\(\tau\)</span>, the TPR and FPR are graphed against each other. With a
 large set of thresholds, graphed pairs of TPR and FPR result in a ROC curve.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-262-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-262-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>In the figure above, the ROC curve associated to the QDA indicates that this
 method has better sensitivity and specificity performance than LDA.</p>
 <p>One of the purposes of the plot is to give us guidance for selecting a
