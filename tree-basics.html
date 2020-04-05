@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>27 K-Means | All Models Are Wrong</title>
+  <title>30 Building Trees | All Models Are Wrong</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="27 K-Means | All Models Are Wrong" />
+  <meta property="og:title" content="30 Building Trees | All Models Are Wrong" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="27 K-Means | All Models Are Wrong" />
+  <meta name="twitter:title" content="30 Building Trees | All Models Are Wrong" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="clustering.html"/>
-<link rel="next" href="hclus.html"/>
+<link rel="prev" href="trees.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -475,190 +475,430 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="kmeans" class="section level1">
-<h1><span class="header-section-number">27</span> K-Means</h1>
-<p>With partitioning methods, two clusters are always separated; and the
-number of clusters is generally defined a priori. The main methods are:</p>
+<div id="tree-basics" class="section level1">
+<h1><span class="header-section-number">30</span> Building Trees</h1>
+<p>The tree building process requires three main components</p>
 <ul>
-<li><span class="math inline">\(K\)</span>-means</li>
-<li><span class="math inline">\(K\)</span>-medoids</li>
-<li><span class="math inline">\(K\)</span>-prototypes</li>
-<li>Methods based on a concept of density</li>
-<li>Kohonen networks (or maps)</li>
+<li><p>Establish the set of admissible divisions for each node: compute all possible
+binary splits.</p></li>
+<li><p>Define a criterion to find the “best” node split: some optimization criterion
+to be optimized. This is turn, requires determining some measure of
+heterogeneity (within a given node).</p></li>
+<li><p>Determine a rule to declare a given node as either internal node, or leaf node.</p></li>
 </ul>
-<div id="toy-example-2" class="section level2">
-<h2><span class="header-section-number">27.1</span> Toy Example</h2>
-<p>Imagine we are in <span class="math inline">\(\mathbb{R}^n\)</span> (or <span class="math inline">\(\mathbb{R}^p\)</span>, depending on if we are
-looking at things from the individuals perspective or variables perspective).
-For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
-<img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
+<p>Let’s review these components.</p>
+<div id="binary-partitions" class="section level2">
+<h2><span class="header-section-number">30.1</span> Binary Partitions</h2>
+<p>In binary segmentation trees, the set of admissible splits for each node
+depends on the nature of the segmentation variables in the data. Predictor
+variables can be of different type. In practice, most variables are of
+categorical nature although sometimes continuous variables may be present.
+We can divide them in four classes:</p>
+<ol style="list-style-type: decimal">
+<li>Binary variables</li>
+<li>Ordinal variables</li>
+<li>Nominal variables</li>
+<li>Continuous variables</li>
+</ol>
+<p>The number of possible binary splits for each type of segmentation variable is
+described below.</p>
+<div id="splits-of-binary-variables" class="section level3">
+<h3><span class="header-section-number">30.1.1</span> Splits of Binary variables</h3>
+<p>Because binary variables have two values, they only generate one binary
+partition. For example, the variable <em>Gender</em> with two values, female and male,
+can only de divided in one possible way.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-330"></span>
+<img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
 <p class="caption">
-Figure 27.1: Toy data set
+Figure 30.1: Example of a binary partition for a binary variable
 </p>
 </div>
-<p>We start by initializing two centroids <span class="math inline">\(\mathbf{g_1}\)</span> and <span class="math inline">\(\mathbf{g_2}\)</span>.
-Typically, the way centroids are initialized is by randomly selecting two
-objects. Sometimes, however, a more “educated” initialization may be possible
-when we have additional information about where the clusters may be located.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
-<img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
+</div>
+<div id="splits-of-nominal-variables" class="section level3">
+<h3><span class="header-section-number">30.1.2</span> Splits of Nominal Variables</h3>
+<p>A nominal variable may have many categories and the number of binary splits
+depends on the number of distinct categories for the corresponding variable.
+The total number of possible binary partitions for a nominal variable with <span class="math inline">\(q\)</span>
+categories is <span class="math inline">\(2^{q-1} - 1\)</span>. For example, suppose a variable <em>Color</em> with three
+categories: Green, White and Red. The number of binary splits is
+<span class="math inline">\(2^{3-1} - 1 = 3\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
+<img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
 <p class="caption">
-Figure 27.2: Arbitrary centroids
+Figure 30.2: Example of binary splits for a nominal variable
 </p>
 </div>
-<p>Given a new data point, we compute the distances from this point to the two
-centroids, and classify the point to the cluster to which the closest centroid
-belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
-<img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
+</div>
+<div id="splits-of-ordinal-variables" class="section level3">
+<h3><span class="header-section-number">30.1.3</span> Splits of Ordinal Variables</h3>
+<p>Binary splits for ordinal variables must respect the order property of the
+categories, that is, the grouping of categories must preserve the order among
+the values. The total number of binary partitions for an ordinal variable with
+<span class="math inline">\(q\)</span> categories is <span class="math inline">\(q-1\)</span>. For example, the <em>Apparel size</em> may have four
+categories: small (S), medium (M), large (L) and extra-large (XL). In this
+case, the number of binary splits will be <span class="math inline">\(4-1 = 3\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-332"></span>
+<img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
 <p class="caption">
-Figure 27.3: Distance of an object to both centroids
+Figure 30.3: Example of binary splits for an ordinal variable
 </p>
 </div>
-<p>The distances of all objects to the centroids are computed as well, and the
-objects get assigned to the group of the closest centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-284"></span>
-<img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
+</div>
+<div id="splits-continuous-variables" class="section level3">
+<h3><span class="header-section-number">30.1.4</span> Splits Continuous variables</h3>
+<p>The treatment for continuous variables depends on the number of different
+values the variable takes. Suppose a continuous variable with <span class="math inline">\(q\)</span> different
+values. If we consider that <span class="math inline">\(q\)</span> is “adequate” in some sense, we can treat the
+continuous variable like an ordinal variable. If we consider <span class="math inline">\(q\)</span> to be large we
+may group its values and reduced their number in <span class="math inline">\(q^*\)</span> (<span class="math inline">\(q^*&lt;q\)</span>). In both cases,
+the variable is treated as an ordinal variable and the number of binary splits
+will be <span class="math inline">\(q-1\)</span> or <span class="math inline">\(q^*-1\)</span>. For example, imagine the continuous variable <em>Age</em>
+(measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
+splits is <span class="math inline">\(5 - 1 = 4\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-333"></span>
+<img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
 <p class="caption">
-Figure 27.4: Assigning objects to closest centroid
+Figure 30.4: Example of binary splits for a continuous variable
 </p>
 </div>
-<p>Now, with this new grouped data, we have to recompute the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
-<img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
+</div>
+</div>
+<div id="measures-of-heterogeneity" class="section level2">
+<h2><span class="header-section-number">30.2</span> Measures of Heterogeneity</h2>
+<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> points
+and <span class="math inline">\(2\)</span> classes (with <span class="math inline">\(7\)</span> objects of each class). Suppose this node splits in
+the following manner:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-334"></span>
+<img src="images/trees/entropy-toy0.svg" alt="Hypothetical split of a node" width="60%" />
 <p class="caption">
-Figure 27.5: Update centroids
+Figure 30.5: Hypothetical split of a node
 </p>
 </div>
-<p>We repeat this procedure, that is, calculate distances of all objects to the
-centroids, and re-assigning objects to clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-286"></span>
-<img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
+<p>We have an intuitive feeling that the parent node has more heterogeneity than
+its child nodes. In fact, this is a general result: a split cannot result in
+child nodes with more heterogeneity than the parent node. Stated differently,
+you can never do worse than the parent node.</p>
+<p>Most measures of heterogeneity (and therefore homogeneity) relate to
+proportions. Let’s spitball some ideas as to how to do this:</p>
+<ul>
+<li><p><span class="math inline">\(\mathrm{prop}(\bigcirc) - \mathrm{prop}(\Delta)\)</span>; you would need to assign
+some sort of interpretation to the value <span class="math inline">\(0\)</span> in this case.</p></li>
+<li><p>Entropy (information, as viewed from a computer science standpoint). Could
+also refer to this as a measure of “disorder” within a node.</p></li>
+<li><p>Impurity (how mixed, diverse)</p></li>
+</ul>
+<div id="entropy" class="section level3">
+<h3><span class="header-section-number">30.2.1</span> Entropy</h3>
+<p>In the parent node of the previous figure, there is an equal probability of
+being a <span class="math inline">\(\bigcirc\)</span> as there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node,
+there is a higher chance of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is
+true of the right node).</p>
+<p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
+all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-335"></span>
+<img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
 <p class="caption">
-Figure 27.6: Reassigning objects
+Figure 30.6: Set of 12 objects of same type
 </p>
 </div>
-<p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
-<img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
+<p>If we randomly select an object from this box, we have zero uncertainty about
+its class: in other words, there is <strong>zero entropy</strong> associated with this
+situation.</p>
+<p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-336"></span>
+<img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
 <p class="caption">
-Figure 27.7: Recalculate centroids
+Figure 30.7: Set with two different types of objects
 </p>
 </div>
-<p>After enough iterations, the centroids will not move too much between each
-iteration. At this point we will say the algorithm as converged, and we stop
-(and the resulting clusters will be the ones we use).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
-<img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
+<p>If we were to draw an object from this box, there would be <em>some</em> amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.</p>
+<p>Finally, in the most extreme case, say we have 12 objects of different classes:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-337"></span>
+<img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
 <p class="caption">
-Figure 27.8: Rinse and repeat until convergence
+Figure 30.8: Set with 12 different types of objects
 </p>
 </div>
-<p>Is this algorithm stable, in the sense that if we repeat this 10 times will be
-obtain the same final clusters each time? The answer is “no.” The good news is
-that we are guaranteed convergence. The bad news is that we may arrive at a
-different final clustering. There is actually another good news, which is that
-this algorithm converges quite rapidly! (The complexity is <span class="math inline">\(n \cdot k\)</span>).</p>
+<p>We are quite uncertain as to the classes of objects drawn from this box;
+that is, we have <strong>maximum entropy</strong>.</p>
+<p>In Short: the intuition behind entropy relates to how “mixed” a box is, with
+respect to the classes contained inside. If a box is “pure” (i.e. has only one
+class), it has zero entropy where as if a box is “highly impure” (i.e. has many
+different classes), it has some nonzero amount of entropy.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-338"></span>
+<img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
+<p class="caption">
+Figure 30.9: Set with 12 different types of objects
+</p>
 </div>
-<div id="what-does-k-means-do" class="section level2">
-<h2><span class="header-section-number">27.2</span> What does K-means do?</h2>
-<p>Consider the <span class="math inline">\(s\)</span>-th step of the algorithm:</p>
+<p>Now, let’s see how we can link our idea of entropy with the idea of
+<em>probability</em>. From the examples above, we can see the following relationship:</p>
 <p><span class="math display">\[
-\textbf{step s}, \quad \textbf{s} \rightarrow \textbf{s+1}, \quad \textbf{then s+1}
+\begin{array}{lcl} \text{large probability} &amp; \Rightarrow &amp; \text{small entropy value} \\ 
+\text{small probability} &amp; \Rightarrow &amp; \text{large entropy value} \\ 
+\end{array}
 \]</span></p>
-<p>Specifically, let us focus on the intermediate step, when step <span class="math inline">\(s\)</span> goes to step
-<span class="math inline">\(s+1\)</span>. In other words, the centroids have moved but we have not reassigned
-points. At step <span class="math inline">\(s\)</span> we would compute <span class="math inline">\(\mathrm{WSSD}_1\)</span> and <span class="math inline">\(\mathrm{WSSD}_2\)</span>
-which, if we are using the squared Euclidean norm, becomes</p>
-<p><span class="math display" id="eq:802-1">\[
-\mathrm{WSSD}^{(s)} =  \sum_{i \in \mathcal{C}_1^{(s)}} d^2 \big(\mathbf{x_i}, \mathbf{g_1}^{(s)} \big)  +  \sum_{i \in \mathcal{C}_2^{(s)}} d^2 \big(\mathbf{x_i}, \mathbf{g_2}^{(s)} \big)
-\tag{27.1}
+<p>Hence, it makes sense to try and model entropy as a function of <span class="math inline">\(P\)</span>, the probability of selecting a certain class. From our discussion above, we see
+that our entropy function should be small when <span class="math inline">\(P\)</span> is around 1, and large when
+<span class="math inline">\(P\)</span> is around <span class="math inline">\(0\)</span>.</p>
+<p>There are quite a few functions that display this behavior. The one we will use
+is the logarithm, of any base <span class="math inline">\(b\)</span>. Note that</p>
+<p><span class="math display">\[
+\log_b(P) : [0, 1] \to (-\infty, 0)
 \]</span></p>
-<p>At the end of the <span class="math inline">\(s\)</span>-th step, we update centroids, obtaining
-<span class="math inline">\(\mathbf{g_1}^{(s + 1)}\)</span> and <span class="math inline">\(\mathbf{g_2}^{(s + 1)}\)</span>. These are the centroids
-used during the assignment of step <span class="math inline">\(s+1\)</span>. Notice that there is an intermediate
-step, with new centroids, but objects clustered according to
-<span class="math inline">\(\mathcal{C}^{(s)}_1\)</span> and <span class="math inline">\(\mathcal{C}^{(s)}_2\)</span>. Technically, we can compute
-within-group dispersions during this intermediate step, given by:</p>
-<p><span class="math display" id="eq:802-2">\[
-\mathrm{WSSD}^{(s \to s+1)} =    \sum_{i \in \mathcal{C}_1^{(s)}} d^2 \big(\mathbf{x_i}, \mathbf{g_1}^{(s + 1)} \big)  +  \sum_{i \in \mathcal{C}_2^{(s)}} d^2 \big(\mathbf{x_i}, \mathbf{g_1}^{(s + 1)} \big)
-\tag{27.2}
-\]</span></p>
-<p>At the end of step <span class="math inline">\(s+1\)</span>, objects are clustered under new configurations
-<span class="math inline">\(C^{(s+1)}_1\)</span> and <span class="math inline">\(C^{(s+1)}_2\)</span>. Likewise, the within-group dispersions at the
-end of step <span class="math inline">\(s+1\)</span> become:</p>
-<p><span class="math display" id="eq:802-3">\[
-\mathrm{WSSD}^{(s+1)}  =  \sum_{i \in \mathcal{C}_1^{(s + 1)}} d^2 \big(\mathbf{x_i}, \mathbf{g_1}^{(s + 1)} \big)  +  \sum_{i \in \mathcal{C}_2^{(s + 1)}} d^2 \big(\mathbf{x_i}, \mathbf{g_1}^{(s + 1)} \big)
-\tag{27.3}
-\]</span></p>
-<p>It can be proved that these three dispersions are in order of smallest to largest
-(i.e. the intermediate is bigger than the <span class="math inline">\(s\)</span>-th step, the <span class="math inline">\(s+1\)</span>-th step is larger
-than the intermediate). In other words,</p>
-<p><span class="math display" id="eq:802-4">\[
-\mathrm{WSSD}^{(s)} \geq \mathrm{WSSD}^{(s \to s+1)}  \geq \mathrm{WSSD}^{(s+1)}
-\tag{27.4}
-\]</span></p>
+<p>That is, since our probability values are restricted to lie in the unit interval,
+the entropy will lie somewhere on the negative real axis.</p>
 </div>
-<div id="k-means-algorithms" class="section level2">
-<h2><span class="header-section-number">27.3</span> K-Means Algorithms</h2>
-<p>In <span class="math inline">\(K\)</span>-means clustering, we must first define the number of clusters we want
-(for example, <span class="math inline">\(K = 3\)</span> clusters).</p>
-<div id="classic-version" class="section level3">
-<h3><span class="header-section-number">27.3.1</span> Classic Version</h3>
-<p>The original <span class="math inline">\(K\)</span>-means algorithm was proposed by MacQueen in 1967, and is as
-follows:</p>
-<ol start="0" style="list-style-type: decimal">
-<li><p>Define <span class="math inline">\(K\)</span>, the number of clusters we want.</p></li>
-<li><p>Start with <span class="math inline">\(K\)</span> random centroids.</p></li>
-<li><p>Start examining a particular individual object, and assign it to the group of the closest centroid.</p></li>
-<li><p>Recompute the centroid for this assigned cluster.</p></li>
-<li><p>Assign the next object to the group of the closest centroid.</p></li>
-<li><p>Recompute the centroid for this assigned cluster.</p></li>
-<li><p>Repeat this procedure until all objects have been assigned.</p></li>
-</ol>
-<p>Note that this algorithm proceeds object-by-object, re-computing centroids after
-each object has been assigned. That is, if we have <span class="math inline">\(n\)</span> objects, we will
-recompute our centroid <span class="math inline">\(n\)</span> times.</p>
+<div id="the-math-behind-entropy" class="section level3">
+<h3><span class="header-section-number">30.2.2</span> The Math Behind Entropy</h3>
+<p>Letting <span class="math inline">\(H(\text{node})\)</span> denote the entropy of a particular node, we use the
+following definition:</p>
+<p><span class="math display">\[
+H(\text{node}) = - \sum_{k=1}^{h} p_k \log_2(p_k)
+\]</span></p>
+<p>where <span class="math inline">\(p_k\)</span> denotes the probability of randomly selecting an object that comes
+from class <span class="math inline">\(k\)</span>. Note that convention dictates that we use a log of base 2. The
+reason rationale behind picking <span class="math inline">\(2\)</span> comes from information theory, as base-2
+logs can be interpreted in terms of bits.</p>
+<p>Let’s see if this definition of entropy is consistent with our intuition. For
+example, let us consider a <strong>pure</strong> node; that is, a node in which all
+objects share the same class. In this case <span class="math inline">\(p_k = 1\)</span>, and we have only one
+class so</p>
+<p><span class="math display">\[
+H(\text{node}) = -(1) \cdot \log_2(1) = 0 \cdot 0 = 0
+\]</span></p>
+<p>Now, for our second example above, we have <span class="math inline">\(h = 2\)</span> classes with <span class="math inline">\(p_1 = 9/12\)</span>
+and <span class="math inline">\(p_2 = 3/12\)</span>, so that</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) = - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+&amp;= - \frac{9}{12} \log_2\left( \frac{9}{12} \right) - \frac{3}{12} \log_2\left( \frac{3}{12} \right) \approx 0.8112
+\end{align*}\]</span></p>
+<p>In a node where there is a 50-50 split, we have</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) = - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+&amp;= - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
+\end{align*}\]</span></p>
+<p>The following figure depicts several examples of sets and their entropy values.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-339"></span>
+<img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
+<p class="caption">
+Figure 30.10: Different sets with their entropy values
+</p>
 </div>
-<div id="moving-centers-algorithm" class="section level3">
-<h3><span class="header-section-number">27.3.2</span> Moving Centers Algorithm</h3>
-<p>This version of <span class="math inline">\(K\)</span>-means was proposed by Forgy in 1965, and is as follows:</p>
-<ol start="0" style="list-style-type: decimal">
-<li><p>Define <span class="math inline">\(K\)</span>, the number of clusters we want.</p></li>
-<li><p>Start with <span class="math inline">\(K\)</span> random centroids.</p></li>
-<li><p>Assign each object to the nearest centroid, <em>without</em> updating the centroids until all objects have been assigned.</p></li>
-<li><p>Now, recalculate the centroids.</p></li>
-<li><p>Repeat steps (2) and (3) until convergence.</p></li>
-</ol>
-<p>Of course, this algorithm requires some criterion to define “convergence.”
-Some stopping mechanisms could be:</p>
+</div>
+<div id="gini-impurity" class="section level3">
+<h3><span class="header-section-number">30.2.3</span> Gini Impurity</h3>
+<p>Let us return to our box example from the previous section. Let’s suppose I
+select a ball, and note what class it belongs to. I then ask you (without
+giving you any information about the box, other than the fact that there are
+<span class="math inline">\(\bigcirc\)</span>’s and <span class="math inline">\(\square\)</span>’s), and ask you to guess what my selected object
+belongs to. There are 4 possible outcomes to this situation:</p>
 <ul>
-<li><p>Stop when <span class="math inline">\(\mathrm{WSSD}^{(s)}\)</span> is equal (or roughly equal to) <span class="math inline">\(\mathrm{WSSD}^{(s + 1)}\)</span>.</p></li>
-<li><p>Assign a maximum number of iterations (e.g. we stop the algorithm after 10 iterations).</p></li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
 </ul>
-<p>This algorithm is the most popular out of the other two discussed.</p>
+<p>The Gini index pays attention to the <strong>misclassifications</strong>; that is, the
+situations in which your guess was wrong. For instance, in our example above,
+there are a total of 2 possible misclassifications.</p>
+<p>Now, suppose we know that we are in the second box (where there are 9
+<span class="math inline">\(\bigcirc\)</span>’s and 3 <span class="math inline">\(\square\)</span>’s). The Gini Index would be computed as follows:</p>
+<p><span class="math display">\[\begin{align*}
+\text{Gini Index} &amp; = \underbrace{ Prob(\bigcirc) }_{\text{me}} \underbrace{ Prob(\square) }_{\text{you}} + \underbrace{ Prob(\square) }_{\text{me}} \underbrace{ Prob(\bigcirc) }_{\text{you}} \\
+&amp; = \left( \frac{9}{12} \right) \left( \frac{3}{12} \right)  +  \left( \frac{3}{12} \right) \left( \frac{9}{12} \right)  = \frac{1}{8} = 0.375
+\end{align*}\]</span></p>
+<p>The general definition for the Gini Index is as follows:</p>
+<p><span class="math display">\[
+\sum_{k=1}^{h} Pr(k) \left[ 1- Pr(k) \right] = 1 - \sum_{k=1}^{h} Pr^2(k) = \sum_{k \neq \ell} Pr(k) Pr(\ell)
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-340"></span>
+<img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
+<p class="caption">
+Figure 30.11: Different sets with their gini impurities
+</p>
 </div>
-<div id="dynamic-clouds" class="section level3">
-<h3><span class="header-section-number">27.3.3</span> Dynamic Clouds</h3>
-<p>This algorithm was proposed by Diday in 1971, and is as follows:</p>
-<ol start="0" style="list-style-type: decimal">
-<li><p>Instead of centroids, we work with “kernels” (i.e. a group of objects; that is, we no longer consider individual points (centroids) but rather groups of objects).</p></li>
-<li><p>Repeat the steps from the other algorithms.</p></li>
-</ol>
 </div>
-<div id="choosing-k" class="section level3">
-<h3><span class="header-section-number">27.3.4</span> Choosing <span class="math inline">\(K\)</span></h3>
-<p>How many groups should be pick? Well, the answer is highly dependent on our
-initial centroids. The algorithm will always converge at local minima, but there
-is no guarantee it will arrive at the global minimum. One idea is to run
-<span class="math inline">\(K\)</span>-means multiple times, to get a sense of how stable our data is.</p>
-<p>Note that cross-validation <strong>cannot</strong> be used to determine <span class="math inline">\(K^*\)</span>, the optimal
-number of clusters. For an explanation of why this is, see pages 518-9 in
-<a href="https://web.stanford.edu/~hastie/ElemStatLearn/">ESL</a>.</p>
-<p>There is another proposal on how to choose a “good” number of clusters, but it
-involves hierarchical clustering, the topic of the next chapter.</p>
+<div id="toy-example-3" class="section level3">
+<h3><span class="header-section-number">30.2.4</span> Toy Example</h3>
+<p>Let us return to our credit data example.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">gender</th>
+<th align="left">job</th>
+<th align="left">region</th>
+<th align="left">status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td align="left">male</td>
+<td align="left">yes</td>
+<td align="left">A</td>
+<td align="left">good</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td align="left">female</td>
+<td align="left">yes</td>
+<td align="left">B</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td align="left">male</td>
+<td align="left">no</td>
+<td align="left">C</td>
+<td align="left">good</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td align="left">female</td>
+<td align="left">yes</td>
+<td align="left">B</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td>e</td>
+<td align="left">male</td>
+<td align="left">no</td>
+<td align="left">A</td>
+<td align="left">bad</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td align="left">female</td>
+<td align="left">no</td>
+<td align="left">B</td>
+<td align="left">bad</td>
+</tr>
+<tr class="odd">
+<td>g</td>
+<td align="left">male</td>
+<td align="left">yes</td>
+<td align="left">C</td>
+<td align="left">bad</td>
+</tr>
+<tr class="even">
+<td>h</td>
+<td align="left">female</td>
+<td align="left">no</td>
+<td align="left">C</td>
+<td align="left">bad</td>
+</tr>
+</tbody>
+</table>
+<p>Let us encode <span class="math inline">\(\text{good}\)</span> as a circle <span class="math inline">\(\bigcirc\)</span>, and let us encode
+<span class="math inline">\(\text{bad}\)</span> as a square <span class="math inline">\(\square\)</span>. Our root node then contains 8 objects,
+with a 50-50 split in credit scores:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-341"></span>
+<img src="images/trees/entropy-toy-root.svg" alt="Root node" width="30%" />
+<p class="caption">
+Figure 30.12: Root node
+</p>
+</div>
+<p>The entropy of the root node would therefore be</p>
+<p><span class="math display">\[
+H(\text{root}) = - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right) }_{\text{good}} - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right)  }_{\text{bad}} = 1
+\]</span></p>
+<div id="partition-by-gender" class="section level4 unnumbered">
+<h4>Partition by Gender</h4>
+<p>Now, say we choose to partition by gender, Our parent node would then split as
+follows:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-342"></span>
+<img src="images/trees/entropy-toy-gender.svg" alt="Split by gender" width="65%" />
+<p class="caption">
+Figure 30.13: Split by gender
+</p>
+</div>
+<p>Each of these child nodes have the same entropy:</p>
+<p><span class="math display">\[
+H(\text{left}) =  -\frac{1}{2} \log_2\left( \frac{1}{2} \right)  -\frac{1}{2} \log_2\left( \frac{1}{2} \right)  = 1 = H(\text{right})
+\]</span></p>
+<p>Now, we want to compare the combined entropies of these two child nodes and the
+entropy of the root node. That is, we compare</p>
+<p><span class="math display">\[
+H(\text{root}) \quad \text{-vs-} \quad \left( \frac{4}{8} \right) H(\text{left}) + \left( \frac{4}{8} \right) H(\text{right})
+\]</span></p>
+<p>Hence, let us define the <strong>information gain</strong> by the quantity</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp; = H(\text{root}) - \left[ \left( \frac{4}{8} \right) H(\text{left}) + \left( \frac{4}{8} \right) H(\text{right})  \right] \\
+&amp; = 1 - \left[ \frac{4}{8} + \frac{4}{8} \right] = 1 - 1 = 0 
+\end{align*}\]</span></p>
+<p>In this way, we see that gender is not a good predictor to base our partitions
+on.</p>
+</div>
+<div id="partition-by-job" class="section level4 unnumbered">
+<h4>Partition by Job</h4>
+<p>If we decide to partition by job, the parent node would then split as:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-343"></span>
+<img src="images/trees/entropy-toy-job.svg" alt="Split by job" width="65%" />
+<p class="caption">
+Figure 30.14: Split by job
+</p>
+</div>
+<p>The left node has an entropy of:</p>
+<p><span class="math display">\[
+H(\text{left}) =  -\frac{3}{4} \log_2\left( \frac{3}{4} \right)  -\frac{1}{4} \log_2\left( \frac{1}{4} \right) \approx 0.8112
+\]</span></p>
+<p>whereas the right node has an entropy of:</p>
+<p><span class="math display">\[
+H(\text{right}) =  -\frac{1}{4} \log_2\left( \frac{1}{4} \right)  -\frac{3}{4} \log_2\left( \frac{3}{4} \right) \approx 0.8112
+\]</span></p>
+<p>The information gain <span class="math inline">\(\Delta I\)</span> is thus:</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{1}{2} (0.8112) - \frac{1}{2} (0.8112) \\
+&amp;\approx 0.1888
+\end{align*}\]</span></p>
+</div>
+<div id="partition-by-region" class="section level4 unnumbered">
+<h4>Partition by Region</h4>
+<p>What splitting the root node based on the categories of region? Note that
+region is a nominal qualitative variable with three categories, which means
+that there will be three possible binary partitions.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-344"></span>
+<img src="images/trees/entropy-toy-region.svg" alt="Splits by region" width="95%" />
+<p class="caption">
+Figure 30.15: Splits by region
+</p>
+</div>
+<p>Region A -vs- Reiongs B,C</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{1}{2} (1) - \frac{1}{2} (1) \\
+&amp;= 0
+\end{align*}\]</span></p>
+<p>Region B -vs- Reiongs A,C</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{3}{8} (0.9183) - \frac{5}{8} (0.9709) \\
+&amp;\approx 0.0488
+\end{align*}\]</span></p>
+<p>Region C -vs- Reiongs A,B</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{3}{8} (0.9183) - \frac{5}{8} (0.9709) \\
+&amp;\approx 0.04888
+\end{align*}\]</span></p>
+</div>
+<div id="comparing-the-splits" class="section level4 unnumbered">
+<h4>Comparing the splits</h4>
+<p>As a summary, here are the following splits and the associated information
+gains:</p>
+<p><img src="images/trees/entropy-toy-splits.svg" width="45%" style="display: block; margin: auto;" /></p>
+<p>We therefore see that splitting based on <span class="math inline">\(\text{Job}\)</span> yields the best split
+(i.e. the split with the highest information gain).</p>
+<p>In practice, this is the procedure that you would have to carry out. Try
+splitting based on <strong>all</strong> of the variables and compute the associated
+information gains, and visually ascertain which split results in the highest
+information gain. If there are ties in <span class="math inline">\(\Delta I\)</span> values, it is customary to
+randomly select one to have a higher ranking than the other.</p>
 
+</div>
 </div>
 </div>
 </div>
@@ -667,8 +907,8 @@ involves hierarchical clustering, the topic of the next chapter.</p>
           </div>
         </div>
       </div>
-<a href="clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hclus.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="trees.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
