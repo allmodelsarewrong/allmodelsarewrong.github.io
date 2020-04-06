@@ -519,9 +519,15 @@ Figure 30.1: Example of a binary partition for a binary variable
 <p>A nominal variable may have many categories and the number of binary splits
 depends on the number of distinct categories for the corresponding variable.
 The total number of possible binary partitions for a nominal variable with <span class="math inline">\(q\)</span>
-categories is <span class="math inline">\(2^{q-1} - 1\)</span>. For example, suppose a variable <em>Color</em> with three
-categories: Green, White and Red. The number of binary splits is
-<span class="math inline">\(2^{3-1} - 1 = 3\)</span>.</p>
+categories is</p>
+<p><span class="math display">\[
+2^{q-1} - 1
+\]</span></p>
+<p>For example, suppose a variable <em>Color</em> with three
+categories: Green, White and Red. The number of binary splits is</p>
+<p><span class="math display">\[
+2^{3-1} - 1 = 3
+\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
 <img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
 <p class="caption">
@@ -534,9 +540,16 @@ Figure 30.2: Example of binary splits for a nominal variable
 <p>Binary splits for ordinal variables must respect the order property of the
 categories, that is, the grouping of categories must preserve the order among
 the values. The total number of binary partitions for an ordinal variable with
-<span class="math inline">\(q\)</span> categories is <span class="math inline">\(q-1\)</span>. For example, the <em>Apparel size</em> may have four
+<span class="math inline">\(q\)</span> categories is</p>
+<p><span class="math display">\[
+q-1
+\]</span></p>
+<p>For example, the <em>Apparel size</em> may have four
 categories: small (S), medium (M), large (L) and extra-large (XL). In this
-case, the number of binary splits will be <span class="math inline">\(4-1 = 3\)</span>.</p>
+case, the number of binary splits will be</p>
+<p><span class="math display">\[
+4-1 = 3
+\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-332"></span>
 <img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
 <p class="caption">
@@ -552,9 +565,16 @@ values. If we consider that <span class="math inline">\(q\)</span> is “adequat
 continuous variable like an ordinal variable. If we consider <span class="math inline">\(q\)</span> to be large we
 may group its values and reduced their number in <span class="math inline">\(q^*\)</span> (<span class="math inline">\(q^*&lt;q\)</span>). In both cases,
 the variable is treated as an ordinal variable and the number of binary splits
-will be <span class="math inline">\(q-1\)</span> or <span class="math inline">\(q^*-1\)</span>. For example, imagine the continuous variable <em>Age</em>
+will be</p>
+<p><span class="math display">\[
+q-1 \quad \text{or} \quad q^*-1
+\]</span></p>
+<p>For example, imagine the continuous variable <em>Age</em>
 (measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
-splits is <span class="math inline">\(5 - 1 = 4\)</span>.</p>
+splits is</p>
+<p><span class="math display">\[
+5 - 1 = 4
+\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-333"></span>
 <img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
 <p class="caption">
@@ -565,8 +585,9 @@ Figure 30.4: Example of binary splits for a continuous variable
 </div>
 <div id="measures-of-heterogeneity" class="section level2">
 <h2><span class="header-section-number">30.2</span> Measures of Heterogeneity</h2>
-<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> points
-and <span class="math inline">\(2\)</span> classes (with <span class="math inline">\(7\)</span> objects of each class). Suppose this node splits in
+<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> points,
+and <span class="math inline">\(2\)</span> classes; one class denoted as <span class="math inline">\(\bigcirc\)</span>, the other denoted as
+<span class="math inline">\(\Delta\)</span>; both classes having <span class="math inline">\(7\)</span> objects. Suppose this node splits in
 the following manner:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-334"></span>
 <img src="images/trees/entropy-toy0.svg" alt="Hypothetical split of a node" width="60%" />
@@ -578,6 +599,11 @@ Figure 30.5: Hypothetical split of a node
 its child nodes. In fact, this is a general result: a split cannot result in
 child nodes with more heterogeneity than the parent node. Stated differently,
 you can never do worse than the parent node.</p>
+<p>In the parent node of the previous figure, the proportion of <span class="math inline">\(\bigcirc\)</span> equals
+the proportion of <span class="math inline">\(\Delta\)</span>. In other words, there is an equal probability of
+being a <span class="math inline">\(\bigcirc\)</span> as there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node,
+there is a higher chance of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is
+true of the right node).</p>
 <p>Most measures of heterogeneity (and therefore homogeneity) relate to
 proportions. Let’s spitball some ideas as to how to do this:</p>
 <ul>
@@ -589,10 +615,6 @@ also refer to this as a measure of “disorder” within a node.</p></li>
 </ul>
 <div id="entropy" class="section level3">
 <h3><span class="header-section-number">30.2.1</span> Entropy</h3>
-<p>In the parent node of the previous figure, there is an equal probability of
-being a <span class="math inline">\(\bigcirc\)</span> as there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node,
-there is a higher chance of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is
-true of the right node).</p>
 <p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
 all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-335"></span>
@@ -670,12 +692,12 @@ H(\text{node}) = -(1) \cdot \log_2(1) = 0 \cdot 0 = 0
 <p>Now, for our second example above, we have <span class="math inline">\(h = 2\)</span> classes with <span class="math inline">\(p_1 = 9/12\)</span>
 and <span class="math inline">\(p_2 = 3/12\)</span>, so that</p>
 <p><span class="math display">\[\begin{align*}
-H(\text{node}) = - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
 &amp;= - \frac{9}{12} \log_2\left( \frac{9}{12} \right) - \frac{3}{12} \log_2\left( \frac{3}{12} \right) \approx 0.8112
 \end{align*}\]</span></p>
 <p>In a node where there is a 50-50 split, we have</p>
 <p><span class="math display">\[\begin{align*}
-H(\text{node}) = - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
 &amp;= - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
 \end{align*}\]</span></p>
 <p>The following figure depicts several examples of sets and their entropy values.</p>
