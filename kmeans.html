@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>27 K-Means | All Models Are Wrong</title>
+  <title>27 K-Means | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="27 K-Means | All Models Are Wrong" />
+  <meta property="og:title" content="27 K-Means | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,12 +16,12 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="27 K-Means | All Models Are Wrong" />
+  <meta name="twitter:title" content="27 K-Means | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
 
-<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+<meta name="author" content="Gaston Sanchez Ethan Marzban" />
 
 
 
@@ -430,6 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="28.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>28.3</b> Example: Complete Linkage</a><ul>
 <li class="chapter" data-level="28.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>28.3.1</b> Cutting Dendograms</a></li>
+<li class="chapter" data-level="28.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>28.3.2</b> Pros and COons</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
@@ -467,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong: Concepts of Statistical Learning</a>
           </h1>
         </div>
 
@@ -477,21 +478,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="kmeans" class="section level1">
 <h1><span class="header-section-number">27</span> K-Means</h1>
-<p>With partitioning methods, two clusters are always separated; and the
-number of clusters is generally defined a priori. The main methods are:</p>
+<p>With direct partitioning methods, two clusters are always separated; and the
+number of clusters is generally defined a priori. Some common methods are:</p>
 <ul>
 <li><span class="math inline">\(K\)</span>-means</li>
 <li><span class="math inline">\(K\)</span>-medoids</li>
 <li><span class="math inline">\(K\)</span>-prototypes</li>
 <li>Methods based on a concept of density</li>
-<li>Kohonen networks (or maps)</li>
+<li>Kohonen networks (or Kohonen maps)</li>
 </ul>
 <div id="toy-example-2" class="section level2">
 <h2><span class="header-section-number">27.1</span> Toy Example</h2>
-<p>Imagine we are in <span class="math inline">\(\mathbb{R}^n\)</span> (or <span class="math inline">\(\mathbb{R}^p\)</span>, depending on if we are
+<p>Imagine we are in <span class="math inline">\(\mathbb{R}^p\)</span> (or <span class="math inline">\(\mathbb{R}^n\)</span>, depending on if we are
 looking at things from the individuals perspective or variables perspective).
 For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
 <img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
 <p class="caption">
 Figure 27.1: Toy data set
@@ -501,7 +502,7 @@ Figure 27.1: Toy data set
 Typically, the way centroids are initialized is by randomly selecting two
 objects. Sometimes, however, a more “educated” initialization may be possible
 when we have additional information about where the clusters may be located.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
 <img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
 <p class="caption">
 Figure 27.2: Arbitrary centroids
@@ -510,7 +511,7 @@ Figure 27.2: Arbitrary centroids
 <p>Given a new data point, we compute the distances from this point to the two
 centroids, and classify the point to the cluster to which the closest centroid
 belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-284"></span>
 <img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
 <p class="caption">
 Figure 27.3: Distance of an object to both centroids
@@ -518,14 +519,14 @@ Figure 27.3: Distance of an object to both centroids
 </div>
 <p>The distances of all objects to the centroids are computed as well, and the
 objects get assigned to the group of the closest centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-284"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
 <img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
 <p class="caption">
 Figure 27.4: Assigning objects to closest centroid
 </p>
 </div>
 <p>Now, with this new grouped data, we have to recompute the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-286"></span>
 <img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
 <p class="caption">
 Figure 27.5: Update centroids
@@ -533,14 +534,14 @@ Figure 27.5: Update centroids
 </div>
 <p>We repeat this procedure, that is, calculate distances of all objects to the
 centroids, and re-assigning objects to clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-286"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
 <img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
 <p class="caption">
 Figure 27.6: Reassigning objects
 </p>
 </div>
 <p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
 <img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
 <p class="caption">
 Figure 27.7: Recalculate centroids
@@ -549,7 +550,7 @@ Figure 27.7: Recalculate centroids
 <p>After enough iterations, the centroids will not move too much between each
 iteration. At this point we will say the algorithm as converged, and we stop
 (and the resulting clusters will be the ones we use).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-289"></span>
 <img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
 <p class="caption">
 Figure 27.8: Rinse and repeat until convergence
@@ -652,7 +653,7 @@ Some stopping mechanisms could be:</p>
 <p>How many groups should be pick? Well, the answer is highly dependent on our
 initial centroids. The algorithm will always converge at local minima, but there
 is no guarantee it will arrive at the global minimum. One idea is to run
-<span class="math inline">\(K\)</span>-means multiple times, to get a sense of how stable our data is.</p>
+<span class="math inline">\(K\)</span>-means multiple times, to get a sense of how stable groups are.</p>
 <p>Note that cross-validation <strong>cannot</strong> be used to determine <span class="math inline">\(K^*\)</span>, the optimal
 number of clusters. For an explanation of why this is, see pages 518-9 in
 <a href="https://web.stanford.edu/~hastie/ElemStatLearn/">ESL</a>.</p>

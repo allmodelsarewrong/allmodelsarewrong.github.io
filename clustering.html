@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>26 Clustering | All Models Are Wrong</title>
+  <title>26 Clustering | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="26 Clustering | All Models Are Wrong" />
+  <meta property="og:title" content="26 Clustering | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,12 +16,12 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="26 Clustering | All Models Are Wrong" />
+  <meta name="twitter:title" content="26 Clustering | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
 
-<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+<meta name="author" content="Gaston Sanchez Ethan Marzban" />
 
 
 
@@ -430,6 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="28.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>28.3</b> Example: Complete Linkage</a><ul>
 <li class="chapter" data-level="28.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>28.3.1</b> Cutting Dendograms</a></li>
+<li class="chapter" data-level="28.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>28.3.2</b> Pros and COons</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
@@ -467,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong: Concepts of Statistical Learning</a>
           </h1>
         </div>
 
@@ -485,8 +486,8 @@ particular, the so-called clustering methods.</p>
 Figure 26.1: Clustering Corner
 </p>
 </div>
-<p>Clustering refers to a very broad set of techniques for finding groups,
-or clusters, in a data set. Here are some examples that have become
+<p>Clustering refers to a very broad set of techniques for finding groups or
+clusters of objects, in a data set. Here are some examples that have become
 famous in the clustering literature:</p>
 <ul>
 <li><p><strong>Marketing</strong>: discover groups of customers and used them for
@@ -497,7 +498,7 @@ particular treatment protocols.</p></li>
 <li><p><strong>Genomics</strong>: find groups of genes with similar expressions.</p></li>
 </ul>
 <p>The main idea of clustering (or cluster analysis) is to find groups of objects
-in data. When we say “groups”, it can be groups of individuals, but also
+in data. When we say “objects”, it can be groups of individuals, but also
 groups of variables. So, more formally, clustering refers to the statistical
 process of forming groups of objects (individuals or variables)
 into a limited number of groups known as clusters.</p>
@@ -510,6 +511,12 @@ have an explicit response in clustering; we want to (in a sense) find a “hidde
 variable that exposes group structure in the data. The groups are not defined
 in advanced. In other words, there is no observed variable that imposes a group
 structure.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-267"></span>
+<img src="images/cluster/data-corners2.svg" alt="Unobserved variable of interest" width="40%" />
+<p class="caption">
+Figure 26.2: Unobserved variable of interest
+</p>
+</div>
 <div id="about-clustering" class="section level2">
 <h2><span class="header-section-number">26.1</span> About Clustering</h2>
 <p>Clustering has its roots in what used to be called
@@ -545,10 +552,10 @@ defining a hierarchy of partitions.</p></li>
 somewhat obvious from the data at first glance. Of course, there will be cases
 where there are no natural groups; in such a case, we might say we have
 “artificial” groups.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-267"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-268"></span>
 <img src="images/cluster/clustering-structures.svg" alt="Some Typical Clustering Structures" width="70%" />
 <p class="caption">
-Figure 26.2: Some Typical Clustering Structures
+Figure 26.3: Some Typical Clustering Structures
 </p>
 </div>
 </div>
@@ -585,15 +592,15 @@ to the individuals to be clustered (although you could also cluster variables).<
 </div>
 <div id="dispersion-measures" class="section level2">
 <h2><span class="header-section-number">26.2</span> Dispersion Measures</h2>
-<p>Let’s assume that the individuals are embeded in an euclidean space
+<p>Let’s assume that the individuals are embeded in a Euclidean space
 (e.g. quantitative variables, or output of dimension reduction method). As
 usual, suppose that the individuals form a cloud of points in a <span class="math inline">\(p\)</span>-dimensional
 space, and that we also have the centroid or average individual, like in the
 following figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-268"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-269"></span>
 <img src="images/cluster/clusters-cloud2.svg" alt="Cloud of n points in p-dim space" width="50%" />
 <p class="caption">
-Figure 26.3: Cloud of n points in p-dim space
+Figure 26.4: Cloud of n points in p-dim space
 </p>
 </div>
 <p>We can look at the amount of spread or dispersion in the data with respect to
@@ -605,20 +612,20 @@ distances from the centroid given by:</p>
 \]</span></p>
 <p>Now suppose that we have some group structure in which objects are divided into
 several clusters <span class="math inline">\(\mathcal{C}_1, \mathcal{C}_2, \dots, \mathcal{C}_K\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-269"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-270"></span>
 <img src="images/cluster/clusters-cloud3.svg" alt="Each cluster forms its own cloud" width="50%" />
 <p class="caption">
-Figure 26.4: Each cluster forms its own cloud
+Figure 26.5: Each cluster forms its own cloud
 </p>
 </div>
 <p>Because each cluster <span class="math inline">\(\mathcal{C}_k\)</span> will form its own cloud of points, we can
 make the visual representation more pattent by using different shapes for the
 points. Likewise, we suppose that each cluster has its own centroid
 <span class="math inline">\(\mathbf{g_k}\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-270"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-271"></span>
 <img src="images/cluster/clusters-cloud5.svg" alt="Each cluster has a certain within dispersion" width="50%" />
 <p class="caption">
-Figure 26.5: Each cluster has a certain within dispersion
+Figure 26.6: Each cluster has a certain within dispersion
 </p>
 </div>
 <div id="within-cluster-dispersion" class="section level4 unnumbered">
@@ -629,10 +636,10 @@ is a specific Cluster Sum of Squared distances (<span class="math inline">\(\tex
 \text{CSSD} = \sum_{i \in \mathcal{C}_k} d^2(\mathbf{x_i}, \mathbf{g_k})
 \tag{26.2}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-271"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-272"></span>
 <img src="images/cluster/clusters-cloud6.svg" alt="Dispersion within each cluster" width="50%" />
 <p class="caption">
-Figure 26.6: Dispersion within each cluster
+Figure 26.7: Dispersion within each cluster
 </p>
 </div>
 <p>We can combine the cluster sum-of-squared distances to obtain the Within-clusters
@@ -645,10 +652,10 @@ sum of squared distances <span class="math inline">\(\text{WSSD}\)</span>:</p>
 <div id="between-cluster-dispersion" class="section level4 unnumbered">
 <h4>Between Cluster Dispersion</h4>
 <p>Let’s now turn our attention to the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-272"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-273"></span>
 <img src="images/cluster/clusters-cloud7.svg" alt="Focusing on the centroids" width="50%" />
 <p class="caption">
-Figure 26.7: Focusing on the centroids
+Figure 26.8: Focusing on the centroids
 </p>
 </div>
 <p>Focusing on just the centroids, and taking into acount the size <span class="math inline">\(n_k\)</span> of each
@@ -659,10 +666,10 @@ and the overall centroid. Let us call this between-cluster dispersion the
 \text{BSSD} = \sum_{k=1}^{K} n_k d^2(\mathbf{g_k}, \mathbf{g})
 \tag{26.4}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-273"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-274"></span>
 <img src="images/cluster/clusters-cloud8.svg" alt="Dispersion between the centroids" width="50%" />
 <p class="caption">
-Figure 26.8: Dispersion between the centroids
+Figure 26.9: Dispersion between the centroids
 </p>
 </div>
 </div>
@@ -689,6 +696,12 @@ number of clusters <span class="math inline">\(K\)</span>, minimizing <span clas
 equivalent.</p>
 <p>Notice that in discriminant analysis, we cared a lot about <span class="math inline">\(\text{BSSD}\)</span>. Now,
 in clustering, we will want to minimize <span class="math inline">\(\text{WSSD}\)</span>.</p>
+<p>Cluster analysis aims to minimize the within-clusters sum of squared distances
+<span class="math inline">\(\text{WSSD}\)</span>, to a fixed number of clusters <span class="math inline">\(K\)</span>. A cluster becomes more
+homogenous as its sum of squared distances decreases, and the clustering of
+the data set becomes better as <span class="math inline">\(\text{WSSD}\)</span> decreases. Also, as <span class="math inline">\(\text{BSSD}\)</span>
+increases, the separation between clusters also increases, indicating
+satisfactory clustering.</p>
 </div>
 </div>
 <div id="complexity-in-clustering" class="section level2">
@@ -702,10 +715,10 @@ in clustering, we will want to minimize <span class="math inline">\(\text{WSSD}\
 #&gt; 4  0.3  0.6
 #&gt; 5  0.4  1.0</code></pre>
 <p>and their corresponding scatterplot</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
 <img src="images/cluster/aggregation1.svg" alt="Toy data set" width="60%" />
 <p class="caption">
-Figure 26.9: Toy data set
+Figure 26.10: Toy data set
 </p>
 </div>
 <p>To measure the distance between observations, we compute the Euclidean squared
@@ -729,10 +742,10 @@ below the diagonal)</p>
 possible partition is the blue configuration that produces <span class="math inline">\(K = 2\)</span> clusters.
 The other partition is the red configuration which produces another set of
 <span class="math inline">\(K = 2\)</span> clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
 <img src="images/cluster/aggregation2.svg" alt="Two possible clustering configurations" width="60%" />
 <p class="caption">
-Figure 26.10: Two possible clustering configurations
+Figure 26.11: Two possible clustering configurations
 </p>
 </div>
 <p>We could compute the centroids of each group and obtain exact values for

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>30 Building Trees | All Models Are Wrong</title>
+  <title>30 Building Trees | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="30 Building Trees | All Models Are Wrong" />
+  <meta property="og:title" content="30 Building Trees | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,12 +16,12 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="30 Building Trees | All Models Are Wrong" />
+  <meta name="twitter:title" content="30 Building Trees | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
 
-<meta name="author" content="by Gaston Sanchez, and Ethan Marzban" />
+<meta name="author" content="Gaston Sanchez Ethan Marzban" />
 
 
 
@@ -430,6 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="28.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>28.3</b> Example: Complete Linkage</a><ul>
 <li class="chapter" data-level="28.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>28.3.1</b> Cutting Dendograms</a></li>
+<li class="chapter" data-level="28.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>28.3.2</b> Pros and COons</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
@@ -467,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">All Models Are Wrong: Concepts of Statistical Learning</a>
           </h1>
         </div>
 
@@ -507,7 +508,7 @@ described below.</p>
 <p>Because binary variables have two values, they only generate one binary
 partition. For example, the variable <em>Gender</em> with two values, female and male,
 can only de divided in one possible way.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-330"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
 <img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
 <p class="caption">
 Figure 30.1: Example of a binary partition for a binary variable
@@ -528,7 +529,7 @@ categories: Green, White and Red. The number of binary splits is</p>
 <p><span class="math display">\[
 2^{3-1} - 1 = 3
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-332"></span>
 <img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
 <p class="caption">
 Figure 30.2: Example of binary splits for a nominal variable
@@ -550,7 +551,7 @@ case, the number of binary splits will be</p>
 <p><span class="math display">\[
 4-1 = 3
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-332"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-333"></span>
 <img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
 <p class="caption">
 Figure 30.3: Example of binary splits for an ordinal variable
@@ -575,7 +576,7 @@ splits is</p>
 <p><span class="math display">\[
 5 - 1 = 4
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-333"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-334"></span>
 <img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
 <p class="caption">
 Figure 30.4: Example of binary splits for a continuous variable
@@ -589,7 +590,7 @@ Figure 30.4: Example of binary splits for a continuous variable
 and <span class="math inline">\(2\)</span> classes; one class denoted as <span class="math inline">\(\bigcirc\)</span>, the other denoted as
 <span class="math inline">\(\Delta\)</span>; both classes having <span class="math inline">\(7\)</span> objects. Suppose this node splits in
 the following manner:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-334"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-335"></span>
 <img src="images/trees/entropy-toy0.svg" alt="Hypothetical split of a node" width="60%" />
 <p class="caption">
 Figure 30.5: Hypothetical split of a node
@@ -617,7 +618,7 @@ also refer to this as a measure of “disorder” within a node.</p></li>
 <h3><span class="header-section-number">30.2.1</span> Entropy</h3>
 <p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
 all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-335"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-336"></span>
 <img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
 <p class="caption">
 Figure 30.6: Set of 12 objects of same type
@@ -627,7 +628,7 @@ Figure 30.6: Set of 12 objects of same type
 its class: in other words, there is <strong>zero entropy</strong> associated with this
 situation.</p>
 <p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-336"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-337"></span>
 <img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
 <p class="caption">
 Figure 30.7: Set with two different types of objects
@@ -635,7 +636,7 @@ Figure 30.7: Set with two different types of objects
 </div>
 <p>If we were to draw an object from this box, there would be <em>some</em> amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.</p>
 <p>Finally, in the most extreme case, say we have 12 objects of different classes:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-337"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-338"></span>
 <img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
 <p class="caption">
 Figure 30.8: Set with 12 different types of objects
@@ -647,7 +648,7 @@ that is, we have <strong>maximum entropy</strong>.</p>
 respect to the classes contained inside. If a box is “pure” (i.e. has only one
 class), it has zero entropy where as if a box is “highly impure” (i.e. has many
 different classes), it has some nonzero amount of entropy.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-338"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-339"></span>
 <img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
 <p class="caption">
 Figure 30.9: Set with 12 different types of objects
@@ -701,7 +702,7 @@ H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
 &amp;= - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
 \end{align*}\]</span></p>
 <p>The following figure depicts several examples of sets and their entropy values.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-339"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-340"></span>
 <img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
 <p class="caption">
 Figure 30.10: Different sets with their entropy values
@@ -734,7 +735,7 @@ there are a total of 2 possible misclassifications.</p>
 <p><span class="math display">\[
 \sum_{k=1}^{h} Pr(k) \left[ 1- Pr(k) \right] = 1 - \sum_{k=1}^{h} Pr^2(k) = \sum_{k \neq \ell} Pr(k) Pr(\ell)
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-340"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-341"></span>
 <img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
 <p class="caption">
 Figure 30.11: Different sets with their gini impurities
@@ -816,7 +817,7 @@ Figure 30.11: Different sets with their gini impurities
 <p>Let us encode <span class="math inline">\(\text{good}\)</span> as a circle <span class="math inline">\(\bigcirc\)</span>, and let us encode
 <span class="math inline">\(\text{bad}\)</span> as a square <span class="math inline">\(\square\)</span>. Our root node then contains 8 objects,
 with a 50-50 split in credit scores:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-341"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-342"></span>
 <img src="images/trees/entropy-toy-root.svg" alt="Root node" width="30%" />
 <p class="caption">
 Figure 30.12: Root node
@@ -830,7 +831,7 @@ H(\text{root}) = - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right) }_{
 <h4>Partition by Gender</h4>
 <p>Now, say we choose to partition by gender, Our parent node would then split as
 follows:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-342"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-343"></span>
 <img src="images/trees/entropy-toy-gender.svg" alt="Split by gender" width="65%" />
 <p class="caption">
 Figure 30.13: Split by gender
@@ -856,7 +857,7 @@ on.</p>
 <div id="partition-by-job" class="section level4 unnumbered">
 <h4>Partition by Job</h4>
 <p>If we decide to partition by job, the parent node would then split as:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-343"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-344"></span>
 <img src="images/trees/entropy-toy-job.svg" alt="Split by job" width="65%" />
 <p class="caption">
 Figure 30.14: Split by job
@@ -882,7 +883,7 @@ H(\text{right}) =  -\frac{1}{4} \log_2\left( \frac{1}{4} \right)  -\frac{3}{4} \
 <p>What splitting the root node based on the categories of region? Note that
 region is a nominal qualitative variable with three categories, which means
 that there will be three possible binary partitions.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-344"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-345"></span>
 <img src="images/trees/entropy-toy-region.svg" alt="Splits by region" width="95%" />
 <p class="caption">
 Figure 30.15: Splits by region
