@@ -421,6 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>27.3.2</b> Moving Centers Algorithm</a></li>
 <li class="chapter" data-level="27.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>27.3.3</b> Dynamic Clouds</a></li>
 <li class="chapter" data-level="27.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>27.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
+<li class="chapter" data-level="27.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>27.3.5</b> Comments</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="28" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>28</b> Hierarchical Clustering</a><ul>
@@ -560,17 +561,26 @@ Figure 27.8: Rinse and repeat until convergence
 obtain the same final clusters each time? The answer is “no.” The good news is
 that we are guaranteed convergence. The bad news is that we may arrive at a
 different final clustering. There is actually another good news, which is that
-this algorithm converges quite rapidly! (The complexity is <span class="math inline">\(n \cdot k\)</span>).</p>
+this algorithm converges quite rapidly! (The complexity is of order
+<span class="math inline">\(O(n \cdot K)\)</span>).</p>
 </div>
 <div id="what-does-k-means-do" class="section level2">
 <h2><span class="header-section-number">27.2</span> What does K-means do?</h2>
-<p>Consider the <span class="math inline">\(s\)</span>-th step of the algorithm:</p>
+<p>Consider the transition between the <span class="math inline">\(s\)</span>-th step to the <span class="math inline">\(s+1\)</span> step of the
+algorithm:</p>
 <p><span class="math display">\[
 \textbf{step s}, \quad \textbf{s} \rightarrow \textbf{s+1}, \quad \textbf{then s+1}
 \]</span></p>
 <p>Specifically, let us focus on the intermediate step, when step <span class="math inline">\(s\)</span> goes to step
 <span class="math inline">\(s+1\)</span>. In other words, the centroids have moved but we have not reassigned
-points. At step <span class="math inline">\(s\)</span> we would compute <span class="math inline">\(\mathrm{WSSD}_1\)</span> and <span class="math inline">\(\mathrm{WSSD}_2\)</span>
+points.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-290"></span>
+<img src="images/cluster/kmeans-steps.svg" alt="From step s to step s+1" width="90%" />
+<p class="caption">
+Figure 27.9: From step s to step s+1
+</p>
+</div>
+<p>At step <span class="math inline">\(s\)</span> we would compute <span class="math inline">\(\mathrm{WSSD}_1\)</span> and <span class="math inline">\(\mathrm{WSSD}_2\)</span>
 which, if we are using the squared Euclidean norm, becomes</p>
 <p><span class="math display" id="eq:802-1">\[
 \mathrm{WSSD}^{(s)} =  \sum_{i \in \mathcal{C}_1^{(s)}} d^2 \big(\mathbf{x_i}, \mathbf{g_1}^{(s)} \big)  +  \sum_{i \in \mathcal{C}_2^{(s)}} d^2 \big(\mathbf{x_i}, \mathbf{g_2}^{(s)} \big)
@@ -659,6 +669,22 @@ number of clusters. For an explanation of why this is, see pages 518-9 in
 <a href="https://web.stanford.edu/~hastie/ElemStatLearn/">ESL</a>.</p>
 <p>There is another proposal on how to choose a “good” number of clusters, but it
 involves hierarchical clustering, the topic of the next chapter.</p>
+</div>
+<div id="comments" class="section level3">
+<h3><span class="header-section-number">27.3.5</span> Comments</h3>
+<p>The main advantage of most flavors of K-means is their complexity which in
+general is linear, in the order <span class="math inline">\(O(n \cdot K)\)</span>. In other words, their
+computational complexity is proportional to the number of observations <span class="math inline">\(n\)</span>,
+because we compute <span class="math inline">\(n \cdot K\)</span> distances at each step. This is the reason why
+K-means procedures are favored when dealing with large data sets.</p>
+<p>The main disadvantage of direct partitioning methods is that the clustering
+configuration depends on the initial centroids. Which means we don’t obtain the
+global optimum, but just a local optima. An attempt to overcome this limitation
+is to run the algorithm several times for different values of <span class="math inline">\(k\)</span>, and then
+compare the obtained configurations in order to detect strong or stable groups.</p>
+<p>Another suggestion is to run K-means on various random samples of observations,
+and then use the centroids of a good configuration as the initial centroids
+for the algorithm applied on the entire data set.</p>
 
 </div>
 </div>

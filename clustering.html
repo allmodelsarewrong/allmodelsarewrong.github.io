@@ -421,6 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>27.3.2</b> Moving Centers Algorithm</a></li>
 <li class="chapter" data-level="27.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>27.3.3</b> Dynamic Clouds</a></li>
 <li class="chapter" data-level="27.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>27.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
+<li class="chapter" data-level="27.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>27.3.5</b> Comments</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="28" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>28</b> Hierarchical Clustering</a><ul>
@@ -545,7 +546,7 @@ partitions may have sub-partitions within them.</p>
 <ul>
 <li><p><strong>Direct Partitioning</strong>: Clusters are always separated,
 and their number is defined <em>a priori</em>.</p></li>
-<li><p><strong>Hierarchical Partitions</strong>: clusters are either separate or embeded,
+<li><p><strong>Hierarchical Partitions</strong>: clusters are either separate or embedded,
 defining a hierarchy of partitions.</p></li>
 </ul>
 <p>You may have what are referred to as “natural” groups; that is, groups that are
@@ -708,12 +709,12 @@ satisfactory clustering.</p>
 <h2><span class="header-section-number">26.3</span> Complexity in Clustering</h2>
 <p>Consider the following (fictitious) dataset with <span class="math inline">\(n = 5\)</span> observations and
 2 continuous variables:</p>
-<pre><code>#&gt;      x    y
-#&gt; 1  0.7  0.0
-#&gt; 2  1.0  0.4
-#&gt; 3  0.0  0.7
-#&gt; 4  0.3  0.6
-#&gt; 5  0.4  1.0</code></pre>
+<pre><code>     x    y
+1  0.7  0.0
+2  1.0  0.4
+3  0.0  0.7
+4  0.3  0.6
+5  0.4  1.0</code></pre>
 <p>and their corresponding scatterplot</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
 <img src="images/cluster/aggregation1.svg" alt="Toy data set" width="60%" />
@@ -721,7 +722,7 @@ satisfactory clustering.</p>
 Figure 26.10: Toy data set
 </p>
 </div>
-<p>To measure the distance between observations, we compute the Euclidean squared
+<p>To measure the distance between observations, we compute the squared Euclidean
 distance. Recall that this distance between objects <span class="math inline">\(i\)</span> and <span class="math inline">\(\ell\)</span>
 (i.e. <span class="math inline">\(\mathbf{x_i}\)</span> and <span class="math inline">\(\mathbf{x_{\ell}}\)</span>) is given by:</p>
 <p><span class="math display" id="eq:801-6">\[

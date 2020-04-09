@@ -421,6 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>27.3.2</b> Moving Centers Algorithm</a></li>
 <li class="chapter" data-level="27.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>27.3.3</b> Dynamic Clouds</a></li>
 <li class="chapter" data-level="27.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>27.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
+<li class="chapter" data-level="27.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>27.3.5</b> Comments</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="28" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>28</b> Hierarchical Clustering</a><ul>
@@ -515,7 +516,7 @@ species of iris flower with three categories:</p>
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 <p>If we use a decision tree to classify the species of iris flowers, we obtain
 a tree diagram like this:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-318-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-319-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Software programs that compute trees, would return some kind of numeric output
 like this:</p>
 <pre><code>n= 150 
@@ -533,7 +534,7 @@ node), split, n, loss, yval, (yprob)
 <h2><span class="header-section-number">29.2</span> Some Terminology</h2>
 <p>Decision trees have three types of nodes: root, internal, and leaf nodes. This
 is depicted in the diagram below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-320"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-321"></span>
 <img src="images/trees/tree-diagram1.svg" alt="Diagram of a tree structure" width="85%" />
 <p class="caption">
 Figure 29.1: Diagram of a tree structure
@@ -554,7 +555,7 @@ called a “child” node. A node that gives origin to two (or more) child nodes
 called a “parent” node. Terminal nodes are nodes without children. The most
 common way of visually representing a tree is by means of the classical
 node-link diagram that connects nodes together with line segments.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-321"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-322"></span>
 <img src="images/trees/tree-diagram2.svg" alt="Common elements of a tree diagram" width="85%" />
 <p class="caption">
 Figure 29.2: Common elements of a tree diagram
@@ -565,7 +566,7 @@ Figure 29.2: Common elements of a tree diagram
 <h2><span class="header-section-number">29.3</span> Binary Trees</h2>
 <p>One special kind of decision trees are binary trees. They are called <em>binary</em>
 because the nodes are only partitioned in two (see diagram below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-322"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-323"></span>
 <img src="images/trees/tree-binary-diagram1.svg" alt="Example of a binary tree diagram" width="85%" />
 <p class="caption">
 Figure 29.3: Example of a binary tree diagram
@@ -594,10 +595,10 @@ the condition <code>Petal.Length &lt; 2.45</code>. This condition splits the dim
 inches, and another region with petal length values greater than or equal to
 2.45 inches. Likewise, the second split is based on the condition
 <code>Petal.Width &lt; 1.75</code>, which results in two regions along this dimension.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-323-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-324-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Suppose we have two quantitative predictors <span class="math inline">\(X_1\)</span>, and <span class="math inline">\(X_2\)</span>, like in the image
 below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-324"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-325"></span>
 <img src="images/trees/regions-tree0.svg" alt="Two-dimensional feature space" width="35%" />
 <p class="caption">
 Figure 29.4: Two-dimensional feature space
@@ -605,7 +606,7 @@ Figure 29.4: Two-dimensional feature space
 </div>
 <p>Generally, we create partitions by iteratively splitting one of the predictors
 into two regions. For example, a first split could be based on <span class="math inline">\(X_1 = t_1\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-325"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-326"></span>
 <img src="images/trees/regions-tree1.svg" alt="First partition" width="85%" />
 <p class="caption">
 Figure 29.5: First partition
@@ -613,7 +614,7 @@ Figure 29.5: First partition
 </div>
 <p>A second split could be produced on a partition for <span class="math inline">\(X_2\)</span>. If <span class="math inline">\(X_1 \leq t_1\)</span>,
 split on <span class="math inline">\(X_2 = t_2\)</span>. This results in two regions: <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-326"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-327"></span>
 <img src="images/trees/regions-tree2.svg" alt="Second partition" width="85%" />
 <p class="caption">
 Figure 29.6: Second partition
@@ -621,21 +622,21 @@ Figure 29.6: Second partition
 </div>
 <p>A third split may be detected on the preliminary region <span class="math inline">\(B\)</span>. If <span class="math inline">\(X_1 &gt; t_1\)</span>,
 split on <span class="math inline">\(X_3 = t_3\)</span>. This results in two regions: <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-327"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-328"></span>
 <img src="images/trees/regions-tree3.svg" alt="Third partition" width="85%" />
 <p class="caption">
 Figure 29.7: Third partition
 </p>
 </div>
 <p>Then, another partition on region <span class="math inline">\(D\)</span>, if <span class="math inline">\(X_2 = t_4\)</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-328"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-329"></span>
 <img src="images/trees/regions-tree4.svg" alt="Fourth partition" width="85%" />
 <p class="caption">
 Figure 29.8: Fourth partition
 </p>
 </div>
 <p>At the end, with four splits, the feature space is divided in five regions:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-329"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-330"></span>
 <img src="images/trees/regions-tree5.svg" alt="Regions of feature space" width="85%" />
 <p class="caption">
 Figure 29.9: Regions of feature space
