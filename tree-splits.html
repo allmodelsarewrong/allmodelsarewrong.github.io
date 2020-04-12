@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>30 Binary Splits and Impurity | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="30 Binary Splits and Impurity | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="30 Binary Splits and Impurity | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree-splits.html"/>
-<link rel="next" href="bagging.html"/>
+<link rel="prev" href="trees.html"/>
+<link rel="next" href="tree-basics.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -501,134 +501,452 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree-basics" class="section level1">
-<h1><span class="header-section-number">31</span> Building Binary Trees</h1>
-<div id="algorithm-1" class="section level2">
-<h2><span class="header-section-number">31.1</span> Algorithm</h2>
-<p>In a given node:</p>
+<div id="tree-splits" class="section level1">
+<h1><span class="header-section-number">30</span> Binary Splits and Impurity</h1>
+<p>The tree building process requires three main components</p>
 <ul>
-<li><p>For each variable feature <span class="math inline">\(X_j\)</span></p>
-<ul>
-<li>Determine the number of binary splits</li>
-<li>For each binary split:
-<ul>
-<li>compute impurity for left node</li>
-<li>compute impurity for right node</li>
-<li>calculate and store reduction in impurity</li>
-</ul></li>
-</ul></li>
-<li><p>Find the best splitting feature <span class="math inline">\(X_j\)</span> that has the maximum reduction in
-impurity</p></li>
+<li><p>Establish the set of admissible divisions for each node: compute all possible
+binary splits.</p></li>
+<li><p>Define a criterion to find the “best” node split: some optimization criterion
+to be optimized. This is turn, requires determining some measure of
+heterogeneity (within a given node).</p></li>
+<li><p>Determine a rule to declare a given node as either internal node, or leaf node.</p></li>
 </ul>
-<p>Once you find the optimal split, perform the split, and repeat the above
-procedure for the new child nodes.</p>
+<p>Let’s review these components.</p>
+<div id="binary-partitions" class="section level2">
+<h2><span class="header-section-number">30.1</span> Binary Partitions</h2>
+<p>In binary segmentation trees, the set of admissible splits for each node
+depends on the nature of the segmentation variables in the data. Predictor
+variables can be of different type. In practice, most variables are of
+categorical nature although sometimes continuous variables may be present.
+We can divide them in four classes:</p>
+<ol style="list-style-type: decimal">
+<li>Binary variables</li>
+<li>Ordinal variables</li>
+<li>Nominal variables</li>
+<li>Continuous variables</li>
+</ol>
+<p>The number of possible binary splits for each type of segmentation variable is
+described below.</p>
+<div id="splits-of-binary-variables" class="section level3">
+<h3><span class="header-section-number">30.1.1</span> Splits of Binary variables</h3>
+<p>Because binary variables have two values, they only generate one binary
+partition. For example, the variable <em>Gender</em> with two values, female and male,
+can only de divided in one possible way.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-332"></span>
+<img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
+<p class="caption">
+Figure 30.1: Example of a binary partition for a binary variable
+</p>
 </div>
-<div id="stopping-criteria" class="section level2">
-<h2><span class="header-section-number">31.2</span> Stopping Criteria</h2>
-<p>In no particular order of importance, here are a few criteria for stopping
-splitting. Stop splitting a node when/if:</p>
-<ul>
-<li><p>A node is pure (i.e. a node contains objects of only one class)</p></li>
-<li><p>You run out of features (that is, there are no more features to split with)</p></li>
-<li><p>A (pre-specified) minimum number of objects in a node is reached. For example,
-stop splitting when a node contains only 20 elements.</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>minsplit</code> parameter.</li>
-</ul></li>
-<li><p>Size of resulting nodes would be “too small” (e.g. 10, 15, 20, etc.)</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the  parameter.</li>
-<li>Typically <code>minsplit &gt; minbucket</code></li>
-</ul></li>
-<li><p>Depth level</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>maxdepth</code> parameter.</li>
-</ul></li>
-<li><p>Complexity: minimum improvement from a given partition.</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>cp</code> (complexity parameter)
-parameter.</li>
-</ul></li>
-</ul>
 </div>
-<div id="cost-of-a-tree" class="section level2">
-<h2><span class="header-section-number">31.3</span> Cost of a Tree</h2>
-<p>Th3 total <strong>cost</strong> (or error) of a tree is</p>
+<div id="splits-of-nominal-variables" class="section level3">
+<h3><span class="header-section-number">30.1.2</span> Splits of Nominal Variables</h3>
+<p>A nominal variable may have many categories and the number of binary splits
+depends on the number of distinct categories for the corresponding variable.
+The total number of possible binary partitions for a nominal variable with <span class="math inline">\(q\)</span>
+categories is</p>
 <p><span class="math display">\[
-\text{Cost}(\mathrm{Tree}) = \sum_{T} ( \text{misclass}_i ) + \lambda \hspace{1mm} |T|
+2^{q-1} - 1
 \]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> would be determined using cross-validation.</p>
-<p>Typically, you will grow a very large tree, and then perform pruning. To prune,
-you might use cross-validation to find the subtree <span class="math inline">\(T&#39; \subseteq T\)</span> that results
-in the smallest cost.</p>
+<p>For example, suppose a variable <em>Color</em> with three
+categories: Green, White and Red. The number of binary splits is</p>
+<p><span class="math display">\[
+2^{3-1} - 1 = 3
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-333"></span>
+<img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
+<p class="caption">
+Figure 30.2: Example of binary splits for a nominal variable
+</p>
 </div>
-<div id="pros-and-cons-of-trees" class="section level2">
-<h2><span class="header-section-number">31.4</span> Pros and Cons of Trees</h2>
-<p>Let’s review some of the advantages and disadvantages of trees.</p>
-<div id="advantages-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.1</span> Advantages of Trees</h3>
+</div>
+<div id="splits-of-ordinal-variables" class="section level3">
+<h3><span class="header-section-number">30.1.3</span> Splits of Ordinal Variables</h3>
+<p>Binary splits for ordinal variables must respect the order property of the
+categories, that is, the grouping of categories must preserve the order among
+the values. The total number of binary partitions for an ordinal variable with
+<span class="math inline">\(q\)</span> categories is</p>
+<p><span class="math display">\[
+q-1
+\]</span></p>
+<p>For example, the <em>Apparel size</em> may have four
+categories: small (S), medium (M), large (L) and extra-large (XL). In this
+case, the number of binary splits will be</p>
+<p><span class="math display">\[
+4-1 = 3
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-334"></span>
+<img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
+<p class="caption">
+Figure 30.3: Example of binary splits for an ordinal variable
+</p>
+</div>
+</div>
+<div id="splits-continuous-variables" class="section level3">
+<h3><span class="header-section-number">30.1.4</span> Splits Continuous variables</h3>
+<p>The treatment for continuous variables depends on the number of different
+values the variable takes. Suppose a continuous variable with <span class="math inline">\(q\)</span> different
+values. If we consider that <span class="math inline">\(q\)</span> is “adequate” in some sense, we can treat the
+continuous variable like an ordinal variable. If we consider <span class="math inline">\(q\)</span> to be large we
+may group its values and reduced their number in <span class="math inline">\(q^*\)</span> (<span class="math inline">\(q^*&lt;q\)</span>). In both cases,
+the variable is treated as an ordinal variable and the number of binary splits
+will be</p>
+<p><span class="math display">\[
+q-1 \quad \text{or} \quad q^*-1
+\]</span></p>
+<p>For example, imagine the continuous variable <em>Age</em>
+(measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
+splits is</p>
+<p><span class="math display">\[
+5 - 1 = 4
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-335"></span>
+<img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
+<p class="caption">
+Figure 30.4: Example of binary splits for a continuous variable
+</p>
+</div>
+</div>
+</div>
+<div id="measures-of-impurity" class="section level2">
+<h2><span class="header-section-number">30.2</span> Measures of Impurity</h2>
+<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> points,
+and <span class="math inline">\(2\)</span> classes; one class denoted as <span class="math inline">\(\bigcirc\)</span>, the other denoted as
+<span class="math inline">\(\Delta\)</span>; both classes having <span class="math inline">\(7\)</span> objects. Suppose this node splits in
+the following manner:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-336"></span>
+<img src="images/trees/entropy-toy0.svg" alt="Hypothetical split of a node" width="60%" />
+<p class="caption">
+Figure 30.5: Hypothetical split of a node
+</p>
+</div>
+<p>We have an intuitive feeling that the parent node has more heterogeneity than
+its child nodes. In fact, this is a general result: a split cannot result in
+child nodes with more heterogeneity than the parent node. Stated differently,
+you can never do worse than the parent node.</p>
+<p>In the parent node of the previous figure, the proportion of <span class="math inline">\(\bigcirc\)</span> equals
+the proportion of <span class="math inline">\(\Delta\)</span>. In other words, there is an equal probability of
+being a <span class="math inline">\(\bigcirc\)</span> as there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node,
+there is a higher chance of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is
+true of the right node).</p>
+<p>Most measures of heterogeneity (and therefore homogeneity) relate to
+proportions. Let’s spitball some ideas as to how to do this:</p>
 <ul>
-<li><p>They work for both types of responses: 1) categorical and 2) quantitative.
-When dealing with a categorical response we talk about classification tree;
-when dealing with a quantitative response we talk about regression tree.</p></li>
-<li><p>They work with <strong>any</strong> type of predictors: binary, nominal, ordinal,
-continuous, even with missing values.</p></li>
-<li><p>Another advtange is that there almost no need to preprocess data for a
-decision tree. This is very rare among statistical methods.</p></li>
-<li><p>Likewise, decision trees make no stochastic assumptions: e.g. no normality
-assumptions, or other specific distributions.</p></li>
-<li><p>In general, they tend to have low bias.</p></li>
-<li><p>The graphical display of a tree tends to be aasy to read and interpret (at
-least the main output; there are some summary statistics that might require
-further background knowledge).</p></li>
+<li><p><span class="math inline">\(\mathrm{prop}(\bigcirc) - \mathrm{prop}(\Delta)\)</span>; you would need to assign
+some sort of interpretation to the value <span class="math inline">\(0\)</span> in this case.</p></li>
+<li><p>Entropy (information, as viewed from a computer science standpoint). Could
+also refer to this as a measure of “disorder” within a node.</p></li>
+<li><p>Impurity (how mixed, diverse)</p></li>
 </ul>
+<div id="entropy" class="section level3">
+<h3><span class="header-section-number">30.2.1</span> Entropy</h3>
+<p>Let’s start with an (abstract) toy example: say we have a set of 12 objects,
+all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-337"></span>
+<img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
+<p class="caption">
+Figure 30.6: Set of 12 objects of same type
+</p>
 </div>
-<div id="disadvantages-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.2</span> Disadvantages of Trees</h3>
+<p>If we randomly select an object from this box, we have zero uncertainty about
+its class: in other words, there is <strong>zero entropy</strong> associated with this
+situation.</p>
+<p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-338"></span>
+<img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
+<p class="caption">
+Figure 30.7: Set with two different types of objects
+</p>
+</div>
+<p>If we were to draw an object from this box, there would be <em>some</em> amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.</p>
+<p>Finally, in the most extreme case, say we have 12 objects of different classes:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-339"></span>
+<img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
+<p class="caption">
+Figure 30.8: Set with 12 different types of objects
+</p>
+</div>
+<p>We are quite uncertain as to the classes of objects drawn from this box;
+that is, we have <strong>maximum entropy</strong>.</p>
+<p>In Short: the intuition behind entropy relates to how “mixed” a box is, with
+respect to the classes contained inside. If a box is “pure” (i.e. has only one
+class), it has zero entropy where as if a box is “highly impure” (i.e. has many
+different classes), it has some nonzero amount of entropy.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-340"></span>
+<img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
+<p class="caption">
+Figure 30.9: Set with 12 different types of objects
+</p>
+</div>
+<p>Now, let’s see how we can link our idea of entropy with the idea of
+<em>probability</em>. From the examples above, we can see the following relationship:</p>
+<p><span class="math display">\[
+\begin{array}{lcl} \text{large probability} &amp; \Rightarrow &amp; \text{small entropy value} \\ 
+\text{small probability} &amp; \Rightarrow &amp; \text{large entropy value} \\ 
+\end{array}
+\]</span></p>
+<p>Hence, it makes sense to try and model entropy as a function of <span class="math inline">\(P\)</span>, the probability of selecting a certain class. From our discussion above, we see
+that our entropy function should be small when <span class="math inline">\(P\)</span> is around 1, and large when
+<span class="math inline">\(P\)</span> is around <span class="math inline">\(0\)</span>.</p>
+<p>There are quite a few functions that display this behavior. The one we will use
+is the logarithm, of any base <span class="math inline">\(b\)</span>. Note that</p>
+<p><span class="math display">\[
+\log_b(P) : [0, 1] \to (-\infty, 0)
+\]</span></p>
+<p>That is, since our probability values are restricted to lie in the unit interval,
+the entropy will lie somewhere on the negative real axis.</p>
+</div>
+<div id="the-math-behind-entropy" class="section level3">
+<h3><span class="header-section-number">30.2.2</span> The Math Behind Entropy</h3>
+<p>Letting <span class="math inline">\(H(\text{node})\)</span> denote the entropy of a particular node, we use the
+following definition:</p>
+<p><span class="math display">\[
+H(\text{node}) = - \sum_{k=1}^{h} p_k \log_2(p_k)
+\]</span></p>
+<p>where <span class="math inline">\(p_k\)</span> denotes the probability of randomly selecting an object that comes
+from class <span class="math inline">\(k\)</span>. Note that convention dictates that we use a log of base 2. The
+reason rationale behind picking <span class="math inline">\(2\)</span> comes from information theory, as base-2
+logs can be interpreted in terms of bits.</p>
+<p>Let’s see if this definition of entropy is consistent with our intuition. For
+example, let us consider a <strong>pure</strong> node; that is, a node in which all
+objects share the same class. In this case <span class="math inline">\(p_k = 1\)</span>, and we have only one
+class so</p>
+<p><span class="math display">\[
+H(\text{node}) = -(1) \cdot \log_2(1) = 0 \cdot 0 = 0
+\]</span></p>
+<p>Now, for our second example above, we have <span class="math inline">\(h = 2\)</span> classes with <span class="math inline">\(p_1 = 9/12\)</span>
+and <span class="math inline">\(p_2 = 3/12\)</span>, so that</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+&amp;= - \frac{9}{12} \log_2\left( \frac{9}{12} \right) - \frac{3}{12} \log_2\left( \frac{3}{12} \right) \approx 0.8112
+\end{align*}\]</span></p>
+<p>In a node where there is a 50-50 split, we have</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+&amp;= - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
+\end{align*}\]</span></p>
+<p>The following figure depicts several examples of sets and their entropy values.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-341"></span>
+<img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
+<p class="caption">
+Figure 30.10: Different sets with their entropy values
+</p>
+</div>
+</div>
+<div id="gini-impurity" class="section level3">
+<h3><span class="header-section-number">30.2.3</span> Gini Impurity</h3>
+<p>Let us return to our box example from the previous section. Let’s suppose I
+select a ball, and note what class it belongs to. I then ask you (without
+giving you any information about the box, other than the fact that there are
+<span class="math inline">\(\bigcirc\)</span>’s and <span class="math inline">\(\square\)</span>’s), and ask you to guess what my selected object
+belongs to. There are 4 possible outcomes to this situation:</p>
 <ul>
-<li><p>They suffer from high variance (this is perhaps the main “Achilles’ heel” of
-decision trees).</p></li>
-<li><p>They highly depend on the training set. That is, given a different training
-set, there is a high chance that you will obtain a different tree. Which means
-they are prone to overfitting.</p></li>
-<li><p>Because of this dependency, they also tend to have high variance.</p></li>
-<li><p>Training a decision tree requires a reasonably large number of observations:
-as a rule of thumb there should be at least 30-50 observations per node.</p></li>
-<li><p>Recall that decision trees produce splits which involve rectangular regions
-in the feature space which may not necessarily match the distribution of the
-observations.</p></li>
-<li><p>Finding the optimal sweetspot in BV tradeoff is difficult (depth can only
-take integer values).</p></li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
 </ul>
-</div>
-<div id="bias-variance-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.3</span> Bias-Variance of Trees</h3>
-<p>The typical error curves of decision trees are illustrated in the following
-diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-349"></span>
-<img src="images/trees/error-curve-trees0.svg" alt="Typical error curves of decision trees" width="70%" />
+<p>The Gini index pays attention to the <strong>misclassifications</strong>; that is, the
+situations in which your guess was wrong. For instance, in our example above,
+there are a total of 2 possible misclassifications.</p>
+<p>Now, suppose we know that we are in the second box (where there are 9
+<span class="math inline">\(\bigcirc\)</span>’s and 3 <span class="math inline">\(\square\)</span>’s). The Gini Index would be computed as follows:</p>
+<p><span class="math display">\[\begin{align*}
+\text{Gini Index} &amp; = \underbrace{ Prob(\bigcirc) }_{\text{me}} \underbrace{ Prob(\square) }_{\text{you}} + \underbrace{ Prob(\square) }_{\text{me}} \underbrace{ Prob(\bigcirc) }_{\text{you}} \\
+&amp; = \left( \frac{9}{12} \right) \left( \frac{3}{12} \right)  +  \left( \frac{3}{12} \right) \left( \frac{9}{12} \right)  = \frac{1}{8} = 0.375
+\end{align*}\]</span></p>
+<p>The general definition for the Gini Index is as follows:</p>
+<p><span class="math display">\[
+\sum_{k=1}^{h} Pr(k) \left[ 1- Pr(k) \right] = 1 - \sum_{k=1}^{h} Pr^2(k) = \sum_{k \neq \ell} Pr(k) Pr(\ell)
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-342"></span>
+<img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
 <p class="caption">
-Figure 31.1: Typical error curves of decision trees
+Figure 30.11: Different sets with their gini impurities
 </p>
 </div>
-<p>Small trees (i.e. small depth) tend to have a bias problem (underfitting).
-Conversely, large trees (i.e. large depth) tend to have a variance problem
-(overfitting).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-350"></span>
-<img src="images/trees/error-curve-trees1.svg" alt="Bias-Variance problem of trees" width="70%" />
+</div>
+<div id="toy-example-3" class="section level3">
+<h3><span class="header-section-number">30.2.4</span> Toy Example</h3>
+<p>Let us return to our credit data example.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">gender</th>
+<th align="left">job</th>
+<th align="left">region</th>
+<th align="left">status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td align="left">male</td>
+<td align="left">yes</td>
+<td align="left">A</td>
+<td align="left">good</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td align="left">female</td>
+<td align="left">yes</td>
+<td align="left">B</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td align="left">male</td>
+<td align="left">no</td>
+<td align="left">C</td>
+<td align="left">good</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td align="left">female</td>
+<td align="left">yes</td>
+<td align="left">B</td>
+<td align="left">good</td>
+</tr>
+<tr class="odd">
+<td>e</td>
+<td align="left">male</td>
+<td align="left">no</td>
+<td align="left">A</td>
+<td align="left">bad</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td align="left">female</td>
+<td align="left">no</td>
+<td align="left">B</td>
+<td align="left">bad</td>
+</tr>
+<tr class="odd">
+<td>g</td>
+<td align="left">male</td>
+<td align="left">yes</td>
+<td align="left">C</td>
+<td align="left">bad</td>
+</tr>
+<tr class="even">
+<td>h</td>
+<td align="left">female</td>
+<td align="left">no</td>
+<td align="left">C</td>
+<td align="left">bad</td>
+</tr>
+</tbody>
+</table>
+<p>Let us encode <span class="math inline">\(\text{good}\)</span> as a circle <span class="math inline">\(\bigcirc\)</span>, and let us encode
+<span class="math inline">\(\text{bad}\)</span> as a square <span class="math inline">\(\square\)</span>. Our root node then contains 8 objects,
+with a 50-50 split in credit scores:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-343"></span>
+<img src="images/trees/entropy-toy-root.svg" alt="Root node" width="30%" />
 <p class="caption">
-Figure 31.2: Bias-Variance problem of trees
+Figure 30.12: Root node
 </p>
 </div>
-<p>Because the depth of trees is measure in iteger steps (not in a continuous scale),
-it is very difficult to find the “sweet spot” for the right depth level.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-351"></span>
-<img src="images/trees/error-curve-trees2.svg" alt="Bias-Variance problem of trees" width="70%" />
+<p>The entropy of the root node would therefore be</p>
+<p><span class="math display">\[
+H(\text{root}) = - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right) }_{\text{good}} - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right)  }_{\text{bad}} = 1
+\]</span></p>
+<div id="partition-by-gender" class="section level4 unnumbered">
+<h4>Partition by Gender</h4>
+<p>Now, say we choose to partition by gender, Our parent node would then split as
+follows:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-344"></span>
+<img src="images/trees/entropy-toy-gender.svg" alt="Split by gender" width="65%" />
 <p class="caption">
-Figure 31.3: Bias-Variance problem of trees
+Figure 30.13: Split by gender
 </p>
 </div>
+<p>Each of these child nodes have the same entropy:</p>
+<p><span class="math display">\[
+H(\text{left}) =  -\frac{1}{2} \log_2\left( \frac{1}{2} \right)  -\frac{1}{2} \log_2\left( \frac{1}{2} \right)  = 1 = H(\text{right})
+\]</span></p>
+<p>Now, we want to compare the combined entropies of these two child nodes and the
+entropy of the root node. That is, we compare</p>
+<p><span class="math display">\[
+H(\text{root}) \quad \text{-vs-} \quad \left( \frac{4}{8} \right) H(\text{left}) + \left( \frac{4}{8} \right) H(\text{right})
+\]</span></p>
+<p>Hence, let us define the <strong>information gain</strong> by the quantity</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp; = H(\text{root}) - \left[ \left( \frac{4}{8} \right) H(\text{left}) + \left( \frac{4}{8} \right) H(\text{right})  \right] \\
+&amp; = 1 - \left[ \frac{4}{8} + \frac{4}{8} \right] = 1 - 1 = 0 
+\end{align*}\]</span></p>
+<p>In this way, we see that gender is not a good predictor to base our partitions
+on.</p>
+</div>
+<div id="partition-by-job" class="section level4 unnumbered">
+<h4>Partition by Job</h4>
+<p>If we decide to partition by job, the parent node would then split as:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-345"></span>
+<img src="images/trees/entropy-toy-job.svg" alt="Split by job" width="65%" />
+<p class="caption">
+Figure 30.14: Split by job
+</p>
+</div>
+<p>The left node has an entropy of:</p>
+<p><span class="math display">\[
+H(\text{left}) =  -\frac{3}{4} \log_2\left( \frac{3}{4} \right)  -\frac{1}{4} \log_2\left( \frac{1}{4} \right) \approx 0.8112
+\]</span></p>
+<p>whereas the right node has an entropy of:</p>
+<p><span class="math display">\[
+H(\text{right}) =  -\frac{1}{4} \log_2\left( \frac{1}{4} \right)  -\frac{3}{4} \log_2\left( \frac{3}{4} \right) \approx 0.8112
+\]</span></p>
+<p>The information gain <span class="math inline">\(\Delta I\)</span> is thus:</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{1}{2} (0.8112) - \frac{1}{2} (0.8112) \\
+&amp;\approx 0.1888
+\end{align*}\]</span></p>
+</div>
+<div id="partition-by-region" class="section level4 unnumbered">
+<h4>Partition by Region</h4>
+<p>What splitting the root node based on the categories of region? Note that
+region is a nominal qualitative variable with three categories, which means
+that there will be three possible binary partitions.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-346"></span>
+<img src="images/trees/entropy-toy-region.svg" alt="Splits by region" width="95%" />
+<p class="caption">
+Figure 30.15: Splits by region
+</p>
+</div>
+<p>Region A -vs- Reiongs B,C</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{1}{2} (1) - \frac{1}{2} (1) \\
+&amp;= 0
+\end{align*}\]</span></p>
+<p>Region B -vs- Reiongs A,C</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{3}{8} (0.9183) - \frac{5}{8} (0.9709) \\
+&amp;\approx 0.0488
+\end{align*}\]</span></p>
+<p>Region C -vs- Reiongs A,B</p>
+<p><span class="math display">\[\begin{align*}
+\Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
+&amp;= 1 - \frac{3}{8} (0.9183) - \frac{5}{8} (0.9709) \\
+&amp;\approx 0.04888
+\end{align*}\]</span></p>
+</div>
+<div id="comparing-the-splits" class="section level4 unnumbered">
+<h4>Comparing the splits</h4>
+<p>As a summary, here are the following splits and the associated information
+gains:</p>
+<p><img src="images/trees/entropy-toy-splits.svg" width="45%" style="display: block; margin: auto;" /></p>
+<p>We therefore see that splitting based on <span class="math inline">\(\text{Job}\)</span> yields the best split
+(i.e. the split with the highest information gain).</p>
+<p>In practice, this is the procedure that you would have to carry out. Try
+splitting based on <strong>all</strong> of the variables and compute the associated
+information gains, and visually ascertain which split results in the highest
+information gain. If there are ties in <span class="math inline">\(\Delta I\)</span> values, it is customary to
+randomly select one to have a higher ranking than the other.</p>
 
+</div>
 </div>
 </div>
 </div>
@@ -637,8 +955,8 @@ Figure 31.3: Bias-Variance problem of trees
           </div>
         </div>
       </div>
-<a href="tree-splits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bagging.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tree-basics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

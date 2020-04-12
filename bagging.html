@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>32 Bagging | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="32 Bagging | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="32 Bagging | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree-splits.html"/>
-<link rel="next" href="bagging.html"/>
+<link rel="prev" href="tree-basics.html"/>
+<link rel="next" href="forest.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -501,135 +501,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree-basics" class="section level1">
-<h1><span class="header-section-number">31</span> Building Binary Trees</h1>
-<div id="algorithm-1" class="section level2">
-<h2><span class="header-section-number">31.1</span> Algorithm</h2>
-<p>In a given node:</p>
-<ul>
-<li><p>For each variable feature <span class="math inline">\(X_j\)</span></p>
-<ul>
-<li>Determine the number of binary splits</li>
-<li>For each binary split:
-<ul>
-<li>compute impurity for left node</li>
-<li>compute impurity for right node</li>
-<li>calculate and store reduction in impurity</li>
-</ul></li>
-</ul></li>
-<li><p>Find the best splitting feature <span class="math inline">\(X_j\)</span> that has the maximum reduction in
-impurity</p></li>
-</ul>
-<p>Once you find the optimal split, perform the split, and repeat the above
-procedure for the new child nodes.</p>
+<div id="bagging" class="section level1">
+<h1><span class="header-section-number">32</span> Bagging</h1>
+<div id="introduction-7" class="section level2">
+<h2><span class="header-section-number">32.1</span> Introduction</h2>
+<p>Bagging is the acronym for “bootstrap aggregating”, a method developped by
+Leo Breiman in the early 1990s, and officially published in his paper
+<em>Bagging Predictors</em>, in the <a href="https://link.springer.com/article/10.1023/A:1018054314350">Machine Learning</a> journal.
+A preliminary report is still available in his archived personal website:</p>
+<p><a href="https://www.stat.berkeley.edu/~breiman/bagging.pdf" class="uri">https://www.stat.berkeley.edu/~breiman/bagging.pdf</a></p>
+<p>We will not discuss bagging in detail, rather we will only focus on its
+conceptual essence, following Leo’s description: " a method for generating
+multiple versions of a predictor and using these to get an aggregated predictor".</p>
+<div id="idea-of-bagging" class="section level3">
+<h3><span class="header-section-number">32.1.1</span> Idea of Bagging</h3>
+<p>Suppose that, given our initial dataset <span class="math inline">\(\mathcal{D}\)</span>, we are able to obtain
+<span class="math inline">\(M\)</span> new datasets <span class="math inline">\(\{\mathcal{D_m}\}_{m=1}^{M}\)</span>. From each <span class="math inline">\(\mathcal{D_m}\)</span> we
+obtain a model <span class="math inline">\(h_m\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-353"></span>
+<img src="images/trees/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
+<p class="caption">
+Figure 32.1: Several data sets and fitted models
+</p>
 </div>
-<div id="stopping-criteria" class="section level2">
-<h2><span class="header-section-number">31.2</span> Stopping Criteria</h2>
-<p>In no particular order of importance, here are a few criteria for stopping
-splitting. Stop splitting a node when/if:</p>
-<ul>
-<li><p>A node is pure (i.e. a node contains objects of only one class)</p></li>
-<li><p>You run out of features (that is, there are no more features to split with)</p></li>
-<li><p>A (pre-specified) minimum number of objects in a node is reached. For example,
-stop splitting when a node contains only 20 elements.</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>minsplit</code> parameter.</li>
-</ul></li>
-<li><p>Size of resulting nodes would be “too small” (e.g. 10, 15, 20, etc.)</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the  parameter.</li>
-<li>Typically <code>minsplit &gt; minbucket</code></li>
-</ul></li>
-<li><p>Depth level</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>maxdepth</code> parameter.</li>
-</ul></li>
-<li><p>Complexity: minimum improvement from a given partition.</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>cp</code> (complexity parameter)
-parameter.</li>
-</ul></li>
-</ul>
-</div>
-<div id="cost-of-a-tree" class="section level2">
-<h2><span class="header-section-number">31.3</span> Cost of a Tree</h2>
-<p>Th3 total <strong>cost</strong> (or error) of a tree is</p>
+<p>Define the <strong>average model</strong> <span class="math inline">\(\bar{h}(x)\)</span> to be</p>
 <p><span class="math display">\[
-\text{Cost}(\mathrm{Tree}) = \sum_{T} ( \text{misclass}_i ) + \lambda \hspace{1mm} |T|
+\bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
 \]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> would be determined using cross-validation.</p>
-<p>Typically, you will grow a very large tree, and then perform pruning. To prune,
-you might use cross-validation to find the subtree <span class="math inline">\(T&#39; \subseteq T\)</span> that results
-in the smallest cost.</p>
-</div>
-<div id="pros-and-cons-of-trees" class="section level2">
-<h2><span class="header-section-number">31.4</span> Pros and Cons of Trees</h2>
-<p>Let’s review some of the advantages and disadvantages of trees.</p>
-<div id="advantages-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.1</span> Advantages of Trees</h3>
-<ul>
-<li><p>They work for both types of responses: 1) categorical and 2) quantitative.
-When dealing with a categorical response we talk about classification tree;
-when dealing with a quantitative response we talk about regression tree.</p></li>
-<li><p>They work with <strong>any</strong> type of predictors: binary, nominal, ordinal,
-continuous, even with missing values.</p></li>
-<li><p>Another advtange is that there almost no need to preprocess data for a
-decision tree. This is very rare among statistical methods.</p></li>
-<li><p>Likewise, decision trees make no stochastic assumptions: e.g. no normality
-assumptions, or other specific distributions.</p></li>
-<li><p>In general, they tend to have low bias.</p></li>
-<li><p>The graphical display of a tree tends to be aasy to read and interpret (at
-least the main output; there are some summary statistics that might require
-further background knowledge).</p></li>
-</ul>
-</div>
-<div id="disadvantages-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.2</span> Disadvantages of Trees</h3>
-<ul>
-<li><p>They suffer from high variance (this is perhaps the main “Achilles’ heel” of
-decision trees).</p></li>
-<li><p>They highly depend on the training set. That is, given a different training
-set, there is a high chance that you will obtain a different tree. Which means
-they are prone to overfitting.</p></li>
-<li><p>Because of this dependency, they also tend to have high variance.</p></li>
-<li><p>Training a decision tree requires a reasonably large number of observations:
-as a rule of thumb there should be at least 30-50 observations per node.</p></li>
-<li><p>Recall that decision trees produce splits which involve rectangular regions
-in the feature space which may not necessarily match the distribution of the
-observations.</p></li>
-<li><p>Finding the optimal sweetspot in BV tradeoff is difficult (depth can only
-take integer values).</p></li>
-</ul>
-</div>
-<div id="bias-variance-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.3</span> Bias-Variance of Trees</h3>
-<p>The typical error curves of decision trees are illustrated in the following
-diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-349"></span>
-<img src="images/trees/error-curve-trees0.svg" alt="Typical error curves of decision trees" width="70%" />
+<p>which we can add to our previous diagram and get an updated figure:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-354"></span>
+<img src="images/trees/bagging-idea2.svg" alt="Empirical average model" width="50%" />
 <p class="caption">
-Figure 31.1: Typical error curves of decision trees
+Figure 32.2: Empirical average model
 </p>
 </div>
-<p>Small trees (i.e. small depth) tend to have a bias problem (underfitting).
-Conversely, large trees (i.e. large depth) tend to have a variance problem
-(overfitting).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-350"></span>
-<img src="images/trees/error-curve-trees1.svg" alt="Bias-Variance problem of trees" width="70%" />
+<p>As the number of data sets increases, i.e. a very large number <span class="math inline">\(M \to \infty\)</span>,
+our average model will approach the theoretical average hypothesis:</p>
+<p><span class="math display">\[
+\bar{h}(x) \to \text{avg. hypothesis} \hspace{5mm} \text{as} \hspace{5mm} M \to \infty
+\]</span></p>
+<p>Now, there’s a catch: we don’t usually have <span class="math inline">\(M\)</span> independent datasets. What we
+can do is to resample from <span class="math inline">\(\mathcal{D}\)</span>, sampling with replacement.
+If <span class="math inline">\(|\mathcal{D}| = n\)</span>, we wish to produce a set of data sets
+<span class="math inline">\(\{\mathcal{D_m} \}_{m=1}^{M}\)</span> with
+<span class="math inline">\(|\mathcal{D_m}|=n\)</span>; that is, these are <strong>bootstrap samples</strong>. Now given these
+<span class="math inline">\(M\)</span> bootstrap samples, we proceed as we did in our theoretical experiment above:
+generate <span class="math inline">\(\{h_m \}_{m=1}^{M}\)</span>, and define</p>
+<p><span class="math display">\[
+\bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
+\]</span></p>
+<p>Now, we do not have the weak law of large numbers, because these
+<span class="math inline">\(\mathcal{D_m}\)</span>’s are not independent. However, it turns out that despite this,
+<span class="math inline">\(\bar{h}(x)\)</span> gets quite close to the true average hypothesis.</p>
+<p>This process of taking bootstrap samples, averaging, and using this to
+approximate the average hypothesis is known as <strong>bagging</strong>, which is a
+portmanteau of <strong>bootstrap-aggregation</strong>.</p>
+</div>
+</div>
+<div id="why-bother-bagging" class="section level2">
+<h2><span class="header-section-number">32.2</span> Why Bother Bagging?</h2>
+<p>Recall the bias-variance decomposition. Given a learning data set <span class="math inline">\(\mathcal{D}\)</span>
+of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>, the expectation of the Squared Error
+for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all possible learning sets, is
+expressed as:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
+\]</span></p>
+<p>When we have a noisy target <span class="math inline">\(y = f(x) + \epsilon\)</span>, with <span class="math inline">\(\epsilon\)</span> a zero-mean
+noise random variable with variance <span class="math inline">\(\sigma^2\)</span>, the bias-variance decomposition
+becomes:</p>
+<p><span class="math display">\[
+\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - y_0 \right)^2 \right ] = \text{var} + \text{bias}^2 + \sigma^2
+\]</span></p>
+<p>which can be expanded as:</p>
+<p><span class="math display">\[\begin{align*}
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) + \epsilon \right)^2 \right ] &amp;= 
+\underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} \\ 
+&amp;+ \underbrace{ \big( \bar{h}(x_0) - f(x_0) \big)^2 }_{\text{bias}^2} \\
+&amp;+ \underbrace{\sigma^2}_{\text{noise}}
+\end{align*}\]</span></p>
+<p>Suppose we only use our training set to fit one model; if this is a decision
+tree, we know it will suffer from high variance and hence there is a strong
+chance this model will be wildly off from the true model. Using bagging,
+however, we are able to reduce variance.</p>
+<p>Now, will bagging increase bias? We know that, in general, reducing variance
+comes at the cost of increasing bias. However, after closer examination of
+bias:</p>
+<p><span class="math display">\[
+\text{Bias}^2 (h(x)) = \big( \bar{h}(x_0) - f(x_0) \big)^2
+\]</span></p>
+<p>you should be able to note that bias does not depend on our individual datasets
+directly. Sure, there is an implicit dependency through the average model,
+however there is no <span class="math inline">\(\mathcal{D}\)</span> in the bias formula bove. Hence, in bagging,
+we can decrease variance while <em>not</em> sacrificing bias.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-355"></span>
+<img src="images/trees/bagging-idea3.svg" alt="Ensemble of models, and bagged model" width="50%" />
 <p class="caption">
-Figure 31.2: Bias-Variance problem of trees
+Figure 32.3: Ensemble of models, and bagged model
 </p>
 </div>
-<p>Because the depth of trees is measure in iteger steps (not in a continuous scale),
-it is very difficult to find the “sweet spot” for the right depth level.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-351"></span>
-<img src="images/trees/error-curve-trees2.svg" alt="Bias-Variance problem of trees" width="70%" />
-<p class="caption">
-Figure 31.3: Bias-Variance problem of trees
-</p>
-</div>
+<p>Surely there is still a cost, somewhere? Well, there is. For one, we lose
+interpretability. But, more importantly, there is a higher computational cost
+associated with bagging (especially in the resample procedure). Luckily, there
+is a “cheat” for this: <em>parallel processing</em>. This resampling procedure is
+highly parallelizable; that is, we could run different parts on different
+computers and combine them in the end. Hence, if we have enough computational
+resources, this should not be a huge problem.</p>
 
-</div>
 </div>
 </div>
             </section>
@@ -637,8 +615,8 @@ Figure 31.3: Bias-Variance problem of trees
           </div>
         </div>
       </div>
-<a href="tree-splits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bagging.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tree-basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="forest.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

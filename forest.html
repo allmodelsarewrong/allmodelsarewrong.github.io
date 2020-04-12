@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>33 Random Forests | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="33 Random Forests | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="31 Building Binary Trees | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="33 Random Forests | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree-splits.html"/>
-<link rel="next" href="bagging.html"/>
+<link rel="prev" href="bagging.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -501,133 +501,124 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tree-basics" class="section level1">
-<h1><span class="header-section-number">31</span> Building Binary Trees</h1>
-<div id="algorithm-1" class="section level2">
-<h2><span class="header-section-number">31.1</span> Algorithm</h2>
-<p>In a given node:</p>
-<ul>
-<li><p>For each variable feature <span class="math inline">\(X_j\)</span></p>
-<ul>
-<li>Determine the number of binary splits</li>
-<li>For each binary split:
-<ul>
-<li>compute impurity for left node</li>
-<li>compute impurity for right node</li>
-<li>calculate and store reduction in impurity</li>
-</ul></li>
-</ul></li>
-<li><p>Find the best splitting feature <span class="math inline">\(X_j\)</span> that has the maximum reduction in
-impurity</p></li>
-</ul>
-<p>Once you find the optimal split, perform the split, and repeat the above
-procedure for the new child nodes.</p>
+<div id="forest" class="section level1">
+<h1><span class="header-section-number">33</span> Random Forests</h1>
+<div id="introduction-8" class="section level2">
+<h2><span class="header-section-number">33.1</span> Introduction</h2>
+<p>Instead of fitting a single tree, we fit several trees (much like the
+different <span class="math inline">\(h_i\)</span>’s in the diagram below).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-357"></span>
+<img src="images/trees/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
+<p class="caption">
+Figure 33.1: Several data sets and fitted models
+</p>
 </div>
-<div id="stopping-criteria" class="section level2">
-<h2><span class="header-section-number">31.2</span> Stopping Criteria</h2>
-<p>In no particular order of importance, here are a few criteria for stopping
-splitting. Stop splitting a node when/if:</p>
-<ul>
-<li><p>A node is pure (i.e. a node contains objects of only one class)</p></li>
-<li><p>You run out of features (that is, there are no more features to split with)</p></li>
-<li><p>A (pre-specified) minimum number of objects in a node is reached. For example,
-stop splitting when a node contains only 20 elements.</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>minsplit</code> parameter.</li>
-</ul></li>
-<li><p>Size of resulting nodes would be “too small” (e.g. 10, 15, 20, etc.)</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the  parameter.</li>
-<li>Typically <code>minsplit &gt; minbucket</code></li>
-</ul></li>
-<li><p>Depth level</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>maxdepth</code> parameter.</li>
-</ul></li>
-<li><p>Complexity: minimum improvement from a given partition.</p>
-<ul>
-<li>In <code>rpart()</code>, this can be specified using the <code>cp</code> (complexity parameter)
-parameter.</li>
-</ul></li>
-</ul>
-</div>
-<div id="cost-of-a-tree" class="section level2">
-<h2><span class="header-section-number">31.3</span> Cost of a Tree</h2>
-<p>Th3 total <strong>cost</strong> (or error) of a tree is</p>
+<p>Now, from a given a bootstrap sample <span class="math inline">\(\mathcal{D_m}\)</span>
+we further take a random sample of features (to obtain <span class="math inline">\(k\)</span> of them). We search
+across these <span class="math inline">\(k\)</span> to identify the variable <span class="math inline">\(X_{\ell}\)</span> that produces the optimal
+split; then split.</p>
+<p>Here, <span class="math inline">\(k\)</span> is a tuning parameter. However, there is a theoretical justification
+for the fact that</p>
 <p><span class="math display">\[
-\text{Cost}(\mathrm{Tree}) = \sum_{T} ( \text{misclass}_i ) + \lambda \hspace{1mm} |T|
+k = \lceil \sqrt{p} \rceil
 \]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> would be determined using cross-validation.</p>
-<p>Typically, you will grow a very large tree, and then perform pruning. To prune,
-you might use cross-validation to find the subtree <span class="math inline">\(T&#39; \subseteq T\)</span> that results
-in the smallest cost.</p>
+<p>This gives us a good chance that our subsamples are very nearly independent.</p>
 </div>
-<div id="pros-and-cons-of-trees" class="section level2">
-<h2><span class="header-section-number">31.4</span> Pros and Cons of Trees</h2>
-<p>Let’s review some of the advantages and disadvantages of trees.</p>
-<div id="advantages-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.1</span> Advantages of Trees</h3>
+<div id="algorithm-2" class="section level2">
+<h2><span class="header-section-number">33.2</span> Algorithm</h2>
+<p>Recall: instead of growing a single tree, we now want to grow a forest; that is,
+multiple trees. Say we have <span class="math inline">\(b = 1, 2, \dots, B\)</span> trees. Here is how we would
+grow our forest:</p>
 <ul>
-<li><p>They work for both types of responses: 1) categorical and 2) quantitative.
-When dealing with a categorical response we talk about classification tree;
-when dealing with a quantitative response we talk about regression tree.</p></li>
-<li><p>They work with <strong>any</strong> type of predictors: binary, nominal, ordinal,
-continuous, even with missing values.</p></li>
-<li><p>Another advtange is that there almost no need to preprocess data for a
-decision tree. This is very rare among statistical methods.</p></li>
-<li><p>Likewise, decision trees make no stochastic assumptions: e.g. no normality
-assumptions, or other specific distributions.</p></li>
-<li><p>In general, they tend to have low bias.</p></li>
-<li><p>The graphical display of a tree tends to be aasy to read and interpret (at
-least the main output; there are some summary statistics that might require
-further background knowledge).</p></li>
+<li><p>Draw a bootstrap sample—that is, <strong>with</strong> replacement—of size <span class="math inline">\(n\)</span> from
+the training set, where <span class="math inline">\(n\)</span> is the size of our trainin set.</p></li>
+<li><p>Grow a tree <span class="math inline">\(T_b\)</span> using the bootstrapped data, by recursively repeating the following steps:</p>
+<ul>
+<li><p>For each child node:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Randomly select <span class="math inline">\(k\)</span> features from the <span class="math inline">\(p\)</span> possible features. Typically we set <span class="math inline">\(k = \lceil \sqrt{p} \rceil\)</span> (though some authors use <span class="math inline">\(k = \lfloor \sqrt{p} \rfloor\)</span>). The point is: <span class="math inline">\(k\)</span> is <em>not</em> really a quantity that needs to be tuned.</p></li>
+<li><p>Pick the best feature/split among the <span class="math inline">\(k\)</span> available features.</p></li>
+<li><p>Split the node into two child nodes according to the rule you obtained from step (ii).</p></li>
+</ol></li>
+</ul></li>
+<li><p>Output the set of trees <span class="math inline">\(\{T_1, T_2, \dots, T_B\}\)</span> (known as the <em>ensemble</em> of trees)</p></li>
 </ul>
 </div>
-<div id="disadvantages-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.2</span> Disadvantages of Trees</h3>
+<div id="two-sources-of-randomness" class="section level2">
+<h2><span class="header-section-number">33.3</span> Two Sources of Randomness</h2>
+<p>Randomness in the data points</p>
 <ul>
-<li><p>They suffer from high variance (this is perhaps the main “Achilles’ heel” of
-decision trees).</p></li>
-<li><p>They highly depend on the training set. That is, given a different training
-set, there is a high chance that you will obtain a different tree. Which means
-they are prone to overfitting.</p></li>
-<li><p>Because of this dependency, they also tend to have high variance.</p></li>
-<li><p>Training a decision tree requires a reasonably large number of observations:
-as a rule of thumb there should be at least 30-50 observations per node.</p></li>
-<li><p>Recall that decision trees produce splits which involve rectangular regions
-in the feature space which may not necessarily match the distribution of the
-observations.</p></li>
-<li><p>Finding the optimal sweetspot in BV tradeoff is difficult (depth can only
-take integer values).</p></li>
+<li><p>Each tree gets to see a different data set (that is, no tree gets to train on the <em>entire</em> dataset)</p></li>
+<li><p>Behind this, we have the notion of bagging (recall, this is a portmanteau of Bootstrap and Aggregating)</p></li>
 </ul>
+<p>Randomness in the features/predictors</p>
+<ul>
+<li><p>Each tree gets to see a different set of features (that is, no tree gets to train on the <em>entire</em> set of features)</p></li>
+<li><p>This is the powerful feature of random forests. Specifically, it is in this step that trees become de-correlated. Note that this source of randomness is <em>not</em> present in bagging.</p></li>
+</ul>
+<p><span class="math display">\[
+\textbf{INSERT DIAGRAM}
+\]</span></p>
+<p>Suppose we are in a regression setting. We would obtain <span class="math inline">\(B\)</span> predictions for
+<span class="math inline">\(y_0\)</span>: denote these by <span class="math inline">\(\hat{y}_0^{(1)}, \hat{y}_0^{(2)}, \dots, \hat{y}_0^{(B)}\)</span>.
+We would then average these values to obtain our predicted value:</p>
+<p><span class="math display">\[
+\hat{y}_0 = \frac{1}{B} \sum_{b=1}^{B} \hat{y}_0^{(b)}
+\]</span></p>
+<p>Suppose, now, that we were in a classification setting (<span class="math inline">\(k = 2\)</span> for illustrative purposes). Our sub-predictions <span class="math inline">\(\hat{y}_0^{(b)}\)</span> would be obtained by examining the distribution of each class within each terminal node:</p>
+<p><span class="math display">\[
+\textbf{INSERT BAR GRAPH}
+\]</span></p>
+<p>In this example, <span class="math inline">\(\hat{y}_0^{(1)} = \verb|blue|\)</span>, <span class="math inline">\(\hat{y}_0^{(2)} = \verb|blue|\)</span>,
+<span class="math inline">\(\hat{y}_0^{(3)} = \verb|blue|\)</span>, and <span class="math inline">\(\hat{y}_0^{(B)} = \verb|black|\)</span>. We would
+then assign <span class="math inline">\(\hat{y}_0\)</span> the mode of these sub-predictions:</p>
+<p><span class="math display">\[
+\hat{y}_0 = \mathrm{mode} \left\{ T_b(x_0) \right\}
+\]</span></p>
+<div id="key-advantage-of-random-forests" class="section level3">
+<h3><span class="header-section-number">33.3.1</span> Key Advantage of Random Forests</h3>
+<p>Let’s first start by recapping what we’ve done so far. We start with a dataset
+<span class="math inline">\(\mathcal{D}\)</span>, and then split it into some number of sub-datasets:</p>
+<p><span class="math display">\[
+\mathcal{D} \to 
+\begin{cases}
+\mathcal{D}_{\mathrm{training}} \\ 
+\mathcal{D}_{\text{testing}} \\ 
+\end{cases}
+\hspace{5mm} \text{|or|} \hspace{5mm} 
+\mathcal{D} \to \begin{cases} 
+\mathcal{D}_{\mathrm{training}} \\ 
+\mathcal{D}_{\text{validation}} \\ 
+\mathcal{D}_{\text{testing}} \\ 
+\end{cases}
+\]</span></p>
+<p>In bagging, we do not take this approach. Rather, we end up with the so-called
+<strong>Out-of-Bag Error</strong> (or OOB, for short).</p>
+<p><span class="math display">\[
+\textbf{[10 subtrees]}
+\]</span></p>
+<p>Some points <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> are not used by all the trees. For example,
+suppose <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> are never used by <span class="math inline">\(T_2, T_3, T_5,\)</span> and <span class="math inline">\(T_8\)</span>.
+In other words, this point <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> is really a test point for
+these trees. Hence, we could plug <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> into these trees to
+obtain predictors $ _i^{(2)} , _i^{(3)} , _i^{(5)},$ and <span class="math inline">\(\hat{y}_i^{(8)}\)</span>. We would then compute the OOB in the following manner:</p>
+<p><span class="math display">\[
+\mathrm{OOB}_i = \frac{ (\hat{y}_i^{(2)} - y_i)^2 + (\hat{y}_i^{(3)} - y_i)^2 + (\hat{y}_i^{(5)} - y_i)^2 + (\hat{y}_i^{(8)} - y_i)^2 }{4}
+\]</span></p>
+<p>More generally, we define the overall OOB error to be</p>
+<p><span class="math display">\[
+E_{\mathrm{OOB}} = \frac{1}{n} \sum_{i=1}^{n} \mathrm{OOB}_i
+\]</span></p>
+<p>where the OOB<span class="math inline">\(_i\)</span>’s are computed as above. Here is the key observation: it
+turns out that <span class="math inline">\(E_{\mathrm{OOB}}\)</span> is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>.</p>
 </div>
-<div id="bias-variance-of-trees" class="section level3">
-<h3><span class="header-section-number">31.4.3</span> Bias-Variance of Trees</h3>
-<p>The typical error curves of decision trees are illustrated in the following
-diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-349"></span>
-<img src="images/trees/error-curve-trees0.svg" alt="Typical error curves of decision trees" width="70%" />
-<p class="caption">
-Figure 31.1: Typical error curves of decision trees
-</p>
-</div>
-<p>Small trees (i.e. small depth) tend to have a bias problem (underfitting).
-Conversely, large trees (i.e. large depth) tend to have a variance problem
-(overfitting).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-350"></span>
-<img src="images/trees/error-curve-trees1.svg" alt="Bias-Variance problem of trees" width="70%" />
-<p class="caption">
-Figure 31.2: Bias-Variance problem of trees
-</p>
-</div>
-<p>Because the depth of trees is measure in iteger steps (not in a continuous scale),
-it is very difficult to find the “sweet spot” for the right depth level.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-351"></span>
-<img src="images/trees/error-curve-trees2.svg" alt="Bias-Variance problem of trees" width="70%" />
-<p class="caption">
-Figure 31.3: Bias-Variance problem of trees
-</p>
-</div>
+<div id="errors" class="section level3">
+<h3><span class="header-section-number">33.3.2</span> Errors</h3>
+<p><span class="math display">\[
+\textbf{[Error Curves]}
+\]</span></p>
+<p>This is a very cool property of ensemble methods: we get to reduce variance
+without increasing bias!</p>
 
 </div>
 </div>
@@ -637,8 +628,8 @@ Figure 31.3: Bias-Variance problem of trees
           </div>
         </div>
       </div>
-<a href="tree-splits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bagging.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bagging.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
