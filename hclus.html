@@ -437,10 +437,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
 <li class="chapter" data-level="29" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>29</b> Intro to Decision Trees</a><ul>
 <li class="chapter" data-level="29.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>29.1</b> Introduction</a></li>
-<li class="chapter" data-level="29.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>29.2</b> Some Terminology</a></li>
-<li class="chapter" data-level="29.3" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>29.3</b> Binary Trees</a></li>
-<li class="chapter" data-level="29.4" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>29.4</b> Space Partitions</a><ul>
-<li class="chapter" data-level="29.4.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>29.4.1</b> The Process of Building a Tree</a></li>
+<li class="chapter" data-level="29.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>29.2</b> Some Terminology</a><ul>
+<li class="chapter" data-level="29.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>29.2.1</b> Binary Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="29.3" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>29.3</b> Space Partitions</a><ul>
+<li class="chapter" data-level="29.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>29.3.1</b> The Process of Building a Tree</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="30" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>30</b> Binary Splits and Impurity</a><ul>
@@ -513,36 +514,30 @@ of it as the opposite of agglomerative methods.</p></li>
 <div id="agglomerative-methods" class="section level2">
 <h2><span class="header-section-number">28.1</span> Agglomerative Methods</h2>
 <p>Agglomerative Hierarchical Clustering (AHC) produce sequences of nested
-partitions of increasing heterogeneity.</p>
-<p>As with <span class="math inline">\(K\)</span>-means, we still need a notion of distance between two objects: this
-notion could be mathematical (i.e. a distance <em>metric</em>), or qualitative
-(a measure of <em>proximity</em>).</p>
+partitions of increasing within-cluster heterogeneity.</p>
+<div id="distance-and-dissimilarity" class="section level4 unnumbered">
+<h4>Distance and Dissimilarity</h4>
+<p>As with <span class="math inline">\(K\)</span>-means, we still need a notion of distance between two observations:
+this notion could be a distance <em>metric</em>, or a measure of <em>dissimilarity</em> or
+<em>proximity</em>.</p>
+<p>Metric distances satisfy the following properties:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_\ell}) \geq 0 \quad \textsf{(non-negativity)}\)</span></p></li>
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_i}) = 0 \quad \textsf{(reflexivity)}\)</span></p></li>
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_\ell}) = d(\mathbf{x_\ell}, \mathbf{x_i}) \quad \textsf{(symmetry)}\)</span></p></li>
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_\ell}) \leq d(\mathbf{x_i}, \mathbf{x_k}) + d(\mathbf{x_k}, \mathbf{x_\ell}) \quad \textsf{(triangle inequality)}\)</span></p></li>
+</ol>
+<p>In turn, dissimilarities satisfy the following three properties:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_\ell}) \geq 0 \quad \textsf{(non-negativity)}\)</span></p></li>
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_i}) = 0 \quad \textsf{(reflexivity)}\)</span></p></li>
+<li><p><span class="math inline">\(d(\mathbf{x_i}, \mathbf{x_\ell}) = d(\mathbf{x_\ell}, \mathbf{x_i}) \quad \textsf{(symmetry)}\)</span></p></li>
+</ol>
+</div>
+<div id="distance-of-clusters" class="section level4 unnumbered">
+<h4>Distance of clusters</h4>
 <p>We also need another type of distance: this one will be used to measure how
 different two clusters are.</p>
-<p>The general form of an agglomerative algorithm is as follows:</p>
-<ol style="list-style-type: decimal">
-<li>The initial clusters are the observations.</li>
-<li>The distances between clusters are calculated.</li>
-<li>The two clusters which are closest together are merged and replaced
-with a single cluster.</li>
-<li>We start again at step 2 until there is only one cluster, which
-contains all the observations.</li>
-</ol>
-<p>The sequence of partitions is presented in what is known as a tree diagram
-also known as <strong>dendrogram</strong>.</p>
-<p>This tree can be cut at a greater or lesser height to obtain a smaller or
-larger number of clusters.</p>
-<p>The number of clusters can be chosen by optimizing certain statistical
-quality criteria. The main criterion is the loss of between-cluster
-sum of squares.</p>
-<p>The distance between two individual observations tends to be obvious:</p>
-<ul>
-<li>Euclidean</li>
-<li>Manhattan</li>
-</ul>
-<p>As soon as a cluster has more than one element, the distance between two
-clusters is less obvious. It can be defined in many ways but the most usual
-ones are:</p>
 <p><strong>Minimum Distance</strong>:</p>
 <ul>
 <li>Also known as single linkage or nearest neighbor.</li>
@@ -568,11 +563,33 @@ methods.</li>
 <li>Matches the purpose of clustering most closely.</li>
 <li>Ward distance defined as the reduction in between-cluster sum of squares.</li>
 </ul>
+<p>The following diagram illustrates two clusters with several individuals and
+their corresponding centroids; listing the common distances between clusters:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-293"></span>
 <img src="images/cluster/aggregation-criteria.svg" alt="Aggregation Criteria" width="60%" />
 <p class="caption">
 Figure 28.1: Aggregation Criteria
 </p>
+</div>
+</div>
+<div id="agglomerative-algorithms" class="section level4 unnumbered">
+<h4>Agglomerative Algorithms</h4>
+<p>The general form of an agglomerative algorithm is as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>The initial clusters are the observations.</p></li>
+<li><p>The distances between clusters are calculated.</p></li>
+<li><p>The two clusters which are closest together are merged and replaced
+with a single cluster.</p></li>
+<li><p>We start again at step 2 until there is only one cluster, which
+contains all the observations.</p></li>
+</ol>
+<p>The sequence of partitions is presented in what is known as a tree diagram
+also known as <strong>dendrogram</strong>.</p>
+<p>This tree can be cut at a greater or lesser height to obtain a smaller or
+larger number of clusters.</p>
+<p>The number of clusters can be chosen by optimizing certain statistical
+quality criteria. The main criterion is the loss of between-cluster
+sum of squares.</p>
 </div>
 </div>
 <div id="example-single-linkage" class="section level2">
@@ -629,13 +646,13 @@ Figure 28.4: Distance between a cluster and other objects?
 another object. In <strong>single linkage</strong> we define the distance between the
 <span class="math inline">\((\textsf{ac})\)</span> and <span class="math inline">\(\textsf{b}\)</span> to be:</p>
 <p><span class="math display">\[
-d^2(\textsf{ac}, \textsf{b}) = min \{ d^2(\textsf{a},\textsf{b}), \hspace{2mm} d^2(\textsf{c},\textsf{b}) \}
+d^2(\textsf{ac}, \textsf{b}) = \min \{ d^2(\textsf{a},\textsf{b}), \hspace{2mm} d^2(\textsf{c},\textsf{b}) \}
 \]</span></p>
 <p>For example, in our toy dataset we have:</p>
 <ul>
-<li><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \min\{16, 17\} = 16\)</span></li>
-<li><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \min\{9, 4\} = 4\)</span></li>
-<li><span class="math inline">\(d^2(\textsf{ac}, \textsf{e}) = \min\{10, 9\} = 9\)</span></li>
+<li><p><span class="math inline">\(d^2(\textsf{ac}, \textsf{b}) = \min\{16, 17\} = 16\)</span></p></li>
+<li><p><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \min\{9, 4\} = 4\)</span></p></li>
+<li><p><span class="math inline">\(d^2(\textsf{ac}, \textsf{e}) = \min\{10, 9\} = 9\)</span></p></li>
 </ul>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-299"></span>
 <img src="images/cluster/hclus3.svg" alt="Aggregation Criteria" width="85%" />
@@ -653,7 +670,13 @@ Figure 28.6: Second cluster
 </p>
 </div>
 <p>So now we have two clusters <span class="math inline">\(\textsf{ac}\)</span> and <span class="math inline">\(\textsf{be}\)</span>, and a third
-individual object <span class="math inline">\(\textsf{d}\)</span>. The matrix of distances is updated as follows:</p>
+individual object <span class="math inline">\(\textsf{d}\)</span>. As previously done, we compute distances between objects:</p>
+<ul>
+<li><p><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \min \{ d^2(\textsf{a},\textsf{d}), \hspace{2mm} d^2(\textsf{c},\textsf{d}) \} = \min\{9, 4\} = 4\)</span></p></li>
+<li><p><span class="math inline">\(d^2(\textsf{be}, \textsf{d}) = \min \{ d^2(\textsf{b},\textsf{d}), \hspace{2mm} d^2(\textsf{e},\textsf{d}) \} = \min\{25, 13\} = 13\)</span></p></li>
+<li><p><span class="math inline">\(d^2(\textsf{ac}, \textsf{be}) = \min\{16, 9\} = 9\)</span></p></li>
+</ul>
+<p>The matrix of distances is updated as follows:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-301"></span>
 <img src="images/cluster/hclus5.svg" alt="Updating distances between clusters and objects" width="85%" />
 <p class="caption">
@@ -734,7 +757,7 @@ d^2(\textsf{ac}, \textsf{b}) = max \{ d^2(\textsf{a},\textsf{b}), \hspace{2mm} d
 \]</span></p>
 <p>For example, in our toy dataset we have:</p>
 <ul>
-<li><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \max\{16, 17\} = 17\)</span></li>
+<li><span class="math inline">\(d^2(\textsf{ac}, \textsf{b}) = \max\{16, 17\} = 17\)</span></li>
 <li><span class="math inline">\(d^2(\textsf{ac}, \textsf{d}) = \max\{9, 4\} = 9\)</span></li>
 <li><span class="math inline">\(d^2(\textsf{ac}, \textsf{e}) = \max\{10, 9\} = 10\)</span></li>
 </ul>
@@ -817,7 +840,7 @@ distances, even though those notions may be drastically different.</p>
 </ul>
 <p>We can take advantage of both approaches:</p>
 <ul>
-<li>Perform hierarchical clsutering</li>
+<li>Perform hierarchical clustering</li>
 <li>Determine the number of groups</li>
 <li>Calculate the corresponding centroids</li>
 <li>Perform K-means using as seeds the centroids previously calculated</li>

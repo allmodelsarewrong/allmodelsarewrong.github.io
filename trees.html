@@ -437,10 +437,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
 <li class="chapter" data-level="29" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>29</b> Intro to Decision Trees</a><ul>
 <li class="chapter" data-level="29.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>29.1</b> Introduction</a></li>
-<li class="chapter" data-level="29.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>29.2</b> Some Terminology</a></li>
-<li class="chapter" data-level="29.3" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>29.3</b> Binary Trees</a></li>
-<li class="chapter" data-level="29.4" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>29.4</b> Space Partitions</a><ul>
-<li class="chapter" data-level="29.4.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>29.4.1</b> The Process of Building a Tree</a></li>
+<li class="chapter" data-level="29.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>29.2</b> Some Terminology</a><ul>
+<li class="chapter" data-level="29.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>29.2.1</b> Binary Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="29.3" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>29.3</b> Space Partitions</a><ul>
+<li class="chapter" data-level="29.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>29.3.1</b> The Process of Building a Tree</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="30" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>30</b> Binary Splits and Impurity</a><ul>
@@ -503,17 +504,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="trees" class="section level1">
 <h1><span class="header-section-number">29</span> Intro to Decision Trees</h1>
-<p>In this chapter we introduce decision trees, which are one the most popular and
-intuitive supervised learning tools.</p>
+<p>In this chapter we introduce decision trees, which are one the most visually
+atractive and intuitive supervised learning methods. In particular, we will
+focus our discussion around one kind of trees, the CART-style binary decision
+trees from the methodology developed in the early 1980s by
+<a href="https://arxiv.org/pdf/1101.0917.pdf">Leo Breiman</a>, Jerome
+Friedman, Charles Stone, and Richard Olshen. On the downside, we should say
+that single trees tend to have high variance, and suffer from overfitting.
+However, when combined in an ensemble of trees (e.g. bagging, random
+forests)—using clever sampling strategies—they become powerful predicting
+tools.</p>
 <div id="introduction-6" class="section level2">
 <h2><span class="header-section-number">29.1</span> Introduction</h2>
 <p>Trees are used in classification and regression tasks by detecting a set of
 rules allowing the analyst to assign the individuals in data into a class
 or assign it a predicted value.</p>
-<p>The reason they are called trees is because the set of rules can be organized
-into a hierarchical <em>tree</em>. Moreover, this structure can be visually
-displayed as an inverted tree diagram (although the tree is generally displayed
-upside down) like in the image below.</p>
 <p>Here’s an example with iris data set. This data consists of 5 variables measured
 on <span class="math inline">\(n = 150\)</span> iris flowers. There are <span class="math inline">\(p\)</span> = 4 predictors, and one response. The
 four variables are:</p>
@@ -539,10 +544,12 @@ species of iris flower with three categories:</p>
 5          5.0         3.6          1.4         0.2  setosa
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 <p>If we use a decision tree to classify the species of iris flowers, we obtain
-a tree diagram like this:</p>
+a set of rules can be organized into a hierarchical tree structure. Moreover,
+this structure can be visually displayed as an inverted tree diagram (although
+the tree is generally displayed upside down) like in the image below:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-319-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Software programs that compute trees, would return some kind of numeric output
-like this:</p>
+<p>Software programs that compute trees, will also return some kind of numeric
+output like this:</p>
 <pre><code>n= 150 
 
 node), split, n, loss, yval, (yprob)
@@ -556,8 +563,10 @@ node), split, n, loss, yval, (yprob)
 </div>
 <div id="some-terminology" class="section level2">
 <h2><span class="header-section-number">29.2</span> Some Terminology</h2>
-<p>Decision trees have three types of nodes: root, internal, and leaf nodes. This
-is depicted in the diagram below.</p>
+<p>Before looking at how decision trees are built, let’s review some of the
+terminology commonly employed around them.
+Decision trees have three types of nodes: root, internal, and leaf nodes. These
+are depicted in the diagram below.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-321"></span>
 <img src="images/trees/tree-diagram1.svg" alt="Diagram of a tree structure" width="85%" />
 <p class="caption">
@@ -585,9 +594,8 @@ node-link diagram that connects nodes together with line segments.</p>
 Figure 29.2: Common elements of a tree diagram
 </p>
 </div>
-</div>
-<div id="binary-trees" class="section level2">
-<h2><span class="header-section-number">29.3</span> Binary Trees</h2>
+<div id="binary-trees" class="section level3">
+<h3><span class="header-section-number">29.2.1</span> Binary Trees</h3>
 <p>One special kind of decision trees are binary trees. They are called <em>binary</em>
 because the nodes are only partitioned in two (see diagram below).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-323"></span>
@@ -596,33 +604,28 @@ because the nodes are only partitioned in two (see diagram below).</p>
 Figure 29.3: Example of a binary tree diagram
 </p>
 </div>
-<p>The usual process to build an ordinary binary decision tree is as follows.
-First, a search among all the predictor variables is done in order to find the
-single variable which best splits the data in two groups. In other words, one
-must find the segmentation variable that splits the data in two subsets so that
-they are as different as possible with respect to the response variable. This
-process is applied separately to each subgroup, and so on recursively until the
-subgroups either reach a minimum size or until no improvement can be made.
-In each dichotomy the two parts are the most contrasting according to the
-response variable.</p>
+</div>
 </div>
 <div id="space-partitions" class="section level2">
-<h2><span class="header-section-number">29.4</span> Space Partitions</h2>
+<h2><span class="header-section-number">29.3</span> Space Partitions</h2>
 <p>What do partitions of decision trees look like from a geometric standpoint?
 It turns out that each (binary) split results in a given partition of the
 feature space. To be more precise, a partition that involves feature <span class="math inline">\(X_j\)</span>
 will result in dividing the dimension of <span class="math inline">\(X_j\)</span> into two regions, depending on
 the split condition.</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-324-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>In the iris data set example, the first partition is produced by
 the condition <code>Petal.Length &lt; 2.45</code>. This condition splits the dimension of
 <code>Petal.Length</code> in two regions: a region with petal length values less than 2.45
 inches, and another region with petal length values greater than or equal to
 2.45 inches. Likewise, the second split is based on the condition
 <code>Petal.Width &lt; 1.75</code>, which results in two regions along this dimension.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-324-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-325-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="toy-abstract-example" class="section level4 unnumbered">
+<h4>Toy Abstract Example</h4>
 <p>Suppose we have two quantitative predictors <span class="math inline">\(X_1\)</span>, and <span class="math inline">\(X_2\)</span>, like in the image
 below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-325"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-326"></span>
 <img src="images/trees/regions-tree0.svg" alt="Two-dimensional feature space" width="35%" />
 <p class="caption">
 Figure 29.4: Two-dimensional feature space
@@ -630,7 +633,7 @@ Figure 29.4: Two-dimensional feature space
 </div>
 <p>Generally, we create partitions by iteratively splitting one of the predictors
 into two regions. For example, a first split could be based on <span class="math inline">\(X_1 = t_1\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-326"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-327"></span>
 <img src="images/trees/regions-tree1.svg" alt="First partition" width="85%" />
 <p class="caption">
 Figure 29.5: First partition
@@ -638,7 +641,7 @@ Figure 29.5: First partition
 </div>
 <p>A second split could be produced on a partition for <span class="math inline">\(X_2\)</span>. If <span class="math inline">\(X_1 \leq t_1\)</span>,
 split on <span class="math inline">\(X_2 = t_2\)</span>. This results in two regions: <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-327"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-328"></span>
 <img src="images/trees/regions-tree2.svg" alt="Second partition" width="85%" />
 <p class="caption">
 Figure 29.6: Second partition
@@ -646,42 +649,43 @@ Figure 29.6: Second partition
 </div>
 <p>A third split may be detected on the preliminary region <span class="math inline">\(B\)</span>. If <span class="math inline">\(X_1 &gt; t_1\)</span>,
 split on <span class="math inline">\(X_3 = t_3\)</span>. This results in two regions: <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-328"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-329"></span>
 <img src="images/trees/regions-tree3.svg" alt="Third partition" width="85%" />
 <p class="caption">
 Figure 29.7: Third partition
 </p>
 </div>
 <p>Then, another partition on region <span class="math inline">\(D\)</span>, if <span class="math inline">\(X_2 = t_4\)</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-329"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-330"></span>
 <img src="images/trees/regions-tree4.svg" alt="Fourth partition" width="85%" />
 <p class="caption">
 Figure 29.8: Fourth partition
 </p>
 </div>
-<p>At the end, with four splits, the feature space is divided in five regions:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-330"></span>
+<p>At the end, with a total number of four splits, the feature space is divided in
+five regions:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-331"></span>
 <img src="images/trees/regions-tree5.svg" alt="Regions of feature space" width="85%" />
 <p class="caption">
 Figure 29.9: Regions of feature space
 </p>
 </div>
+</div>
 <div id="the-process-of-building-a-tree" class="section level3">
-<h3><span class="header-section-number">29.4.1</span> The Process of Building a Tree</h3>
-<p>Let us begin with the general idea behind trees. The main idea is to build a
-tree structure by successively (i.e. recursively) dividing the set of objects
-with the help of features <span class="math inline">\(X_1, \dots, X_p\)</span>, in order to obtain the terminal
-nodes (i.e. final segments) that are as homogeneous as possible (with respect
-to the response).</p>
+<h3><span class="header-section-number">29.3.1</span> The Process of Building a Tree</h3>
+<p>Let us begin with the general idea behind binary trees. The main idea is to
+build a tree structure by successively (i.e. recursively) dividing the set of
+objects with the help of features <span class="math inline">\(X_1, \dots, X_p\)</span>, in order to obtain the
+terminal nodes (i.e. final segments) that are as homogeneous as possible (with
+respect to the response).</p>
 <p>The tree building process requires three main components</p>
-<ul>
-<li><p>Establish the set of admissible divisions for each node: compute all possible
-binary splits.</p></li>
-<li><p>Define a criterion to find the “best” node split: some optimization criterion
-to be optimized.</p></li>
-<li><p>Determine some measure of heterogeneity (within a given node).</p></li>
+<ol style="list-style-type: decimal">
+<li><p>Establish the set of admissible divisions for each node, that is, compute all
+possible binary splits.</p></li>
+<li><p>Define a criterion to find the “best” node split, which requires some
+criterion to be optimized.</p></li>
 <li><p>Determine a rule to declare a given node as either internal node, or leaf node.</p></li>
-</ul>
+</ol>
 <p>Establishing the set of admissible splits for each node is related with the
 nature of the segmentation variables in the data. The number and type of
 possible binary splits will vary depending on the scale (e.g., binary, nominal,
