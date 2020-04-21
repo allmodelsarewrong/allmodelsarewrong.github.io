@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Introduction | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>30 Binary Splits and Impurity | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Introduction | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="30 Binary Splits and Impurity | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Introduction | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="30 Binary Splits and Impurity | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="about.html"/>
-<link rel="next" href="duality.html"/>
+<link rel="prev" href="trees.html"/>
+<link rel="next" href="tree-splits.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -507,298 +507,407 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction</h1>
-<p>Picture a data set containing scores of several courses for college students.
-For example, courses like matrix algebra, multivariable calculus,
-statistics, and probability. And say we also have historical data about a course
-in Statistical Learning. In particular we have final scores measured on a scale
-from 0 to 100, we also have final grades (in letter grade scale), as well as a
-third interesting variable “Pass - Non-Pass” indicating whether the student
-passed statistical learning.
-Some data like that fits perfectly well in a tabular format. The rows contain
-the records for a bunch of students, and the columns refer to the variables.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">Student</th>
-<th align="center">LinAlg</th>
-<th align="center">Calculus</th>
-<th align="center">Statistics</th>
-<th align="center">StatLearn</th>
-<th align="center">Grade</th>
-<th align="center">P/NP</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">92</td>
-<td align="center">A</td>
-<td align="center">P</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">85</td>
-<td align="center">B</td>
-<td align="center">P</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">40</td>
-<td align="center">F</td>
-<td align="center">NP</td>
-</tr>
-<tr class="even">
-<td align="center">New</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">?</td>
-<td align="center">?</td>
-<td align="center">?</td>
-</tr>
-</tbody>
-</table>
-<p>Suppose that, based on this historical data, we wish to predict the score of a
-new student (whose Linear Algebra, Calculus, and Statistics grades are known)
-in Statistical Learning.
-To do so, we would fit some sort of model to our data; i.e. we would perform
-regression. This is a form of <strong>supervised learning</strong>, since our model is trained
-using known inputs (i.e. LinAlg, Calculus, and Statistics grades) as well as
-known responses (i.e. the Statistical Learning grades of the previous students).</p>
-<p>Likewise, we may be interested in studying the data not from a prediction
-oriented perspective but from a purely exploratory perspective. For example,
-maybe we want to investigate what is the relationship between the courses
-Linear Algebra, Calculus, and Statistics; that is: explore the relationship between
-the features. Or maybe we want to study the resemblance among individuals
-and see what kind of students have similar scores, or if there are “natural”
-groups of individuals based on their features. Both of these tasks are examples
-of <strong>unsupervised learning</strong>. We use the information in the data to discover
-patterns, without focusing on any single variable as a target response.</p>
-<p>In summary, we will focus on two types of learning paradigms:</p>
-<p><strong>Unsupervised Learning</strong>: where we have inputs, but not response variables.</p>
-<p><strong>Supervised Learning</strong>: where we have inputs, and one (or more) response variable(s).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="images/introduction/intro-learning-paradigms.svg" alt="Inputs and outputs in supervised and unsupervised learning" width="85%" />
+<div id="tree-impurities" class="section level1">
+<h1><span class="header-section-number">30</span> Binary Splits and Impurity</h1>
+<p>As we mentioned in the last part of the previous chapter, the building process
+of a binary decision tree requires three main components:</p>
+<ul>
+<li><p>Establish the set of admissible divisions for each node: compute all possible
+binary splits.</p></li>
+<li><p>Define a criterion to find the “best” node split: some optimization criterion
+to be optimized. This in turn, requires determining some measure of
+heterogeneity (within a given node).</p></li>
+<li><p>Determine a rule to declare a given node as either internal node, or leaf node.</p></li>
+</ul>
+<p>In this chapter we’ll review these components in more detail.</p>
+<div id="binary-partitions" class="section level2">
+<h2><span class="header-section-number">30.1</span> Binary Partitions</h2>
+<p>In binary segmentation trees, the set of admissible splits for each node
+depends on the nature of the predictor featuers in the data. Predictor
+variables can be of different type either nature but also continuous.
+We can divide them in four classes:</p>
+<ol style="list-style-type: decimal">
+<li>Binary variables</li>
+<li>Ordinal variables</li>
+<li>Nominal variables</li>
+<li>Continuous variables</li>
+</ol>
+<p>The number of possible binary splits for each type of segmentation variable is
+described below.</p>
+<div id="splits-of-binary-variables" class="section level3">
+<h3><span class="header-section-number">30.1.1</span> Splits of Binary variables</h3>
+<p>Because binary variables have two values, they only generate one binary
+partition. For example, say we have a variable <em>Gender</em> with two values,
+female and male. This feature can only de divided in one possible way:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-333"></span>
+<img src="images/trees/splits_binary.svg" alt="Example of a binary partition for a binary variable" width="80%" />
 <p class="caption">
-Figure 2.1: Inputs and outputs in supervised and unsupervised learning
+Figure 30.1: Example of a binary partition for a binary variable
 </p>
 </div>
-<p>By the way, there are other types of Learning paradigms
-(e.g. <a href="https://en.wikipedia.org/wiki/Deep_learning">deep learning</a>,
-<a href="https://en.wikipedia.org/wiki/Reinforcement_learning">reinforcement learning</a>),
-but we won’t discuss them in this book.</p>
-<p>To visualize the different types of learning, the different types of variables,
-and the methodology associated with each combination of learning/data types,
-we can use the following graphic:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="images/introduction/four-corners.svg" alt="Supervised and Unsupervised Corners" width="80%" />
-<p class="caption">
-Figure 2.2: Supervised and Unsupervised Corners
-</p>
 </div>
-<div id="basic-notation" class="section level2">
-<h2><span class="header-section-number">2.1</span> Basic Notation</h2>
-<p>In this book we are going to use a fair amount of math notation. Becoming familiar
-with the meaning of all the different symbols as soon as possible, should allow
-you to keep the learning curve a little bit less steep.</p>
-<p>The starting point is always the data, which we will assume to be in a tabular
-format, that can be translated into a mathematical matrix object. Here’s an
-example of a data matrix <span class="math inline">\(\mathbf{X}\)</span> of size <span class="math inline">\(n \times p\)</span></p>
-<p><span class="math display" id="eq:101-1">\[
-\mathbf{X} = 
-\
-\begin{bmatrix} 
-x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1j} &amp; \cdots &amp; x_{1p} \\
-x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2j} &amp; \cdots &amp; x_{2p} \\
-\vdots &amp; \vdots &amp;        &amp; \vdots &amp;        &amp; \vdots \\
-x_{i1} &amp; x_{i2} &amp; \cdots &amp; x_{ij} &amp; \cdots &amp; x_{ip} \\
-\vdots &amp; \vdots &amp;        &amp; \vdots &amp;        &amp; \vdots \\
-x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nj} &amp; \cdots &amp; x_{np} \\
-\end{bmatrix}
-\tag{2.1}
+<div id="splits-of-nominal-variables" class="section level3">
+<h3><span class="header-section-number">30.1.2</span> Splits of Nominal Variables</h3>
+<p>A nominal variable may have many categories and the number of binary splits
+depends on the number of distinct categories for the corresponding variable.
+The total number of possible binary partitions for a nominal variable with <span class="math inline">\(q\)</span>
+categories is</p>
+<p><span class="math display">\[
+2^{q-1} - 1
 \]</span></p>
-<p>By default, we will assume that the rows of a data matrix correspond to the
-individuals or objects. Likewise, we will also assume that the columns of a data
-matrix correspond to the variables or features observed on the individuals.
-In this sense, the symbol <span class="math inline">\(x_{ij}\)</span> represents the value observed for the <span class="math inline">\(j\)</span>-th
-variable on the <span class="math inline">\(i\)</span>-th individual.</p>
-<p>Throughout this book, every time you see the letter <span class="math inline">\(i\)</span>, either alone or as an
-index associated with any other symbol (superscript or subscript), it means
-that such term corresponds to an individual or a row of some data matrix.
-For instance, symbols like <span class="math inline">\(x_i\)</span>, <span class="math inline">\(\mathbf{x_i}\)</span>, and <span class="math inline">\(\alpha_i\)</span> are all
-examples that refer to—or denote a connection with—individuals.</p>
-<p>In turn, we will always use the letter <span class="math inline">\(j\)</span> to convey association with variables
-or columns of some data matrix.
-For instance, <span class="math inline">\(x_j\)</span>, <span class="math inline">\(\mathbf{x_j}\)</span>, and <span class="math inline">\(\alpha_j\)</span> are examples that refer
-to—or denote a connection with—variables.</p>
-<p>For better or for worse, we’ve made the decision to represent both the rows
-and the columns of a matrix as vectors using the same notation: as bold lower
-case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and <span class="math inline">\(\mathbf{x_j}\)</span>. Because we know that
-there’s a risk of confusing a vector that corresponds to a row with a vector
-that corresponds to a column, sometimes we will use the arrow notation for
-vectors associated to the row of a data matrix: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
-<p>So, going back to the above data matrix <span class="math inline">\(\mathbf{X}\)</span>, we can represent the first
-variable as a vector <span class="math inline">\(\mathbf{x_1} = (x_{11}, x_{21}, \dots, x_{n1})\)</span>.
-Likewise, we can represent the first individual with the vector
-<span class="math inline">\(\mathbf{\vec{x}_1} = (x_{11}, x_{12}, \dots, x_{1p})\)</span>.</p>
-<p>Here’s a reference table with the most common symbols and notation used
-throughout the book.</p>
+<p>For example, suppose a variable <em>Color</em> with three
+categories: blue, white and red. The number of binary splits for this nominal
+feature is:</p>
+<p><span class="math display">\[
+2^{3-1} - 1 = 3
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-334"></span>
+<img src="images/trees/splits_nominal.svg" alt="Example of binary splits for a nominal variable" width="80%" />
+<p class="caption">
+Figure 30.2: Example of binary splits for a nominal variable
+</p>
+</div>
+</div>
+<div id="splits-of-ordinal-variables" class="section level3">
+<h3><span class="header-section-number">30.1.3</span> Splits of Ordinal Variables</h3>
+<p>Binary splits for ordinal variables must respect the order property of the
+categories, that is, the grouping of categories must preserve the order among
+the values. The total number of binary partitions for an ordinal variable with
+<span class="math inline">\(q\)</span> categories is</p>
+<p><span class="math display">\[
+q-1
+\]</span></p>
+<p>For example, the <em>Apparel size</em> may have four
+categories: small (S), medium (M), large (L) and extra-large (XL). In this
+case, the number of binary splits will be</p>
+<p><span class="math display">\[
+4-1 = 3
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-335"></span>
+<img src="images/trees/splits_ordinal.svg" alt="Example of binary splits for an ordinal variable" width="80%" />
+<p class="caption">
+Figure 30.3: Example of binary splits for an ordinal variable
+</p>
+</div>
+</div>
+<div id="splits-continuous-variables" class="section level3">
+<h3><span class="header-section-number">30.1.4</span> Splits Continuous variables</h3>
+<p>The treatment for continuous variables depends on the number of different
+values the variable takes. Suppose a continuous variable with <span class="math inline">\(q\)</span> different
+values. If we consider that <span class="math inline">\(q\)</span> is “adequate” in some sense, we can treat the
+continuous variable like an ordinal variable. If we consider <span class="math inline">\(q\)</span> to be large we
+may group its values and reduced their number in <span class="math inline">\(q^*\)</span> (<span class="math inline">\(q^*&lt;q\)</span>). In both cases,
+the variable is treated as an ordinal variable and the number of binary splits
+will be</p>
+<p><span class="math display">\[
+q-1 \quad \text{or} \quad q^*-1
+\]</span></p>
+<p>For example, imagine the continuous variable <em>Age</em>
+(measured in years) with five values 5, 7, 8, 9 and 10. The number of binary
+splits is</p>
+<p><span class="math display">\[
+5 - 1 = 4
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-336"></span>
+<img src="images/trees/splits_quantitative.svg" alt="Example of binary splits for a continuous variable" width="80%" />
+<p class="caption">
+Figure 30.4: Example of binary splits for a continuous variable
+</p>
+</div>
+<p>The following table shows the number of binary splits depending on the type of
+scale for a given feature.</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
+<th align="left">Scale</th>
+<th align="left">Order matters?</th>
+<th align="left">Binary splits</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><span class="math inline">\(n\)</span></td>
-<td align="left">number of objects or individuals</td>
+<td align="left">Binary (<span class="math inline">\(q=2\)</span> categories)</td>
+<td align="left">No</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(p\)</span></td>
-<td align="left">number of variables or features</td>
+<td align="left">Nominal (<span class="math inline">\(q&gt;2\)</span> categories)</td>
+<td align="left">No</td>
+<td align="left"><span class="math inline">\(2^{q-1} - 1\)</span></td>
 </tr>
 <tr class="odd">
-<td align="left"><span class="math inline">\(i\)</span></td>
-<td align="left">running index for rows or individuals</td>
+<td align="left">Ordinal (<span class="math inline">\(q&gt;2\)</span> categories)</td>
+<td align="left">Yes</td>
+<td align="left"><span class="math inline">\(q - 1\)</span></td>
 </tr>
 <tr class="even">
-<td align="left"><span class="math inline">\(j\)</span></td>
-<td align="left">running index for columns or variables</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(k\)</span></td>
-<td align="left">running index determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\ell, m, q\)</span></td>
-<td align="left">other auxiliary indexes</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(f()\)</span>, <span class="math inline">\(h()\)</span>, <span class="math inline">\(d()\)</span></td>
-<td align="left">functions</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\lambda, \mu, \gamma, \alpha\)</span></td>
-<td align="left">greek letters represent scalars</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(\mathbf{y}\)</span></td>
-<td align="left">variables, size determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{w}\)</span>, <span class="math inline">\(\mathbf{a}\)</span>, <span class="math inline">\(\mathbf{b}\)</span></td>
-<td align="left">vectors of weight coefficients</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{z}\)</span>, <span class="math inline">\(\mathbf{t}\)</span>, <span class="math inline">\(\mathbf{u}\)</span></td>
-<td align="left">components or latent variables</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{X} : n \times p\)</span></td>
-<td align="left">data matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(p\)</span> columns</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(x_{ij}\)</span></td>
-<td align="left">element of a matrix in <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{1}\)</span></td>
-<td align="left">vector of ones, size determined by context</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{I}\)</span></td>
-<td align="left">identity matrix, size determined by context</td>
+<td align="left">Continuous (<span class="math inline">\(q\)</span> values)</td>
+<td align="left">Yes</td>
+<td align="left"><span class="math inline">\(q - 1\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>By the way, there are many more symbols that will appear in later chapters.
-But for now these are the fundamental ones.</p>
-<p>Likewise, the table below contains some of the most common operators that we
-will use in subsequent chapters:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbb{E}[X]\)</span></td>
-<td align="left">expected value of a random variable <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\|\mathbf{a}\|\)</span></td>
-<td align="left">euclidean norm of a vector</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{a}^{\mathsf{T}}\)</span></td>
-<td align="left">transpose of a vector (or matrix)</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{a^{\mathsf{T}}b}\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\langle \mathbf{a}, \mathbf{b} \rangle\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(det(\mathbf{A})\)</span></td>
-<td align="left">determinant of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(tr(\mathbf{A})\)</span></td>
-<td align="left">trace of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{A}^{-1}\)</span></td>
-<td align="left">inverse of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(diag(\mathbf{A})\)</span></td>
-<td align="left">diagonal of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(E()\)</span></td>
-<td align="left">overall error function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(err()\)</span></td>
-<td align="left">pointwise error function</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(sign()\)</span></td>
-<td align="left">sign function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(var()\)</span></td>
-<td align="left">variance function</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(cov()\)</span></td>
-<td align="left">covariance function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(cor()\)</span></td>
-<td align="left">correlation function</td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
+<div id="measures-of-impurity" class="section level2">
+<h2><span class="header-section-number">30.2</span> Measures of Impurity</h2>
+<p>The second aspect behind any binary tree building process has to do with
+determining a criterion to find the “best” node split. This in turn, requires
+some sort of optimization criterion. The general idea is to find the node
+partition that gives the largest reduction in the amount of heterogeneity
+(or variability) of a parent node.</p>
+<p>For illustrative purposes, let us focus on a single node with <span class="math inline">\(n = 14\)</span> objects,
+divided in <span class="math inline">\(2\)</span> classes; one class denoted as <span class="math inline">\(\bigcirc\)</span>, the other denoted as
+<span class="math inline">\(\Delta\)</span>; both classes having <span class="math inline">\(7\)</span> objects. Suppose this node splits in
+the following manner:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-337"></span>
+<img src="images/trees/entropy-toy0.svg" alt="Hypothetical split of a node" width="55%" />
+<p class="caption">
+Figure 30.5: Hypothetical split of a node
+</p>
+</div>
+<p>We have an intuitive feeling that the parent node has more heterogeneity than
+its child nodes. In fact, this is a general result: a split cannot result in
+child nodes with more heterogeneity than the parent node. Stated differently,
+you can never do worse than the parent node.</p>
+<p>In the parent node of the previous figure, the proportion of <span class="math inline">\(\bigcirc\)</span> equals
+the proportion of <span class="math inline">\(\Delta\)</span>. In other words, there is an equal probability of
+being a <span class="math inline">\(\bigcirc\)</span> as there is to be a <span class="math inline">\(\Delta\)</span>. However, in the left node,
+there is a higher chance of being a <span class="math inline">\(\bigcirc\)</span> than <span class="math inline">\(\Delta\)</span> (the reverse is
+true of the right node).</p>
+<p>Most measures of heterogeneity (and therefore homogeneity) relate to
+proportions of classes in a parent node. Let’s spitball some ideas as to how
+to do this:</p>
+<ul>
+<li><p><span class="math inline">\(\mathrm{prop}(\bigcirc) - \mathrm{prop}(\Delta)\)</span>; you would need to assign
+some sort of interpretation to the value <span class="math inline">\(0\)</span> in this case.</p></li>
+<li><p>Entropy (information, as viewed from a computer science standpoint). Could
+also refer to this as a measure of “disorder” within a node.</p></li>
+<li><p>Impurity (how mixed, diverse)</p></li>
+</ul>
+<div id="entropy" class="section level3">
+<h3><span class="header-section-number">30.2.1</span> Entropy</h3>
+<p>The first type of measure of heterogeneity (or impurity) that we’ll study is
+the so-called <em>Entropy</em>.</p>
+<p>Let’s start with an (abstract) toy example: say we have a box containing 12
+objects, all of the same class (say, <span class="math inline">\(\bigcirc\)</span>).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-338"></span>
+<img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
+<p class="caption">
+Figure 30.6: Set of 12 objects of same type
+</p>
+</div>
+<p>If we randomly select an object from this box, we have zero uncertainty about
+its class: in other words, there is <strong>zero entropy</strong> associated with this
+situation.</p>
+<p>Now, suppose three of those <span class="math inline">\(\bigcirc\)</span>’s were replaced with <span class="math inline">\(\square\)</span>’s.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-339"></span>
+<img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
+<p class="caption">
+Figure 30.7: Set with two different types of objects
+</p>
+</div>
+<p>If we were to randomly draw an object from this box, there would be <em>some</em>
+amount of uncertainty as to its class; that is, there is <strong>some entropy</strong>.
+Probabilistically speaking, there’s a chance of 9/12 that the selected object
+is <span class="math inline">\(\bigcirc\)</span>, and a chance of 3/12 that the drawn object is <span class="math inline">\(\square\)</span>.</p>
+<p>Finally, in the most extreme case, say we have 12 objects, all of different
+classes, like in the diagram below:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-340"></span>
+<img src="images/trees/entropy_levels3.svg" alt="Set with 12 different types of objects" width="35%" />
+<p class="caption">
+Figure 30.8: Set with 12 different types of objects
+</p>
+</div>
+<p>We are quite uncertain as to the classes of objects drawn from this box;
+that is, we have <strong>maximum entropy</strong>.</p>
+<p>In Short: the intuition behind entropy relates to how “mixed” a box is, with
+respect to the classes contained inside. If a box is “pure” (i.e. has only one
+class), it has zero entropy where as if a box is “highly impure” (i.e. has many
+different classes), it has some nonzero amount of entropy.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-341"></span>
+<img src="images/trees/entropy_levels4.svg" alt="Set with 12 different types of objects" width="90%" />
+<p class="caption">
+Figure 30.9: Set with 12 different types of objects
+</p>
+</div>
+<p>Now, let’s see how we can link our idea of entropy with the idea of
+<em>probability</em>. From the examples above, we can see the following relationship
+when randomly slecting an object from the box:</p>
+<p><span class="math display">\[
+\begin{array}{lcl} \text{large probability of guessing class} &amp; \Rightarrow &amp; \text{small entropy value} \\ 
+\text{small probability of guessing class} &amp; \Rightarrow &amp; \text{large entropy value} \\ 
+\end{array}
+\]</span></p>
+<p>Hence, it makes sense to try and model entropy as a function of <span class="math inline">\(P\)</span>, the probability of selecting an object of a certain class. From our discussion above, we see
+that our entropy function should be small when <span class="math inline">\(P\)</span> is around 1, and large when
+<span class="math inline">\(P\)</span> is around <span class="math inline">\(0\)</span>.</p>
+<p>There are quite a few functions that display this behavior. The one we will use
+is the logarithm, of any base <span class="math inline">\(b\)</span>. Note that</p>
+<p><span class="math display">\[
+\log_b(P) : [0, 1] \to (-\infty, 0]
+\]</span></p>
+<p>That is, since our probability values are restricted to lie in the unit interval,
+the entropy will lie somewhere on the negative real axis.</p>
+</div>
+<div id="the-math-behind-entropy" class="section level3">
+<h3><span class="header-section-number">30.2.2</span> The Math Behind Entropy</h3>
+<p>Letting <span class="math inline">\(H(\text{node})\)</span> denote the entropy of a particular node, we use the
+following definition:</p>
+<p><span class="math display">\[
+H(\text{node}) = - \sum_{k=1}^{K} p_k \log_2(p_k)
+\]</span></p>
+<p>where <span class="math inline">\(p_k\)</span> denotes the probability of randomly selecting an object that comes
+from class <span class="math inline">\(k\)</span>. Note the negative sign in the above formula; the reason for
+this negative sign is to have positive values from logarithms of probabilities.
+By convention, we use a log of base 2. The rationale behind picking <span class="math inline">\(2\)</span> comes
+from information theory, as base-2 logs can be interpreted in terms of bits.</p>
+<p>Let’s see if this definition of entropy is consistent with our intuition. For
+example, let us consider a <strong>pure</strong> node; that is, a node in which all
+objects share the same class. In this case <span class="math inline">\(p_k = 1\)</span>, and we have only one
+class so</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) &amp;= - p_1 \cdot log_2 (p_1) \\
+&amp;= -(1) \cdot \log_2(1) \\
+&amp;= -1 \cdot 0 = 0
+\end{align*}\]</span></p>
+<p>Now, for our second example above, we have <span class="math inline">\(h = 2\)</span> classes with <span class="math inline">\(p_1 = 9/12\)</span>
+and <span class="math inline">\(p_2 = 3/12\)</span>, so that</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+&amp;= - \frac{9}{12} \log_2\left( \frac{9}{12} \right) - \frac{3}{12} \log_2\left( \frac{3}{12} \right) \approx 0.8112
+\end{align*}\]</span></p>
+<p>In a node where there is a 50-50 split, we have</p>
+<p><span class="math display">\[\begin{align*}
+H(\text{node}) &amp;= - p_1 \log_2 (p1) - p_2 \log_2 (p_2) \\
+&amp;= - \frac{1}{2} \log_2\left( \frac{1}{2} \right) - \frac{1}{2} \log_2\left( \frac{1}{2} \right) = 1
+\end{align*}\]</span></p>
+<p>The following figure depicts several examples of sets and their entropy values.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-342"></span>
+<img src="images/trees/entropy_levels5.svg" alt="Different sets with their entropy values" width="90%" />
+<p class="caption">
+Figure 30.10: Different sets with their entropy values
+</p>
+</div>
+</div>
+<div id="gini-impurity" class="section level3">
+<h3><span class="header-section-number">30.2.3</span> Gini Impurity</h3>
+<p>The second type of measure of heterogeneity (or impurity) that we’ll describe
+is the so-called <em>Gini</em> impurity, also refer to as Gini index.</p>
+<p>Let us return to the second box example from the previous section. There are
+9 <span class="math inline">\(\bigcirc\)</span>’s and 3 <span class="math inline">\(\square\)</span>’s.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-343"></span>
+<img src="images/trees/entropy_levels2.svg" alt="Set with two different types of objects" width="35%" />
+<p class="caption">
+Figure 30.11: Set with two different types of objects
+</p>
+</div>
+<p>Let’s suppose I randomly select a ball, and note what class it belongs to.
+I then ask you (without giving you any information about the box, other than
+the fact that there are <span class="math inline">\(\bigcirc\)</span>’s and <span class="math inline">\(\square\)</span>’s), to guess
+what class my selected object belongs to.</p>
+<p>There are 4 possible outcomes to this situation:</p>
+<ul>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
+</ul>
+<p>The Gini index pays attention to the <strong>misclassifications</strong>; that is, the
+situations in which your guess was wrong. For instance, in our example above,
+there is a total of 2 possible misclassifications:</p>
+<ul>
+<li>I select <span class="math inline">\(\bigcirc\)</span>, you guess <span class="math inline">\(\square\)</span>.</li>
+<li>I select <span class="math inline">\(\square\)</span>, you guess <span class="math inline">\(\bigcirc\)</span>.</li>
+</ul>
+<p>The Gini Index involves the probability of misclassification of an object
+randomly selected from the box. It is computed as follows:</p>
+<p><span class="math display">\[\begin{align*}
+\text{Gini Index} &amp; = \underbrace{ Prob(\bigcirc) }_{\text{me}} \underbrace{ Prob(\square) }_{\text{you}} + \underbrace{ Prob(\square) }_{\text{me}} \underbrace{ Prob(\bigcirc) }_{\text{you}} \\
+&amp; = \left( \frac{9}{12} \right) \left( \frac{3}{12} \right)  +  \left( \frac{3}{12} \right) \left( \frac{9}{12} \right)  = \frac{1}{8} = 0.375
+\end{align*}\]</span></p>
+<p>For a given node containing objects of <span class="math inline">\(K\)</span> classes, the Gini impurity is
+given by:</p>
+<p><span class="math display">\[
+Gini(\text{node}) = \sum_{k=1}^{K} p_k (1 - p_k)
+\]</span></p>
+<p>Doing a bit of algebra, it is possible to find alternative formulas for the
+gini impurity:</p>
+<p><span class="math display">\[\begin{align*}
+Gini(\text{node}) &amp;= \sum_{k=1}^{K} p_k (1 - p_k) \\ 
+&amp;= 1 - \sum_{k=1}^{K} p^{2}_{k} \\ 
+&amp;= \sum_{k \neq \ell} p_k p_{\ell}
+\end{align*}\]</span></p>
+<div id="some-examples" class="section level4 unnumbered">
+<h4>Some Examples</h4>
+<p>For illustration purposes, let’s compute gini impurity of a node containing 12
+objects, all of the same class:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-344"></span>
+<img src="images/trees/entropy_levels1.svg" alt="Set of 12 objects of same type" width="35%" />
+<p class="caption">
+Figure 30.12: Set of 12 objects of same type
+</p>
+</div>
+<p><span class="math display">\[\begin{align*}
+Gini(\text{node}) &amp;= \sum_{k=1}^{1} p_k (1 - p_k) \\ 
+&amp;= \left( \frac{12}{12} \right) \left( \frac{0}{12} \right) = 0
+\end{align*}\]</span></p>
+<p>Now consider a balanced node with objects of two classes</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-345"></span>
+<img src="images/trees/entropy_levels11.svg" alt="Two-class balanced set" width="35%" />
+<p class="caption">
+Figure 30.13: Two-class balanced set
+</p>
+</div>
+<p>the gini impurity in this case is:</p>
+<p><span class="math display">\[\begin{align*}
+Gini(\text{node}) &amp;= \sum_{k=1}^{2} p_k (1 - p_k) \\ 
+&amp;= \left( \frac{6}{12} \right) \left( \frac{6}{12} \right)  +  \left( \frac{6}{12} \right) \left( \frac{6}{12} \right) = 0.5
+\end{align*}\]</span></p>
+<p>The following figure depicts several examples of sets and their gini impurities.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-346"></span>
+<img src="images/trees/gini_impurities.svg" alt="Different sets with their gini impurities" width="90%" />
+<p class="caption">
+Figure 30.14: Different sets with their gini impurities
+</p>
+</div>
+</div>
+</div>
+<div id="variance-based-impurity" class="section level3">
+<h3><span class="header-section-number">30.2.4</span> Variance-based Impurity</h3>
+<p>So far we’ve been considering measures of impurity when we have a categorical
+response. But what about a quantitative response? What measure of impurity can
+we use in this case?</p>
+<p>The typical way in which we measure the amount of impurity of a node, with
+respect to a quantitative response <span class="math inline">\(Y\)</span>, is by computing the sum of squared
+deviations from the mean (or alternatively the variance).</p>
+<p>For instance, consider a parent node denoted by <span class="math inline">\(N\)</span>. The sum of squared
+deviations from the mean is given by:</p>
+<p><span class="math display">\[
+\text{rss} = \sum_{i \in N} (y_i - \bar{y})^2
+\]</span></p>
+<p>where <span class="math inline">\(\bar{y}\)</span> is the mean response for the individuals in node <span class="math inline">\(N\)</span>.</p>
+<p>Now, suppose we are looking the best binary split among a set of
+<span class="math inline">\(X_1, \dots, X_m\)</span> features.</p>
+<p>Say we take predictor <span class="math inline">\(X_j\)</span>, and we are evaluating a splitting condition
+given by the cutoff value <span class="math inline">\(s\)</span>. This means that <span class="math inline">\(s\)</span> splits the feature space in
+two regions <span class="math inline">\(\mathcal{R_1}\)</span> and <span class="math inline">\(\mathcal{R_2}\)</span>:</p>
+<p><span class="math display">\[
+\mathcal{R_1}(j,s) = \{ X | X_j &lt; s\} \quad \mathrm{and} \quad \mathcal{R_2}(j,s) = \{ X | X_j \geq s \}
+\]</span></p>
+<p>The goal is to find the feature <span class="math inline">\(j\)</span>, and the value <span class="math inline">\(s\)</span> that minimize the
+following equation:</p>
+<p><span class="math display">\[
+\sum_{i \in \mathcal{R_1}} (y_i - \bar{y}_{\mathcal{R_1}})^2 + \sum_{i \in \mathcal{R_2}} (y_i - \bar{y}_{\mathcal{R_2}})^2
+\]</span></p>
+<p>where <span class="math inline">\(\bar{y}_{\mathcal{R_1}}\)</span> is the mean response for the individuals
+in region <span class="math inline">\(\mathcal{R_1}(j,s)\)</span>, and <span class="math inline">\(\bar{y}_{\mathcal{R_2}}\)</span> is the mean
+response for the individuals in region <span class="math inline">\(\mathcal{R_2}(j,s)\)</span>.</p>
+<p>When <span class="math inline">\(j\)</span> and the value <span class="math inline">\(s\)</span> have been identified, the predicted response
+<span class="math inline">\(\hat{y}_0\)</span> of an observation is calculated as the mean of the in-sample
+individuals in the region to which <span class="math inline">\(\mathbf{x_0}\)</span> belongs to.</p>
 
+</div>
 </div>
 </div>
             </section>
@@ -806,8 +915,8 @@ will use in subsequent chapters:</p>
           </div>
         </div>
       </div>
-<a href="about.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="duality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tree-splits.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

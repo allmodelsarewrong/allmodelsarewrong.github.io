@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>33 Random Forests | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>34 Random Forests | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="33 Random Forests | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="34 Random Forests | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="33 Random Forests | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="34 Random Forests | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -444,42 +444,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="29.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>29.3.1</b> The Process of Building a Tree</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="30" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>30</b> Binary Splits and Impurity</a><ul>
-<li class="chapter" data-level="30.1" data-path="tree-splits.html"><a href="tree-splits.html#binary-partitions"><i class="fa fa-check"></i><b>30.1</b> Binary Partitions</a><ul>
-<li class="chapter" data-level="30.1.1" data-path="tree-splits.html"><a href="tree-splits.html#splits-of-binary-variables"><i class="fa fa-check"></i><b>30.1.1</b> Splits of Binary variables</a></li>
-<li class="chapter" data-level="30.1.2" data-path="tree-splits.html"><a href="tree-splits.html#splits-of-nominal-variables"><i class="fa fa-check"></i><b>30.1.2</b> Splits of Nominal Variables</a></li>
-<li class="chapter" data-level="30.1.3" data-path="tree-splits.html"><a href="tree-splits.html#splits-of-ordinal-variables"><i class="fa fa-check"></i><b>30.1.3</b> Splits of Ordinal Variables</a></li>
-<li class="chapter" data-level="30.1.4" data-path="tree-splits.html"><a href="tree-splits.html#splits-continuous-variables"><i class="fa fa-check"></i><b>30.1.4</b> Splits Continuous variables</a></li>
+<li class="chapter" data-level="30" data-path="tree-impurities.html"><a href="tree-impurities.html"><i class="fa fa-check"></i><b>30</b> Binary Splits and Impurity</a><ul>
+<li class="chapter" data-level="30.1" data-path="tree-impurities.html"><a href="tree-impurities.html#binary-partitions"><i class="fa fa-check"></i><b>30.1</b> Binary Partitions</a><ul>
+<li class="chapter" data-level="30.1.1" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-binary-variables"><i class="fa fa-check"></i><b>30.1.1</b> Splits of Binary variables</a></li>
+<li class="chapter" data-level="30.1.2" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-nominal-variables"><i class="fa fa-check"></i><b>30.1.2</b> Splits of Nominal Variables</a></li>
+<li class="chapter" data-level="30.1.3" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-ordinal-variables"><i class="fa fa-check"></i><b>30.1.3</b> Splits of Ordinal Variables</a></li>
+<li class="chapter" data-level="30.1.4" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-continuous-variables"><i class="fa fa-check"></i><b>30.1.4</b> Splits Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="30.2" data-path="tree-splits.html"><a href="tree-splits.html#measures-of-impurity"><i class="fa fa-check"></i><b>30.2</b> Measures of Impurity</a><ul>
-<li class="chapter" data-level="30.2.1" data-path="tree-splits.html"><a href="tree-splits.html#entropy"><i class="fa fa-check"></i><b>30.2.1</b> Entropy</a></li>
-<li class="chapter" data-level="30.2.2" data-path="tree-splits.html"><a href="tree-splits.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>30.2.2</b> The Math Behind Entropy</a></li>
-<li class="chapter" data-level="30.2.3" data-path="tree-splits.html"><a href="tree-splits.html#gini-impurity"><i class="fa fa-check"></i><b>30.2.3</b> Gini Impurity</a></li>
-<li class="chapter" data-level="30.2.4" data-path="tree-splits.html"><a href="tree-splits.html#toy-example-3"><i class="fa fa-check"></i><b>30.2.4</b> Toy Example</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="31" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>31</b> Building Binary Trees</a><ul>
-<li class="chapter" data-level="31.1" data-path="tree-basics.html"><a href="tree-basics.html#algorithm-1"><i class="fa fa-check"></i><b>31.1</b> Algorithm</a></li>
-<li class="chapter" data-level="31.2" data-path="tree-basics.html"><a href="tree-basics.html#stopping-criteria"><i class="fa fa-check"></i><b>31.2</b> Stopping Criteria</a></li>
-<li class="chapter" data-level="31.3" data-path="tree-basics.html"><a href="tree-basics.html#cost-of-a-tree"><i class="fa fa-check"></i><b>31.3</b> Cost of a Tree</a></li>
-<li class="chapter" data-level="31.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>31.4</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="31.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>31.4.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="31.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>31.4.2</b> Disadvantages of Trees</a></li>
-<li class="chapter" data-level="31.4.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>31.4.3</b> Bias-Variance of Trees</a></li>
+<li class="chapter" data-level="30.2" data-path="tree-impurities.html"><a href="tree-impurities.html#measures-of-impurity"><i class="fa fa-check"></i><b>30.2</b> Measures of Impurity</a><ul>
+<li class="chapter" data-level="30.2.1" data-path="tree-impurities.html"><a href="tree-impurities.html#entropy"><i class="fa fa-check"></i><b>30.2.1</b> Entropy</a></li>
+<li class="chapter" data-level="30.2.2" data-path="tree-impurities.html"><a href="tree-impurities.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>30.2.2</b> The Math Behind Entropy</a></li>
+<li class="chapter" data-level="30.2.3" data-path="tree-impurities.html"><a href="tree-impurities.html#gini-impurity"><i class="fa fa-check"></i><b>30.2.3</b> Gini Impurity</a></li>
+<li class="chapter" data-level="30.2.4" data-path="tree-impurities.html"><a href="tree-impurities.html#variance-based-impurity"><i class="fa fa-check"></i><b>30.2.4</b> Variance-based Impurity</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="32" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>32</b> Bagging</a><ul>
-<li class="chapter" data-level="32.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>32.1</b> Introduction</a><ul>
-<li class="chapter" data-level="32.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>32.1.1</b> Idea of Bagging</a></li>
+<li class="chapter" data-level="31" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>31</b> Splitting Nodes</a><ul>
+<li class="chapter" data-level="31.1" data-path="tree-splits.html"><a href="tree-splits.html#entropy-based-splits"><i class="fa fa-check"></i><b>31.1</b> Entropy-based Splits</a></li>
+<li class="chapter" data-level="31.2" data-path="tree-splits.html"><a href="tree-splits.html#gini-index-based-splits"><i class="fa fa-check"></i><b>31.2</b> Gini-index based Splits</a></li>
+<li class="chapter" data-level="31.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>31.3</b> Looking for the best split</a></li>
 </ul></li>
-<li class="chapter" data-level="32.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>32.2</b> Why Bother Bagging?</a></li>
+<li class="chapter" data-level="32" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>32</b> Building Binary Trees</a><ul>
+<li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#looking-for-best-split"><i class="fa fa-check"></i><b>32.1</b> Looking for best split</a></li>
+<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.2</b> Node-Splitting Stopping Criteria</a></li>
+<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.3</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="32.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.4</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="32.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.4.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="32.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.4.2</b> Disadvantages of Trees</a></li>
+<li class="chapter" data-level="32.4.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.4.3</b> Bias-Variance of Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="33" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>33</b> Random Forests</a><ul>
-<li class="chapter" data-level="33.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
-<li class="chapter" data-level="33.2" data-path="forest.html"><a href="forest.html#algorithm-2"><i class="fa fa-check"></i><b>33.2</b> Algorithm</a></li>
-<li class="chapter" data-level="33.3" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>33.3</b> Two Sources of Randomness</a><ul>
-<li class="chapter" data-level="33.3.1" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>33.3.1</b> Key Advantage of Random Forests</a></li>
-<li class="chapter" data-level="33.3.2" data-path="forest.html"><a href="forest.html#errors"><i class="fa fa-check"></i><b>33.3.2</b> Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="33" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>33</b> Bagging</a><ul>
+<li class="chapter" data-level="33.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>33.1</b> Introduction</a><ul>
+<li class="chapter" data-level="33.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>33.1.1</b> Idea of Bagging</a></li>
+</ul></li>
+<li class="chapter" data-level="33.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>33.2</b> Why Bother Bagging?</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>34</b> Random Forests</a><ul>
+<li class="chapter" data-level="34.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>34.1</b> Introduction</a></li>
+<li class="chapter" data-level="34.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>34.2</b> Algorithm</a></li>
+<li class="chapter" data-level="34.3" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>34.3</b> Two Sources of Randomness</a><ul>
+<li class="chapter" data-level="34.3.1" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>34.3.1</b> Key Advantage of Random Forests</a></li>
+<li class="chapter" data-level="34.3.2" data-path="forest.html"><a href="forest.html#errors"><i class="fa fa-check"></i><b>34.3.2</b> Errors</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -503,19 +508,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="forest" class="section level1">
-<h1><span class="header-section-number">33</span> Random Forests</h1>
+<h1><span class="header-section-number">34</span> Random Forests</h1>
 <div id="introduction-8" class="section level2">
-<h2><span class="header-section-number">33.1</span> Introduction</h2>
+<h2><span class="header-section-number">34.1</span> Introduction</h2>
 <p>Instead of fitting a single tree, we fit several trees (much like the
 different <span class="math inline">\(h_i\)</span>’s in the diagram below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-359"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-367"></span>
 <img src="images/trees/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
 <p class="caption">
-Figure 33.1: Several data sets and fitted models
+Figure 34.1: Several data sets and fitted models
 </p>
 </div>
-<p>Now, from a given a bootstrap sample <span class="math inline">\(\mathcal{D_m}\)</span>
-we further take a random sample of features (to obtain <span class="math inline">\(k\)</span> of them). We search
+<p>Now, from a given bootstrap sample <span class="math inline">\(\mathcal{D_m}\)</span>,
+we further take a random sample of features to obtain <span class="math inline">\(k\)</span> of them. We search
 across these <span class="math inline">\(k\)</span> to identify the variable <span class="math inline">\(X_{\ell}\)</span> that produces the optimal
 split; then split.</p>
 <p>Here, <span class="math inline">\(k\)</span> is a tuning parameter. However, there is a theoretical justification
@@ -525,8 +530,8 @@ k = \lceil \sqrt{p} \rceil
 \]</span></p>
 <p>This gives us a good chance that our subsamples are very nearly independent.</p>
 </div>
-<div id="algorithm-2" class="section level2">
-<h2><span class="header-section-number">33.2</span> Algorithm</h2>
+<div id="algorithm-1" class="section level2">
+<h2><span class="header-section-number">34.2</span> Algorithm</h2>
 <p>Recall: instead of growing a single tree, we now want to grow a forest; that is,
 multiple trees. Say we have <span class="math inline">\(b = 1, 2, \dots, B\)</span> trees. Here is how we would
 grow our forest:</p>
@@ -546,7 +551,7 @@ the training set, where <span class="math inline">\(n\)</span> is the size of ou
 </ul>
 </div>
 <div id="two-sources-of-randomness" class="section level2">
-<h2><span class="header-section-number">33.3</span> Two Sources of Randomness</h2>
+<h2><span class="header-section-number">34.3</span> Two Sources of Randomness</h2>
 <p>Randomness in the data points</p>
 <ul>
 <li><p>Each tree gets to see a different data set (that is, no tree gets to train on the <em>entire</em> dataset)</p></li>
@@ -577,7 +582,7 @@ then assign <span class="math inline">\(\hat{y}_0\)</span> the mode of these sub
 \hat{y}_0 = \mathrm{mode} \left\{ T_b(x_0) \right\}
 \]</span></p>
 <div id="key-advantage-of-random-forests" class="section level3">
-<h3><span class="header-section-number">33.3.1</span> Key Advantage of Random Forests</h3>
+<h3><span class="header-section-number">34.3.1</span> Key Advantage of Random Forests</h3>
 <p>Let’s first start by recapping what we’ve done so far. We start with a dataset
 <span class="math inline">\(\mathcal{D}\)</span>, and then split it into some number of sub-datasets:</p>
 <p><span class="math display">\[
@@ -614,7 +619,7 @@ E_{\mathrm{OOB}} = \frac{1}{n} \sum_{i=1}^{n} \mathrm{OOB}_i
 turns out that <span class="math inline">\(E_{\mathrm{OOB}}\)</span> is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>.</p>
 </div>
 <div id="errors" class="section level3">
-<h3><span class="header-section-number">33.3.2</span> Errors</h3>
+<h3><span class="header-section-number">34.3.2</span> Errors</h3>
 <p><span class="math display">\[
 \textbf{[Error Curves]}
 \]</span></p>
