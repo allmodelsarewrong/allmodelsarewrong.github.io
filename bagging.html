@@ -464,13 +464,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>31.3</b> Looking for the best split</a></li>
 </ul></li>
 <li class="chapter" data-level="32" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>32</b> Building Binary Trees</a><ul>
-<li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#looking-for-best-split"><i class="fa fa-check"></i><b>32.1</b> Looking for best split</a></li>
-<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.2</b> Node-Splitting Stopping Criteria</a></li>
-<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.3</b> Pruning a Tree</a></li>
-<li class="chapter" data-level="32.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.4</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="32.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.4.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="32.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.4.2</b> Disadvantages of Trees</a></li>
-<li class="chapter" data-level="32.4.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.4.3</b> Bias-Variance of Trees</a></li>
+<li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.1</b> Node-Splitting Stopping Criteria</a></li>
+<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.2</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.3</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="32.3.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.3.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="32.3.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.3.2</b> Disadvantages of Trees</a></li>
+<li class="chapter" data-level="32.3.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.3.3</b> Bias-Variance of Trees</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="33" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>33</b> Bagging</a><ul>
@@ -524,7 +523,7 @@ multiple versions of a predictor and using these to get an aggregated predictorâ
 <p>Suppose that, given our initial dataset <span class="math inline">\(\mathcal{D}\)</span>, we are able to obtain
 <span class="math inline">\(M\)</span> new datasets <span class="math inline">\(\{\mathcal{D_m}\}_{m=1}^{M}\)</span>. From each <span class="math inline">\(\mathcal{D_m}\)</span> we
 obtain a model <span class="math inline">\(h_m\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-363"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-372"></span>
 <img src="images/trees/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
 <p class="caption">
 Figure 33.1: Several data sets and fitted models
@@ -535,7 +534,7 @@ Figure 33.1: Several data sets and fitted models
 \bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
 \]</span></p>
 <p>which we can add to our previous diagram and get an updated figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-364"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-373"></span>
 <img src="images/trees/bagging-idea2.svg" alt="Empirical average model" width="50%" />
 <p class="caption">
 Figure 33.2: Empirical average model
@@ -600,7 +599,7 @@ bias:</p>
 directly. Sure, there is an implicit dependency through the average model,
 however there is no <span class="math inline">\(\mathcal{D}\)</span> in the bias formula bove. Hence, in bagging,
 we can decrease variance while <em>not</em> sacrificing bias.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-365"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-374"></span>
 <img src="images/trees/bagging-idea3.svg" alt="Ensemble of models, and bagged model" width="50%" />
 <p class="caption">
 Figure 33.3: Ensemble of models, and bagged model

@@ -464,13 +464,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>31.3</b> Looking for the best split</a></li>
 </ul></li>
 <li class="chapter" data-level="32" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>32</b> Building Binary Trees</a><ul>
-<li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#looking-for-best-split"><i class="fa fa-check"></i><b>32.1</b> Looking for best split</a></li>
-<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.2</b> Node-Splitting Stopping Criteria</a></li>
-<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.3</b> Pruning a Tree</a></li>
-<li class="chapter" data-level="32.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.4</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="32.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.4.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="32.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.4.2</b> Disadvantages of Trees</a></li>
-<li class="chapter" data-level="32.4.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.4.3</b> Bias-Variance of Trees</a></li>
+<li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.1</b> Node-Splitting Stopping Criteria</a></li>
+<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.2</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.3</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="32.3.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.3.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="32.3.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.3.2</b> Disadvantages of Trees</a></li>
+<li class="chapter" data-level="32.3.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.3.3</b> Bias-Variance of Trees</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="33" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>33</b> Bagging</a><ul>
@@ -519,65 +518,49 @@ criterion to be optimized based on measures of impurity.</p></li>
 </ol>
 <p>So far, we have described the first two aspects. But we still need to talk
 about how to stop the tree-growing process.</p>
-<div id="looking-for-best-split" class="section level2">
-<h2><span class="header-section-number">32.1</span> Looking for best split</h2>
-<p>Let’s quickly review the steps for splitting a node, which involve the first
-two aspects listed above.</p>
-<p>The main idea to grow a tree is to successively (i.e. recursively) divide the
-set of objects with the help of features <span class="math inline">\(X_1, \dots, X_p\)</span>, in order to obtain
-nodes that are as homogeneous as possible (with respect to the response).</p>
-<p>Here’s what we have to do in a given (parent) node:</p>
-<ul>
-<li>Comptue impurity of the (parent) node</li>
-<li>For each variable feature <span class="math inline">\(X_j\)</span>
-<ul>
-<li>Determine the number of binary splits</li>
-<li>For each binary split:
-<ul>
-<li>compute impurity for left node</li>
-<li>compute impurity for right node</li>
-<li>calculate and store reduction in impurity</li>
-</ul></li>
-</ul></li>
-<li>Find the best splitting feature <span class="math inline">\(X_j\)</span> that has the maximum reduction in
-impurity</li>
-</ul>
-<p>Once you find the optimal split, perform the split, and repeat the above
-procedure for the new child nodes.</p>
-</div>
 <div id="node-splitting-stopping-criteria" class="section level2">
-<h2><span class="header-section-number">32.2</span> Node-Splitting Stopping Criteria</h2>
-<p>To grow a tree, we need to recursively apply the steps previously described,
-to all child nodes. But at some point we need to decide whether to stop
+<h2><span class="header-section-number">32.1</span> Node-Splitting Stopping Criteria</h2>
+<p>To grow a tree, we need to recursively apply the steps described in the previous
+chapter, to all child nodes. But at some point we need to decide whether to stop
 splitting a given node.</p>
 <p>In no particular order of importance, here are a few criteria for stopping
 splitting a node. We stop splitting a node when/if:</p>
 <ul>
-<li><p>The node is pure (i.e. a node contains objects of only one class)</p></li>
-<li><p>We run out of features (that is, there are no more features to split on)</p></li>
-<li><p>A pre-specified minimum number of objects in a node is reached. For example,
-stop splitting when a node contains only 30 elements.</p>
+<li>The node is pure (i.e. a node contains objects of only one class).</li>
+</ul>
+<p><img src="images/trees/stop-split-pure.svg" width="45%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>We run out of features (that is, there are no more features to split on).</li>
+</ul>
+<p><img src="images/trees/stop-split-exhaust.svg" width="45%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>A pre-specified minimum number of objects in a node is reached. For example,
+stop splitting when a node contains at most 30 elements.
 <ul>
 <li>In <code>rpart()</code>, this can be specified using the <code>minsplit</code> parameter.</li>
 </ul></li>
-<li><p>Size of resulting nodes would be “too small” (e.g. 10, 15, 20, etc.). This
+</ul>
+<p><img src="images/trees/stop-split-minsplit.svg" width="45%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Size of resulting nodes would be “too small” (e.g. 10, 15, 20, etc.). This
 is closely related to the previous rule, but a bit different. For example,
 we can have a node with enough objects greater than the minimum required.
-However, all resulting binary splits are deemed too small.</p>
+However, all resulting binary splits are deemed too small.
 <ul>
 <li>In <code>rpart()</code>, this can be specified using the  parameter.</li>
 <li>Typically <code>minsplit &gt; minbucket</code></li>
 </ul></li>
-<li><p>A certain depth level is reached. This is another condition in which a
+<li>A certain depth level is reached. This is another condition in which a
 pre-determined level of depth is chosen, in order to prevent “large” overfitting
-trees.</p>
+trees.
 <ul>
 <li>In <code>rpart()</code>, this can be specified using the <code>maxdepth</code> parameter.</li>
 </ul></li>
 </ul>
+<p><img src="images/trees/stop-split-level.svg" width="65%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="pruning-a-tree" class="section level2">
-<h2><span class="header-section-number">32.3</span> Pruning a Tree</h2>
+<h2><span class="header-section-number">32.2</span> Pruning a Tree</h2>
 <p>Now that we have described all the main aspects to grow a tree, we can
 present the formal algorithm of CART-trees.</p>
 <p>The building process of CART-style binary trees is to grow a “large” tree and
@@ -621,10 +604,10 @@ in the smallest cost.</p>
 <p>In the R package <code>"rpart", the function</code>rpart()<code>allows you to specify the  argument</code>cp` which controls the complexity parameter.</p>
 </div>
 <div id="pros-and-cons-of-trees" class="section level2">
-<h2><span class="header-section-number">32.4</span> Pros and Cons of Trees</h2>
+<h2><span class="header-section-number">32.3</span> Pros and Cons of Trees</h2>
 <p>Let’s review some of the advantages and disadvantages of trees.</p>
 <div id="advantages-of-trees" class="section level3">
-<h3><span class="header-section-number">32.4.1</span> Advantages of Trees</h3>
+<h3><span class="header-section-number">32.3.1</span> Advantages of Trees</h3>
 <ul>
 <li><p>They work for both types of responses: 1) categorical and 2) quantitative.
 When dealing with a categorical response we talk about classification tree;
@@ -642,7 +625,7 @@ further background knowledge).</p></li>
 </ul>
 </div>
 <div id="disadvantages-of-trees" class="section level3">
-<h3><span class="header-section-number">32.4.2</span> Disadvantages of Trees</h3>
+<h3><span class="header-section-number">32.3.2</span> Disadvantages of Trees</h3>
 <ul>
 <li><p>Trees are highly dependent on the training set. That is, given a different
 training set, there is a high chance that you will obtain a different tree.
@@ -659,10 +642,10 @@ we touch on this aspect in the next subsection.</p></li>
 </ul>
 </div>
 <div id="bias-variance-of-trees" class="section level3">
-<h3><span class="header-section-number">32.4.3</span> Bias-Variance of Trees</h3>
+<h3><span class="header-section-number">32.3.3</span> Bias-Variance of Trees</h3>
 <p>The typical error curves of decision trees are illustrated in the following
 diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-359"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-368"></span>
 <img src="images/trees/error-curve-trees0.svg" alt="Typical error curves of decision trees" width="70%" />
 <p class="caption">
 Figure 32.1: Typical error curves of decision trees
@@ -671,7 +654,7 @@ Figure 32.1: Typical error curves of decision trees
 <p>Small trees (i.e. small depth) tend to have a bias problem (underfitting).
 Conversely, large trees (i.e. large depth) tend to have a variance problem
 (overfitting).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-360"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-369"></span>
 <img src="images/trees/error-curve-trees1.svg" alt="Bias-Variance problem of trees" width="70%" />
 <p class="caption">
 Figure 32.2: Bias-Variance problem of trees
@@ -679,7 +662,7 @@ Figure 32.2: Bias-Variance problem of trees
 </div>
 <p>Because the depth of trees is measured in integer steps (not in a continuous
 scale), it is very difficult to find the “sweet spot” for the right depth level.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-361"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-370"></span>
 <img src="images/trees/error-curve-trees2.svg" alt="Bias-Variance problem of trees" width="70%" />
 <p class="caption">
 Figure 32.3: Bias-Variance problem of trees
