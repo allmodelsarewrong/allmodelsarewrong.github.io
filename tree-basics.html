@@ -465,11 +465,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="32" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>32</b> Building Binary Trees</a><ul>
 <li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.1</b> Node-Splitting Stopping Criteria</a></li>
-<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.2</b> Pruning a Tree</a></li>
-<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.3</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="32.3.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.3.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="32.3.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.3.2</b> Disadvantages of Trees</a></li>
-<li class="chapter" data-level="32.3.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.3.3</b> Bias-Variance of Trees</a></li>
+<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#issues-with-trees"><i class="fa fa-check"></i><b>32.2</b> Issues with Trees</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.2.1</b> Bias-Variance of Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.3</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="32.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.4</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="32.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.4.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="32.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.4.2</b> Disadvantages of Trees</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="33" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>33</b> Bagging</a><ul>
@@ -528,28 +530,31 @@ splitting a node. We stop splitting a node when/if:</p>
 <ul>
 <li>The node is pure (i.e. a node contains objects of only one class).</li>
 </ul>
-<p><img src="images/trees/stop-split-pure.svg" width="45%" style="display: block; margin: auto;" /></p>
+<p><img src="images/trees/stop-split-pure.svg" width="55%" style="display: block; margin: auto;" /></p>
 <ul>
 <li>We run out of features (that is, there are no more features to split on).</li>
 </ul>
-<p><img src="images/trees/stop-split-exhaust.svg" width="45%" style="display: block; margin: auto;" /></p>
+<p><img src="images/trees/stop-split-exhaust.svg" width="55%" style="display: block; margin: auto;" /></p>
 <ul>
 <li>A pre-specified minimum number of objects in a node is reached. For example,
-stop splitting when a node contains at most 30 elements.
+stop splitting when a node contains at most 10 elements.
 <ul>
 <li>In <code>rpart()</code>, this can be specified using the <code>minsplit</code> parameter.</li>
 </ul></li>
 </ul>
-<p><img src="images/trees/stop-split-minsplit.svg" width="45%" style="display: block; margin: auto;" /></p>
+<p><img src="images/trees/stop-split-minsplit.svg" width="55%" style="display: block; margin: auto;" /></p>
 <ul>
 <li>Size of resulting nodes would be “too small” (e.g. 10, 15, 20, etc.). This
 is closely related to the previous rule, but a bit different. For example,
 we can have a node with enough objects greater than the minimum required.
 However, all resulting binary splits are deemed too small.
 <ul>
-<li>In <code>rpart()</code>, this can be specified using the  parameter.</li>
-<li>Typically <code>minsplit &gt; minbucket</code></li>
+<li>In <code>rpart()</code>, this can be specified using the  parameter
+<code>minbucket</code>.</li>
 </ul></li>
+</ul>
+<p><img src="images/trees/stop-split-minbucket.svg" width="55%" style="display: block; margin: auto;" /></p>
+<ul>
 <li>A certain depth level is reached. This is another condition in which a
 pre-determined level of depth is chosen, in order to prevent “large” overfitting
 trees.
@@ -559,14 +564,106 @@ trees.
 </ul>
 <p><img src="images/trees/stop-split-level.svg" width="65%" style="display: block; margin: auto;" /></p>
 </div>
+<div id="issues-with-trees" class="section level2">
+<h2><span class="header-section-number">32.2</span> Issues with Trees</h2>
+<p>How good are trees? Do they predict well? Yes and No. A tree can achieve
+high prediction performance … of the training data. The larger the tree,
+the better its in-sample performance. In some cases, a (very large) tree can
+even accomplish zero (or near-zero) error rates. But as you can imagine, this
+optential for having good in-sample predictions comes with a price: large
+test error. Why? Because the tree structure is highly dependent on early
+splits. Put it otherwise, trees are complex models.</p>
+<p>To illustrate the complexity of trees, let’s use the Heart data set from
+<em>An Introduction to Statistical Learning</em> (ISL, by James te al). This data
+contains 14 variables observed on 303 individuals. The response variable is
+AHD. We have randomly split the data into training (90%) and testing test (10%),
+using the training set to fit the response. For illustration purposes, we
+repeat this operation four times, obtaining four different trees, displayed in
+the following figure.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-369"></span>
+<img src="images/trees/heart-trees.svg" alt="Different Tress" width="90%" />
+<p class="caption">
+Figure 32.1: Different Tress
+</p>
+</div>
+<p>Notice how different the trees are. This is why we say that trees tend to
+have high complexity (i.e. high flexibility). Recall that the way in which
+splits are chosen is by looking for the best split at a given step, without
+paying attention to what subsequent splits may look like. It can be the case
+that a less good split leads to a better tree later on. But this is not how
+the algorithm proceeds.</p>
+<p>In other words, trees can become very complex “too soon”, because splits
+are obtained with a “short-term view”, (best split <em>now</em> with instant
+gratification), instead of a "long-term view (less good split now with delayed
+gratification).</p>
+<p>Up to now, we are using the notion of complexity in a vague manner. But it is
+important to think about this for a minute. How do we define complexity in
+decision trees? Well, there is no unique answer to this question. Perhaps the
+most natural way to think about a tree’s complexity is by looking at its
+depth (how tall, or small, a tree is). The taller the tree (that is, the
+deeper it is), the more complexity.</p>
+<p>Knowing that larger trees (large depth level) tend to result in poor out-of-sample
+prediction, it feels intuitive that we should look for smaller, less complex,
+trees. We may be willing to sacrifice some of the in-sample error in exchange of
+increasing the out-of-sample performance. So far, so good.
+But things are not that really simple. To see this, we need to talk about the
+bias-variance tradeoff of decision trees.</p>
+<div id="bias-variance-of-trees" class="section level3">
+<h3><span class="header-section-number">32.2.1</span> Bias-Variance of Trees</h3>
+<p>In general, decision trees have a bias and a variance problem. With small depth
+levels, they have a bias problem. With large depth levels, they have a variance
+problem.</p>
+<p>The following diagram shows typical error curves of decision trees:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-370"></span>
+<img src="images/trees/error-curve-trees0.svg" alt="Typical error curves of decision trees" width="70%" />
+<p class="caption">
+Figure 32.2: Typical error curves of decision trees
+</p>
+</div>
+<p>Small trees (i.e. small depth) tend to have a bias problem (underfitting).
+Conversely, large trees (i.e. large depth) tend to have a variance problem
+(overfitting).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-371"></span>
+<img src="images/trees/error-curve-trees1.svg" alt="Bias-Variance problem of trees" width="70%" />
+<p class="caption">
+Figure 32.3: Bias-Variance problem of trees
+</p>
+</div>
+<p>Because the depth of trees is measured in integer steps (not in a continuous
+scale), it is very difficult to find the “sweet spot” for the right depth level.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-372"></span>
+<img src="images/trees/error-curve-trees2.svg" alt="Bias-Variance problem of trees" width="70%" />
+<p class="caption">
+Figure 32.4: Bias-Variance problem of trees
+</p>
+</div>
+<p>Compared to penalized criteria like those used in penalized methods (e.g. ridge
+regression and lasso), using tree depth to measure complexity, does not provide
+the same “fine granularity” of a penalty tuning parameter. Why? Because the
+depth level of a tree is an integer number. You either have a tree of depth 2
+or 3 or 4, but you cannot have a tree of depth level 2.78 or 3.125. Therefore,
+finding the sweet spot for level of depth that minimizes the
+test-error does not allow us to have a fine grain sensitive analysis of what the
+best tradeoff is between bias and variance. And this is, to a large extent, the
+downfall of decision trees. This is why in practice they don’t tend to work
+as expected (in terms of generalization power).</p>
+<p>The main strategy to overcome this limitation is not by changing the depth of
+the tree, but by focusing on building large trees, and tackling the high
+variance issue with resampling techniques, and aggregating several versions of
+individual trees. These are the topics of the next chapters.</p>
+</div>
+</div>
 <div id="pruning-a-tree" class="section level2">
-<h2><span class="header-section-number">32.2</span> Pruning a Tree</h2>
-<p>Now that we have described all the main aspects to grow a tree, we can
-present the formal algorithm of CART-trees.</p>
+<h2><span class="header-section-number">32.3</span> Pruning a Tree</h2>
+<p>Now that we have described all the main aspects to grow a tree, as well as
+some of the main drawbacks that a tree suffers from, we can present the formal
+algorithm of CART-trees, based on cost-complexity pruning.</p>
 <p>The building process of CART-style binary trees is to grow a “large” tree and
 then prune off branches (from the bottom up) until we get an “okay size” tree.
 Finding the pruned tree of “okay size” implies finding a subtree of the large
-tree that is “optimal” in some predictive-power sense.</p>
+tree that is “optimal” in some predictive-power sense. This, in turn, requires
+to handle a tree’s complexity in a different manner: not in terms of a tree’s
+depth, but in terms of its number of terminal nodes. Here are the main stages:</p>
 <ol style="list-style-type: decimal">
 <li><p>Grow a large tree, denoted by <span class="math inline">\(T_{\max}\)</span>, typically obtained by getting
 nodes of a pre-determined minimum size.</p></li>
@@ -576,12 +673,14 @@ for the tree: <span class="math inline">\(E(T_{\max})\)</span></p></li>
 <li><p>Prune <span class="math inline">\(T_{\max}\)</span>, from the bottom up, by getting rid of terminal nodes
 that don’t provide “enough” information gain (i.e. useless leaf nodes). This
 is done by including a tuning parameter that penalizes the “complexity” of
-the subtrees.</p></li>
+the subtrees (complexity in terms of number of terminal nodes).</p></li>
 </ol>
-<p>First we denote <span class="math inline">\(err(\tau)\)</span>, the error measure of terminal node <span class="math inline">\(\tau\)</span>.
-The type of error function will depend on the type of response:</p>
+<p>To introduce the cost-complexity criterion, we need to first introduce
+some terminology and notation. We denote <span class="math inline">\(err(\tau)\)</span>, the error measure of
+terminal node <span class="math inline">\(\tau\)</span>. The type of error function will depend on the type of
+response:</p>
 <ul>
-<li><p><span class="math inline">\(err()\)</span> will be a misclassification rate when dealing with a qualitative
+<li><p><span class="math inline">\(err()\)</span> will be a misclassification rate when dealing with a categorical
 response.</p></li>
 <li><p><span class="math inline">\(err()\)</span> will be a regression error, e.g. squared error, when dealing with a
 quantitative response.</p></li>
@@ -591,41 +690,63 @@ quantitative response.</p></li>
 <p><span class="math display">\[
 err_{\alpha} (\tau) = err(\tau) + \alpha
 \]</span></p>
+<p>where <span class="math inline">\(\alpha\)</span> is defined on the interval <span class="math inline">\([0, \infty)\)</span>].</p>
 <p>The total error of a (sub)tree <span class="math inline">\(T\)</span>, also referred to as the cost of a tree,
-is then calculated as:</p>
+is then calculated as the sum of penalized errors of all terminal nodes:</p>
 <p><span class="math display">\[
 E_{\alpha} (T) = \sum_{\ell}^{L} err_{\alpha}(\tau_{\ell}) = E(T) + \alpha |\tilde{T}|
 \]</span></p>
 <p>where <span class="math inline">\(L = |\tilde{T}|\)</span> is the number of terminal nodes in subtree <span class="math inline">\(T\)</span> of
 <span class="math inline">\(T_{\max}\)</span>.</p>
+<p>The penalty parameter <span class="math inline">\(\alpha\)</span> determines the tree size. When <span class="math inline">\(\alpha\)</span> is very
+small, the penalty will be small, and so the size of the subtree <span class="math inline">\(T(\alpha)\)</span>
+will be large. Setting <span class="math inline">\(\alpha = 0\)</span>, and the obtained tree will be <span class="math inline">\(T_{\max}\)</span>,
+the largest possible tree. As we increase <span class="math inline">\(\alpha\)</span>, the minimizing subtrees
+<span class="math inline">\(T(\alpha)\)</span> will have fewer and fewer terminal nodes. Taking things to the
+extreme, with a very large <span class="math inline">\(\alpha\)</span>, all nodes will be pruned, resulting in
+<span class="math inline">\(T_{\max}\)</span> being the root node.</p>
+<p>The idea is to choose several values of <span class="math inline">\(\alpha\)</span>, in an increasing order,
+and then look for the subtree <span class="math inline">\(T_m = T(\alpha_m)\)</span> that minimizes the penalized
+error.</p>
+<p>It can be shown that the sequence of penalty values</p>
+<p><span class="math display">\[
+0 = \alpha_0 &lt; \alpha_1 &lt; \alpha_2 &lt; \dots &lt; \alpha_M
+\]</span></p>
+<p>corresponds to a finte sequence of nested subtrees of <span class="math inline">\(T_{\max}\)</span></p>
+<p><span class="math display">\[
+T_{\max} = T_0 \supseteq T_1 \supseteq T_2 \supseteq \dots \supseteq T_M
+\]</span></p>
 <p>Because the complexity (i.e. penalty) parameter is a tuning parameter, we
 typically use cross-validation to find the subtree <span class="math inline">\(T&#39; \subseteq T\)</span> that results
 in the smallest cost.</p>
-<p>In the R package <code>"rpart", the function</code>rpart()<code>allows you to specify the  argument</code>cp` which controls the complexity parameter.</p>
+<p>In the R package <code>"rpart"</code>, the function <code>rpart()</code> allows you to specify the
+argument <code>cp</code> which controls the complexity parameter.</p>
 </div>
 <div id="pros-and-cons-of-trees" class="section level2">
-<h2><span class="header-section-number">32.3</span> Pros and Cons of Trees</h2>
+<h2><span class="header-section-number">32.4</span> Pros and Cons of Trees</h2>
 <p>Let’s review some of the advantages and disadvantages of trees.</p>
 <div id="advantages-of-trees" class="section level3">
-<h3><span class="header-section-number">32.3.1</span> Advantages of Trees</h3>
+<h3><span class="header-section-number">32.4.1</span> Advantages of Trees</h3>
 <ul>
 <li><p>They work for both types of responses: 1) categorical and 2) quantitative.
 When dealing with a categorical response we talk about classification tree;
 when dealing with a quantitative response we talk about regression tree.</p></li>
 <li><p>They work with <strong>any</strong> type of predictors: binary, nominal, ordinal,
 continuous, even with missing values.</p></li>
-<li><p>Another advantage is that there almost no need to preprocess data for a
+<li><p>They can detect interactions among the predictors.</p></li>
+<li><p>Another advantage is that there’s almost no need to preprocess data for a
 decision tree. This is very rare among statistical methods.</p></li>
 <li><p>Likewise, decision trees make no stochastic assumptions: e.g. no normality
 assumptions, or other specific distributions about the data.</p></li>
-<li><p>In general, they tend to have low bias.</p></li>
+<li><p>In general, as long as the resulting trees are not too small, they tend to
+have low bias.</p></li>
 <li><p>The graphical display of a tree tends to be easy to read and interpret (at
 least the main output; there are some summary statistics that might require
 further background knowledge).</p></li>
 </ul>
 </div>
 <div id="disadvantages-of-trees" class="section level3">
-<h3><span class="header-section-number">32.3.2</span> Disadvantages of Trees</h3>
+<h3><span class="header-section-number">32.4.2</span> Disadvantages of Trees</h3>
 <ul>
 <li><p>Trees are highly dependent on the training set. That is, given a different
 training set, there is a high chance that you will obtain a different tree.
@@ -637,37 +758,8 @@ as a rule of thumb there should be at least 30-50 observations per node.</p></li
 <li><p>Recall that decision trees produce splits which involve rectangular regions
 in the feature space which may not necessarily match the distribution of the
 observations.</p></li>
-<li><p>Finding the optimal sweetspot in bias-variance tradeoff is difficult, and
-we touch on this aspect in the next subsection.</p></li>
+<li><p>Finding the optimal sweetspot in bias-variance tradeoff is difficult.</p></li>
 </ul>
-</div>
-<div id="bias-variance-of-trees" class="section level3">
-<h3><span class="header-section-number">32.3.3</span> Bias-Variance of Trees</h3>
-<p>The typical error curves of decision trees are illustrated in the following
-diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-368"></span>
-<img src="images/trees/error-curve-trees0.svg" alt="Typical error curves of decision trees" width="70%" />
-<p class="caption">
-Figure 32.1: Typical error curves of decision trees
-</p>
-</div>
-<p>Small trees (i.e. small depth) tend to have a bias problem (underfitting).
-Conversely, large trees (i.e. large depth) tend to have a variance problem
-(overfitting).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-369"></span>
-<img src="images/trees/error-curve-trees1.svg" alt="Bias-Variance problem of trees" width="70%" />
-<p class="caption">
-Figure 32.2: Bias-Variance problem of trees
-</p>
-</div>
-<p>Because the depth of trees is measured in integer steps (not in a continuous
-scale), it is very difficult to find the “sweet spot” for the right depth level.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-370"></span>
-<img src="images/trees/error-curve-trees2.svg" alt="Bias-Variance problem of trees" width="70%" />
-<p class="caption">
-Figure 32.3: Bias-Variance problem of trees
-</p>
-</div>
 
 </div>
 </div>

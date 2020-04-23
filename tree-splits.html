@@ -465,11 +465,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="32" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>32</b> Building Binary Trees</a><ul>
 <li class="chapter" data-level="32.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>32.1</b> Node-Splitting Stopping Criteria</a></li>
-<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.2</b> Pruning a Tree</a></li>
-<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.3</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="32.3.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.3.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="32.3.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.3.2</b> Disadvantages of Trees</a></li>
-<li class="chapter" data-level="32.3.3" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.3.3</b> Bias-Variance of Trees</a></li>
+<li class="chapter" data-level="32.2" data-path="tree-basics.html"><a href="tree-basics.html#issues-with-trees"><i class="fa fa-check"></i><b>32.2</b> Issues with Trees</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>32.2.1</b> Bias-Variance of Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="32.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>32.3</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="32.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>32.4</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="32.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>32.4.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="32.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>32.4.2</b> Disadvantages of Trees</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="33" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>33</b> Bagging</a><ul>
@@ -649,7 +651,7 @@ H(\text{left}) =  -\frac{3}{4} \log_2\left( \frac{3}{4} \right)  -\frac{1}{4} \l
 <p><span class="math display">\[
 H(\text{right}) =  -\frac{1}{4} \log_2\left( \frac{1}{4} \right)  -\frac{3}{4} \log_2\left( \frac{3}{4} \right) \approx 0.8112
 \]</span></p>
-<p>The information gain <span class="math inline">\(\Delta I\)</span> is thus:</p>
+<p>The information gain (i.e. reduction in impurity) <span class="math inline">\(\Delta I\)</span> is thus:</p>
 <p><span class="math display">\[\begin{align*}
 \Delta I &amp;= H(\text{root}) - \frac{1}{2} H(\text{left}) - \frac{1}{2} H(\text{right}) \\
 &amp;= 1 - \frac{1}{2} (0.8112) - \frac{1}{2} (0.8112) \\
@@ -702,20 +704,20 @@ randomly select one to have a higher ranking than the other.</p>
 <div id="entropy-based-classification-tree" class="section level4 unnumbered">
 <h4>Entropy-based Classification Tree</h4>
 <p>The resulting classfication tree using entropy for binary splits is:</p>
-<pre><code>#&gt; n= 8 
-#&gt; 
-#&gt; node), split, n, loss, yval, (yprob)
-#&gt;       * denotes terminal node
-#&gt; 
-#&gt;  1) root 8 4 bad (0.5000000 0.5000000)  
-#&gt;    2) job= no 4 1 bad (0.7500000 0.2500000)  
-#&gt;      4) gender=female 2 0 bad (1.0000000 0.0000000) *
-#&gt;      5) gender=male 2 1 bad (0.5000000 0.5000000)  
-#&gt;       10) region=A 1 0 bad (1.0000000 0.0000000) *
-#&gt;       11) region=C 1 0 good (0.0000000 1.0000000) *
-#&gt;    3) job=yes 4 1 good (0.2500000 0.7500000)  
-#&gt;      6) gender= male 1 0 bad (1.0000000 0.0000000) *
-#&gt;      7) gender=female,male 3 0 good (0.0000000 1.0000000) *</code></pre>
+<pre><code>n= 8 
+
+node), split, n, loss, yval, (yprob)
+      * denotes terminal node
+
+ 1) root 8 4 bad (0.5000000 0.5000000)  
+   2) job= no 4 1 bad (0.7500000 0.2500000)  
+     4) gender=female 2 0 bad (1.0000000 0.0000000) *
+     5) gender=male 2 1 bad (0.5000000 0.5000000)  
+      10) region=A 1 0 bad (1.0000000 0.0000000) *
+      11) region=C 1 0 good (0.0000000 1.0000000) *
+   3) job=yes 4 1 good (0.2500000 0.7500000)  
+     6) gender= male 1 0 bad (1.0000000 0.0000000) *
+     7) gender=female,male 3 0 good (0.0000000 1.0000000) *</code></pre>
 <p>with the tree diagram as follows:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-355-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
@@ -792,7 +794,7 @@ Gini(\text{left}) = \frac{3}{4} \left(1- \frac{3}{4} \right) + \frac{1}{4} \left
 <p><span class="math display">\[
 Gini(\text{right}) =  \frac{1}{4} \left( 1 - \frac{1}{4} \right) + \frac{3}{4} \left( 1 - \frac{3}{4} \right) = 0.375
 \]</span></p>
-<p>The information gain <span class="math inline">\(\Delta I\)</span> is thus:</p>
+<p>The information gain (i.e. reduction in impurity) <span class="math inline">\(\Delta I\)</span> is thus:</p>
 <p><span class="math display">\[\begin{align*}
 \Delta I &amp;= Gini(\text{root}) - \frac{1}{2} Gini(\text{left}) - \frac{1}{2} Gini(\text{right}) \\
 &amp;= 0.5 - \frac{1}{2} (0.375) - \frac{1}{2} (0.375) \\
@@ -838,20 +840,20 @@ gains:</p>
 <div id="gini-based-classification-tree" class="section level4 unnumbered">
 <h4>Gini-based Classification Tree</h4>
 <p>The resulting classfication tree using Gini-impurity for binary splits is:</p>
-<pre><code>#&gt; n= 8 
-#&gt; 
-#&gt; node), split, n, loss, yval, (yprob)
-#&gt;       * denotes terminal node
-#&gt; 
-#&gt;  1) root 8 4 bad (0.5000000 0.5000000)  
-#&gt;    2) job= no 4 1 bad (0.7500000 0.2500000)  
-#&gt;      4) gender=female 2 0 bad (1.0000000 0.0000000) *
-#&gt;      5) gender=male 2 1 bad (0.5000000 0.5000000)  
-#&gt;       10) region=A 1 0 bad (1.0000000 0.0000000) *
-#&gt;       11) region=C 1 0 good (0.0000000 1.0000000) *
-#&gt;    3) job=yes 4 1 good (0.2500000 0.7500000)  
-#&gt;      6) gender= male 1 0 bad (1.0000000 0.0000000) *
-#&gt;      7) gender=female,male 3 0 good (0.0000000 1.0000000) *</code></pre>
+<pre><code>n= 8 
+
+node), split, n, loss, yval, (yprob)
+      * denotes terminal node
+
+ 1) root 8 4 bad (0.5000000 0.5000000)  
+   2) job= no 4 1 bad (0.7500000 0.2500000)  
+     4) gender=female 2 0 bad (1.0000000 0.0000000) *
+     5) gender=male 2 1 bad (0.5000000 0.5000000)  
+      10) region=A 1 0 bad (1.0000000 0.0000000) *
+      11) region=C 1 0 good (0.0000000 1.0000000) *
+   3) job=yes 4 1 good (0.2500000 0.7500000)  
+     6) gender= male 1 0 bad (1.0000000 0.0000000) *
+     7) gender=female,male 3 0 good (0.0000000 1.0000000) *</code></pre>
 <p>with the tree diagram as follows:</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-362-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
@@ -865,7 +867,7 @@ set of objects with the help of features <span class="math inline">\(X_1, \dots,
 nodes that are as homogeneous as possible (with respect to the response).</p>
 <p>Here’s what we have to do in a given (parent) node:</p>
 <ul>
-<li>Comptue impurity of the (parent) node</li>
+<li>Compute impurity of the (parent) node</li>
 <li>For each variable feature <span class="math inline">\(X_j\)</span>
 <ul>
 <li>Determine the number of binary splits</li>
@@ -873,11 +875,11 @@ nodes that are as homogeneous as possible (with respect to the response).</p>
 <ul>
 <li>compute impurity for left node</li>
 <li>compute impurity for right node</li>
-<li>calculate and store reduction in impurity</li>
+<li>calculate and store reduction in impurity (information gain)</li>
 </ul></li>
 </ul></li>
 <li>Find the best splitting feature <span class="math inline">\(X_j\)</span> that has the maximum reduction in
-impurity</li>
+impurity.</li>
 </ul>
 <p>Once you find the optimal split, perform the split, and repeat the above
 procedure for the new child nodes.</p>
