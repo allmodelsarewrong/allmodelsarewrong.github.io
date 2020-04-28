@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>by G. Sanchez & E. Marzban</small></a></li>
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>G. Sanchez & E. Marzban</small></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Welcome</b></span></li>
@@ -482,10 +482,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="34" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>34</b> Random Forests</a><ul>
 <li class="chapter" data-level="34.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>34.1</b> Introduction</a></li>
-<li class="chapter" data-level="34.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>34.2</b> Algorithm</a></li>
-<li class="chapter" data-level="34.3" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>34.3</b> Two Sources of Randomness</a><ul>
-<li class="chapter" data-level="34.3.1" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>34.3.1</b> Key Advantage of Random Forests</a></li>
-<li class="chapter" data-level="34.3.2" data-path="forest.html"><a href="forest.html#errors"><i class="fa fa-check"></i><b>34.3.2</b> Errors</a></li>
+<li class="chapter" data-level="34.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>34.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="34.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>34.2.1</b> Two Sources of Randomness</a></li>
+<li class="chapter" data-level="34.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>34.2.2</b> Regressions and Classification Forests</a></li>
+<li class="chapter" data-level="34.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>34.2.3</b> Key Advantage of Random Forests</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -515,54 +515,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Bagging is the acronym for “bootstrap aggregating”, a method developped by
 Leo Breiman in the early 1990s, and officially published in his paper
 <em>Bagging Predictors</em>, in the <a href="https://link.springer.com/article/10.1023/A:1018054314350">Machine Learning</a> journal.
-A preliminary report is still available in Leo’s archived personal website:</p>
+A preliminary report is still available in Leo’s archived academic website:</p>
 <p><a href="https://www.stat.berkeley.edu/~breiman/bagging.pdf" class="uri">https://www.stat.berkeley.edu/~breiman/bagging.pdf</a></p>
 <p>We will not discuss bagging in detail, rather we will only focus on its
 conceptual essence, following Leo’s description: “a method for generating
 multiple versions of a predictor and using these to get an aggregated predictor”.</p>
 <div id="idea-of-bagging" class="section level3">
 <h3><span class="header-section-number">33.1.1</span> Idea of Bagging</h3>
-<p>Suppose that, given our initial dataset <span class="math inline">\(\mathcal{D}\)</span>, we are able to obtain
-<span class="math inline">\(M\)</span> new datasets <span class="math inline">\(\{\mathcal{D_m}\}_{m=1}^{M}\)</span>. From each <span class="math inline">\(\mathcal{D_m}\)</span> we
-obtain a model <span class="math inline">\(h_m\)</span>.</p>
+<p>Suppose that, instead of having an initial dataset <span class="math inline">\(\mathcal{D}\)</span>, we are able
+to obtain <span class="math inline">\(M\)</span> new datasets <span class="math inline">\(\mathcal{D}_1, \dots, \mathcal{D}_M\)</span>. From each
+set <span class="math inline">\(\mathcal{D_m}\)</span>, we then obtain a model <span class="math inline">\(h_m\)</span>. The type of model can be
+a single decision tree, or a generic regression model (e.g. ridge regression),
+or a generic classification model (e.g. logistic regression).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-374"></span>
-<img src="images/trees/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
+<img src="images/ensemble/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
 <p class="caption">
 Figure 33.1: Several data sets and fitted models
 </p>
 </div>
-<p>Define the <strong>average model</strong> <span class="math inline">\(\bar{h}(x)\)</span> to be</p>
+<p>Having the set of <span class="math inline">\(m\)</span> models, we can compute the (emperical) <strong>average model</strong>
+<span class="math inline">\(\bar{h}(x)\)</span> as:</p>
 <p><span class="math display">\[
-\bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
+\text{empirical} \quad \bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
 \]</span></p>
-<p>which we can add to our previous diagram and get an updated figure:</p>
+<p>which we can include in our previous diagram and get an updated figure:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-375"></span>
-<img src="images/trees/bagging-idea2.svg" alt="Empirical average model" width="50%" />
+<img src="images/ensemble/bagging-idea2.svg" alt="Empirical average model" width="50%" />
 <p class="caption">
 Figure 33.2: Empirical average model
 </p>
 </div>
 <p>As the number of data sets increases, i.e. a very large number <span class="math inline">\(M \to \infty\)</span>,
-our average model will approach the theoretical average hypothesis:</p>
+the empirical average model will approach the theoretical average hypothesis:</p>
+<p><span class="math display">\[\begin{align*}
+\text{empirical} \quad \bar{h}(x) &amp; \to \text{theoretical} \quad \bar{h}(x) \\
+\text{as} \hspace{5mm} M &amp; \to \infty
+\end{align*}\]</span></p>
+<p>where the theoretical average hypothesis <span class="math inline">\(\bar{h}\)</span> is given by the expectation
+over all learning data sets:</p>
 <p><span class="math display">\[
-\bar{h}(x) \to \text{avg. hypothesis} \hspace{5mm} \text{as} \hspace{5mm} M \to \infty
+\text{theoretical} \quad \bar{h}(x) = \mathbb{E}_{\mathcal{D}} [h^{\mathcal{D}} (x)]
 \]</span></p>
-<p>Now, there’s a catch: we don’t usually have <span class="math inline">\(M\)</span> independent datasets. What we
-can do is to resample from <span class="math inline">\(\mathcal{D}\)</span>, sampling with replacement.
-If <span class="math inline">\(|\mathcal{D}| = n\)</span>, we wish to produce a set of data sets
+<p>Now, there’s a catch. In order for the approximation to be valid, that is, to
+approximate the theoretical average hypothesis with the empirical one, the
+data sets <span class="math inline">\(\mathcal{D}_1, \dots, \mathcal{D}_M\)</span> have to be independent.</p>
+<p>The problem is that, in practice, we don’t have <span class="math inline">\(M\)</span> independent datasets.
+However, what we can do is to resample from <span class="math inline">\(\mathcal{D}\)</span>, sampling with
+replacement.</p>
+<p>If <span class="math inline">\(|\mathcal{D}| = n\)</span>, we wish to produce a set of data sets
 <span class="math inline">\(\{\mathcal{D_m} \}_{m=1}^{M}\)</span> with
-<span class="math inline">\(|\mathcal{D_m}|=n\)</span>; that is, these are <strong>bootstrap samples</strong>. Now given these
+<span class="math inline">\(|\mathcal{D_m}|=n\)</span>; that is, these are <strong>bootstrap samples</strong>. Given these
 <span class="math inline">\(M\)</span> bootstrap samples, we proceed as we did in our theoretical experiment above:
-generate <span class="math inline">\(\{h_m \}_{m=1}^{M}\)</span>, and define</p>
+generate the set of individual models <span class="math inline">\(\{h_m \}_{m=1}^{M}\)</span>, and define compute
+the empirical average hypothesis:</p>
 <p><span class="math display">\[
 \bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
 \]</span></p>
 <p>Now, we do not have the weak law of large numbers, because these
 <span class="math inline">\(\mathcal{D_m}\)</span>’s are not independent. However, it turns out that despite this,
-<span class="math inline">\(\bar{h}(x)\)</span> gets quite close to the true average hypothesis.</p>
+the empirical <span class="math inline">\(\bar{h}(x)\)</span> gets quite close to the theoretical average hypothesis.</p>
 <p>This process of taking bootstrap samples, averaging, and using this to
 approximate the average hypothesis is known as <strong>bagging</strong>, which is a
-portmanteau of <strong>bootstrap-aggregation</strong>.</p>
+portmanteau of <em>bootstrap aggregating</em>. To summarize, we generate a series of
+data sets <span class="math inline">\(\mathcal{D}_1, \dots, \mathcal{D}_M\)</span> by drawing <strong>bootstrap</strong>
+samples from the original learning set <span class="math inline">\(\mathcal{D}\)</span>; we fit the corresponding
+models <span class="math inline">\(h_m(x)\)</span> for each bootstrap set <span class="math inline">\(\mathcal{D}_m\)</span>, and then we <strong>aggregate</strong>
+them (averaging them) to obtain the final model:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-376"></span>
+<img src="images/ensemble/bagging-idea3.svg" alt="Bagging Scheme" width="50%" />
+<p class="caption">
+Figure 33.3: Bagging Scheme
+</p>
+</div>
+<p>The way we obtain a prediction <span class="math inline">\(\hat{y}_0\)</span> for a query point <span class="math inline">\(\mathbf{x_0}\)</span> is
+by taking the average of all <span class="math inline">\(M\)</span> predictions, that is:</p>
+<p><span class="math display">\[
+\hat{y}_0 \rightarrow \bar{h}(\mathbf{x_0}) = \frac{1}{M}  \sum_{m=1}^{M} h_m(\mathbf{x_0})
+\]</span></p>
 </div>
 </div>
 <div id="why-bother-bagging" class="section level2">
@@ -588,8 +617,8 @@ becomes:</p>
 &amp;+ \underbrace{\sigma^2}_{\text{noise}}
 \end{align*}\]</span></p>
 <p>Suppose we only use our training set to fit one model; if this is a decision
-tree, we know it will suffer from high variance and hence there is a strong
-chance this model will be wildly off from the true model. Using bagging,
+tree, we know it will tend to suffer from high variance and hence there is a
+strong chance this model will be wildly off from the true model. Using bagging,
 however, we are able to reduce variance.</p>
 <p>Now, will bagging increase bias? We know that, in general, reducing variance
 comes at the cost of increasing bias. However, after closer examination of
@@ -601,19 +630,22 @@ bias:</p>
 directly. Sure, there is an implicit dependency through the average model,
 however there is no <span class="math inline">\(\mathcal{D}\)</span> in the bias formula bove. Hence, in bagging,
 we can decrease variance while <em>not</em> sacrificing bias.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-376"></span>
-<img src="images/trees/bagging-idea3.svg" alt="Ensemble of models, and bagged model" width="50%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-377"></span>
+<img src="images/ensemble/bagging-idea4.svg" alt="Ensemble of models, and bagged model" width="50%" />
 <p class="caption">
-Figure 33.3: Ensemble of models, and bagged model
+Figure 33.4: Ensemble of models, and bagged model
 </p>
 </div>
-<p>Surely there is still a cost, somewhere? Well, there is. For one, we lose
-interpretability. But, more importantly, there is a higher computational cost
-associated with bagging (especially in the resample procedure). Luckily, there
-is a “cheat” for this: <em>parallel processing</em>. This resampling procedure is
-highly parallelizable; that is, we could run different parts on different
-computers and combine them in the end. Hence, if we have enough computational
-resources, this should not be a huge problem.</p>
+<p>Surely there is still a cost, somewhere? Well, there is. On one hand, we lose
+interpretability. If we apply bagging with decision trees, we then obtain a
+bagged forest in which there is not a “global tree” that we can visualize and
+follow its partitions.
+On the other hand, there is a higher computational cost associated with bagging
+(especially in the resample procedure). Luckily, there is a “cheat” for this:
+<em>parallel processing</em>. This resampling procedure is highly parallelizable;
+we could run different parts on different computers and combine them in the end.
+Hence, if we have enough computational resources, this should not be a huge
+problem.</p>
 
 </div>
 </div>

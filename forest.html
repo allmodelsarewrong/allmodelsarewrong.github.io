@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>by G. Sanchez & E. Marzban</small></a></li>
+<li><a href="./"><b>All Models Are Wrong (CSL)</b><br><small>G. Sanchez & E. Marzban</small></a></li>
 
 <li class="divider"></li>
 <li class="part"><span><b>I Welcome</b></span></li>
@@ -482,10 +482,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="34" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>34</b> Random Forests</a><ul>
 <li class="chapter" data-level="34.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>34.1</b> Introduction</a></li>
-<li class="chapter" data-level="34.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>34.2</b> Algorithm</a></li>
-<li class="chapter" data-level="34.3" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>34.3</b> Two Sources of Randomness</a><ul>
-<li class="chapter" data-level="34.3.1" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>34.3.1</b> Key Advantage of Random Forests</a></li>
-<li class="chapter" data-level="34.3.2" data-path="forest.html"><a href="forest.html#errors"><i class="fa fa-check"></i><b>34.3.2</b> Errors</a></li>
+<li class="chapter" data-level="34.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>34.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="34.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>34.2.1</b> Two Sources of Randomness</a></li>
+<li class="chapter" data-level="34.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>34.2.2</b> Regressions and Classification Forests</a></li>
+<li class="chapter" data-level="34.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>34.2.3</b> Key Advantage of Random Forests</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -512,47 +512,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">34</span> Random Forests</h1>
 <div id="introduction-8" class="section level2">
 <h2><span class="header-section-number">34.1</span> Introduction</h2>
-<p>Instead of fitting a single tree, we fit several trees (much like the
-different <span class="math inline">\(h_i\)</span>’s in the diagram below).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-378"></span>
-<img src="images/trees/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
+<p>Random Forests are another creation of Leo Breiman, co-developped with Adele
+Cutler, in the late 1990s. Like bagging, documentation on random forests is
+available in Leo’s archived academic website:</p>
+<p><a href="https://www.stat.berkeley.edu/~breiman/RandomForests/" class="uri">https://www.stat.berkeley.edu/~breiman/RandomForests/</a></p>
+<p>As the name indicates, a random forest entails a set of trees. The building
+blocks are still single trees, but instead of fitting just one tree, we grow
+many of them. Depending on the type of analyzed response variable, you will end
+up with a forest of regression trees or a forest of classification trees.</p>
+<p>Conceptually, growing many trees is something that can also be done with
+bagging, in which case we talk about a bagged forest.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-379"></span>
+<img src="images/ensemble/forest-idea1.svg" alt="Several data sets and fitted models" width="50%" />
 <p class="caption">
 Figure 34.1: Several data sets and fitted models
 </p>
 </div>
-<p>Now, from a given bootstrap sample <span class="math inline">\(\mathcal{D_m}\)</span>,
-we further take a random sample of features to obtain <span class="math inline">\(k\)</span> of them. We search
-across these <span class="math inline">\(k\)</span> to identify the variable <span class="math inline">\(X_{\ell}\)</span> that produces the optimal
-split; then split.</p>
-<p>Here, <span class="math inline">\(k\)</span> is a tuning parameter. However, there is a theoretical justification
-for the fact that</p>
+<p>The starting point is the same as in bagging: use of bootstrap samples to
+generate multiple learning data sets <span class="math inline">\(\mathcal{D}_1, \dots, \mathcal{D}_B\)</span>,
+which in turn will be used to grow several trees, like in the following diagram:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-380"></span>
+<img src="images/ensemble/random-forest0.svg" alt="Conceptual diagram of a Random Forest" width="95%" />
+<p class="caption">
+Figure 34.2: Conceptual diagram of a Random Forest
+</p>
+</div>
+<p>So far, so good.</p>
+<p>Now, what exactly makes a random forest different from a bagged forest? The
+answer to this question has to do with the way in which single trees are grown
+in a random forests. We are going to introduce a twist in the tree-building
+algorithm. More specifically, we are going to
+<strong>modify the node splitting procedure</strong>. Assuming we have <span class="math inline">\(p\)</span> features, we
+predetermine a number <span class="math inline">\(k \ll p\)</span> such that at each node, <span class="math inline">\(k\)</span> features are
+randomly selected (from the set of <span class="math inline">\(p\)</span> predictors), to find the best split.</p>
+<p>The fundamental reason to introduce another random sampling operation, which
+is repeated for every node partition, is to attempt reducing the number of
+correlated predictors that could potentially be present in the construction of
+a single tree. This seemingly awkward operation turns out to return high
+dividends when a forest is deployed in practice.</p>
+</div>
+<div id="algorithm-1" class="section level2">
+<h2><span class="header-section-number">34.2</span> Algorithm</h2>
+<p>Say we decide to grow <span class="math inline">\(B\)</span> trees (e.g. <span class="math inline">\(B\)</span> = 100). Here is how we would
+grow our forest with trees <span class="math inline">\(T_1, T_2, \dots, T_B\)</span>.</p>
+<ul>
+<li><p>Draw a bootstrap sample—that is, <strong>with</strong> replacement—of size <span class="math inline">\(n\)</span> from
+the learning set <span class="math inline">\(\mathcal{D}\)</span>, where <span class="math inline">\(n\)</span> is the size of the learning set.</p></li>
+<li><p>Specify a number <span class="math inline">\(k &lt;&lt; p\)</span> of features which will be used in each
+node-splitting operation.</p></li>
+<li><p>Grow a tree <span class="math inline">\(T_b\)</span> using the bootstrapped data <span class="math inline">\(\mathcal{D}_b\)</span>, by recursively
+repeating the following steps:</p>
+<ul>
+<li><p>For each child node:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Randomly select <span class="math inline">\(k\)</span> features from the <span class="math inline">\(p\)</span> possible features.</p></li>
+<li><p>Pick the feature <span class="math inline">\(X_{\ell}\)</span>, among the <span class="math inline">\(k\)</span> available features,
+that produces the best split.</p></li>
+<li><p>Split the node into two child nodes according to the rule you
+obtained from step (ii).</p></li>
+</ol></li>
+</ul></li>
+<li><p>Output the set of trees, that is, the forest: <span class="math inline">\(\{T_1, T_2, \dots, T_B\}\)</span>
+(also known as the <em>ensemble</em> of trees).</p></li>
+</ul>
+<p>Here, <span class="math inline">\(k\)</span> is a tuning parameter. The good news, however, is that we typically
+set <span class="math inline">\(k = \lceil \sqrt{p} \rceil\)</span> (take square root of <span class="math inline">\(p\)</span> and round up, although
+some authors prefer to round down, <span class="math inline">\(k = \lfloor \sqrt{p} \rfloor\)</span>). Why is this
+good news? Because using the previous formula to select <span class="math inline">\(k\)</span>, we don’t really need to tune anything.</p>
+<p>There is a theoretical justification for the fact that</p>
 <p><span class="math display">\[
 k = \lceil \sqrt{p} \rceil
 \]</span></p>
 <p>This gives us a good chance that our subsamples are very nearly independent.</p>
-</div>
-<div id="algorithm-1" class="section level2">
-<h2><span class="header-section-number">34.2</span> Algorithm</h2>
-<p>Recall: instead of growing a single tree, we now want to grow a forest; that is,
-multiple trees. Say we have <span class="math inline">\(b = 1, 2, \dots, B\)</span> trees. Here is how we would
-grow our forest:</p>
-<ul>
-<li><p>Draw a bootstrap sample—that is, <strong>with</strong> replacement—of size <span class="math inline">\(n\)</span> from
-the training set, where <span class="math inline">\(n\)</span> is the size of our trainin set.</p></li>
-<li><p>Grow a tree <span class="math inline">\(T_b\)</span> using the bootstrapped data, by recursively repeating the following steps:</p>
-<ul>
-<li><p>For each child node:</p>
-<ol style="list-style-type: lower-roman">
-<li><p>Randomly select <span class="math inline">\(k\)</span> features from the <span class="math inline">\(p\)</span> possible features. Typically we set <span class="math inline">\(k = \lceil \sqrt{p} \rceil\)</span> (though some authors use <span class="math inline">\(k = \lfloor \sqrt{p} \rfloor\)</span>). The point is: <span class="math inline">\(k\)</span> is <em>not</em> really a quantity that needs to be tuned.</p></li>
-<li><p>Pick the best feature/split among the <span class="math inline">\(k\)</span> available features.</p></li>
-<li><p>Split the node into two child nodes according to the rule you obtained from step (ii).</p></li>
-</ol></li>
-</ul></li>
-<li><p>Output the set of trees <span class="math inline">\(\{T_1, T_2, \dots, T_B\}\)</span> (known as the <em>ensemble</em> of trees)</p></li>
-</ul>
-</div>
-<div id="two-sources-of-randomness" class="section level2">
-<h2><span class="header-section-number">34.3</span> Two Sources of Randomness</h2>
+<div id="two-sources-of-randomness" class="section level3">
+<h3><span class="header-section-number">34.2.1</span> Two Sources of Randomness</h3>
 <p>Randomness in the data points</p>
 <ul>
 <li><p>Each tree gets to see a different data set (that is, no tree gets to train on the <em>entire</em> dataset)</p></li>
@@ -563,29 +596,54 @@ the training set, where <span class="math inline">\(n\)</span> is the size of ou
 <li><p>Each tree gets to see a different set of features (that is, no tree gets to train on the <em>entire</em> set of features)</p></li>
 <li><p>This is the powerful feature of random forests. Specifically, it is in this step that trees become de-correlated. Note that this source of randomness is <em>not</em> present in bagging.</p></li>
 </ul>
-<p><span class="math display">\[
-\textbf{INSERT DIAGRAM}
-\]</span></p>
-<p>Suppose we are in a regression setting. We would obtain <span class="math inline">\(B\)</span> predictions for
-<span class="math inline">\(y_0\)</span>: denote these by <span class="math inline">\(\hat{y}_0^{(1)}, \hat{y}_0^{(2)}, \dots, \hat{y}_0^{(B)}\)</span>.
-We would then average these values to obtain our predicted value:</p>
+</div>
+<div id="regressions-and-classification-forests" class="section level3">
+<h3><span class="header-section-number">34.2.2</span> Regressions and Classification Forests</h3>
+<p>Once you grow a random forests, how does it get used to make predictions?
+Let’s consider the type of prediction based on the kind of response variable.</p>
+<div id="forest-of-regression-trees" class="section level4 unnumbered">
+<h4>Forest of Regression Trees</h4>
+<p>Suppose we are in a regression setting. Given a test a point
+<span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, we pass this query point to all the trees. We would
+obtain <span class="math inline">\(B\)</span> predictions for <span class="math inline">\(y_0\)</span>: denote these by
+<span class="math inline">\(\hat{y}_0^{(1)}, \hat{y}_0^{(2)}, \dots, \hat{y}_0^{(B)}\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-381"></span>
+<img src="images/ensemble/random-forest1.svg" alt="Random forest of regression trees" width="95%" />
+<p class="caption">
+Figure 34.3: Random forest of regression trees
+</p>
+</div>
+<p>To get the predicted value <span class="math inline">\(\hat{y}_0\)</span>, we would then average these single-tree
+predictions:</p>
 <p><span class="math display">\[
 \hat{y}_0 = \frac{1}{B} \sum_{b=1}^{B} \hat{y}_0^{(b)}
 \]</span></p>
-<p>Suppose, now, that we were in a classification setting (<span class="math inline">\(k = 2\)</span> for illustrative purposes). Our sub-predictions <span class="math inline">\(\hat{y}_0^{(b)}\)</span> would be obtained by examining the distribution of each class within each terminal node:</p>
-<p><span class="math display">\[
-\textbf{INSERT BAR GRAPH}
-\]</span></p>
-<p>In this example, <span class="math inline">\(\hat{y}_0^{(1)} = \verb|blue|\)</span>, <span class="math inline">\(\hat{y}_0^{(2)} = \verb|blue|\)</span>,
-<span class="math inline">\(\hat{y}_0^{(3)} = \verb|blue|\)</span>, and <span class="math inline">\(\hat{y}_0^{(B)} = \verb|black|\)</span>. We would
-then assign <span class="math inline">\(\hat{y}_0\)</span> the mode of these sub-predictions:</p>
+</div>
+<div id="forest-of-classification-trees" class="section level4 unnumbered">
+<h4>Forest of Classification Trees</h4>
+<p>Suppose now, that we are in a classification setting with a binary response
+with 2 classes, say class “red” and class “yellow”. Given a test a point
+<span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, we pass this query point to all the trees:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-382"></span>
+<img src="images/ensemble/random-forest2.svg" alt="Random forest of classification trees" width="95%" />
+<p class="caption">
+Figure 34.4: Random forest of classification trees
+</p>
+</div>
+<p>The single-tree predictions <span class="math inline">\(\hat{y}_0^{(b)}\)</span> would be obtained by examining the distribution of each class within each terminal node.</p>
+<p>In this hypothetical example (see above diagram), <span class="math inline">\(\hat{y}_0^{(1)} = \verb|red|\)</span>,
+<span class="math inline">\(\hat{y}_0^{(2)} = \verb|yellow|\)</span>, <span class="math inline">\(\hat{y}_0^{(3)} = \verb|red|\)</span>, and <span class="math inline">\(\hat{y}_0^{(B)} = \verb|red|\)</span>. We would
+then assign <span class="math inline">\(\hat{y}_0\)</span> the mode of all this single-tree predictions:</p>
 <p><span class="math display">\[
 \hat{y}_0 = \mathrm{mode} \left\{ T_b(x_0) \right\}
 \]</span></p>
+</div>
+</div>
 <div id="key-advantage-of-random-forests" class="section level3">
-<h3><span class="header-section-number">34.3.1</span> Key Advantage of Random Forests</h3>
-<p>Let’s first start by recapping what we’ve done so far. We start with a dataset
-<span class="math inline">\(\mathcal{D}\)</span>, and then split it into some number of sub-datasets:</p>
+<h3><span class="header-section-number">34.2.3</span> Key Advantage of Random Forests</h3>
+<p>Let’s first start by recapping what we typically do with most techniques
+covered in this book. We start with a dataset <span class="math inline">\(\mathcal{D}\)</span>, and then split it
+into some number of sub-datasets:</p>
 <p><span class="math display">\[
 \mathcal{D} \to 
 \begin{cases}
@@ -599,16 +657,22 @@ then assign <span class="math inline">\(\hat{y}_0\)</span> the mode of these sub
 \mathcal{D}_{\text{testing}} \\ 
 \end{cases}
 \]</span></p>
-<p>In bagging, we do not take this approach. Rather, we end up with the so-called
-<strong>Out-of-Bag Error</strong> (or OOB, for short).</p>
-<p><span class="math display">\[
-\textbf{[10 subtrees]}
-\]</span></p>
-<p>Some points <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> are not used by all the trees. For example,
-suppose <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> are never used by <span class="math inline">\(T_2, T_3, T_5,\)</span> and <span class="math inline">\(T_8\)</span>.
-In other words, this point <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> is really a test point for
-these trees. Hence, we could plug <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> into these trees to
-obtain predictors $ _i^{(2)} , _i^{(3)} , _i^{(5)},$ and <span class="math inline">\(\hat{y}_i^{(8)}\)</span>. We would then compute the OOB in the following manner:</p>
+<p>In bagging, as well as in random forests, we do NOT take this approach. Rather,
+we end up with the so-called <strong>Out-of-Bag Error</strong> (or OOB, for short).
+For example, suppose we have a forest of 10 trees <span class="math inline">\(T_1, T_2, \dots, T_10\)</span></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-383"></span>
+<img src="images/ensemble/forest-oob-idea.svg" alt="Out-of-Bag points in Random Forest" width="75%" />
+<p class="caption">
+Figure 34.5: Out-of-Bag points in Random Forest
+</p>
+</div>
+<p>Some points <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> are not used by all the trees. For instance,
+say we have a data point <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> that is never used by trees
+<span class="math inline">\(T_2, T_3, T_5,\)</span> and <span class="math inline">\(T_8\)</span>. This means that point <span class="math inline">\((\mathbf{x}_i, y_i)\)</span> is
+really a test point for these trees. Hence, we could plug
+<span class="math inline">\((\mathbf{x}_i, y_i)\)</span> into these trees to obtain predictors
+<span class="math inline">\(\hat{y}_i^{(2)} , \hat{y}_i^{(3)} , \hat{y}_i^{(5)},\)</span> and <span class="math inline">\(\hat{y}_i^{(8)}\)</span>.
+We would then compute the OOB in the following manner:</p>
 <p><span class="math display">\[
 \mathrm{OOB}_i = \frac{ (\hat{y}_i^{(2)} - y_i)^2 + (\hat{y}_i^{(3)} - y_i)^2 + (\hat{y}_i^{(5)} - y_i)^2 + (\hat{y}_i^{(8)} - y_i)^2 }{4}
 \]</span></p>
@@ -618,15 +682,19 @@ E_{\mathrm{OOB}} = \frac{1}{n} \sum_{i=1}^{n} \mathrm{OOB}_i
 \]</span></p>
 <p>where the OOB<span class="math inline">\(_i\)</span>’s are computed as above. Here is the key observation: it
 turns out that <span class="math inline">\(E_{\mathrm{OOB}}\)</span> is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>.</p>
+<div id="errors" class="section level4 unnumbered">
+<h4>Errors</h4>
+<p>Last but not least, we want to highlight the extremely atractive property of
+ensemble methods: we get to reduce variance without increasing bias. And
+with random forests, we get an unbiased estimate of <span class="math inline">\(E_{out}\)</span> (almost for free!).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-384"></span>
+<img src="images/ensemble/error-curve-forests.svg" alt="Typical error curves of random forests" width="85%" />
+<p class="caption">
+Figure 34.6: Typical error curves of random forests
+</p>
 </div>
-<div id="errors" class="section level3">
-<h3><span class="header-section-number">34.3.2</span> Errors</h3>
-<p><span class="math display">\[
-\textbf{[Error Curves]}
-\]</span></p>
-<p>This is a very cool property of ensemble methods: we get to reduce variance
-without increasing bias!</p>
 
+</div>
 </div>
 </div>
 </div>
