@@ -576,18 +576,18 @@ species of iris flower with three categories:</p>
 #&gt; </code></pre>
 <p>Let’s look at the distribution of the four input variables without making
 distinction between species of iris flowers:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-201-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-204-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>As you can tell from the above conditional boxplots, all predictors have
 different ranges, as well as different types of distributions.</p>
 <p>Now let’s take into account the group structure according to the species:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-202-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-205-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>You should be able to observe that the boxplot of some predictors are fairly
 different between iris species. For example, take a look at the boxplots of
 <code>Petal.Length</code>, and the boxplots of <code>Petal.Width</code>. In contrast, predictors like
 <code>Sepal.Length</code> and <code>Sepal.Width</code> have boxplots that are not as different as
 those of <code>Petal.Length</code>.</p>
 <p>The same differences can be seen if we take a look at density curves:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-203-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-206-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="distinguishing-species" class="section level3">
 <h3><span class="header-section-number">22.1.1</span> Distinguishing Species</h3>
 <p>Let us consider the following question:</p>
@@ -767,7 +767,7 @@ correlation ratios and <span class="math inline">\(F\)</span>-ratios</p>
 geometric perspective of what’s going on with the data, and the classification
 setting behind discriminant analysis. As usual, assume that the objects form
 a cloud of points in <span class="math inline">\(p\)</span>-dimensional space.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-213"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-216"></span>
 <img src="images/discrim/discrim_cloud1.svg" alt="Cloud of n points in p-dimensional space" width="50%" />
 <p class="caption">
 Figure 22.1: Cloud of n points in p-dimensional space
@@ -776,7 +776,7 @@ Figure 22.1: Cloud of n points in p-dimensional space
 <p>One of the things that we can do is to look at the average individual, denoted
 by <span class="math inline">\(\mathbf{g}\)</span>, also known as the global centroid (i.e. the center of
 gravity of the cloud of points).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-214"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-217"></span>
 <img src="images/discrim/discrim_cloud2.svg" alt="The centroid of the cloud of points" width="50%" />
 <p class="caption">
 Figure 22.2: The centroid of the cloud of points
@@ -824,7 +824,7 @@ of spread or dispersion in the data.</p>
 <li><p>The number of individuals: <span class="math inline">\(n = n_1 + n_2 + \dots + n_K = \sum_{k=1}^{K} n_k\)</span></p></li>
 </ul>
 <p>Let’s now take into the account the class structure given by the response variable.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-215"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-218"></span>
 <img src="images/discrim/discrim_cloud3.svg" alt="The objects are divided into classes or groups" width="50%" />
 <p class="caption">
 Figure 22.3: The objects are divided into classes or groups
@@ -832,14 +832,14 @@ Figure 22.3: The objects are divided into classes or groups
 </div>
 <p>Each class is denoted by <span class="math inline">\(\mathcal{C_k}\)</span>, and it is supposed to be formed by <span class="math inline">\(n_k\)</span>
 individuals.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-216"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-219"></span>
 <img src="images/discrim/discrim_cloud4.svg" alt="Each class forms its own sub-cloud" width="50%" />
 <p class="caption">
 Figure 22.4: Each class forms its own sub-cloud
 </p>
 </div>
 <p>We can also look at the local or class centroids (one per class)</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-217"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-220"></span>
 <img src="images/discrim/discrim_cloud5.svg" alt="Each class has its own centroid" width="50%" />
 <p class="caption">
 Figure 22.5: Each class has its own centroid
@@ -857,7 +857,7 @@ for those observations in class <span class="math inline">\(k\)</span>:</p>
 \tag{22.21}
 \]</span></p>
 <p>We can focus on the dispersion within the clouds</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-218"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-221"></span>
 <img src="images/discrim/discrim_cloud6.svg" alt="Dispersion within the sub-clouds" width="50%" />
 <p class="caption">
 Figure 22.6: Dispersion within the sub-clouds
@@ -889,7 +889,7 @@ to get the <strong>Within-class variance matrix</strong> <span class="math inlin
 \tag{22.25}
 \]</span></p>
 <p>What if we focus on just the centroids?</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-219"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-222"></span>
 <img src="images/discrim/discrim_cloud7.svg" alt="Global and Group Centroids" width="50%" />
 <p class="caption">
 Figure 22.7: Global and Group Centroids
@@ -945,7 +945,7 @@ and <span class="math inline">\(\mathbf{Y}\)</span> be the <span class="math inl
 <li><p><span class="math inline">\(\text{BSS} = \mathbf{X^\mathsf{T} Y (Y^\mathsf{T} Y)^{-1} Y^\mathsf{T} X}\)</span></p></li>
 <li><p><span class="math inline">\(\text{WSS} = \mathbf{X^\mathsf{T} (I - Y (Y^\mathsf{T} Y)^{-1} Y^\mathsf{T}) X}\)</span></p></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-220"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-223"></span>
 <img src="images/discrim/discrim_cloud10.svg" alt="Dispersion Decomposition" width="85%" />
 <p class="caption">
 Figure 22.8: Dispersion Decomposition
@@ -1003,7 +1003,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }

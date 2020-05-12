@@ -522,7 +522,7 @@ many of them. Depending on the type of analyzed response variable, you will end
 up with a forest of regression trees or a forest of classification trees.</p>
 <p>Conceptually, growing many trees is something that can also be done with
 bagging, in which case we talk about a bagged forest.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-379"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-382"></span>
 <img src="images/ensemble/forest-idea1.svg" alt="Several data sets and fitted models" width="50%" />
 <p class="caption">
 Figure 34.1: Several data sets and fitted models
@@ -531,7 +531,7 @@ Figure 34.1: Several data sets and fitted models
 <p>The starting point is the same as in bagging: use of bootstrap samples to
 generate multiple learning data sets <span class="math inline">\(\mathcal{D}_1, \dots, \mathcal{D}_B\)</span>,
 which in turn will be used to grow several trees, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-380"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-383"></span>
 <img src="images/ensemble/random-forest0.svg" alt="Conceptual diagram of a Random Forest" width="95%" />
 <p class="caption">
 Figure 34.2: Conceptual diagram of a Random Forest
@@ -607,7 +607,7 @@ Let’s consider the type of prediction based on the kind of response variable.<
 <span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, we pass this query point to all the trees. We would
 obtain <span class="math inline">\(B\)</span> predictions for <span class="math inline">\(y_0\)</span>: denote these by
 <span class="math inline">\(\hat{y}_0^{(1)}, \hat{y}_0^{(2)}, \dots, \hat{y}_0^{(B)}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-381"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-384"></span>
 <img src="images/ensemble/random-forest1.svg" alt="Random forest of regression trees" width="95%" />
 <p class="caption">
 Figure 34.3: Random forest of regression trees
@@ -624,7 +624,7 @@ predictions:</p>
 <p>Suppose now, that we are in a classification setting with a binary response
 with 2 classes, say class “red” and class “yellow”. Given a test a point
 <span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, we pass this query point to all the trees:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-382"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-385"></span>
 <img src="images/ensemble/random-forest2.svg" alt="Random forest of classification trees" width="95%" />
 <p class="caption">
 Figure 34.4: Random forest of classification trees
@@ -660,7 +660,7 @@ into some number of sub-datasets:</p>
 <p>In bagging, as well as in random forests, we do NOT take this approach. Rather,
 we end up with the so-called <strong>Out-of-Bag Error</strong> (or OOB, for short).
 For example, suppose we have a forest of 10 trees <span class="math inline">\(T_1, T_2, \dots, T_{10}\)</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-383"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-386"></span>
 <img src="images/ensemble/forest-oob-idea.svg" alt="Out-of-Bag points in Random Forest" width="75%" />
 <p class="caption">
 Figure 34.5: Out-of-Bag points in Random Forest
@@ -687,7 +687,7 @@ turns out that <span class="math inline">\(E_{\mathrm{OOB}}\)</span> is an unbia
 <p>Last but not least, we want to highlight the extremely atractive property of
 ensemble methods: we get to reduce variance without increasing bias. And
 with random forests, we get an unbiased estimate of <span class="math inline">\(E_{out}\)</span> (almost for free!).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-384"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-387"></span>
 <img src="images/ensemble/error-curve-forests.svg" alt="Typical error curves of random forests" width="85%" />
 <p class="caption">
 Figure 34.6: Typical error curves of random forests
@@ -746,7 +746,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }

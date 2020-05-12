@@ -524,7 +524,7 @@ number of clusters is generally defined a priori. Some common methods are:</p>
 <p>Imagine we are in <span class="math inline">\(\mathbb{R}^p\)</span> (or <span class="math inline">\(\mathbb{R}^n\)</span>, depending on if we are
 looking at things from the individuals perspective or variables perspective).
 For illustrative purposes, let’s consider two clusters, that is <span class="math inline">\(K = 2\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
 <img src="images/cluster/kmeans-step1.svg" alt="Toy data set" width="90%" />
 <p class="caption">
 Figure 27.1: Toy data set
@@ -534,7 +534,7 @@ Figure 27.1: Toy data set
 Typically, the way centroids are initialized is by randomly selecting two
 objects. Sometimes, however, a more “educated” initialization may be possible
 when we have additional information about where the clusters may be located.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-286"></span>
 <img src="images/cluster/kmeans-step2.svg" alt="Arbitrary centroids" width="90%" />
 <p class="caption">
 Figure 27.2: Arbitrary centroids
@@ -543,7 +543,7 @@ Figure 27.2: Arbitrary centroids
 <p>Given a new data point, we compute the distances from this point to the two
 centroids, and classify the point to the cluster to which the closest centroid
 belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-284"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
 <img src="images/cluster/kmeans-step3.svg" alt="Distance of an object to both centroids" width="90%" />
 <p class="caption">
 Figure 27.3: Distance of an object to both centroids
@@ -551,14 +551,14 @@ Figure 27.3: Distance of an object to both centroids
 </div>
 <p>The distances of all objects to the centroids are computed as well, and the
 objects get assigned to the group of the closest centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
 <img src="images/cluster/kmeans-step4.svg" alt="Assigning objects to closest centroid" width="90%" />
 <p class="caption">
 Figure 27.4: Assigning objects to closest centroid
 </p>
 </div>
 <p>Now, with this new grouped data, we have to recompute the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-286"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-289"></span>
 <img src="images/cluster/kmeans-step5.svg" alt="Update centroids" width="90%" />
 <p class="caption">
 Figure 27.5: Update centroids
@@ -566,14 +566,14 @@ Figure 27.5: Update centroids
 </div>
 <p>We repeat this procedure, that is, calculate distances of all objects to the
 centroids, and re-assigning objects to clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-290"></span>
 <img src="images/cluster/kmeans-step6.svg" alt="Reassigning objects" width="90%" />
 <p class="caption">
 Figure 27.6: Reassigning objects
 </p>
 </div>
 <p>Likewise, after assigning objects to new clusters, new centroids are updated.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-288"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-291"></span>
 <img src="images/cluster/kmeans-step7.svg" alt="Recalculate centroids" width="90%" />
 <p class="caption">
 Figure 27.7: Recalculate centroids
@@ -582,7 +582,7 @@ Figure 27.7: Recalculate centroids
 <p>After enough iterations, the centroids will not move too much between each
 iteration. At this point we will say the algorithm has converged, and we stop
 (and the resulting clusters will be the ones we use).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-289"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-292"></span>
 <img src="images/cluster/kmeans-step8.svg" alt="Rinse and repeat until convergence" width="90%" />
 <p class="caption">
 Figure 27.8: Rinse and repeat until convergence
@@ -600,7 +600,7 @@ algorithm:</p>
 <p>Specifically, let us focus on the intermediate step, when step <span class="math inline">\(s\)</span> goes to step
 <span class="math inline">\(s+1\)</span>. In other words, the centroids have moved but we have not reassigned
 points.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-290"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-293"></span>
 <img src="images/cluster/kmeans-steps.svg" alt="From step s to step s+1" width="90%" />
 <p class="caption">
 Figure 27.9: From step s to step s+1
@@ -763,7 +763,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }

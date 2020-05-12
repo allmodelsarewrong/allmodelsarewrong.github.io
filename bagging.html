@@ -527,7 +527,7 @@ to obtain <span class="math inline">\(M\)</span> new datasets <span class="math 
 set <span class="math inline">\(\mathcal{D_m}\)</span>, we then obtain a model <span class="math inline">\(h_m\)</span>. The type of model can be
 a single decision tree, or a generic regression model (e.g. ridge regression),
 or a generic classification model (e.g. logistic regression).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-374"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-377"></span>
 <img src="images/ensemble/bagging-idea1.svg" alt="Several data sets and fitted models" width="50%" />
 <p class="caption">
 Figure 33.1: Several data sets and fitted models
@@ -539,7 +539,7 @@ Figure 33.1: Several data sets and fitted models
 \text{empirical} \quad \bar{h}(x) = \frac{1}{M}  \sum_{m=1}^{M} h_m(x)
 \]</span></p>
 <p>which we can include in our previous diagram and get an updated figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-375"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-378"></span>
 <img src="images/ensemble/bagging-idea2.svg" alt="Empirical average model" width="50%" />
 <p class="caption">
 Figure 33.2: Empirical average model
@@ -581,7 +581,7 @@ data sets <span class="math inline">\(\mathcal{D}_1, \dots, \mathcal{D}_M\)</spa
 samples from the original learning set <span class="math inline">\(\mathcal{D}\)</span>; we fit the corresponding
 models <span class="math inline">\(h_m(x)\)</span> for each bootstrap set <span class="math inline">\(\mathcal{D}_m\)</span>, and then we <strong>aggregate</strong>
 them (averaging them) to obtain the final model:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-376"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-379"></span>
 <img src="images/ensemble/bagging-idea3.svg" alt="Bagging Scheme" width="50%" />
 <p class="caption">
 Figure 33.3: Bagging Scheme
@@ -630,7 +630,7 @@ bias:</p>
 directly. Sure, there is an implicit dependency through the average model,
 however there is no <span class="math inline">\(\mathcal{D}\)</span> in the bias formula bove. Hence, in bagging,
 we can decrease variance while <em>not</em> sacrificing bias.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-377"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-380"></span>
 <img src="images/ensemble/bagging-idea4.svg" alt="Ensemble of models, and bagged model" width="50%" />
 <p class="caption">
 Figure 33.4: Ensemble of models, and bagged model
@@ -697,7 +697,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }

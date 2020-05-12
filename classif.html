@@ -512,7 +512,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">20</span> Classification</h1>
 <p>In this part of the book we discuss classification methods, that is, methods
 to predict a qualitative or categorical response:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-176"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-179"></span>
 <img src="images/classif/four-corners-classification.svg" alt="Clustering Corner" width="85%" />
 <p class="caption">
 Figure 20.1: Clustering Corner
@@ -538,7 +538,7 @@ so that each input is assigned to one and only one class.</p>
 three-digit number that relates to how likely you are to
 repay debt. This score typically ranges from 300-850. Banks and lenders use it
 to decide whether they’ll approve you for a credit card or loan.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-177"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-180"></span>
 <img src="images/classif/credit-score-gauge.png" alt="Typical display of a Credit Score with a gauge chart" width="60%" />
 <p class="caption">
 Figure 20.2: Typical display of a Credit Score with a gauge chart
@@ -584,7 +584,7 @@ are derived <span class="math inline">\(X = [ X_1, \dots, X_p ]\)</span>.</p>
 </ul>
 <p>Let’s bring our mental map back of the Supervised Learning diagram, and see
 how its elements get framed from a classification perspective.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-178"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-181"></span>
 <img src="images/classif/learning-diag4.svg" alt="Some elements of the Supervised Learning Diagram" width="85%" />
 <p class="caption">
 Figure 20.3: Some elements of the Supervised Learning Diagram
@@ -606,7 +606,7 @@ P(y \mid X = \mathbf{x})
 <p>For example, we can think of <span class="math inline">\(n\)</span> individuals in a <span class="math inline">\(p\)</span>-dimensional space.
 Moreover, assume that each class of customers forms its own cloud: the <em>good</em>
 customers, and the <em>bad</em> customers.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-179"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-182"></span>
 <img src="images/classif/cloud_credit1.svg" alt="Cloud of n points in p-dimensional space" width="60%" />
 <p class="caption">
 Figure 20.4: Cloud of n points in p-dimensional space
@@ -614,7 +614,7 @@ Figure 20.4: Cloud of n points in p-dimensional space
 </div>
 <p>Now, assume that there are four individuals <span class="math inline">\(\{a, b, c, d\}\)</span> for which we
 want to predict their classes.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-180"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-183"></span>
 <img src="images/classif/cloud_credit2.svg" alt="To which class we assign new individuals?" width="60%" />
 <p class="caption">
 Figure 20.5: To which class we assign new individuals?
@@ -626,7 +626,7 @@ could be assignd to class <em>bad</em>. Customer <span class="math inline">\(d\)
 <em>bad</em> with high confidence. In turn, customer <span class="math inline">\(c\)</span> coud be assigned to class
 <em>good</em>. What about customer <span class="math inline">\(b\)</span>? We could be uncertain to which class this
 individual belongs.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-181"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-184"></span>
 <img src="images/classif/cloud_credit3.svg" alt="Some possible classifications" width="60%" />
 <p class="caption">
 Figure 20.6: Some possible classifications
@@ -636,7 +636,7 @@ Figure 20.6: Some possible classifications
 <span class="math inline">\(\mathcal{R}_k\)</span> called <strong>decision regions</strong> (one for each class). The boundaries
 between decision regions would establish <strong>decision boundaries</strong> or decision
 surfaces.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-182"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-185"></span>
 <img src="images/classif/decision-boundaries.svg" alt="Two possible decision boundaries" width="80%" />
 <p class="caption">
 Figure 20.7: Two possible decision boundaries
@@ -649,7 +649,7 @@ another decision rule could result in a nonlinear decision surface.</p>
 <h3><span class="header-section-number">20.1.3</span> Two-class Problem</h3>
 <p>In our credit application example we have customers belonging to one of two
 classes: <span class="math inline">\(\mathcal{C}_1 =\)</span> <em>good</em>, and <span class="math inline">\(\mathcal{C}_2 =\)</span> <em>bad</em>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-183"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-186"></span>
 <img src="images/classif/cloud_credit1.svg" alt="Cloud of n customers in p-dimensional space" width="60%" />
 <p class="caption">
 Figure 20.8: Cloud of n customers in p-dimensional space
@@ -665,7 +665,7 @@ P(X = \mathbf{x} \mid y = k)
 <p>For instance, we may ask “How does <span class="math inline">\(X_j \mid y = 1\)</span> compare with
 <span class="math inline">\(X_j \mid y = 2\)</span>?” Similarly, “How does <span class="math inline">\(X_q \mid y = 1\)</span> compare with
 <span class="math inline">\(X_q \mid y = 2\)</span>?”</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-184"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-187"></span>
 <img src="images/classif/density_classes1.svg" alt="Exploring conditional distributions" width="70%" />
 <p class="caption">
 Figure 20.9: Exploring conditional distributions
@@ -860,7 +860,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }

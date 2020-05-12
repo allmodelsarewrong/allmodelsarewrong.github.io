@@ -590,7 +590,7 @@ categories: <span class="math inline">\(\text{good}\)</span> and <span class="ma
 <p>Let us encode <span class="math inline">\(\text{good}\)</span> as a circle <span class="math inline">\(\bigcirc\)</span>, and let us encode
 <span class="math inline">\(\text{bad}\)</span> as a square <span class="math inline">\(\square\)</span>. Our root node then contains 8 objects,
 with a 50-50 split in credit status:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-349"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-352"></span>
 <img src="images/trees/entropy-toy-root.svg" alt="Root node" width="30%" />
 <p class="caption">
 Figure 31.1: Root node
@@ -609,7 +609,7 @@ H(\text{root}) = - \underbrace{ \frac{1}{2} \log_2\left( \frac{1}{2} \right) }_{
 <h4>Partition by Gender</h4>
 <p>Now, say we choose to partition by gender. Our parent node would then split as
 follows:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-350"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-353"></span>
 <img src="images/trees/entropy-toy-gender.svg" alt="Split by gender" width="65%" />
 <p class="caption">
 Figure 31.2: Split by gender
@@ -637,7 +637,7 @@ on. Why? Because we obtain child nodes that have the same amount of entropy
 <div id="partition-by-job" class="section level4 unnumbered">
 <h4>Partition by Job</h4>
 <p>If we decide to partition by job, the parent node would then split as:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-351"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-354"></span>
 <img src="images/trees/entropy-toy-job.svg" alt="Split by job" width="65%" />
 <p class="caption">
 Figure 31.3: Split by job
@@ -663,7 +663,7 @@ H(\text{right}) =  -\frac{1}{4} \log_2\left( \frac{1}{4} \right)  -\frac{3}{4} \
 <p>What about splitting the root node based on the categories of region? Note that
 region is a nominal qualitative variable with three categories, which means
 that there will be three possible binary partitions.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-352"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-355"></span>
 <img src="images/trees/entropy-toy-region.svg" alt="Splits by region" width="95%" />
 <p class="caption">
 Figure 31.4: Splits by region
@@ -719,7 +719,7 @@ node), split, n, loss, yval, (yprob)
      6) gender= male 1 0 bad (1.0000000 0.0000000) *
      7) gender=female,male 3 0 good (0.0000000 1.0000000) *</code></pre>
 <p>with the tree diagram as follows:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-355-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-358-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="gini-index-based-splits" class="section level2">
@@ -732,7 +732,7 @@ objects of <span class="math inline">\(k = 1, \dots, K\)</span> classes, is give
 Gini(\text{node}) = \sum_{k=1}^{K} p_k (1 - p_k)
 \]</span></p>
 <p>Consider the root node:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-356"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-359"></span>
 <img src="images/trees/entropy-toy-root.svg" alt="Root node" width="30%" />
 <p class="caption">
 Figure 31.5: Root node
@@ -748,7 +748,7 @@ Gini(\text{root}) &amp;= \sum_{k=1}^{2} p_k (1 - p_k) = \\
 <div id="partition-by-gender-1" class="section level4 unnumbered">
 <h4>Partition by Gender</h4>
 <p>We begin partitioning by gender. Our parent node would then split as follows:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-357"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-360"></span>
 <img src="images/trees/entropy-toy-gender.svg" alt="Split by gender" width="65%" />
 <p class="caption">
 Figure 31.6: Split by gender
@@ -780,7 +780,7 @@ feature is not a helpful predictor to base our partitions on.</p>
 <div id="partition-by-job-1" class="section level4 unnumbered">
 <h4>Partition by Job</h4>
 <p>If we decide to partition by job, the parent node would then split as:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-358"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-361"></span>
 <img src="images/trees/entropy-toy-job.svg" alt="Split by job" width="65%" />
 <p class="caption">
 Figure 31.7: Split by job
@@ -804,7 +804,7 @@ Gini(\text{right}) =  \frac{1}{4} \left( 1 - \frac{1}{4} \right) + \frac{3}{4} \
 <div id="partition-by-region-1" class="section level4 unnumbered">
 <h4>Partition by Region</h4>
 <p>Finally, let’s split the root node based on the categories of region.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-359"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-362"></span>
 <img src="images/trees/entropy-toy-region.svg" alt="Splits by region" width="95%" />
 <p class="caption">
 Figure 31.8: Splits by region
@@ -855,7 +855,7 @@ node), split, n, loss, yval, (yprob)
      6) gender= male 1 0 bad (1.0000000 0.0000000) *
      7) gender=female,male 3 0 good (0.0000000 1.0000000) *</code></pre>
 <p>with the tree diagram as follows:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-362-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-365-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="looking-for-the-best-split" class="section level2">
@@ -934,7 +934,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }

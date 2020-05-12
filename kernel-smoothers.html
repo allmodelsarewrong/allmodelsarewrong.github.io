@@ -528,15 +528,31 @@ from the query point. Which sometimes could be problematic.</p>
 <span class="math inline">\(y_0\)</span> using <span class="math inline">\(k\)</span> closest neighbors.
 The local information of <span class="math inline">\(x_i\)</span> is concentrated around the actual observed
 <span class="math inline">\(x_0\)</span>.</p>
-<p><strong>INSERT IMAGE</strong></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
+<img src="images/nonparam/knn.svg" alt="k = 10 Closest Neighbors" width="70%" />
+<p class="caption">
+Figure 19.1: k = 10 Closest Neighbors
+</p>
+</div>
 <p>However, if we consider more neighbors <span class="math inline">\(k\)</span>, now some of the <span class="math inline">\(x_i\)</span> values are
 considerably farther from the query point <span class="math inline">\(x_0\)</span>:</p>
-<p><strong>INSERT IMAGE</strong></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-175"></span>
+<img src="images/nonparam/knn2.svg" alt="k = 20 Closest Neighbors" width="70%" />
+<p class="caption">
+Figure 19.2: k = 20 Closest Neighbors
+</p>
+</div>
 <p>Instead of giving the same importance to all the neighbors, we could instead
 give them variable importances depending on their proximity to <span class="math inline">\(x_0\)</span>. Those
 values <span class="math inline">\(x_i\)</span> that are closer to <span class="math inline">\(x_0\)</span> should receive more importance via a
 bigger weight. Those values <span class="math inline">\(x_i\)</span> that are farther from <span class="math inline">\(x_0\)</span> should receive
 less importance vis a smaller weight.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-176"></span>
+<img src="images/nonparam/knn-weighted.svg" alt="k = 20 Closest Neighbors, Weighted" width="70%" />
+<p class="caption">
+Figure 19.3: k = 20 Closest Neighbors, Weighted
+</p>
+</div>
 <p>Consequently, we can modify the formula of the KNN estimator that uses a
 constant average, and replace the constant weights with variable weights.
 This modification will result in an estimator that computes <span class="math inline">\(\hat{f}(x_0)\)</span>
@@ -585,10 +601,10 @@ from terms such as Mercer kernels, and the so-called kernel trick.</p>
   \text{Triweight} &amp; \qquad K(u) = \frac{35}{32} (1 - u^2)^3, \quad \text{for } |u| \leq 1 \\
 \end{aligned}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-177"></span>
 <img src="images/nonparam/Kernels.svg" alt="Various Kernels (source: wikipedia)" width="70%" />
 <p class="caption">
-Figure 19.1: Various Kernels (source: wikipedia)
+Figure 19.4: Various Kernels (source: wikipedia)
 </p>
 </div>
 <p>In case you are curious, Wikipedia’s entry about kernel functions has many more
@@ -725,7 +741,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["allmodelsarewrong.pdf", "allmodelsarewrong.epub"],
+"download": ["allmodelsarewrong.epub"],
 "toc": {
 "collapse": "section"
 }
