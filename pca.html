@@ -522,24 +522,23 @@ Likewise, it also provides us results to get a graphic representation of the
 variables in terms of their correlations. Overall, PCA is a multivariate technique
 that allows us to summarize the systematic patterns of variations in a data set.</p>
 <p>The classic reference for PCA is the work by the eminent British biostatistician
-Karl Pearson “On Lines and Planes of Closest Fit to Systems of Points in Space,”
-from 1901. This publication presents the PCA problem under a purely geometric
-standpoint, describing how to find low-dimensional subspaces that best
-fit—in the least squares sense—a cloud of points. The other seminal work of
-PCA is the one by the American mathematician and economic theorist Harold Hotelling
-with “Analysis of a Complex of Statistical Variables into Principal Components,”
-from 1933. Unlike Pearson, Hotelling finds the principal components as
-orthogonal linear combinations of the variables of maximum variance.</p>
+&lt;a href=“<a href="https://en.wikipedia.org/wiki/Karl_Pearson" class="uri">https://en.wikipedia.org/wiki/Karl_Pearson</a>” target="_blank&gt;Karl Pearson’s</a> “On Lines and Planes of Closest Fit to Systems of Points in Space,”
+from 1901. This publication presents the underlying problem of PCA from a purely
+geometric standpoint, describing how to find low-dimensional subspaces that best
+fit—in the least squares sense—a cloud of points. Keep in mind that Pearson
+never used the term <em>principal components analysis</em>.
+The other seminal work of PCA is the one by American mathematician and economic
+theorist Harold Hotelling with “Analysis of a Complex of Statistical Variables
+into Principal Components,” from 1933. It is Hotelling who coined the term
+<em>principal components analysis</em> and gave the method a more mature statistical
+perspective. Unlike Pearson, Hotelling finds the principal components as
+orthogonal linear combinations of the input variables in a way that such
+combinations have maximum variance.</p>
 <p>PCA is one of those methods that can be approached from multiple, seemingly
 unrelated, perspectives. The way we are going to introduce PCA is not the typical
 way in which PCA is discussed in most books published in English. However, our
 introduction is actually based on the ideas and concepts originally published
-in <a href="https://en.wikipedia.org/wiki/Karl_Pearson">Karl Pearson’s</a> 1901 paper
-<em>On lines and planes of closest fit to systems of points in space</em>. This is what
-can be considered to be the first paper on PCA, although keep in mind that
-Karl Pearson never used the term <em>principal components analysis</em>. That term was
-coined by Harold Hotelling, who formalized the method by giving it a more
-mature statistical perspective.</p>
+by Karl Pearson.</p>
 <div id="low-dimensional-representations" class="section level2">
 <h2><span class="header-section-number">4.1</span> Low-dimensional Representations</h2>
 <p>Let’s play the following game. Imagine for a minute that you have the superpower
@@ -598,8 +597,8 @@ projection, we hope to minimize such loss.</p>
 concept, and its implications.</p>
 <p>Pretend that we zoom in to see some of the individuals of the cloud of points
 that form the mug (see figure below). Keep in mind that these data points are
-in a <span class="math inline">\(p\)</span>-dimensional space, which will also have its centroid (i.e. average
-individual).</p>
+in a <span class="math inline">\(p\)</span>-dimensional space, and the cloud will have its centroid <span class="math inline">\(\mathbf{g}\)</span>
+(i.e. average individual).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
 <img src="images/pca/pca-scalar-projection0.svg" alt="Set of individuals in p-dim space." width="55%" />
 <p class="caption">
@@ -607,7 +606,8 @@ Figure 4.4: Set of individuals in p-dim space.
 </p>
 </div>
 <p>Because our goal is to look for a low-dimensional represention,
-we can start by considering a one-dimensional space, that is, some axis.
+we can start by considering the simplest type of low-dimensional representations:
+a one-dimensional space. This in turn can be graphically displayed as one axis.
 In the above diagram (as well as the one below) this dimension is depicted with
 the yellow line, labeled as <span class="math inline">\(dim_{\mathbf{v}}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
@@ -616,8 +616,9 @@ the yellow line, labeled as <span class="math inline">\(dim_{\mathbf{v}}\)</span
 Figure 4.5: Set of individuals in p-dim space.
 </p>
 </div>
-<p>We should note that we don’t really manipulate <span class="math inline">\(dim_{\mathbf{v}}\)</span> directly.
-Instead, what we manipulate is a vector <span class="math inline">\(\mathbf{v}\)</span> along this dimension.</p>
+<p>We should note that we don’t really manipulate dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span>
+directly. Instead, what we manipulate is a vector <span class="math inline">\(\mathbf{v}\)</span> along this
+dimension.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
 <img src="images/pca/pca-scalar-projection2.svg" alt="Dimension spanned by vector v" width="70%" />
 <p class="caption">
@@ -636,11 +637,11 @@ Figure 4.7: Projections onto one dimension
 <div id="vector-and-scalar-projections" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Vector and Scalar Projections</h3>
 <p>Let’s consider a specific individual, for example the <span class="math inline">\(i\)</span>-th individual.
-And let’s take the centroid as the origin of the cloud of points. In this way,
-the dimension that we are looking for has to pass thorugh the centroid of this
-cloud. Obtaining the orthogonal projection of the <span class="math inline">\(i\)</span>-th individual
-onto the dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span> involves projecting <span class="math inline">\(\mathbf{x_i}\)</span> onto
-<span class="math inline">\(\mathbf{v}\)</span>.</p>
+And let’s take the centroid <span class="math inline">\(\mathbf{g}\)</span> as the origin of the cloud of points.
+In this way, the dimension that we are looking for has to pass thorugh the
+centroid of this cloud. Obtaining the orthogonal projection of the <span class="math inline">\(i\)</span>-th
+individual onto the dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span> involves projecting
+<span class="math inline">\(\mathbf{x_i}\)</span> onto any vector <span class="math inline">\(\mathbf{v}\)</span> along this dimension.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/pca/pca-scalar-projection4.svg" alt="Projection of an individual onto one dimension" width="70%" />
 <p class="caption">
@@ -675,7 +676,7 @@ obtain the coordinate of the <span class="math inline">\(i\)</span>-th individua
 <h3><span class="header-section-number">4.2.2</span> Projected Inertia</h3>
 <p>As we said before, our goal is to find the angle that gives us the “best”
 photo of the mug (i.e. cloud of points). This can be translated as finding a
-subspace in which the distances between the points is most similar to those on
+subspace in which the distances between the points are most similar to those on
 the actual mug.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="images/pca/pca-projection-goal.svg" alt="Projection Goal" width="90%" />
@@ -686,15 +687,19 @@ Figure 4.10: Projection Goal
 <p>Now, we need to define what we mean by “similar” distances in <span class="math inline">\(\mathbb{H}\)</span>. Consider the overall dispersion of our original system (the one with all <span class="math inline">\(p\)</span>
 dimensions): <span class="math inline">\(\sum_{j} \sum_{\ell} d^2 (i, \ell)\)</span>. This is a fixed number;
 and we cannot change it. However, we can try fine-tune our subset <span class="math inline">\(\mathbb{H}\)</span>
-such that
-<span class="math inline">\(\sum_{j} \sum_{\ell} d^2 (i, \ell) \approx \sum_{i} \sum_{\ell} d_H^2(i, \ell)\)</span>.</p>
+such that:</p>
+<p><span class="math display">\[
+\sum_{j} \sum_{\ell} d^2 (i, \ell) \approx \sum_{i} \sum_{\ell} d_H^2(i, \ell)
+\]</span></p>
+<p>In the previous chapter, we learned about the so-called measure of “Overall Dispersion” which is basically the sum of all pairwise squared distances, which
+can also be expressed in terms of a sum of squared distances to the centroid:</p>
 <p><span class="math display">\[ 
 \sum_{j} \sum_{\ell} d^2 (i, \ell) = \ 2n \sum_i d^2 (i, g)
 \]</span></p>
 <p>However, it will be easier to simply consider the <em>inertia</em> of the system
 (as opposed to the overall dispersion).</p>
 <p><span class="math display">\[
-2n \sum_i d^2 (i, g) \  \to  \ \frac{1}{n} \sum_{i=1}^{n} d^2 (i, g)
+2n \sum_i d^2 (i, g) \  \longrightarrow  \ \frac{1}{n} \sum_{i=1}^{n} d^2 (i, g) = \text{Inertia}
 \]</span></p>
 <p>In mathematical terms, finding the subspace <span class="math inline">\(\mathbb{H}\)</span> that gives us “similar”
 distances to those of the original space corresponds to maximizing the
@@ -716,20 +721,21 @@ Hence, the projected inertia becomes:</p>
 <p>For convenience, we add the restriction that <span class="math inline">\(\mathbf{v}\)</span> is a unit-vector
 (vector of unit norm). Why do we need the constraint? If we didn’t have the
 constraint, we could always find a <span class="math inline">\(\mathbf{v}\)</span> that obtains higher inertia,
-and things would explode. Furthermore, as we will see in the next sectoin,
+and things would explode. Furthermore, as we will see in the next section,
 this helps in the algebra we will use when we actually perform the maximization.</p>
 </div>
 </div>
 <div id="maximization-problem" class="section level2">
 <h2><span class="header-section-number">4.3</span> Maximization Problem</h2>
-<p>We now need to compute the projected Inertia. Since we have projected onto a
-line spanned by <span class="math inline">\(\mathbf{v}\)</span>, the projected inertia <span class="math inline">\(I_{\mathbb{H}}\)</span> will simply
-be the variance of the projected data points:</p>
+<p>We now need to compute the projected Inertia. Without loss of generality, we
+will assume that we have mean-centered data. This implies that the centroid <span class="math inline">\(g\)</span>
+of the cloud of points is now the origin <span class="math inline">\(g = 0\)</span>. Since we are projecting onto
+a line spanned by a unit-vector <span class="math inline">\(\mathbf{v}\)</span>, the projected inertia
+<span class="math inline">\(I_{\mathbb{H}}\)</span> will simply be the variance of the projected data points:</p>
 <p><span class="math display">\[
 I_{\mathbb{H}} = \frac{1}{n} \sum_{i=1}^{n} d_\mathbb{H}^2(i, 0) = \frac{1}{n} \sum_{i=1}^{n} z_i^2
 \]</span></p>
-<p>(note that <span class="math inline">\(g = 0\)</span> since we are assuming our data is mean-centered).
-We can simplify notation as follows:</p>
+<p>In vector-matrix notation we have the following expressions:</p>
 <p><span class="math display">\[
 \mathbf{z} := \begin{pmatrix} z_1 \\ z_2 \\ \vdots \\ z_n \\ \end{pmatrix} \ \Longrightarrow \ I_\mathbb{H} = \frac{1}{n} \mathbf{z}^\mathsf{T} \mathbf{z} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v}
 \]</span></p>
@@ -738,14 +744,19 @@ We can simplify notation as follows:</p>
 \max_{\mathbf{v}} \left\{ \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} \right\} \qquad \text{s.t.} \qquad \mathbf{v}^\mathsf{T} \mathbf{v} = 1
 \]</span></p>
 <p>To solve this maximization problem, we utilize the method of
-Lagrange Multipliers:</p>
+<a href="https://en.wikipedia.org/wiki/Lagrange_multiplier" target="_blank">Lagrange Multipliers</a>. The <em>lagrangian</em> <span class="math inline">\(\mathcal{L}\)</span> is
+given by:</p>
 <p><span class="math display">\[
 \mathcal{L} = \frac{1}{n} \mathbf{v}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - \lambda \left( \mathbf{v}^\mathsf{T} \mathbf{v}  - 1 \right)
 \]</span></p>
 <p>Calculating the derivative of the lagrangian <span class="math inline">\(\mathcal{L}\)</span> with respect to
 <span class="math inline">\(\mathbf{v}\)</span>, and equating to zero we get:</p>
 <p><span class="math display">\[
-\frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = \mathbf{0} \ \Rightarrow \ \underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \ \Rightarrow \ \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
+\frac{\partial \mathcal{L}}{\partial \mathbf{v}} = \frac{2}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} - 2 \lambda \mathbf{v} = \mathbf{0}
+\]</span></p>
+<p>Doing some algebra, we get:</p>
+<p><span class="math display">\[
+\underbrace{  \frac{1}{n} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{v} }_{:= \mathbf{S} } = \lambda \mathbf{v}  \quad \Rightarrow \quad \mathbf{S} \mathbf{v} = \lambda \mathbf{v}
 \]</span></p>
 <p>That is, we obtain the equation <span class="math inline">\(\mathbf{S} \mathbf{v} = \lambda \mathbf{v}\)</span>
 where <span class="math inline">\(\mathbf{S} \in \mathbb{R}^{p \times p}\)</span> is symmetric.
@@ -770,18 +781,18 @@ matrix consisting of the vectors <span class="math inline">\(\mathbf{z_i}\)</spa
 \mathbf{Z} = \begin{bmatrix} \mathbf{z_1} &amp; \mathbf{z_2} &amp; \dots &amp; \mathbf{z_k} &amp; \dots &amp; \mathbf{z_p} \\ \end{bmatrix}
 \]</span></p>
 <ul>
-<li><p>The matrix <span class="math inline">\(\mathbf{V}\)</span> consists of the <strong>loadings</strong></p></li>
-<li><p>The matrix <span class="math inline">\(\mathbf{Z}\)</span> contains the <strong>principal components</strong> (PC’s),
-also known as <strong>scores</strong>.</p></li>
+<li><p>The matrix of eigenvectors <span class="math inline">\(\mathbf{V}\)</span> is known as the matrix of <strong>loadings</strong> (in PCA jargon)</p></li>
+<li><p>The matrix of projected points <span class="math inline">\(\mathbf{Z}\)</span> is known as the matrix of
+<strong>principal components</strong> (PC’s), also known as <strong>scores</strong> (in PCA jargon).</p></li>
 </ul>
-<p>Let us examine the <span class="math inline">\(k\)</span>th principal component <span class="math inline">\(\mathbf{z_k}\)</span>:</p>
+<p>Let us examine the <span class="math inline">\(k\)</span>-th principal component <span class="math inline">\(\mathbf{z_k}\)</span>:</p>
 <p><span class="math display">\[
 \mathbf{z_k} = \mathbf{X v_k} = v_{1k} \mathbf{x_1} + v_{2k} \mathbf{x_2} + \dots + v_{pk} \mathbf{x_p}
 \]</span></p>
-<p>(where <span class="math inline">\(\mathbf{x_k}\)</span> denotes columns of <span class="math inline">\(\mathbf{X}\)</span>). Note that
-<span class="math inline">\(\mathrm{mean}(\mathbf{z_k}) = 0\)</span>; since we are assuming that the data is
-mean-centered, we have that <span class="math inline">\(\mathrm{mean}(\mathbf{x_1}) = 0\)</span>.
-What about variance?</p>
+<p>(where <span class="math inline">\(\mathbf{x_k}\)</span> denotes columns of <span class="math inline">\(\mathbf{X}\)</span>).</p>
+<p>Note that <span class="math inline">\(\mathrm{mean}(\mathbf{z_k}) = 0\)</span>; since we are assuming that the
+data is mean-centered, we have that <span class="math inline">\(\mathrm{mean}(\mathbf{x_1}) = 0\)</span>.</p>
+<p>What about variance of <span class="math inline">\(\mathbf{z_k}\)</span>?</p>
 <p><span class="math display">\[\begin{align*}
 Var(\mathbf{z_k}) &amp; = \frac{1}{n} \mathbf{z_{k}^\mathsf{T}} \mathbf{z_k} \\
 &amp;  = \frac{1}{n}\left( \mathbf{X} \mathbf{v_k} \right)^{\mathsf{T}} \left( \mathbf{X} \mathbf{v_k} \right) \\
@@ -805,7 +816,7 @@ correlation matrix.</p>
 <p>We have the following fact (the proof is omitted, and may be assigned as
 homework or as a test question):</p>
 <p><span class="math display">\[
-I = \frac{1}{n} \sum_{i=1}^{n} d^2(i, g) = \sum_{k} \lambda_k = \mathrm{tr}\left( \frac{1}{n} \mathbf{X^\mathsf{T} X} \right)
+\text{Inertia} = \frac{1}{n} \sum_{i=1}^{n} d^2(i, g) = \sum_{k} \lambda_k = \mathrm{tr}\left( \frac{1}{n} \mathbf{X^\mathsf{T} X} \right)
 \]</span></p>
 <ul>
 <li><p>The dimensions that we find in our analysis (through <span class="math inline">\(\mathbf{v_k}\)</span>)
@@ -814,16 +825,21 @@ relates directly to <span class="math inline">\(\mathbf{z_k}\)</span>.</p></li>
 of our data.</p></li>
 </ul>
 <p><strong>Remark</strong>: The principal components capture different parts of the variability
-of the full data.</p>
+in the data.</p>
 </div>
 </div>
 <div id="another-perspective-of-pca" class="section level2">
 <h2><span class="header-section-number">4.4</span> Another Perspective of PCA</h2>
-<p>Let us present another way to approach PCA. Given a set of <span class="math inline">\(p\)</span> variables
-<span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>, we want to obtain new <span class="math inline">\(k\)</span> variables
-<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the <strong>Principal Components</strong> (PCs).</p>
+<p>Having seen how to approach PCA from a geometric point of view, let us present
+another way to approach PCA from a variance maximazation standpoint, which is
+the most common way in which PCA is introduced within the Anglo-Saxon literature.
+Given a set of <span class="math inline">\(p\)</span> variables <span class="math inline">\(\mathbf{x_1}, \mathbf{x_2}, \dots, \mathbf{x_p}\)</span>,
+we want to obtain new <span class="math inline">\(k\)</span> variables
+<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_k}\)</span>, called the
+<strong>Principal Components</strong> (PCs).</p>
 <p>A principal component is a linear combination of the <span class="math inline">\(p\)</span> variables:
-<span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>. The first PC is a linear mix:</p>
+<span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>. The first PC is a linear mix which we graphically
+depict like this:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="images/pca/pca-path-diag1.svg" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
