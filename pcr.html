@@ -625,7 +625,7 @@ input matrix <span class="math inline">\(\mathbf{X}\)</span> as:</p>
 data matrix into a <em>signal</em> part captured by <span class="math inline">\(k\)</span> components, and a <em>residual</em>
 or noise part:</p>
 <span class="math display">\[
-\underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times k}{\mathbf{V^\mathsf{T}}} + \underset{n \times k}{\mathbf{E}}
+\underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times p}{\mathbf{V^\mathsf{T}}} + \underset{n \times p}{\mathbf{E}}
 \]</span>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-123"></span>
 <img src="images/pcr/pcr-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
@@ -652,7 +652,7 @@ predictors of <span class="math inline">\(\mathbf{y}\)</span>:</p>
 <p><span class="math display">\[
 \mathbf{\hat{y}} = \mathbf{Z b}
 \]</span></p>
-<p>Without loss of generality suppose the predictors and response are standardized.
+<p>Without loss of generality, suppose the predictors and response are standardized.
 In Principal Components Regression we regress <span class="math inline">\(\mathbf{y}\)</span> onto the PC’s:</p>
 <p><span class="math display">\[
 \mathbf{\hat{y}} = b_1 \mathbf{z_1} + b \mathbf{z_2} 
@@ -690,7 +690,7 @@ a PC are unaffected by which other PCs are also included in the regression.</p>
 <div id="how-does-pcr-work" class="section level2">
 <h2><span class="header-section-number">13.3</span> How does PCR work?</h2>
 <p>Start with <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{n \times p}\)</span>, assuming standardized data.
-Then, perform PCA on <span class="math inline">\(\mathbf{X}\)</span>: either a EVD of a multiple of
+Then, perform PCA on <span class="math inline">\(\mathbf{X}\)</span>: either an EVD of a multiple of
 <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> (e.g. <span class="math inline">\((n-1)^{-1} \mathbf{X^\mathsf{T} X}\)</span>), or the
 SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</span>. In either case,
 <span class="math inline">\(\mathbf{X} = \mathbf{Z V^\mathsf{T}}\)</span>
@@ -727,11 +727,14 @@ that if you keep all PC’s, what happens is:</p>
 <p>In summary, we can go back and forth between regression coefficients for PC
 scores, and regression coefficients for original input features:</p>
 <ul>
-<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} \mathbf{b}_\text{ols} = \mathbf{Z V^\mathsf{T}} \mathbf{b}_\text{ols} = \mathbf{Z b}_\text{pcr}\)</span>.</p></li>
-<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_\text{pcr} = \mathbf{X V} \mathbf{b}_\text{pcr} = \mathbf{X b}_\text{ols}\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} \mathbf{b}_\text{ols} = \mathbf{Z V^\mathsf{T}} \mathbf{b}_\text{ols} = \mathbf{Z b}_\text{pcr}\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_\text{pcr} = \mathbf{X V} \mathbf{b}_\text{pcr} = \mathbf{X b}_\text{ols}\)</span></p></li>
 </ul>
 <p>The following output shows the regression coefficients of all nine regression
-equations in terms of the original input variables:</p>
+equations in terms of the original input variables. For example, the values
+in the first column (column <code>Z_1:1</code>) are the regression coefficients of the
+<span class="math inline">\(X\)</span> inputs when using the first PC. The values in the second column (<code>Z_1:2</code>)
+are the coefficients when using PC1 and PC2; and so on.</p>
 <pre><code>#&gt;          Z_1:1 Z_1:2 Z_1:3 Z_1:4 Z_1:5 Z_1:6   Z_1:7 Z_1:8 Z_1:9
 #&gt; engine    1641  2345  5487  5203  1887  1064  2168.5 -3551 -3327
 #&gt; cyl       1544  2881  7312  7289  2213  1401  -295.5  3856  3766

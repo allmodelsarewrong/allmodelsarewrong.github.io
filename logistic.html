@@ -850,7 +850,7 @@ for example, the <strong>Newton-Raphson method</strong>, or <strong>gradient asc
 </div>
 <div id="another-way-to-solve-logistic-regression" class="section level3">
 <h3><span class="header-section-number">21.2.2</span> Another Way to Solve Logistic Regression</h3>
-<p>The overall picture stills stands:</p>
+<p>The overall picture still stands:</p>
 <p><img src="images/logistic/logistic-pathdiag1.svg" width="80%" style="display: block; margin: auto;" /></p>
 <p>Now, however, we will change our probability expression a bit. How? By recoding
 the response variable <span class="math inline">\(y_i\)</span>. Specifically, what it used to be <span class="math inline">\(y_i = 0\)</span>
@@ -904,7 +904,7 @@ Prob(\mathbf{y} \mid x_1, x_2, \dots, x_p; \mathbf{b}) &amp; = \prod_{i=1}^{n} P
 \end{align*}\]</span></p>
 <p>Notice that we are adding the constant <span class="math inline">\(1/n\)</span>. The inclusion of this term does
 not modify the maximization of the loglikelihood. But it will help us in the
-next step to have a matheematically convenient expression.</p>
+next step to have a mathematically convenient expression.</p>
 <p>Here comes an important trick. Instead of maximizing the log-likelihood,
 we can minimize the negative of the loglikelihood.
 In other words, we can perform the following <strong>minimization</strong> problem:</p>

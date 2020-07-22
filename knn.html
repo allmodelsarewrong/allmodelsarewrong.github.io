@@ -524,10 +524,10 @@ of neighborhood, and very simple local fitting mechanisms.</p>
 <h2><span class="header-section-number">18.2</span> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</h2>
 <p>Perhaps the most popular approach that takes into account neighboring points
 to make predictions is <span class="math inline">\(k\)</span> Nearest Neighbors, or <strong>KNN</strong> for short.</p>
-<p>In KNN, we define a neighborhood <span class="math inline">\(\mathcal{N}_k(x_0)\)</span> that consists of the <span class="math inline">\(k\)</span>
-closest points around a query point <span class="math inline">\(x_0\)</span>. This neighborhood will give us a set
-of points <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i \in \mathcal{N}_k(x_0)\)</span>, that will be taken into
-account to compute <span class="math inline">\(\hat{y}_0\)</span> with some local averaging mechanism.</p>
+<p>In KNN, we define a neighborhood, denoted <span class="math inline">\(\mathcal{N}_k(x_0)\)</span>, that consists of
+the <span class="math inline">\(k\)</span> closest points around a query point <span class="math inline">\(x_0\)</span>. This neighborhood will give
+us a set of <span class="math inline">\(k\)</span> points <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i \in \mathcal{N}_k(x_0)\)</span>, that will be
+taken into account to compute <span class="math inline">\(\hat{y}_0\)</span> with some local averaging mechanism.</p>
 <p>To keep the notation simpler, sometimes we will use
 <span class="math inline">\(\mathcal{N}_0 = \mathcal{N}_k(x_0)\)</span> to denote the neighborhood around <span class="math inline">\(x_0\)</span>.</p>
 <p>The plain vanilla KNN estimator <span class="math inline">\(\hat{f}(x_0)\)</span> is defined as the arithmetic
@@ -547,7 +547,7 @@ estimate a linear regression based in the neighboring points
 \textsf{running line:} \quad \hat{f}(x_0) = b_{0,x_0} + b_{1,x_0} x_0
 \]</span></p>
 <p>where <span class="math inline">\(b_{0,x_0}\)</span> and <span class="math inline">\(b_{1,x_0}\)</span> are the least squares estimates using the
-data pints <span class="math inline">\((x_i, y_i)\)</span>, with <span class="math inline">\(i \in \mathcal{N}_0\)</span>.</p>
+data points <span class="math inline">\((x_i, y_i)\)</span>, with <span class="math inline">\(i \in \mathcal{N}_0\)</span>.</p>
 <div id="distance-measures" class="section level3">
 <h3><span class="header-section-number">18.2.1</span> Distance Measures</h3>
 <p>One important consideration behind KNN has to do with the question of “How do
@@ -556,8 +556,8 @@ univariate case, we typically use the absolute distance:</p>
 <p><span class="math display">\[
 d(x_0, x_i) = |x_0 - x_i|
 \]</span></p>
-<p>Notice that for the univariate case, there’s no difference between using the
-absolute distance or using the Euclidean distance. The <span class="math inline">\(k\)</span> nearest neighbors
+<p>Notice that for the univariate case, there’s no difference between using
+the absolute distance or using the Euclidean distance. The <span class="math inline">\(k\)</span> nearest neighbors
 should be the same regardless of the choice of distance.</p>
 <p>In the multivariate case, common options for distances are Euclidean distance,
 and Manhattan distance (but many other distances are also available).</p>
