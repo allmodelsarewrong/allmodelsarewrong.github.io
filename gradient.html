@@ -631,11 +631,11 @@ we can simply consider <span class="math inline">\(\mathbf{v}\)</span> to be a <
 how to find the direction of <span class="math inline">\(\mathbf{v}\)</span> in a little bit. Right now let’s just
 focus on generating new vectors in this manner:</p>
 <p><span class="math display" id="eq:302-4">\[\begin{align*}
-\tag{6.4}
 \mathbf{b}^{(2)} &amp; = \mathbf{b}^{(1)} + \alpha \mathbf{v}^{(1)} \\ 
 \mathbf{b}^{(3)} &amp; = \mathbf{b}^{(2)} + \alpha \mathbf{v}^{(2)} \\ 
 \vdots &amp; \hspace{10mm} \vdots \\
 \mathbf{b}^{(s+1)} &amp; = \mathbf{b}^{(s)} + \alpha \mathbf{v}^{(s)}
+\tag{6.4}
 \end{align*}\]</span></p>
 <p>Note that we are assuming a constant step size <span class="math inline">\(\alpha\)</span>; that is, note that
 <span class="math inline">\(\alpha\)</span> remains the same at each iteration. We should say that there are more
@@ -661,9 +661,10 @@ is less than the error at point <span class="math inline">\(\mathbf{b}^{(s)}\)</
 \tag{6.5}
 \end{align*}\]</span></p>
 <p>In order for our vector <span class="math inline">\(\mathbf{b}^{(s+1)}\)</span> to be closer to the minimizing
-point that <span class="math inline">\(\mathbf{b}^{(s)}\)</span>, we want this quantity to be as negative as possible.
+point, we want this quantity <span class="math inline">\(\Delta E_{\mathbf{b}}\)</span> to be as negative as possible.
 To find the <span class="math inline">\(\mathbf{v}\)</span> that makes this true, we need to use a trick:
-get the Taylor series expansion of <span class="math inline">\(E(\mathbf{b}^{(s)} + \alpha \mathbf{v})\)</span>. Doing so, we obtain:</p>
+get the Taylor series expansion of <span class="math inline">\(E(\mathbf{b}^{(s)} + \alpha \mathbf{v})\)</span>.
+Doing so, we obtain:</p>
 <p><span class="math display" id="eq:302-6">\[\begin{align*}
 \Delta E_{\mathbf{b}} &amp;= E\big( \mathbf{b}^{(s)} \big) + \nabla E\big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \big(\alpha \mathbf{v} \big) + O \big( \alpha^2 \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2) 
@@ -672,15 +673,19 @@ get the Taylor series expansion of <span class="math inline">\(E(\mathbf{b}^{(s)
 <p>where <span class="math inline">\(O(\alpha^2)\)</span> denotes those terms of order 2 or greater in the series expansion.</p>
 <p>We will focus our attention on the series expansion of just one term, and ignore
 the higher order terms comprised by <span class="math inline">\(O(\alpha^2)\)</span>. In other words, we will
-focus on the term:
+focus on the first-order term:
 <span class="math inline">\(\alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v}\)</span>.
 Notice that this term involves the inner product between the gradient and
 the unit vector <span class="math inline">\(\mathbf{v}\)</span>, that is:
 <span class="math inline">\([ \nabla E(\mathbf{b}^{(s)})]^{\mathsf{T}} \mathbf{v}\)</span>.</p>
-<p>For notational convenience, let us (temporarily) define
-<span class="math inline">\(\mathbf{u} : = \nabla E ( \mathbf{b}^{(s)} )\)</span>. In this way, we need to examine
-the inner product: <span class="math inline">\(\mathbf{u^\mathsf{T}v}\)</span>.
-We can consider three prototypical cases with respect to the orientation of <span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>: either antiparallel, parallel, or orthogonal.</p>
+<p>For notational convenience, let us (temporarily) define <span class="math inline">\(\mathbf{u}\)</span> as:</p>
+<p><span class="math display" id="eq:302-7">\[
+\mathbf{u} : = \nabla E ( \mathbf{b}^{(s)} )
+\tag{6.7}
+\]</span></p>
+<p>In this way, we need to examine the inner product: <span class="math inline">\(\mathbf{u^\mathsf{T}v}\)</span>.
+We can consider three prototypical cases with respect to the orientation of
+<span class="math inline">\(\mathbf{v}\)</span> and <span class="math inline">\(\mathbf{u}\)</span>: either antiparallel, parallel, or orthogonal.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-59"></span>
 <img src="images/ols/three-prototypical-cases.png" alt="Three prototypical cases" width="80%" />
 <p class="caption">
@@ -697,27 +702,27 @@ Recall that we are assuming <span class="math inline">\(\mathbf{v}\)</span> to b
 <span class="math inline">\(\mathbf{u}^\mathsf{T} \mathbf{v} = 0\)</span>.</p></li>
 </ul>
 <p>Therefore, in any of the three cases, we have that</p>
-<p><span class="math display" id="eq:302-7">\[
+<p><span class="math display" id="eq:302-8">\[
 \mathbf{u}^\mathsf{T} \mathbf{v} \geq - \left\| \mathbf{u} \right\|
-\tag{6.7}
+\tag{6.8}
 \]</span></p>
 <p>This means that the least we can get is <span class="math inline">\(- \left\| \mathbf{u} \right\|\)</span>, which
 occurs when <span class="math inline">\(\mathbf{v}\)</span> is in the opposite direction of <span class="math inline">\(\mathbf{u}\)</span>.</p>
 <p>Hence, recalling that <span class="math inline">\(\mathbf{u} := \nabla E(\mathbf{b}^{(s)})\)</span>, we can plug
 this result into our error computation to obtain:</p>
-<p><span class="math display" id="eq:302-8">\[\begin{align*} 
+<p><span class="math display" id="eq:302-9">\[\begin{align*} 
 \Delta E_{\mathbf{b}}  &amp; := E\big( \mathbf{b}^{(s + 1)} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = E \big( \mathbf{b}^{(s)} + \alpha \mathbf{v} \big) - E\big( \mathbf{b}^{(s)} \big) \\
 &amp; = \alpha \hspace{1mm} \nabla E \big( \mathbf{b}^{(s)} \big)^{\mathsf{T}} \mathbf{v} + O(\alpha^2)  \\
 &amp; \geq - \alpha \left\| \nabla E\big( \mathbf{b}^{(s)} \big) \right\|
-\tag{6.8}
+\tag{6.9}
 \end{align*}\]</span></p>
 <p>Thus, to make <span class="math inline">\(\Delta E_{\mathbf{b}}\)</span> as negative as possible, we should take
 <span class="math inline">\(\mathbf{v}\)</span> parallel to the opposite direction of the gradient.</p>
 <p><strong>The Moral:</strong> We want the following:</p>
-<p><span class="math display" id="eq:302-9">\[
+<p><span class="math display" id="eq:302-10">\[
 \mathbf{v} = - \frac{\nabla E(\mathbf{b}^{(s)}) }{\left\| \nabla E(\mathbf{b}^{(s)})  \right\| }
-\tag{6.9}
+\tag{6.10}
 \]</span></p>
 <p>which means we want to move in the direction opposite to that of the gradient.
 Keep in mind that we divided by the norm because we previously defined
@@ -728,37 +733,47 @@ Keep in mind that we divided by the norm because we previously defined
 </div>
 <div id="gradient-descent-and-our-model" class="section level2">
 <h2><span class="header-section-number">6.4</span> Gradient Descent and our Model</h2>
-<p>Before we present the full algorithm for gradient descent in the context of regression,
-let us investigate the actual gradient further. Since we have a formula for
-<span class="math inline">\(E(\mathbf{b})\)</span>, we can find a closed form for its gradient
-<span class="math inline">\(\nabla E(\mathbf{b})\)</span>:</p>
-<p><span class="math display" id="eq:302-10">\[\begin{align*}
+<p>Before we present the full algorithm for gradient descent in the context of
+regression, let us investigate the actual gradient further. The starting point
+is the formula for <span class="math inline">\(E(\mathbf{b})\)</span></p>
+<p><span class="math display" id="eq:302-11">\[\begin{align*}
 E(\mathbf{b}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \right)^{\mathsf{T}} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \right) \\
 \\
 &amp; = \frac{1}{n} \left( \mathbf{b}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{b}^\mathsf{T} \mathbf{X}^\mathsf{T} \mathbf{y} + \mathbf{y}^\mathsf{T} \mathbf{y} \right) \\
-\\
-\nabla E(\mathbf{b}) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) 
-\tag{6.10}
+\tag{6.11}
 \end{align*}\]</span></p>
-<p>This was from the columns point of view; we can also find a different formula
-from the row’s perspective in pointwise notation:</p>
-<p><span class="math display" id="eq:302-11">\[\begin{align*}
+<p>We can find a closed form for its gradient <span class="math inline">\(\nabla E(\mathbf{b})\)</span>:</p>
+<p><span class="math display" id="eq:302-12">\[\begin{align*}
+\nabla E(\mathbf{b}) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) 
+\tag{6.12}
+\end{align*}\]</span></p>
+<p>The above formula involves the columns point of view. However, we can also find
+a formula from the row’s perspective (i.e. in pointwise notation):</p>
+<p><span class="math display" id="eq:302-13">\[\begin{align*}
 E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right) \\
 &amp; = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right)^2 \\
-\frac{\partial}{\partial b_j} E(\mathbf{b}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
-\frac{\partial}{\partial b_j} E(\mathbf{b}^{(0)}) &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
-&amp; = - \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[ \mathbf{b}^{(0)} \right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij} 
-\tag{6.11}
+\tag{6.13}
+\end{align*}\]</span></p>
+<p>The partial derivative with respect to <span class="math inline">\(b_j\)</span> is:</p>
+<p><span class="math display" id="eq:302-14">\[\begin{align*}
+\frac{\partial E(\mathbf{b})}{\partial b_j} &amp; = - \frac{2}{n} \sum_{i=1}^{n}  \left( y_i - b_0 x_{i0} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right) x_{ij} \\
+&amp; = - \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \mathbf{b}^{\mathsf{T}} \mathbf{x_i} \right) x_{ij}
+\tag{6.14}
 \end{align*}\]</span></p>
 <p>This will be a better formula to use in our iterative algorithm, described below.</p>
 <div id="algorithm" class="section level4 unnumbered">
 <h4>Algorithm</h4>
 <p>Initialize a vector <span class="math inline">\(\mathbf{b}^{(0)} = \left( b_{0}^{(0)}, b_{1}^{(0)}, \dots, b_{p}^{(0)} \right)\)</span></p>
 <p>Repeat the following over <span class="math inline">\(s\)</span> (starting with <span class="math inline">\(s = 0\)</span>), until convergence:</p>
-<p><span class="math inline">\(b_{j}^{(s+1)}:= b_{j}^{(s)} + \alpha \cdot \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[\mathbf{b}^{(s)}\right]^{\mathsf{T}} \mathbf{x_i} \right) x_{ij}\)</span> for all <span class="math inline">\(j = 0, \dots, p\)</span> simultaneously.</p>
+<p><span class="math display" id="eq:302-15">\[
+b_{j}^{(s+1)}:= b_{j}^{(s)} + \alpha \cdot  \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[\mathbf{b}^{(s)}\right]^{\mathsf{T}}  \mathbf{x_i} \right) x_{ij}
+\tag{6.15}
+\]</span></p>
+<p>for all <span class="math inline">\(j = 0, \dots, p\)</span> simultaneously.</p>
 <p>In more compact notation,</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:302-16">\[
 b_{j}^{(s+1)} = b_{j}^{(s)} + \alpha \cdot \frac{\partial }{\partial b_j} E(\mathbf{b}^{(s)})
+\tag{6.16}
 \]</span></p>
 <p>Store these elements in the vector <span class="math inline">\(\mathbf{b}^{(s+1)} = \left( b_{0}^{(s+1)} , b_{1}^{(s+1)} , \dots, b_{p}^{(s+1)} \right)\)</span></p>
 <p>When there is little change between <span class="math inline">\(\mathbf{b}^{(k + 1)}\)</span> and <span class="math inline">\(\mathbf{b}^{(k)}\)</span>
@@ -766,7 +781,7 @@ b_{j}^{(s+1)} = b_{j}^{(s)} + \alpha \cdot \frac{\partial }{\partial b_j} E(\mat
 <span class="math inline">\(\mathbf{b}^{*} = \mathbf{b}^{(k+1)}\)</span>.</p>
 <p>Note that in the algorithm, we have dropped the condition that <span class="math inline">\(\mathbf{v}\)</span> is
 a unit vector. Indeed, if you look on the Wikipedia page for
-<a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient Descent</a>,
+<a href="https://en.wikipedia.org/wiki/Gradient_descent" target="_blank">Gradient Descent</a>
 the algorithm listed there also omits the unit-length condition.</p>
 
 </div>
