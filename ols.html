@@ -636,7 +636,7 @@ In all of these examples, the prediction is basically a conditional mean:</p>
 \tag{5.1}
 \]</span></p>
 <p>Of course, the previous strategy only makes sense when we have data points <span class="math inline">\(x_i\)</span>
-that are equal to the qeury point <span class="math inline">\(x_0\)</span>. But what if none of the available <span class="math inline">\(x_i\)</span>
+that are equal to the query point <span class="math inline">\(x_0\)</span>. But what if none of the available <span class="math inline">\(x_i\)</span>
 values are equal to <span class="math inline">\(x_0\)</span>? We’ll talk about this later.</p>
 <p>The previous hypothetical scenarios illustrate the core idea of regression:
 we obtain predictions <span class="math inline">\(\hat{y}_0\)</span> using quantities of the form
@@ -644,7 +644,7 @@ we obtain predictions <span class="math inline">\(\hat{y}_0\)</span> using quant
 which can be formalized—under some assumptions—into the notion of
 conditional expectations of the form:</p>
 <p><span class="math display" id="eq:301-2">\[
-\mathbb{E}(y_i \mid x_{i1}^{*} , x_{i2}^{*}, \dots, x_{ip}^{*})
+\mathbb{E}(y_i \mid x_{i1}^{*} , x_{i2}^{*}, \dots, x_{ip}^{*}) \longrightarrow \hat{y}
 \tag{5.2}
 \]</span></p>
 <p>where <span class="math inline">\(x_{ij}^{*}\)</span> represents the <span class="math inline">\(i\)</span>-th measurement of the <span class="math inline">\(j\)</span>-th variable.
