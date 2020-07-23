@@ -631,8 +631,9 @@ Figure 5.2: Average salary by years of experience
 </div>
 <p>What do the three previous scenarios correspond to?
 In all of these examples, the prediction is basically a conditional mean:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:301-1">\[
 \hat{y}_0 = \text{ave}(y_i|x_i = x_0)
+\tag{5.1}
 \]</span></p>
 <p>Of course, the previous strategy only makes sense when we have data points <span class="math inline">\(x_i\)</span>
 that are equal to the qeury point <span class="math inline">\(x_0\)</span>. But what if none of the available <span class="math inline">\(x_i\)</span>
@@ -642,8 +643,9 @@ we obtain predictions <span class="math inline">\(\hat{y}_0\)</span> using quant
 <span class="math inline">\(\text{ave}(y_i|x_i = x_0)\)</span>
 which can be formalized—under some assumptions—into the notion of
 conditional expectations of the form:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:301-2">\[
 \mathbb{E}(y_i \mid x_{i1}^{*} , x_{i2}^{*}, \dots, x_{ip}^{*})
+\tag{5.2}
 \]</span></p>
 <p>where <span class="math inline">\(x_{ij}^{*}\)</span> represents the <span class="math inline">\(i\)</span>-th measurement of the <span class="math inline">\(j\)</span>-th variable.
 The above equation is what we call the <strong>regression function</strong>; note that the
@@ -655,19 +657,19 @@ regression function is nothing more than a conditional expectation!</p>
 reponse <span class="math inline">\(Y\)</span>. In turn, a <strong>linear regression</strong> model tells us to combine our
 features in a <strong>linear</strong> way in order to approximate the response, In the
 univarite case, we have a linear equation:</p>
-<p><span class="math display" id="eq:301-1">\[
+<p><span class="math display" id="eq:301-3">\[
 \hat{Y} = b_0 + b_1 X
-\tag{5.1}
+\tag{5.3}
 \]</span></p>
 <p>In pointwise format, that is for a given individual <span class="math inline">\(i\)</span>, we have:</p>
-<p><span class="math display" id="eq:301-2">\[
+<p><span class="math display" id="eq:301-4">\[
 \hat{y}_i = b_0 + b_1 x_i
-\tag{5.2}
+\tag{5.4}
 \]</span></p>
 <p>In vector notation:</p>
-<p><span class="math display" id="eq:301-3">\[
+<p><span class="math display" id="eq:301-5">\[
 \mathbf{\hat{y}} = b_0 + b_1 \mathbf{x}
-\tag{5.3}
+\tag{5.5}
 \]</span></p>
 <p>To simplify notation, sometimes we prefer to add an auxiliary constant feature
 in the form of a vector of 1’s with <span class="math inline">\(n\)</span> elements, and then use matrix notation
@@ -725,8 +727,9 @@ b_{p} \\
 \]</span></p>
 <p>With the matrix of features, the response, and the coefficients we have a
 compact expression for the predicted outcomes:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:301-6">\[
 \mathbf{\hat{y}} = \mathbf{Xb}
+\tag{5.6}
 \]</span></p>
 <p>In path diagram form, the linear model looks like this:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-41"></span>
@@ -751,14 +754,14 @@ Figure 5.4: Linear combination without constant term
 This requires to come up with some type of measure of <em>closeness</em>. Among the
 various functions that we can use to measure how close <span class="math inline">\(\hat{y}_i\)</span> and <span class="math inline">\(y_i\)</span>
 are, the most common option is to use the squared distance between such values:</p>
-<p><span class="math display" id="eq:301-4">\[
+<p><span class="math display" id="eq:301-7">\[
 d^2(y_i, \hat{y}_i) = (y_i - \hat{y}_i)^2 = (\hat{y}_i - y_i)^2 
-\tag{5.4}
+\tag{5.7}
 \]</span></p>
 <p>Replacing <span class="math inline">\(\hat{y}_i\)</span> with <span class="math inline">\(\mathbf{b^\mathsf{T}\vec{x}_i}\)</span> we have:</p>
-<p><span class="math display" id="eq:301-5">\[
+<p><span class="math display" id="eq:301-8">\[
 d^2(y_i, \hat{y}_i) = (\mathbf{b^\mathsf{T}\vec{x}_i} - y_i)^2
-\tag{5.5}
+\tag{5.8}
 \]</span></p>
 <p>Notice that <span class="math inline">\(d^2(y_i, \hat{y}_i)\)</span> is a pointwise error measure that we can
 generally denote as <span class="math inline">\(\text{err}_i\)</span>. But we also need to define a global
@@ -771,37 +774,39 @@ differences:</p>
 <li>the mean squared error or <span class="math inline">\(\text{MSE}\)</span>.</li>
 </ol>
 <p>The sum of squared errors, <span class="math inline">\(\text{SSE}\)</span>, is defined as:</p>
-<p><span class="math display" id="eq:301-6">\[
+<p><span class="math display" id="eq:301-9">\[
 \text{SSE} = \sum_{i=1}^{n} \text{err}_i 
-\tag{5.6}
+\tag{5.9}
 \]</span></p>
 <p>The mean squared error, <span class="math inline">\(\text{MSE}\)</span>, is defined as:</p>
-<p><span class="math display" id="eq:301-7">\[
+<p><span class="math display" id="eq:301-10">\[
 \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} \text{err}_i 
-\tag{5.7}
+\tag{5.10}
 \]</span></p>
 <p>As you can tell, <span class="math inline">\(\text{SSE} = n \text{MSE}\)</span>, and viceversa, <span class="math inline">\(\text{MSE} = \text{SSE} / n\)</span></p>
 <p>Throughout this book, unless mentioned otherwise, when dealing with regression
 problems, we will consider the <span class="math inline">\(\text{MSE}\)</span> as the default overall error
 function to be minimized (you could also take <span class="math inline">\(\text{SSE}\)</span> instead).
 Let <span class="math inline">\(e_i\)</span> be:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:301-11">\[
 e_i = (y_i - \hat{y}_i) \quad \to \quad e_i^2 = (y_i - \hat{y}_i)^2 = \text{err}_i
+\tag{5.11}
 \]</span></p>
 <p>Doing some algebra, it’s easy to see that:</p>
-<p><span class="math display" id="eq:301-8">\[\begin{align}
+<p><span class="math display" id="eq:301-12">\[\begin{align}
 \text{MSE} &amp;= \frac{1}{n} \sum_{i=1}^{n} e_{i}^{2} \\
 &amp;= \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)^2 \\
 &amp;= \frac{1}{n} \sum_{i=1}^{n} (\mathbf{b^\mathsf{T}\vec{x}_i} - y_i)^2 \\
 &amp;= \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^\mathsf{T} (\mathbf{Xb} - \mathbf{y}) \\
 &amp;= \frac{1}{n} \| \mathbf{Xb} - \mathbf{y} \|^2 \\
 &amp;= \frac{1}{n} \| \mathbf{\hat{y}} - \mathbf{y} \|^2
-\tag{5.8}
+\tag{5.12}
 \end{align}\]</span></p>
 <p>As you can tell, the Mean Squared Error <span class="math inline">\(\text{MSE}\)</span> is proportional to the
 squared norm of the residual vector <span class="math inline">\(\mathbf{e} = \mathbf{\hat{y}} - \mathbf{y}\)</span>,</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:301-13">\[
 \text{MSE} = \frac{1}{n} \| \mathbf{e} \|^2 = \frac{1}{n} (\mathbf{\hat{y}} - \mathbf{y})^\mathsf{T} (\mathbf{\hat{y}} - \mathbf{y})
+\tag{5.13}
 \]</span></p>
 </div>
 <div id="the-least-squares-algorithm" class="section level2">
@@ -812,20 +817,20 @@ of <span class="math inline">\(\text{MSE}\)</span> with respect to <span class="
 gradient of <span class="math inline">\(\text{MSE}\)</span>, denoted <span class="math inline">\(\nabla \text{MSE}(\mathbf{b})\)</span>, which is the
 vector of partial derivatives of <span class="math inline">\(\text{MSE}\)</span> with respecto to each parameter
 <span class="math inline">\(b_0, b_1, \dots, b_p\)</span>:</p>
-<p><span class="math display" id="eq:301-9">\[\begin{align*}
+<p><span class="math display" id="eq:301-14">\[\begin{align*}
 \nabla \text{MSE}(\mathbf{b}) &amp;= \frac{\partial }{\partial \mathbf{b}}\text{MSE}(\mathbf{b}) \\
 &amp;= \frac{\partial }{\partial \mathbf{b}} \left (\frac{1}{n} \mathbf{b^\mathsf{T}X^\mathsf{T}Xb} - \frac{2}{n} \mathbf{b^\mathsf{T}X^\mathsf{T}y} + \frac{1}{n} \mathbf{y^\mathsf{T}y} \right)
-\tag{5.9}
+\tag{5.14}
 \end{align*}\]</span></p>
 <p>which becomes:</p>
-<p><span class="math display" id="eq:301-10">\[
+<p><span class="math display" id="eq:301-15">\[
 \nabla \text{MSE}(\mathbf{b}) = \frac{2}{n} \mathbf{X^\mathsf{T}Xb} - \frac{2}{n} \mathbf{X^\mathsf{T}y}
-\tag{5.10}
+\tag{5.15}
 \]</span></p>
 <p>Equating to zero we get that:</p>
-<p><span class="math display" id="eq:301-11">\[
+<p><span class="math display" id="eq:301-16">\[
 \mathbf{X^\mathsf{T}Xb} = \mathbf{X^\mathsf{T}y} \quad (\text{normal equations})
-\tag{5.11}
+\tag{5.16}
 \]</span></p>
 <p>The above equation defines a system of equations that most authors refer to as
 the so-called <em>Normal</em> equations. It is a system of <span class="math inline">\(n\)</span> equations with
@@ -833,20 +838,20 @@ the so-called <em>Normal</em> equations. It is a system of <span class="math inl
 <p>If the cross-product matrix <span class="math inline">\(\mathbf{X^\mathsf{T}X}\)</span> is invertible, which is not
 a minor assumption, then the vector of regression coefficients <span class="math inline">\(\mathbf{b}\)</span> that
 we are looking for is given by:</p>
-<p><span class="math display" id="eq:301-12">\[
+<p><span class="math display" id="eq:301-17">\[
 \mathbf{b} = (\mathbf{X^\mathsf{T}X})^{-1} \mathbf{X^\mathsf{T}y}
-\tag{5.12}
+\tag{5.17}
 \]</span></p>
 <p>Having obtained <span class="math inline">\(\mathbf{b}\)</span>, we can easily compute the response vector:</p>
-<p><span class="math display" id="eq:301-13">\[\begin{align*}
+<p><span class="math display" id="eq:301-18">\[\begin{align*}
 \mathbf{\hat{y}} &amp;= \mathbf{Xb} \\
 &amp;= \mathbf{X} (\mathbf{X^\mathsf{T}X})^{-1} \mathbf{X^\mathsf{T} y}
-\tag{5.13}
+\tag{5.18}
 \end{align*}\]</span></p>
 <p>If we denote <span class="math inline">\(\mathbf{H} = \mathbf{X} (\mathbf{X^\mathsf{T}X})^{-1} \mathbf{X^\mathsf{T}}\)</span>, then the predicted response is:</p>
-<p><span class="math display" id="eq:301-14">\[
+<p><span class="math display" id="eq:301-19">\[
 \mathbf{\hat{y}} = \mathbf{Hy}
-\tag{5.14}
+\tag{5.19}
 \]</span></p>
 <p>This matrix <span class="math inline">\(\mathbf{H}\)</span> is better known as the <strong>hat matrix</strong>, because it puts
 the hat on the response. More importantly, the matrix <span class="math inline">\(\mathbf{H}\)</span> is an
@@ -914,17 +919,17 @@ Figure 5.8: OLS focuses on minimizing the squared errors
 </div>
 <p>Combining all residuals, we want to obtain parameters <span class="math inline">\(b_0, \dots, b_p\)</span>
 that minimize the squared norm of the vector of residuals:</p>
-<p><span class="math display" id="eq:301-15">\[
+<p><span class="math display" id="eq:301-20">\[
 \sum_{i=1}^{n} e_{i}^{2} = \sum_{i=1}^{n} (\hat{y}_i - y_i)^2 = \sum_{i=1}^{n} (b_0 + b_1 x_i - y_i)^2
-\tag{5.15}
+\tag{5.20}
 \]</span></p>
 <p>In vector-matrix form we have:</p>
-<p><span class="math display" id="eq:301-16">\[\begin{align*}
+<p><span class="math display" id="eq:301-21">\[\begin{align*}
 \| \mathbf{e} \|^2 &amp;= \| \mathbf{\hat{y}} - \mathbf{y} \|^2 \\
 &amp;= \| \mathbf{Xb} - \mathbf{y} \|^2 \\
 &amp;= (\mathbf{Xb} - \mathbf{y})^\mathsf{T} (\mathbf{Xb} - \mathbf{y}) \\
 &amp;\propto \text{MSE}
-\tag{5.16}
+\tag{5.21}
 \end{align*}\]</span></p>
 <p>As you can tell, minimizing the squared norm of the vector of residuals,
 is equivalent to minimizing the mean squared error.</p>
@@ -968,9 +973,9 @@ By looking at the difference, which results in a vector
 or <em>norm</em> of this vector. Well, the squared norm to be precise. In other words,
 we want to obtain <span class="math inline">\(\mathbf{\hat{y}}\)</span> such that the squared norm <span class="math inline">\(\| \mathbf{e} \|^2\)</span>
 is as small as possible.</p>
-<p><span class="math display" id="eq:301-17">\[
+<p><span class="math display" id="eq:301-22">\[
 \text{Minimize} \quad \| \mathbf{e} \|^2 = \| \mathbf{\hat{y}} - \mathbf{y} \|^2
-\tag{5.17}
+\tag{5.22}
 \]</span></p>
 <p>Minimizing the squared norm of <span class="math inline">\(\mathbf{e}\)</span> involves minimizing
 the mean squared error.</p>
@@ -985,15 +990,15 @@ to do with linear regression in general. However, it is not that uncommon
 within the Statistical Learning literature.</p>
 <p>For illustration purposes, assume that we have only two predictors <span class="math inline">\(X_1\)</span> and
 <span class="math inline">\(X_2\)</span>. Recall that the Mean Squared Error (MSE) is:</p>
-<p><span class="math display" id="eq:301-18">\[
+<p><span class="math display" id="eq:301-23">\[
 E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
-\tag{5.18}
+\tag{5.23}
 \]</span></p>
 <p>Now, from the point of view of <span class="math inline">\(\mathbf{b} = (b_1, b_2)\)</span>, we can classify the
 order of each term:</p>
-<p><span class="math display" id="eq:301-19">\[
+<p><span class="math display" id="eq:301-24">\[
 E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} ( \underbrace{\mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b}}_{\text{Quadratic Form}} - \underbrace{ 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y}}_{\text{Linear}} + \underbrace{ \mathbf{y^\mathsf{T}y}}_{\text{Constant}} )
-\tag{5.19}
+\tag{5.24}
 \]</span></p>
 <p>Since <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is positive semidefinite, we know that
 <span class="math inline">\(\mathbf{b^\mathsf{T} X^\mathsf{T} Xb} \geq 0\)</span>. Furthermore, we know that
