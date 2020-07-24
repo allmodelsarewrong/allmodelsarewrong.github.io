@@ -523,7 +523,7 @@ algorithm.</p>
 <div id="error-surface" class="section level2">
 <h2><span class="header-section-number">6.1</span> Error Surface</h2>
 <p>Consider the overall error measure of a linear regression problem, for example
-the mean squared error (<span class="math inline">\(\text{MSE}\)</span>)—or if you prefer the sum of squared errors, which is simply <span class="math inline">\(\text{SSE} = n \text{MSE}\)</span>).</p>
+the mean squared error (<span class="math inline">\(\text{MSE}\)</span>)—or if you prefer the sum of squared errors, which is simply <span class="math inline">\(\text{SSE} = n \text{MSE}\)</span>.</p>
 <p><span class="math display" id="eq:302-1">\[
 E(\mathbf{y}, \mathbf{\hat{y}}) = \frac{1}{n} \left( \mathbf{b^\mathsf{T} X^\mathsf{T}} \mathbf{X b} - 2 \mathbf{b^\mathsf{T} X^\mathsf{T} y} + \mathbf{y^\mathsf{T}y} \right)
 \tag{6.1}
@@ -750,7 +750,7 @@ E(\mathbf{b}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \rig
 <p>The above formula involves the columns point of view. However, we can also find
 a formula from the row’s perspective (i.e. in pointwise notation):</p>
 <p><span class="math display" id="eq:302-13">\[\begin{align*}
-E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right) \\
+E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\mathsf{T} \mathbf{x_i} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2 \\
 &amp; = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - b_0 x_{i0} - b_1 x_{i1} - \dots - b_{j} x_{ij} - \dots - b_{p} x_{ip} \right)^2 \\
 \tag{6.13}
 \end{align*}\]</span></p>
@@ -769,7 +769,7 @@ E(\mathbf{b}) &amp; = \frac{1}{n} \sum_{i = 1}^{n} \left( y_i - \mathbf{b}^\math
 b_{j}^{(s+1)}:= b_{j}^{(s)} + \alpha \cdot  \frac{2}{n} \sum_{i=1}^{n} \left( y_i - \left[\mathbf{b}^{(s)}\right]^{\mathsf{T}}  \mathbf{x_i} \right) x_{ij}
 \tag{6.15}
 \]</span></p>
-<p>for all <span class="math inline">\(j = 0, \dots, p\)</span> simultaneously.</p>
+<p>for all <span class="math inline">\(j = 0, \dots, p\)</span> <strong>simultaneously</strong>.</p>
 <p>In more compact notation,</p>
 <p><span class="math display" id="eq:302-16">\[
 b_{j}^{(s+1)} = b_{j}^{(s)} + \alpha \cdot \frac{\partial }{\partial b_j} E(\mathbf{b}^{(s)})
