@@ -531,23 +531,97 @@ handle most of these theoretical elements (in the upcoming chapters).</p>
 <p>So far, we have seen an example of Unsupervised Learning (PCA), as well as one
 method of Supervised Learning (linear regression). Now, we begin discussing
 learning ideas at an abstract level.</p>
-<p>Let’s return to our example of predicting NBA players’ salaries. We have a
-series of <em>inputs</em>: height, weight, 2PTS, 3PTS, fouls, etc. From these inputs,
-we obtain an <em>output</em>: the salary of a player. We also have a <em>target function</em>
-<span class="math inline">\(f : \mathcal{X} \to \mathcal{Y}\)</span>. (i.e. a function mapping from the column spaces
-of <span class="math inline">\(\mathbf{X}\)</span> to the output space <span class="math inline">\(\mathbf{y}\)</span>).
-Keep in mind that this function is an <em>ideal</em>, and remains unknown throughout
-our computations.</p>
-<p>Here’s a metaphor that we like to use. Pretend that the target function is
-some sort of mythical creature, like a unicorn (or your preferred creature).
-We are trying to find this elusive guy.</p>
-<p>More generally, we have a dataset
-<span class="math inline">\(\mathcal{D}: (\mathbf{x_1}, y_1), ( \mathbf{x_2}, y_2), \dots, (\mathbf{x_n}, y_n)\)</span>,
-where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of features for the <span class="math inline">\(i\)</span>-th
-player/individual.</p>
-<p>From this data, we wish to obtain a hypothesis model <span class="math inline">\(\widehat{f}: \mathcal{X} \to \mathcal{Y}\)</span> that is an approximation to the unknown function <span class="math inline">\(f\)</span>.
-We can sketch these basic ideas in a sort of “mental map”.
-We will refer to this picture as the “diagram for supervised learning”.</p>
+<p>Let’s return to our example of predicting NBA players’ salaries. Suppose we have
+data of NBA players: player’s height, player’s weight, player’s years of
+professional experience, player’s number of 2 points, player’s number of 3
+points, etc. And assume also that we have data about the players’ salaries.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Player</th>
+<th align="center">Height</th>
+<th align="center">Weight</th>
+<th align="center">Yrs Expr</th>
+<th align="center">2-Pts</th>
+<th align="center">3-Pts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+<tr class="odd">
+<td align="center">n</td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>We are interested in predicting the salary of players, which is the <strong>output</strong>
+variable, denoted as <span class="math inline">\(Y\)</span>. The rest of the variables (e.g. height, weight,
+experience, 2PTS, 3PTS) are the <strong>inputs</strong> denoted as <span class="math inline">\(X_1, \dots, X_p\)</span>.</p>
+<p>Likewise, we assume the existence of a <strong>target function</strong> <span class="math inline">\(f()\)</span>:</p>
+<p><span class="math display" id="eq:401-1">\[
+\textsf{target function} \qquad f : \mathcal{X} \to \mathcal{Y}
+\tag{8.1}
+\]</span></p>
+<p>which is a function mapping from the inputs’ space <span class="math inline">\(\mathcal{X}\)</span> to the output
+space <span class="math inline">\(\mathcal{y}\)</span>). Keep in mind that this function is an <em>ideal</em>, and remains
+unknown throughout our computations. Here’s a metaphor that we like to use.
+Pretend that the target function is some sort of mythical creature, like a
+unicorn (or your preferred creature). We are trying to find this elusive guy.</p>
+<p>More generally, we have a <strong>dataset</strong> <span class="math inline">\(\mathcal{D}\)</span>:</p>
+<p><span class="math display" id="eq:401-2">\[
+\textsf{dataset} \qquad \mathcal{D} = \large \{ (\mathbf{x_1}, y_1), ( \mathbf{x_2}, y_2), \dots, (\mathbf{x_n}, y_n) \large \}
+\tag{8.2}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{x_i}\)</span> represents the vector of features for the <span class="math inline">\(i\)</span>-th
+player, and <span class="math inline">\(y_i\)</span> represents his salary.</p>
+<p>From this data, we wish to obtain a fitted model, formally known as
+a <strong>hypothesis model</strong> <span class="math inline">\(\widehat{f}()\)</span>:</p>
+<p><span class="math display" id="eq:401-3">\[
+\textsf{hypothesis model} \qquad \widehat{f}: \mathcal{X} \to \mathcal{Y}
+\tag{8.3}
+\]</span></p>
+<p>and then use <span class="math inline">\(\widehat{f}\)</span> to approximate the unknown target function <span class="math inline">\(f\)</span>.</p>
+<p>In order to find <span class="math inline">\(\widehat{f}()\)</span>, we typically consider a set of candidate
+models, also known as a <em>hypothesis set</em>,
+<span class="math inline">\(\mathcal{H} = \{ h_1, h_2, \dots, h_m \}\)</span>. The selected hypothesized model
+<span class="math inline">\(h^*_m\)</span> will be the one used as our <em>final</em> model <span class="math inline">\(\widehat{f}\)</span>.</p>
+<p>We can sketch these basic ideas in a sort of mental map; we will refer to the
+following picture as the “diagram for supervised learning”.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-63"></span>
 <img src="images/theory/learning-diag0.svg" alt="Supervised Learning Diagram (ver 1)" width="85%" />
 <p class="caption">
@@ -555,10 +629,10 @@ Figure 8.1: Supervised Learning Diagram (ver 1)
 </p>
 </div>
 <p>Here’s how to read this diagram. We are using orange clouds around those concepts
-that are more intangible than those appearing within rectangular or oval
-shapes. One of these clouds is the unknown target function <span class="math inline">\(f\)</span>, which as its
+that are more intangible than those appearing within rectangular or oval shapes.
+One of these orange clouds is the unknown target function <span class="math inline">\(f\)</span>, which as its
 name indicates it is <strong>unknown</strong>. This implies that we never really “discover”
-the function <span class="math inline">\(f\)</span> in its entirety; rather, we just find a good enough
+the target function <span class="math inline">\(f\)</span> in its entirety; rather, we just find a good enough
 approximation to it by estimating <span class="math inline">\(\widehat{f}\)</span>. Now, as you can tell from the
 mental map, the other orange clound has to do with precisely this idea of
 <em>good approximation</em>: <span class="math inline">\(\widehat{f} \approx f\)</span>. It is also theoretical because of
@@ -591,7 +665,7 @@ what exactly do we mean by “accurate”, we first need to talk about predictio
 estimate an unknown model <span class="math inline">\(f\)</span> with some model <span class="math inline">\(\widehat{f}\)</span> that gives “good”
 predictions. What do we mean by “good” predictions? Loosely speaking, it means
 that we want to obtain “accurate” predictions. Before clarifying the notion of
-<em>accurate predictions</em>, let’s discuss first the concept of predictions.</p>
+<em>accurate predictions</em>, let’s discuss first the concept of <strong>predictions</strong>.</p>
 <p>Think of a simple linear regression model (e.g. with one predictor). Having a
 fitted model <span class="math inline">\(\widehat{f}(x)\)</span>, we can use it to make two types of predictions.
 On one hand, for an observed point <span class="math inline">\(x_i\)</span>, we can compute <span class="math inline">\(\hat{y}_i = \widehat{f}(x_i)\)</span>.
@@ -651,21 +725,24 @@ from the target function <span class="math inline">\(f\)</span>:</p>
 the estimated model and the target model. This means that we need a function
 that summarizes, somehow, the total amount of error. We will denote such term as
 an <em>Overall Measure of Error</em>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:401-4">\[
 \text{Overall Measure of Error:} \quad E(\widehat{f},f) 
+\tag{8.4}
 \]</span></p>
 <p>The typical way in which an overall measure of error is defined is in terms
 of individual or pointwise errors <span class="math inline">\(err_i(\hat{y}_i, y_i)\)</span> that quantify the
 difference between an observed value <span class="math inline">\(y_i\)</span> and its predicted value <span class="math inline">\(\hat{y}_i\)</span>.
 As a matter of fact, most overall errors focus on the addition of the pointwise
 errors:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:401-5">\[
 E(\widehat{f},f) = \text{measure} \left( \sum err_i(\hat{y}_i, y_i) \right )
+\tag{8.5}
 \]</span></p>
 <p>Unless otherwise said, in this book we will use the mean sum of errors as the
 default overall error measure:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:401-6">\[
 E(\widehat{f},f) = \frac{1}{n} \left( \sum_i err_i (\hat{y}_i, y_i) \right)
+\tag{8.6}
 \]</span></p>
 <div id="individual-errors" class="section level3">
 <h3><span class="header-section-number">8.3.1</span> Individual Errors</h3>
@@ -690,13 +767,15 @@ based on the type of data that is used to assess the individual errors:</p>
 </ul>
 <p>The in-sample error is the average of pointwise errors from data points of the
 in-sample data <span class="math inline">\(\mathcal{D}_{in}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:401-7">\[
 E_{in} (\widehat{f}, f) = \frac{1}{n} \sum_{i} err_i
+\tag{8.7}
 \]</span></p>
 <p>The out-of-sample error is the theoretical mean, or expected value, of the
 pointwise errors over the entire input space:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:401-8">\[
 E_{out} (\widehat{f}, f) = \mathbb{E}_{\mathcal{X}} \left[ err \left( \widehat{f}(x), f(x) \right) \right]
+\tag{8.8}
 \]</span></p>
 <p>The point <span class="math inline">\(x\)</span> denotes a general data point in the input space <span class="math inline">\(\mathcal{X}\)</span>.
 And as we said, the expectation is taken over the input space <span class="math inline">\(\mathcal{X}\)</span>.
@@ -716,9 +795,9 @@ Figure 8.2: Supervised Learning Diagram (ver 2)
 <p>Notice the connections of the error elements to both the learning algortihm
 <span class="math inline">\(\mathcal{A}\)</span>, and the final model <span class="math inline">\(\hat{f}\)</span>. Why is this? As we will learn in
 the upcoming chapters, learning algorithms use—implicitly or explicitly—a
-pointwise error function. In turn, in order to determine which candidate
+pointwise error function <span class="math inline">\(err()\)</span>. In turn, in order to determine which candidate
 model <span class="math inline">\(h()\)</span> is the best approximation to the target model <span class="math inline">\(f()\)</span>, we need to
-use an overall measure of error.</p>
+use an overall measure of error <span class="math inline">\(E()\)</span>.</p>
 </div>
 <div id="auxiliary-technicality" class="section level3">
 <h3><span class="header-section-number">8.3.3</span> Auxiliary Technicality</h3>
@@ -768,8 +847,9 @@ different response variables <span class="math inline">\(y_A \neq y_B\)</span>. 
 consider some <strong>target conditional distribution</strong> <span class="math inline">\(P(y \mid x)\)</span>. In this way,
 we can think of our data as forming a joint probability distribution
 <span class="math inline">\(P(\mathbf{x}, y)\)</span>. That is because:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:401-9">\[
 P(\mathbf{x}, y) = P(\mathbf{x})  P(y \mid \mathbf{x})
+\tag{8.9}
 \]</span></p>
 <p>Here’s the updated version of the supervised learning diagram with a modified
 orange cloud containing the unknown target distribution, and the noisy function.</p>
@@ -781,7 +861,7 @@ Figure 8.4: Supervised Learning Diagram (ver 4)
 </div>
 <p>In supervised learning, we want to learn the conditional distribution
 <span class="math inline">\(P(y \mid \mathbf{x})\)</span>. Again, we can think of this probability in terms of
-<span class="math inline">\(y = f() + \text{noise}\)</span>. Also, sometimes the Hypothesis Sets and Learning
+<span class="math inline">\(y = f() + \text{noise}\)</span>. Also, sometimes the Hypothesis Set and the Learning
 Algorithm boxes are combined into one, called the <strong>Learning Model</strong>.</p>
 
 </div>

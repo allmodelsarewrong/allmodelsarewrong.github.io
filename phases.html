@@ -589,7 +589,7 @@ Figure 11.2: Schematic of Learning Phases
 </p>
 </div>
 <p>Having identified the main learning tasks, and knowing how they show up inside
-the supervised larning diagram, the next thing to consider is:
+the supervised learning diagram, the next thing to consider is:
 <strong>What data should we use to perform each task?</strong>
 We will answer this question in the following sections, starting first with the
 model assessment phase, then the selection of the final model, then the
@@ -634,12 +634,16 @@ If we can obtain a data set <span class="math inline">\(\mathcal{D}_{proxy}\)</s
 subset of <span class="math inline">\(\mathcal{D}_{out}\)</span>, then we can compute <span class="math inline">\(E_{proxy}\)</span> and use it to
 approximate <span class="math inline">\(E_{out}\)</span>, thus having a fair estimation of the generalization power
 of <span class="math inline">\(h\)</span>. This is precisely the idea of the so-called term <strong>Model Assessment</strong>:
-How can we estimate <span class="math inline">\(E_{out}(\widehat{f})\)</span> of a final model? Which basically
+How can we estimate <span class="math inline">\(E_{out}(h)\)</span> of a final model? Which basically
 reduces to: how can we find an unbiased sample <span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
+<p><span class="math display">\[
+\underbrace{\hat{E}_{out}(h)}_{\mathcal{D}_{proxy}} \ \approx \ \underbrace{E_{out}(h)}_{\mathcal{D}_{out}}
+\]</span></p>
 <div id="holdout-test-set" class="section level3">
 <h3><span class="header-section-number">11.2.1</span> Holdout Test Set</h3>
 <p>In order to answer the question “How can we estimate <span class="math inline">\(E_{out}\)</span>?”, let us
-discuss the theoretical rationale behind the so-called <strong>Holdout Method</strong>.</p>
+discuss the theoretical rationale behind the so-called <strong>Holdout Method</strong>,
+also known as <em>Holdout Test Set</em>.</p>
 <p>In practice, we always have some available data
 <span class="math inline">\(\mathcal{D} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>. If we used
 all the <span class="math inline">\(n\)</span> data points to train/fit a model, we could perfectly measure <span class="math inline">\(E_{in}\)</span>
@@ -665,7 +669,9 @@ samples of size <span class="math inline">\(a\)</span>, without replacement, fro
 (although there are exceptions).</p>
 <p><span class="math display">\[
 \mathcal{D} \to \begin{cases} 
-\text{training } \mathcal{D}_{train} &amp; \to \text{size } n - a \\ \text{test } \mathcal{D}_{test} &amp;  \to \text{size } a \\ 
+\text{training } \ \mathcal{D}_{train} &amp; \to \ \text{size } n - a \\ 
+&amp; \\
+\text{test } \ \mathcal{D}_{test} &amp;  \to \ \text{size } a \\ 
 \end{cases}
 \]</span></p>
 <p>We then fit a particular model using <span class="math inline">\(\mathcal{D}_{train}\)</span>; obtaining a model
@@ -676,18 +682,25 @@ the performance of the model <span class="math inline">\(h^{-}(x)\)</span> as:</
 <p><span class="math display">\[
 E_{test}(h^{-}) = \frac{1}{a} \sum_{\ell=1}^{a} err\left( h^{-}(\mathbf{x_\ell}) , y_\ell \right) ; \hspace{5mm} (\mathbf{x_\ell}, y_\ell) \in \mathcal{D}_{test}
 \]</span></p>
-<p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give a good estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why?</p>
+<p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give a good estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why.</p>
 </div>
 <div id="why-does-a-test-set-work" class="section level3">
 <h3><span class="header-section-number">11.2.2</span> Why does a test set work?</h3>
 <p>Consider an out-of-sample point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span> that is part of the test
-set: <span class="math inline">\((\mathbf{x_0}, y_0) \in \mathcal{D}_{test}\)</span>. Given a pointwise error
-function <span class="math inline">\(err()\)</span>, we can measure the error: <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span>.
-Moreover, we can treat it as a point estimate of <span class="math inline">\(E_{out}(h)\)</span>.</p>
+set:</p>
+<p><span class="math display">\[
+(\mathbf{x_0}, y_0) \in \mathcal{D}_{test}
+\]</span></p>
+<p>Given a pointwise error function <span class="math inline">\(err()\)</span>, we can measure the error:</p>
+<p><span class="math display">\[
+err(h(\mathbf{x_0}), y_0)
+\]</span></p>
+<p>Moreover, we can treat it as a point estimate of <span class="math inline">\(E_{out}(h)\)</span>.</p>
 <p>Here’s a relevant question: Is <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> an unbiased
 estimate of <span class="math inline">\(E_{out}(h)\)</span>?</p>
 <p>To see whether the point estimate <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> is an unbiased
-estimate of <span class="math inline">\(E_{out}(h)\)</span>, let’s determine its expectation over the input space:</p>
+estimate of <span class="math inline">\(E_{out}(h)\)</span>, let’s determine its expectation over the input space
+<span class="math inline">\(\mathcal{X}\)</span>:</p>
 <p><span class="math display">\[
 \mathbb{E}_{\mathcal{X}} [ err(h(\mathbf{x_0}), y_0) ]
 \]</span></p>
@@ -700,8 +713,8 @@ simplicity let’s assume that this variance is constant:</p>
 Var[err(h(\mathbf{x_0}), y_0)] = s^2
 \]</span></p>
 <p>Obviously this variance could be large (or small). So having just one test
-point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, even though is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>,
-does not allow us to have an idea of how reliable that estimate is.</p>
+point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, even though it is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>,
+it does not allow us to have an idea of how reliable that estimate is.</p>
 <p>Well, let’s consider a set <span class="math inline">\(D_{test} = \{ (\mathbf{x_1}, y_1), \dots, (\mathbf{x_a}, y_a) \}\)</span> containing <span class="math inline">\(a &gt; 1\)</span> points. We can average their pointwise errors to
 get <span class="math inline">\(E_{test}\)</span></p>
 <p><span class="math display">\[
