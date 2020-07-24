@@ -530,10 +530,14 @@ tradeoff are applicable to all supervised learning contexts.</p>
 goal is to find a model <span class="math inline">\(\hat{f}\)</span> that is a good approximation to the target
 model <span class="math inline">\(f\)</span>, or put it compactly, we want <span class="math inline">\(\hat{f} \approx f\)</span>.
 By good approximation we mean finding a model <span class="math inline">\(\hat{f}\)</span> that gives “good”
-predictions of both types of data points: predictions of in-sample data
-<span class="math inline">\(\hat{y}_i = \hat{f}(x_i)\)</span>, <em>and</em> predictions of out-of-sample data
-<span class="math inline">\(\hat{y}_0 = \hat{f}(x_0)\)</span>. In turn, these two types of predictions involve
-two types of errors:</p>
+predictions of both types of data points:</p>
+<ul>
+<li>predictions of in-sample data <span class="math inline">\(\hat{y}_i = \hat{f}(x_i)\)</span>, where
+<span class="math inline">\((x_i, y_i) \in \mathcal{D}_{in}\)</span></li>
+<li><em>and</em> predictions of out-of-sample data <span class="math inline">\(\hat{y}_0 = \hat{f}(x_0)\)</span>, where
+<span class="math inline">\((x_0, y_0) \in \mathcal{D}_{out}\)</span></li>
+</ul>
+<p>In turn, these two types of predictions involve two types of errors:</p>
 <ul>
 <li>in-sample error: <span class="math inline">\(E_{in}(\hat{f})\)</span></li>
 <li>out-of-sample error: <span class="math inline">\(E_{out}(\hat{f})\)</span></li>
@@ -553,9 +557,13 @@ Mean Squared Error (MSE).</p>
 </div>
 <div id="motivation-example" class="section level2">
 <h2><span class="header-section-number">10.2</span> Motivation Example</h2>
-<p>Let’s start with a toy example. Consider a noiseless target function given by
-<span class="math inline">\(f(x) = sin(\pi x)\)</span>, with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>,
-like in the following picture:</p>
+<p>Let’s start with a toy example. Consider a noiseless target function given by</p>
+<p><span class="math display" id="eq:403-1">\[
+f(x) = sin(\pi x)
+\tag{10.1}
+\]</span></p>
+<p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>, like in the following
+picture:</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-76"></span>
 <img src="allmodelsarewrong_files/figure-html/unnamed-chunk-76-1.png" alt="Target function" width="70%" height="80%" />
 <p class="caption">
@@ -644,10 +652,10 @@ this mythical bias-variance concept.</p>
 <p>From the <a href="mse.html#mse">previous chapter</a>, we saw that the mean squared error
 (<span class="math inline">\(\text{MSE}\)</span>) of an estimator <span class="math inline">\(\hat{\theta}\)</span> can be decomposed in terms of
 bias and variance as:</p>
-<p><span class="math display" id="eq:403-1">\[
+<p><span class="math display" id="eq:403-2">\[
 \text{MSE}(\hat{\theta}) = \underbrace{\mathbb{E} [(\hat{\theta} - \mu_{\hat{\theta}})^2]}_{\text{Variance}} + 
 (\underbrace{\mu_{\hat{\theta}} - \theta}_{\text{Bias}})^2
-\tag{10.1}
+\tag{10.2}
 \]</span></p>
 <p>with <span class="math inline">\(\mu_{\hat{\theta}} = \mathbb{E}(\hat{\theta})\)</span>. In words:</p>
 <ul>
@@ -669,72 +677,84 @@ existance of an out-of-sample data point <span class="math inline">\(x_0\)</span
 <p>Given a learning data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>,
 the expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>,
 over all possible learning sets, is expressed as:</p>
-<p><span class="math display" id="eq:403-2">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
-\tag{10.2}
-\]</span></p>
-<p>For the sake of simplicity, assume the target <span class="math inline">\(f(x)\)</span> is noiseless. Of course
-this is an idealistic assumption but it will help us to simplify notation.
-Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> denotes the value predicted by model <span class="math inline">\(h()\)</span>
-fitted on a specific learning data set <span class="math inline">\(\mathcal{D}\)</span>. This is nothing but an
-estimator, and we can treat <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> as playing the
-role of <span class="math inline">\(\hat{\theta}\)</span>. Likewise, <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>.</p>
-<p>What about the term that corresponds to <span class="math inline">\(\mu_{\hat{\theta}} = \mathbb{E}(\hat{\theta})\)</span>?
-To answer this question we need to introduce a new term:</p>
 <p><span class="math display" id="eq:403-3">\[
-\bar{h} := \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] \qquad \text{average hypothesis}
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ]
 \tag{10.3}
 \]</span></p>
-<p>simply put, think of this term as the “average hypothesis”.</p>
+<p>For the sake of simplicity, assume the target function <span class="math inline">\(f()\)</span> is noiseless. Of
+course this is an idealistic assumption but it will help us to simplify notation.
+Here, <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> denotes the predicted value—of an out-of-sample
+point <span class="math inline">\(x_0\)</span>—by model <span class="math inline">\(h()\)</span> fitted on a specific learning data set <span class="math inline">\(\mathcal{D}\)</span>.
+This is nothing but an estimator, and we can treat <span class="math inline">\(h^{(\mathcal{D})}(x_0)\)</span> as
+playing the role of <span class="math inline">\(\hat{\theta}\)</span>. Likewise, <span class="math inline">\(f(x_0)\)</span> plays the role of <span class="math inline">\(\theta\)</span>.</p>
+<p>What about the term that corresponds to <span class="math inline">\(\mu_{\hat{\theta}} = \mathbb{E}(\hat{\theta})\)</span>?
+To answer this question we need to introduce a new term:</p>
+<p><span class="math display" id="eq:403-4">\[
+\bar{h}(x_0) = \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] \qquad \text{average hypothesis}
+\tag{10.4}
+\]</span></p>
+<p>simply put, think of this term as the <strong>average hypothesis</strong>.</p>
 <p>Now that we have the names and symbols for all the ingredients, let’s do the
 algebra to find out what the expected squared error for a given out-of-sample
 point <span class="math inline">\(x_0\)</span>, over all possible learning sets, turns out to be. In order to
 proceed with the derivation, we need to use a clever trick of adding and
 subtracting <span class="math inline">\(\bar{h}\)</span> as follows:</p>
-<p><span class="math display" id="eq:403-4">\[
-h^{(\mathcal{D})}(x_0) - f(x_0) = h^{(\mathcal{D})}(x_0) - \bar{h} + \bar{h} - f(x_0)
-\tag{10.4}
+<p><span class="math display" id="eq:403-5">\[
+h^{(\mathcal{D})}(x_0) - f(x_0) = h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) + \bar{h}(x_0) - f(x_0)
+\tag{10.5}
 \]</span></p>
-<p>With this little trick in mind, here’s the derivation of the expectation:</p>
-<p><span class="math display" id="eq:403-5">\[\begin{align*}
-\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] &amp;= 
-\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} + \bar{h} - f(x_0) \right)^2 \right ] \\
-&amp;= \mathbb{E}_{\mathcal{D}} \Big [ \Big (\underbrace{h^{(\mathcal{D})}(x_0) - \bar{h}}_{a} + \underbrace{\bar{h} - f(x_0)}_{b} \Big)^2 \Big ] \\
+<p>To have a less cluttered notation, let’s temporarily “drop” the out-of-sample
+point <span class="math inline">\(x_0\)</span>. This allows us to simplify the above equation as follows:</p>
+<p><span class="math display" id="eq:403-6">\[
+h^{(\mathcal{D})} - f = h^{(\mathcal{D})} - \bar{h} + \bar{h} - f
+\tag{10.6}
+\]</span></p>
+<p>With these little tricks in mind, here’s the derivation of the expectation:</p>
+<p><span class="math display" id="eq:403-7">\[\begin{align*}
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})} - f \right)^2 \right ] &amp;= 
+\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})} - \bar{h} + \bar{h} - f \right)^2 \right ] \\
+&amp;= \mathbb{E}_{\mathcal{D}} \Big [ \Big (\underbrace{h^{(\mathcal{D})} - \bar{h}}_{a} + \underbrace{\bar{h} - f}_{b} \Big)^2 \Big ] \\
 &amp;= \mathbb{E}_{\mathcal{D}} \left [ (a + b)^2 \right ] \\
 &amp;= \mathbb{E}_{\mathcal{D}} \left [ a^2 + 2ab + b^2 \right ] \\
 &amp;= \mathbb{E}_{\mathcal{D}} [a^2] + \mathbb{E}_{\mathcal{D}} [b^2] + \mathbb{E}_{\mathcal{D}} [2ab] \\
-\tag{10.5}
+\tag{10.7}
 \end{align*}\]</span></p>
 <p>Let’s examine the first two terms:</p>
 <ul>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} [a^2] = \mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h} \right)^2 \right ] = \text{variance} \left( h(x_0) \right)\)</span></p></li>
-<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} [b^2] = \mathbb{E}_{\mathcal{D}} \left [ \left (\bar{h} - f(x_0) \right)^2 \right ] = \text{Bias}^2 \left( h(x_0) \right)\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} [a^2] = \mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})} - \bar{h} \right)^2 \right ] = \text{Variance} \left( h \right)\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}_{\mathcal{D}} [b^2] = \mathbb{E}_{\mathcal{D}} \left [ \left (\bar{h} - f \right)^2 \right ] = \text{Bias}^2 \left( h \right)\)</span></p></li>
 </ul>
 <p>Now, what about the cross-term: <span class="math inline">\(\mathbb{E}_{\mathcal{D}} [2ab]\)</span>?</p>
-<p><span class="math display" id="eq:403-6">\[\begin{align*}
-\mathbb{E}_{\mathcal{D}} \left[ 2 \left( h^{(\mathcal{D})}(x_0) - \bar{h} \right)  \left( \bar{h} - f(x_0)  \right) \right] &amp; \propto \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] - \bar{h} \\
-&amp; = \bar{h} - \bar{h} = 0 
-\tag{10.6}
+<p><span class="math display" id="eq:403-8">\[\begin{align*}
+\mathbb{E}_{\mathcal{D}} [2ab] &amp; \longrightarrow \mathbb{E}_{\mathcal{D}} \left[ 2 ( h^{(\mathcal{D})} - \bar{h} ) \left( \bar{h} - f  \right) \right] \\
+&amp;= 2 \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})} \bar{h} - h^{(\mathcal{D})} f - \bar{h}^2 + \bar{h} f \right] \\
+&amp; \propto \bar{h} \mathbb{E}_{\mathcal{D}}[h^{(\mathcal{D})}] -  f\mathbb{E}_{\mathcal{D}}[h^{(\mathcal{D})}] - \mathbb{E}_{\mathcal{D}} [\bar{h}^2] + f \mathbb{E}_{\mathcal{D}} [\bar{h}] \\
+&amp;= \bar{h}^2 - f \bar{h} - \bar{h}^2 + f \bar{h} = 0 
+\tag{10.8}
 \end{align*}\]</span></p>
 <p>Hence, under the assumption of a noiseless target function <span class="math inline">\(f\)</span>, we have that the
 expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>, over all
 possible learning sets, is expressed as:</p>
-<p><span class="math display" id="eq:403-7">\[\begin{align}
+<p><span class="math display" id="eq:403-9">\[\begin{align}
 \mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] &amp;= 
 \underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} \\
 &amp;+
 \underbrace{ (\bar{h}(x_0) - f(x_0))^2 }_{\text{bias}^2}
-\tag{10.7}
+\tag{10.9}
 \end{align}\]</span></p>
 </div>
 <div id="noisy-target" class="section level3">
 <h3><span class="header-section-number">10.4.2</span> Noisy Target</h3>
-<p>Now, when there is noise in the data we have that: <span class="math inline">\(y = f(x) + \epsilon\)</span>.
-If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
+<p>Now, when there is noise in the data we have that:</p>
+<p><span class="math display" id="eq:403-10">\[
+y = f(x) + \epsilon
+\tag{10.10}
+\]</span></p>
+<p>If <span class="math inline">\(\epsilon\)</span> is a zero-mean noise random variable with variance <span class="math inline">\(\sigma^2\)</span>,
 the bias-variance decomposition becomes:</p>
-<p><span class="math display" id="eq:403-8">\[
+<p><span class="math display" id="eq:403-11">\[
 \mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - y_0 \right)^2 \right ] = \text{var} + \text{bias}^2 + \sigma^2
-\tag{10.8}
+\tag{10.11}
 \]</span></p>
 <p>Notice that the above equation assumes that the squared error corresponds to
 just one out-of-sample (i.e. test) point <span class="math inline">\((x_0, y_0) = (x_0, f(x_0))\)</span>.</p>
