@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>11 Learning Phases | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>12 Learning Phases | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="11 Learning Phases | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="12 Learning Phases | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="11 Learning Phases | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="12 Learning Phases | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="biasvar.html"/>
+<link rel="prev" href="overfit.html"/>
 <link rel="next" href="resampling.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -245,253 +245,254 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>10.5.1</b> Bias-Variance Tradeoff Picture</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>11</b> Learning Phases</a><ul>
-<li class="chapter" data-level="11.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
-<li class="chapter" data-level="11.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>11.2</b> Model Assessment</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>11.2.1</b> Holdout Test Set</a></li>
-<li class="chapter" data-level="11.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>11.2.2</b> Why does a test set work?</a></li>
+<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a></li>
+<li class="chapter" data-level="12" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>12</b> Learning Phases</a><ul>
+<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>12.2</b> Model Assessment</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>12.2.1</b> Holdout Test Set</a></li>
+<li class="chapter" data-level="12.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>12.2.2</b> Why does a test set work?</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="phases.html"><a href="phases.html#model-selection"><i class="fa fa-check"></i><b>11.3</b> Model Selection</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="phases.html"><a href="phases.html#three-way-holdout-method"><i class="fa fa-check"></i><b>11.3.1</b> Three-way Holdout Method</a></li>
+<li class="chapter" data-level="12.3" data-path="phases.html"><a href="phases.html#model-selection"><i class="fa fa-check"></i><b>12.3</b> Model Selection</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="phases.html"><a href="phases.html#three-way-holdout-method"><i class="fa fa-check"></i><b>12.3.1</b> Three-way Holdout Method</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="phases.html"><a href="phases.html#model-training"><i class="fa fa-check"></i><b>11.4</b> Model Training</a></li>
+<li class="chapter" data-level="12.4" data-path="phases.html"><a href="phases.html#model-training"><i class="fa fa-check"></i><b>12.4</b> Model Training</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resample Approaches</a><ul>
-<li class="chapter" data-level="12.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>12.1</b> General Sampling Blueprint</a></li>
-<li class="chapter" data-level="12.2" data-path="resampling.html"><a href="resampling.html#monte-carlo-cross-validation"><i class="fa fa-check"></i><b>12.2</b> Monte Carlo Cross Validation</a></li>
-<li class="chapter" data-level="12.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>12.3</b> Bootstrap Method</a></li>
-<li class="chapter" data-level="12.4" data-path="resampling.html"><a href="resampling.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>12.4</b> <span class="math inline">\(K\)</span>-Fold Cross-Validation</a><ul>
-<li class="chapter" data-level="12.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>12.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
+<li class="chapter" data-level="13" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>13</b> Resampling Approaches</a><ul>
+<li class="chapter" data-level="13.1" data-path="resampling.html"><a href="resampling.html#general-sampling-blueprint"><i class="fa fa-check"></i><b>13.1</b> General Sampling Blueprint</a></li>
+<li class="chapter" data-level="13.2" data-path="resampling.html"><a href="resampling.html#monte-carlo-cross-validation"><i class="fa fa-check"></i><b>13.2</b> Monte Carlo Cross Validation</a></li>
+<li class="chapter" data-level="13.3" data-path="resampling.html"><a href="resampling.html#bootstrap-method"><i class="fa fa-check"></i><b>13.3</b> Bootstrap Method</a></li>
+<li class="chapter" data-level="13.4" data-path="resampling.html"><a href="resampling.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>13.4</b> <span class="math inline">\(K\)</span>-Fold Cross-Validation</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="resampling.html"><a href="resampling.html#leave-one-out-cross-validation-loocv"><i class="fa fa-check"></i><b>13.4.1</b> Leave-One-Out Cross Validation (LOOCV)</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
-<li class="chapter" data-level="13" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>13</b> Regularization Techniques</a><ul>
-<li class="chapter" data-level="13.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>13.1</b> Multicollinearity Issues</a><ul>
-<li class="chapter" data-level="13.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>13.1.1</b> Toy Example</a></li>
+<li class="chapter" data-level="14" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>14</b> Regularization Techniques</a><ul>
+<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.1</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.1.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="13.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>13.2</b> Irregular Coefficients</a></li>
-<li class="chapter" data-level="13.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>13.3</b> Connection to Regularization</a></li>
+<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.2</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.3</b> Connection to Regularization</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>14</b> Principal Components Regression</a><ul>
-<li class="chapter" data-level="14.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>14.1</b> Motivation Example</a></li>
-<li class="chapter" data-level="14.2" data-path="pcr.html"><a href="pcr.html#the-pcr-model"><i class="fa fa-check"></i><b>14.2</b> The PCR Model</a></li>
-<li class="chapter" data-level="14.3" data-path="pcr.html"><a href="pcr.html#how-does-pcr-work"><i class="fa fa-check"></i><b>14.3</b> How does PCR work?</a><ul>
-<li class="chapter" data-level="14.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>14.3.1</b> Transition Formula</a></li>
-<li class="chapter" data-level="14.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>14.3.2</b> Size of Coefficients</a></li>
+<li class="chapter" data-level="15" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>15</b> Principal Components Regression</a><ul>
+<li class="chapter" data-level="15.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="15.2" data-path="pcr.html"><a href="pcr.html#the-pcr-model"><i class="fa fa-check"></i><b>15.2</b> The PCR Model</a></li>
+<li class="chapter" data-level="15.3" data-path="pcr.html"><a href="pcr.html#how-does-pcr-work"><i class="fa fa-check"></i><b>15.3</b> How does PCR work?</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="pcr.html"><a href="pcr.html#transition-formula"><i class="fa fa-check"></i><b>15.3.1</b> Transition Formula</a></li>
+<li class="chapter" data-level="15.3.2" data-path="pcr.html"><a href="pcr.html#size-of-coefficients"><i class="fa fa-check"></i><b>15.3.2</b> Size of Coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="14.4" data-path="pcr.html"><a href="pcr.html#selecting-number-of-pcs"><i class="fa fa-check"></i><b>14.4</b> Selecting Number of PCs</a></li>
+<li class="chapter" data-level="15.4" data-path="pcr.html"><a href="pcr.html#selecting-number-of-pcs"><i class="fa fa-check"></i><b>15.4</b> Selecting Number of PCs</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>15</b> Partial Least Squares Regression</a><ul>
-<li class="chapter" data-level="15.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
-<li class="chapter" data-level="15.2" data-path="pls.html"><a href="pls.html#the-plsr-model"><i class="fa fa-check"></i><b>15.2</b> The PLSR Model</a></li>
-<li class="chapter" data-level="15.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>15.3</b> How does PLSR work?</a></li>
-<li class="chapter" data-level="15.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>15.4</b> PLSR Algorithm</a><ul>
-<li class="chapter" data-level="15.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>15.4.1</b> PLS Solution with original variables</a></li>
-<li class="chapter" data-level="15.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>15.4.2</b> Size of Coefficients</a></li>
-<li class="chapter" data-level="15.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>15.4.3</b> Some Properties</a></li>
+<li class="chapter" data-level="16" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i><b>16</b> Partial Least Squares Regression</a><ul>
+<li class="chapter" data-level="16.1" data-path="pls.html"><a href="pls.html#motivation-example-2"><i class="fa fa-check"></i><b>16.1</b> Motivation Example</a></li>
+<li class="chapter" data-level="16.2" data-path="pls.html"><a href="pls.html#the-plsr-model"><i class="fa fa-check"></i><b>16.2</b> The PLSR Model</a></li>
+<li class="chapter" data-level="16.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>16.3</b> How does PLSR work?</a></li>
+<li class="chapter" data-level="16.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>16.4</b> PLSR Algorithm</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>16.4.1</b> PLS Solution with original variables</a></li>
+<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.2</b> Size of Coefficients</a></li>
+<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.3</b> Some Properties</a></li>
 </ul></li>
-<li class="chapter" data-level="15.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>15.5</b> Selecting Number of PLS Components</a></li>
+<li class="chapter" data-level="16.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>16.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>16</b> Ridge Regression</a><ul>
-<li class="chapter" data-level="16.1" data-path="ridge.html"><a href="ridge.html#a-new-minimization-problem"><i class="fa fa-check"></i><b>16.1</b> A New Minimization Problem</a><ul>
-<li class="chapter" data-level="16.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>16.1.1</b> Constraining Regression Coefficients</a></li>
+<li class="chapter" data-level="17" data-path="ridge.html"><a href="ridge.html"><i class="fa fa-check"></i><b>17</b> Ridge Regression</a><ul>
+<li class="chapter" data-level="17.1" data-path="ridge.html"><a href="ridge.html#a-new-minimization-problem"><i class="fa fa-check"></i><b>17.1</b> A New Minimization Problem</a><ul>
+<li class="chapter" data-level="17.1.1" data-path="ridge.html"><a href="ridge.html#constraining-regression-coefficients"><i class="fa fa-check"></i><b>17.1.1</b> Constraining Regression Coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="16.2" data-path="ridge.html"><a href="ridge.html#a-new-minimization-solution"><i class="fa fa-check"></i><b>16.2</b> A New Minimization Solution</a></li>
-<li class="chapter" data-level="16.3" data-path="ridge.html"><a href="ridge.html#what-does-rr-accomplish"><i class="fa fa-check"></i><b>16.3</b> What does RR accomplish?</a><ul>
-<li class="chapter" data-level="16.3.1" data-path="ridge.html"><a href="ridge.html#how-to-find-lambda"><i class="fa fa-check"></i><b>16.3.1</b> How to find <span class="math inline">\(\lambda\)</span>?</a></li>
+<li class="chapter" data-level="17.2" data-path="ridge.html"><a href="ridge.html#a-new-minimization-solution"><i class="fa fa-check"></i><b>17.2</b> A New Minimization Solution</a></li>
+<li class="chapter" data-level="17.3" data-path="ridge.html"><a href="ridge.html#what-does-rr-accomplish"><i class="fa fa-check"></i><b>17.3</b> What does RR accomplish?</a><ul>
+<li class="chapter" data-level="17.3.1" data-path="ridge.html"><a href="ridge.html#how-to-find-lambda"><i class="fa fa-check"></i><b>17.3.1</b> How to find <span class="math inline">\(\lambda\)</span>?</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
-<li class="chapter" data-level="17" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>17</b> Beyond Linear Regression</a><ul>
-<li class="chapter" data-level="17.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>17.1</b> Introduction</a></li>
-<li class="chapter" data-level="17.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>17.2</b> Expanding the Regression Horizon</a><ul>
-<li class="chapter" data-level="17.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>17.2.1</b> Linearity</a></li>
-<li class="chapter" data-level="17.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>17.2.2</b> Parametric and Nonparametric</a></li>
+<li class="chapter" data-level="18" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>18</b> Beyond Linear Regression</a><ul>
+<li class="chapter" data-level="18.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>18.1</b> Introduction</a></li>
+<li class="chapter" data-level="18.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>18.2</b> Expanding the Regression Horizon</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>18.2.1</b> Linearity</a></li>
+<li class="chapter" data-level="18.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>18.2.2</b> Parametric and Nonparametric</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="linear-extensions.html"><a href="linear-extensions.html#transforming-features"><i class="fa fa-check"></i><b>17.3</b> Transforming Features</a></li>
+<li class="chapter" data-level="18.3" data-path="linear-extensions.html"><a href="linear-extensions.html#transforming-features"><i class="fa fa-check"></i><b>18.3</b> Transforming Features</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="nonparametric.html"><a href="nonparametric.html"><i class="fa fa-check"></i><b>18</b> Nonparametric Regression</a><ul>
-<li class="chapter" data-level="18.1" data-path="nonparametric.html"><a href="nonparametric.html#conditional-averages"><i class="fa fa-check"></i><b>18.1</b> Conditional Averages</a></li>
-<li class="chapter" data-level="18.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>18.2</b> Looking at the Neighbors</a></li>
+<li class="chapter" data-level="19" data-path="nonparametric.html"><a href="nonparametric.html"><i class="fa fa-check"></i><b>19</b> Nonparametric Regression</a><ul>
+<li class="chapter" data-level="19.1" data-path="nonparametric.html"><a href="nonparametric.html#conditional-averages"><i class="fa fa-check"></i><b>19.1</b> Conditional Averages</a></li>
+<li class="chapter" data-level="19.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>19.2</b> Looking at the Neighbors</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>19</b> Nearest Neighbor Estimates</a><ul>
-<li class="chapter" data-level="19.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
-<li class="chapter" data-level="19.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>19.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
-<li class="chapter" data-level="19.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>19.2.1</b> Distance Measures</a></li>
-<li class="chapter" data-level="19.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>19.2.2</b> KNN Estimator</a></li>
-<li class="chapter" data-level="19.2.3" data-path="knn.html"><a href="knn.html#how-to-find-k"><i class="fa fa-check"></i><b>19.2.3</b> How to find <span class="math inline">\(k\)</span>?</a></li>
+<li class="chapter" data-level="20" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>20</b> Nearest Neighbor Estimates</a><ul>
+<li class="chapter" data-level="20.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
+<li class="chapter" data-level="20.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>20.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>20.2.1</b> Distance Measures</a></li>
+<li class="chapter" data-level="20.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>20.2.2</b> KNN Estimator</a></li>
+<li class="chapter" data-level="20.2.3" data-path="knn.html"><a href="knn.html#how-to-find-k"><i class="fa fa-check"></i><b>20.2.3</b> How to find <span class="math inline">\(k\)</span>?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>20</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="20.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
-<li class="chapter" data-level="20.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>20.2</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="20.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>20.2.1</b> Kernel Functions</a></li>
-<li class="chapter" data-level="20.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>20.2.2</b> Weights from Kernels</a></li>
-<li class="chapter" data-level="20.2.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-estimator"><i class="fa fa-check"></i><b>20.2.3</b> Kernel Estimator</a></li>
+<li class="chapter" data-level="21" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>21</b> Kernel Smoothers</a><ul>
+<li class="chapter" data-level="21.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>21.2</b> Kernel Smoothers</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>21.2.1</b> Kernel Functions</a></li>
+<li class="chapter" data-level="21.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>21.2.2</b> Weights from Kernels</a></li>
+<li class="chapter" data-level="21.2.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-estimator"><i class="fa fa-check"></i><b>21.2.3</b> Kernel Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="20.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#local-polynomial-estimators"><i class="fa fa-check"></i><b>20.3</b> Local Polynomial Estimators</a></li>
+<li class="chapter" data-level="21.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#local-polynomial-estimators"><i class="fa fa-check"></i><b>21.3</b> Local Polynomial Estimators</a></li>
 </ul></li>
 <li class="part"><span><b>VIII Classification</b></span></li>
-<li class="chapter" data-level="21" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>21</b> Classification</a><ul>
-<li class="chapter" data-level="21.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>21.1</b> Introduction</a><ul>
-<li class="chapter" data-level="21.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>21.1.1</b> Credit Score Example</a></li>
-<li class="chapter" data-level="21.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>21.1.2</b> Toy Example</a></li>
-<li class="chapter" data-level="21.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>21.1.3</b> Two-class Problem</a></li>
-<li class="chapter" data-level="21.1.4" data-path="classif.html"><a href="classif.html#bayes-rule-reminder"><i class="fa fa-check"></i><b>21.1.4</b> Bayes’ Rule Reminder</a></li>
+<li class="chapter" data-level="22" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>22</b> Classification</a><ul>
+<li class="chapter" data-level="22.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>22.1</b> Introduction</a><ul>
+<li class="chapter" data-level="22.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>22.1.1</b> Credit Score Example</a></li>
+<li class="chapter" data-level="22.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>22.1.2</b> Toy Example</a></li>
+<li class="chapter" data-level="22.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>22.1.3</b> Two-class Problem</a></li>
+<li class="chapter" data-level="22.1.4" data-path="classif.html"><a href="classif.html#bayes-rule-reminder"><i class="fa fa-check"></i><b>22.1.4</b> Bayes’ Rule Reminder</a></li>
 </ul></li>
-<li class="chapter" data-level="21.2" data-path="classif.html"><a href="classif.html#bayes-classifier"><i class="fa fa-check"></i><b>21.2</b> Bayes Classifier</a></li>
+<li class="chapter" data-level="22.2" data-path="classif.html"><a href="classif.html#bayes-classifier"><i class="fa fa-check"></i><b>22.2</b> Bayes Classifier</a></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>22</b> Logistic Regression</a><ul>
-<li class="chapter" data-level="22.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>22.1</b> Motivation</a><ul>
-<li class="chapter" data-level="22.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>22.1.1</b> First Approach: Fitting a Line</a></li>
-<li class="chapter" data-level="22.1.2" data-path="logistic.html"><a href="logistic.html#second-approach-harsh-thresholding"><i class="fa fa-check"></i><b>22.1.2</b> Second Approach: Harsh Thresholding</a></li>
-<li class="chapter" data-level="22.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>22.1.3</b> Third Approach: Conditional Means</a></li>
+<li class="chapter" data-level="23" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>23</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="23.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>23.1</b> Motivation</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>23.1.1</b> First Approach: Fitting a Line</a></li>
+<li class="chapter" data-level="23.1.2" data-path="logistic.html"><a href="logistic.html#second-approach-harsh-thresholding"><i class="fa fa-check"></i><b>23.1.2</b> Second Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="23.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>23.1.3</b> Third Approach: Conditional Means</a></li>
 </ul></li>
-<li class="chapter" data-level="22.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>22.2</b> Logistic Regression Model</a><ul>
-<li class="chapter" data-level="22.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>22.2.1</b> The Criterion Being Optimized</a></li>
-<li class="chapter" data-level="22.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>22.2.2</b> Another Way to Solve Logistic Regression</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="23" data-path="discrim.html"><a href="discrim.html"><i class="fa fa-check"></i><b>23</b> Preamble for Discriminant Analysis</a><ul>
-<li class="chapter" data-level="23.1" data-path="discrim.html"><a href="discrim.html#motivation-2"><i class="fa fa-check"></i><b>23.1</b> Motivation</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="discrim.html"><a href="discrim.html#distinguishing-species"><i class="fa fa-check"></i><b>23.1.1</b> Distinguishing Species</a></li>
-<li class="chapter" data-level="23.1.2" data-path="discrim.html"><a href="discrim.html#sum-of-squares-decomposition"><i class="fa fa-check"></i><b>23.1.2</b> Sum of Squares Decomposition</a></li>
-</ul></li>
-<li class="chapter" data-level="23.2" data-path="discrim.html"><a href="discrim.html#derived-ratios-from-sum-of-squares"><i class="fa fa-check"></i><b>23.2</b> Derived Ratios from Sum-of-Squares</a><ul>
-<li class="chapter" data-level="23.2.1" data-path="discrim.html"><a href="discrim.html#correlation-ratio"><i class="fa fa-check"></i><b>23.2.1</b> Correlation Ratio</a></li>
-<li class="chapter" data-level="23.2.2" data-path="discrim.html"><a href="discrim.html#f-ratio"><i class="fa fa-check"></i><b>23.2.2</b> F-Ratio</a></li>
-</ul></li>
-<li class="chapter" data-level="23.3" data-path="discrim.html"><a href="discrim.html#geometric-perspective"><i class="fa fa-check"></i><b>23.3</b> Geometric Perspective</a><ul>
-<li class="chapter" data-level="23.3.1" data-path="discrim.html"><a href="discrim.html#clouds-from-class-structure"><i class="fa fa-check"></i><b>23.3.1</b> Clouds from Class Structure</a></li>
-<li class="chapter" data-level="23.3.2" data-path="discrim.html"><a href="discrim.html#dispersion-decomposition"><i class="fa fa-check"></i><b>23.3.2</b> Dispersion Decomposition</a></li>
+<li class="chapter" data-level="23.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>23.2</b> Logistic Regression Model</a><ul>
+<li class="chapter" data-level="23.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>23.2.1</b> The Criterion Being Optimized</a></li>
+<li class="chapter" data-level="23.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>23.2.2</b> Another Way to Solve Logistic Regression</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="24" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>24</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="24.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>24.1</b> CDA: Semi-Supervised Aspect</a></li>
-<li class="chapter" data-level="24.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>24.2</b> Looking for a discriminant axis</a></li>
-<li class="chapter" data-level="24.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>24.3</b> Looking for a Compromise Criterion</a><ul>
-<li class="chapter" data-level="24.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>24.3.1</b> Correlation Ratio Criterion</a></li>
-<li class="chapter" data-level="24.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>24.3.2</b> F-ratio Criterion</a></li>
-<li class="chapter" data-level="24.3.3" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>24.3.3</b> A Special PCA</a></li>
+<li class="chapter" data-level="24" data-path="discrim.html"><a href="discrim.html"><i class="fa fa-check"></i><b>24</b> Preamble for Discriminant Analysis</a><ul>
+<li class="chapter" data-level="24.1" data-path="discrim.html"><a href="discrim.html#motivation-2"><i class="fa fa-check"></i><b>24.1</b> Motivation</a><ul>
+<li class="chapter" data-level="24.1.1" data-path="discrim.html"><a href="discrim.html#distinguishing-species"><i class="fa fa-check"></i><b>24.1.1</b> Distinguishing Species</a></li>
+<li class="chapter" data-level="24.1.2" data-path="discrim.html"><a href="discrim.html#sum-of-squares-decomposition"><i class="fa fa-check"></i><b>24.1.2</b> Sum of Squares Decomposition</a></li>
 </ul></li>
-<li class="chapter" data-level="24.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>24.4</b> CDA: Supervised Aspect</a><ul>
-<li class="chapter" data-level="24.4.1" data-path="cda.html"><a href="cda.html#distance-behind-cda"><i class="fa fa-check"></i><b>24.4.1</b> Distance behind CDA</a></li>
-<li class="chapter" data-level="24.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>24.4.2</b> Predictive Idea</a></li>
-<li class="chapter" data-level="24.4.3" data-path="cda.html"><a href="cda.html#cda-classifier"><i class="fa fa-check"></i><b>24.4.3</b> CDA Classifier</a></li>
-<li class="chapter" data-level="24.4.4" data-path="cda.html"><a href="cda.html#limitations-of-cda-classifier"><i class="fa fa-check"></i><b>24.4.4</b> Limitations of CDA classifier</a></li>
+<li class="chapter" data-level="24.2" data-path="discrim.html"><a href="discrim.html#derived-ratios-from-sum-of-squares"><i class="fa fa-check"></i><b>24.2</b> Derived Ratios from Sum-of-Squares</a><ul>
+<li class="chapter" data-level="24.2.1" data-path="discrim.html"><a href="discrim.html#correlation-ratio"><i class="fa fa-check"></i><b>24.2.1</b> Correlation Ratio</a></li>
+<li class="chapter" data-level="24.2.2" data-path="discrim.html"><a href="discrim.html#f-ratio"><i class="fa fa-check"></i><b>24.2.2</b> F-Ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="discrim.html"><a href="discrim.html#geometric-perspective"><i class="fa fa-check"></i><b>24.3</b> Geometric Perspective</a><ul>
+<li class="chapter" data-level="24.3.1" data-path="discrim.html"><a href="discrim.html#clouds-from-class-structure"><i class="fa fa-check"></i><b>24.3.1</b> Clouds from Class Structure</a></li>
+<li class="chapter" data-level="24.3.2" data-path="discrim.html"><a href="discrim.html#dispersion-decomposition"><i class="fa fa-check"></i><b>24.3.2</b> Dispersion Decomposition</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>25</b> Discriminant Analysis</a><ul>
-<li class="chapter" data-level="25.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>25.1</b> Probabilistic DA</a><ul>
-<li class="chapter" data-level="25.1.1" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>25.1.1</b> Normal Distributions</a></li>
-<li class="chapter" data-level="25.1.2" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>25.1.2</b> Estimating Parameters of Normal Distributions</a></li>
+<li class="chapter" data-level="25" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>25</b> Canonical Discriminant Analysis</a><ul>
+<li class="chapter" data-level="25.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>25.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="25.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>25.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="25.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>25.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="25.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>25.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="25.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>25.3.2</b> F-ratio Criterion</a></li>
+<li class="chapter" data-level="25.3.3" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>25.3.3</b> A Special PCA</a></li>
 </ul></li>
-<li class="chapter" data-level="25.2" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>25.2</b> Discriminant Functions</a></li>
-<li class="chapter" data-level="25.3" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>25.3</b> Quadratic Discriminant Analysis (QDA)</a></li>
-<li class="chapter" data-level="25.4" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>25.4</b> Linear Discriminant Analysis</a><ul>
-<li class="chapter" data-level="25.4.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>25.4.1</b> Canonical Discriminant Analysis</a></li>
-<li class="chapter" data-level="25.4.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>25.4.2</b> Naive Bayes</a></li>
-<li class="chapter" data-level="25.4.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>25.4.3</b> Fifth Case</a></li>
+<li class="chapter" data-level="25.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>25.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="cda.html"><a href="cda.html#distance-behind-cda"><i class="fa fa-check"></i><b>25.4.1</b> Distance behind CDA</a></li>
+<li class="chapter" data-level="25.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>25.4.2</b> Predictive Idea</a></li>
+<li class="chapter" data-level="25.4.3" data-path="cda.html"><a href="cda.html#cda-classifier"><i class="fa fa-check"></i><b>25.4.3</b> CDA Classifier</a></li>
+<li class="chapter" data-level="25.4.4" data-path="cda.html"><a href="cda.html#limitations-of-cda-classifier"><i class="fa fa-check"></i><b>25.4.4</b> Limitations of CDA classifier</a></li>
 </ul></li>
-<li class="chapter" data-level="25.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>25.5</b> Comparing the Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="26" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>26</b> Performance of Classifiers</a><ul>
-<li class="chapter" data-level="26.1" data-path="classperformance.html"><a href="classperformance.html#classification-error-measures"><i class="fa fa-check"></i><b>26.1</b> Classification Error Measures</a><ul>
-<li class="chapter" data-level="26.1.1" data-path="classperformance.html"><a href="classperformance.html#errors-for-binary-response"><i class="fa fa-check"></i><b>26.1.1</b> Errors for Binary Response</a></li>
-<li class="chapter" data-level="26.1.2" data-path="classperformance.html"><a href="classperformance.html#error-for-categorical-response"><i class="fa fa-check"></i><b>26.1.2</b> Error for Categorical Response</a></li>
+<li class="chapter" data-level="26" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>26</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="26.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>26.1</b> Probabilistic DA</a><ul>
+<li class="chapter" data-level="26.1.1" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>26.1.1</b> Normal Distributions</a></li>
+<li class="chapter" data-level="26.1.2" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>26.1.2</b> Estimating Parameters of Normal Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="26.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>26.2</b> Confusion Matrices</a></li>
-<li class="chapter" data-level="26.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>26.3</b> Binary Response Example</a><ul>
-<li class="chapter" data-level="26.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>26.3.1</b> Application for Checking Account</a></li>
-<li class="chapter" data-level="26.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>26.3.2</b> Application for Loan</a></li>
+<li class="chapter" data-level="26.2" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>26.2</b> Discriminant Functions</a></li>
+<li class="chapter" data-level="26.3" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>26.3</b> Quadratic Discriminant Analysis (QDA)</a></li>
+<li class="chapter" data-level="26.4" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>26.4</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="26.4.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>26.4.1</b> Canonical Discriminant Analysis</a></li>
+<li class="chapter" data-level="26.4.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>26.4.2</b> Naive Bayes</a></li>
+<li class="chapter" data-level="26.4.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>26.4.3</b> Fifth Case</a></li>
 </ul></li>
-<li class="chapter" data-level="26.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>26.4</b> Decision Rules and Errors</a></li>
-<li class="chapter" data-level="26.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>26.5</b> ROC Curves</a><ul>
-<li class="chapter" data-level="26.5.1" data-path="classperformance.html"><a href="classperformance.html#graphing-roc-curves"><i class="fa fa-check"></i><b>26.5.1</b> Graphing ROC curves</a></li>
+<li class="chapter" data-level="26.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>26.5</b> Comparing the Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>27</b> Performance of Classifiers</a><ul>
+<li class="chapter" data-level="27.1" data-path="classperformance.html"><a href="classperformance.html#classification-error-measures"><i class="fa fa-check"></i><b>27.1</b> Classification Error Measures</a><ul>
+<li class="chapter" data-level="27.1.1" data-path="classperformance.html"><a href="classperformance.html#errors-for-binary-response"><i class="fa fa-check"></i><b>27.1.1</b> Errors for Binary Response</a></li>
+<li class="chapter" data-level="27.1.2" data-path="classperformance.html"><a href="classperformance.html#error-for-categorical-response"><i class="fa fa-check"></i><b>27.1.2</b> Error for Categorical Response</a></li>
+</ul></li>
+<li class="chapter" data-level="27.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>27.2</b> Confusion Matrices</a></li>
+<li class="chapter" data-level="27.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>27.3</b> Binary Response Example</a><ul>
+<li class="chapter" data-level="27.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>27.3.1</b> Application for Checking Account</a></li>
+<li class="chapter" data-level="27.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>27.3.2</b> Application for Loan</a></li>
+</ul></li>
+<li class="chapter" data-level="27.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>27.4</b> Decision Rules and Errors</a></li>
+<li class="chapter" data-level="27.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>27.5</b> ROC Curves</a><ul>
+<li class="chapter" data-level="27.5.1" data-path="classperformance.html"><a href="classperformance.html#graphing-roc-curves"><i class="fa fa-check"></i><b>27.5.1</b> Graphing ROC curves</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IX Unsupervised II: Clustering</b></span></li>
-<li class="chapter" data-level="27" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>27</b> Clustering</a><ul>
-<li class="chapter" data-level="27.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>27.1</b> About Clustering</a><ul>
-<li class="chapter" data-level="27.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>27.1.1</b> Types of Clustering</a></li>
-<li class="chapter" data-level="27.1.2" data-path="clustering.html"><a href="clustering.html#hard-clustering"><i class="fa fa-check"></i><b>27.1.2</b> Hard Clustering</a></li>
+<li class="chapter" data-level="28" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>28</b> Clustering</a><ul>
+<li class="chapter" data-level="28.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>28.1</b> About Clustering</a><ul>
+<li class="chapter" data-level="28.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>28.1.1</b> Types of Clustering</a></li>
+<li class="chapter" data-level="28.1.2" data-path="clustering.html"><a href="clustering.html#hard-clustering"><i class="fa fa-check"></i><b>28.1.2</b> Hard Clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="27.2" data-path="clustering.html"><a href="clustering.html#dispersion-measures"><i class="fa fa-check"></i><b>27.2</b> Dispersion Measures</a></li>
-<li class="chapter" data-level="27.3" data-path="clustering.html"><a href="clustering.html#complexity-in-clustering"><i class="fa fa-check"></i><b>27.3</b> Complexity in Clustering</a></li>
+<li class="chapter" data-level="28.2" data-path="clustering.html"><a href="clustering.html#dispersion-measures"><i class="fa fa-check"></i><b>28.2</b> Dispersion Measures</a></li>
+<li class="chapter" data-level="28.3" data-path="clustering.html"><a href="clustering.html#complexity-in-clustering"><i class="fa fa-check"></i><b>28.3</b> Complexity in Clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="28" data-path="kmeans.html"><a href="kmeans.html"><i class="fa fa-check"></i><b>28</b> K-Means</a><ul>
-<li class="chapter" data-level="28.1" data-path="kmeans.html"><a href="kmeans.html#toy-example-2"><i class="fa fa-check"></i><b>28.1</b> Toy Example</a></li>
-<li class="chapter" data-level="28.2" data-path="kmeans.html"><a href="kmeans.html#what-does-k-means-do"><i class="fa fa-check"></i><b>28.2</b> What does K-means do?</a></li>
-<li class="chapter" data-level="28.3" data-path="kmeans.html"><a href="kmeans.html#k-means-algorithms"><i class="fa fa-check"></i><b>28.3</b> K-Means Algorithms</a><ul>
-<li class="chapter" data-level="28.3.1" data-path="kmeans.html"><a href="kmeans.html#classic-version"><i class="fa fa-check"></i><b>28.3.1</b> Classic Version</a></li>
-<li class="chapter" data-level="28.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>28.3.2</b> Moving Centers Algorithm</a></li>
-<li class="chapter" data-level="28.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>28.3.3</b> Dynamic Clouds</a></li>
-<li class="chapter" data-level="28.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>28.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
-<li class="chapter" data-level="28.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>28.3.5</b> Comments</a></li>
+<li class="chapter" data-level="29" data-path="kmeans.html"><a href="kmeans.html"><i class="fa fa-check"></i><b>29</b> K-Means</a><ul>
+<li class="chapter" data-level="29.1" data-path="kmeans.html"><a href="kmeans.html#toy-example-2"><i class="fa fa-check"></i><b>29.1</b> Toy Example</a></li>
+<li class="chapter" data-level="29.2" data-path="kmeans.html"><a href="kmeans.html#what-does-k-means-do"><i class="fa fa-check"></i><b>29.2</b> What does K-means do?</a></li>
+<li class="chapter" data-level="29.3" data-path="kmeans.html"><a href="kmeans.html#k-means-algorithms"><i class="fa fa-check"></i><b>29.3</b> K-Means Algorithms</a><ul>
+<li class="chapter" data-level="29.3.1" data-path="kmeans.html"><a href="kmeans.html#classic-version"><i class="fa fa-check"></i><b>29.3.1</b> Classic Version</a></li>
+<li class="chapter" data-level="29.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>29.3.2</b> Moving Centers Algorithm</a></li>
+<li class="chapter" data-level="29.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>29.3.3</b> Dynamic Clouds</a></li>
+<li class="chapter" data-level="29.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>29.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
+<li class="chapter" data-level="29.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>29.3.5</b> Comments</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="29" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>29</b> Hierarchical Clustering</a><ul>
-<li class="chapter" data-level="29.1" data-path="hclus.html"><a href="hclus.html#agglomerative-methods"><i class="fa fa-check"></i><b>29.1</b> Agglomerative Methods</a></li>
-<li class="chapter" data-level="29.2" data-path="hclus.html"><a href="hclus.html#example-single-linkage"><i class="fa fa-check"></i><b>29.2</b> Example: Single Linkage</a><ul>
-<li class="chapter" data-level="29.2.1" data-path="hclus.html"><a href="hclus.html#dendrogram"><i class="fa fa-check"></i><b>29.2.1</b> Dendrogram</a></li>
+<li class="chapter" data-level="30" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>30</b> Hierarchical Clustering</a><ul>
+<li class="chapter" data-level="30.1" data-path="hclus.html"><a href="hclus.html#agglomerative-methods"><i class="fa fa-check"></i><b>30.1</b> Agglomerative Methods</a></li>
+<li class="chapter" data-level="30.2" data-path="hclus.html"><a href="hclus.html#example-single-linkage"><i class="fa fa-check"></i><b>30.2</b> Example: Single Linkage</a><ul>
+<li class="chapter" data-level="30.2.1" data-path="hclus.html"><a href="hclus.html#dendrogram"><i class="fa fa-check"></i><b>30.2.1</b> Dendrogram</a></li>
 </ul></li>
-<li class="chapter" data-level="29.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>29.3</b> Example: Complete Linkage</a><ul>
-<li class="chapter" data-level="29.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>29.3.1</b> Cutting Dendograms</a></li>
-<li class="chapter" data-level="29.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>29.3.2</b> Pros and COons</a></li>
+<li class="chapter" data-level="30.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>30.3</b> Example: Complete Linkage</a><ul>
+<li class="chapter" data-level="30.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>30.3.1</b> Cutting Dendograms</a></li>
+<li class="chapter" data-level="30.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>30.3.2</b> Pros and COons</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
-<li class="chapter" data-level="30" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>30</b> Intro to Decision Trees</a><ul>
-<li class="chapter" data-level="30.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>30.1</b> Introduction</a></li>
-<li class="chapter" data-level="30.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>30.2</b> Some Terminology</a><ul>
-<li class="chapter" data-level="30.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>30.2.1</b> Binary Trees</a></li>
+<li class="chapter" data-level="31" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>31</b> Intro to Decision Trees</a><ul>
+<li class="chapter" data-level="31.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>31.1</b> Introduction</a></li>
+<li class="chapter" data-level="31.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>31.2</b> Some Terminology</a><ul>
+<li class="chapter" data-level="31.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>31.2.1</b> Binary Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="30.3" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>30.3</b> Space Partitions</a><ul>
-<li class="chapter" data-level="30.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>30.3.1</b> The Process of Building a Tree</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="31" data-path="tree-impurities.html"><a href="tree-impurities.html"><i class="fa fa-check"></i><b>31</b> Binary Splits and Impurity</a><ul>
-<li class="chapter" data-level="31.1" data-path="tree-impurities.html"><a href="tree-impurities.html#binary-partitions"><i class="fa fa-check"></i><b>31.1</b> Binary Partitions</a><ul>
-<li class="chapter" data-level="31.1.1" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-binary-variables"><i class="fa fa-check"></i><b>31.1.1</b> Splits of Binary variables</a></li>
-<li class="chapter" data-level="31.1.2" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-nominal-variables"><i class="fa fa-check"></i><b>31.1.2</b> Splits of Nominal Variables</a></li>
-<li class="chapter" data-level="31.1.3" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-ordinal-variables"><i class="fa fa-check"></i><b>31.1.3</b> Splits of Ordinal Variables</a></li>
-<li class="chapter" data-level="31.1.4" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-continuous-variables"><i class="fa fa-check"></i><b>31.1.4</b> Splits Continuous variables</a></li>
-</ul></li>
-<li class="chapter" data-level="31.2" data-path="tree-impurities.html"><a href="tree-impurities.html#measures-of-impurity"><i class="fa fa-check"></i><b>31.2</b> Measures of Impurity</a><ul>
-<li class="chapter" data-level="31.2.1" data-path="tree-impurities.html"><a href="tree-impurities.html#entropy"><i class="fa fa-check"></i><b>31.2.1</b> Entropy</a></li>
-<li class="chapter" data-level="31.2.2" data-path="tree-impurities.html"><a href="tree-impurities.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>31.2.2</b> The Math Behind Entropy</a></li>
-<li class="chapter" data-level="31.2.3" data-path="tree-impurities.html"><a href="tree-impurities.html#gini-impurity"><i class="fa fa-check"></i><b>31.2.3</b> Gini Impurity</a></li>
-<li class="chapter" data-level="31.2.4" data-path="tree-impurities.html"><a href="tree-impurities.html#variance-based-impurity"><i class="fa fa-check"></i><b>31.2.4</b> Variance-based Impurity</a></li>
+<li class="chapter" data-level="31.3" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>31.3</b> Space Partitions</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>31.3.1</b> The Process of Building a Tree</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="32" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>32</b> Splitting Nodes</a><ul>
-<li class="chapter" data-level="32.1" data-path="tree-splits.html"><a href="tree-splits.html#entropy-based-splits"><i class="fa fa-check"></i><b>32.1</b> Entropy-based Splits</a></li>
-<li class="chapter" data-level="32.2" data-path="tree-splits.html"><a href="tree-splits.html#gini-index-based-splits"><i class="fa fa-check"></i><b>32.2</b> Gini-index based Splits</a></li>
-<li class="chapter" data-level="32.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>32.3</b> Looking for the best split</a></li>
+<li class="chapter" data-level="32" data-path="tree-impurities.html"><a href="tree-impurities.html"><i class="fa fa-check"></i><b>32</b> Binary Splits and Impurity</a><ul>
+<li class="chapter" data-level="32.1" data-path="tree-impurities.html"><a href="tree-impurities.html#binary-partitions"><i class="fa fa-check"></i><b>32.1</b> Binary Partitions</a><ul>
+<li class="chapter" data-level="32.1.1" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-binary-variables"><i class="fa fa-check"></i><b>32.1.1</b> Splits of Binary variables</a></li>
+<li class="chapter" data-level="32.1.2" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-nominal-variables"><i class="fa fa-check"></i><b>32.1.2</b> Splits of Nominal Variables</a></li>
+<li class="chapter" data-level="32.1.3" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-ordinal-variables"><i class="fa fa-check"></i><b>32.1.3</b> Splits of Ordinal Variables</a></li>
+<li class="chapter" data-level="32.1.4" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-continuous-variables"><i class="fa fa-check"></i><b>32.1.4</b> Splits Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="33" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>33</b> Building Binary Trees</a><ul>
-<li class="chapter" data-level="33.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>33.1</b> Node-Splitting Stopping Criteria</a></li>
-<li class="chapter" data-level="33.2" data-path="tree-basics.html"><a href="tree-basics.html#issues-with-trees"><i class="fa fa-check"></i><b>33.2</b> Issues with Trees</a><ul>
-<li class="chapter" data-level="33.2.1" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>33.2.1</b> Bias-Variance of Trees</a></li>
-</ul></li>
-<li class="chapter" data-level="33.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>33.3</b> Pruning a Tree</a></li>
-<li class="chapter" data-level="33.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>33.4</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="33.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>33.4.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="33.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>33.4.2</b> Disadvantages of Trees</a></li>
+<li class="chapter" data-level="32.2" data-path="tree-impurities.html"><a href="tree-impurities.html#measures-of-impurity"><i class="fa fa-check"></i><b>32.2</b> Measures of Impurity</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="tree-impurities.html"><a href="tree-impurities.html#entropy"><i class="fa fa-check"></i><b>32.2.1</b> Entropy</a></li>
+<li class="chapter" data-level="32.2.2" data-path="tree-impurities.html"><a href="tree-impurities.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>32.2.2</b> The Math Behind Entropy</a></li>
+<li class="chapter" data-level="32.2.3" data-path="tree-impurities.html"><a href="tree-impurities.html#gini-impurity"><i class="fa fa-check"></i><b>32.2.3</b> Gini Impurity</a></li>
+<li class="chapter" data-level="32.2.4" data-path="tree-impurities.html"><a href="tree-impurities.html#variance-based-impurity"><i class="fa fa-check"></i><b>32.2.4</b> Variance-based Impurity</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="34" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>34</b> Bagging</a><ul>
-<li class="chapter" data-level="34.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>34.1</b> Introduction</a><ul>
-<li class="chapter" data-level="34.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>34.1.1</b> Idea of Bagging</a></li>
+<li class="chapter" data-level="33" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>33</b> Splitting Nodes</a><ul>
+<li class="chapter" data-level="33.1" data-path="tree-splits.html"><a href="tree-splits.html#entropy-based-splits"><i class="fa fa-check"></i><b>33.1</b> Entropy-based Splits</a></li>
+<li class="chapter" data-level="33.2" data-path="tree-splits.html"><a href="tree-splits.html#gini-index-based-splits"><i class="fa fa-check"></i><b>33.2</b> Gini-index based Splits</a></li>
+<li class="chapter" data-level="33.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>33.3</b> Looking for the best split</a></li>
 </ul></li>
-<li class="chapter" data-level="34.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>34.2</b> Why Bother Bagging?</a></li>
+<li class="chapter" data-level="34" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>34</b> Building Binary Trees</a><ul>
+<li class="chapter" data-level="34.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>34.1</b> Node-Splitting Stopping Criteria</a></li>
+<li class="chapter" data-level="34.2" data-path="tree-basics.html"><a href="tree-basics.html#issues-with-trees"><i class="fa fa-check"></i><b>34.2</b> Issues with Trees</a><ul>
+<li class="chapter" data-level="34.2.1" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>34.2.1</b> Bias-Variance of Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="35" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>35</b> Random Forests</a><ul>
-<li class="chapter" data-level="35.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>35.1</b> Introduction</a></li>
-<li class="chapter" data-level="35.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>35.2</b> Algorithm</a><ul>
-<li class="chapter" data-level="35.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>35.2.1</b> Two Sources of Randomness</a></li>
-<li class="chapter" data-level="35.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>35.2.2</b> Regressions and Classification Forests</a></li>
-<li class="chapter" data-level="35.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>35.2.3</b> Key Advantage of Random Forests</a></li>
+<li class="chapter" data-level="34.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>34.3</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="34.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>34.4</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="34.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>34.4.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="34.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>34.4.2</b> Disadvantages of Trees</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="35" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>35</b> Bagging</a><ul>
+<li class="chapter" data-level="35.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>35.1</b> Introduction</a><ul>
+<li class="chapter" data-level="35.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>35.1.1</b> Idea of Bagging</a></li>
+</ul></li>
+<li class="chapter" data-level="35.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>35.2</b> Why Bother Bagging?</a></li>
+</ul></li>
+<li class="chapter" data-level="36" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>36</b> Random Forests</a><ul>
+<li class="chapter" data-level="36.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>36.1</b> Introduction</a></li>
+<li class="chapter" data-level="36.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>36.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="36.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>36.2.1</b> Two Sources of Randomness</a></li>
+<li class="chapter" data-level="36.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>36.2.2</b> Regressions and Classification Forests</a></li>
+<li class="chapter" data-level="36.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>36.2.3</b> Key Advantage of Random Forests</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -515,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="phases" class="section level1">
-<h1><span class="header-section-number">11</span> Learning Phases</h1>
+<h1><span class="header-section-number">12</span> Learning Phases</h1>
 <p>In this chapter we further discuss more theoretical elements of the
 supervised learning framework. In particular, we take a deep dive into
 some of the activities to be performed in every learning process, namely,
@@ -523,7 +524,7 @@ model training, model selection, and model assessment.</p>
 <p>A word of caution needs to be said about the terminology that we use here.
 If you look at other books or resources about statistical/machine learning,
 you will find that there is no consistent use of words such as training,
-testing, validation, evaluation, assessment, and other similar terms.
+testing, validation, evaluation, assessment, selection, and other similar terms.
 We have decided to use specific words—for certain concepts—that other
 authors or practitioners may handle differently.</p>
 <p>Also, bear in mind that many of the notions and ideas described in this chapter
@@ -531,40 +532,41 @@ tend to have a decisive theoretical flavor. As we move on, we will provide
 more details and explanations on how to make such ideas more concrete, and
 how to execute them in practice.</p>
 <div id="introduction-1" class="section level2">
-<h2><span class="header-section-number">11.1</span> Introduction</h2>
+<h2><span class="header-section-number">12.1</span> Introduction</h2>
 <p>Let’s bring back a simplified version of the supervised learning diagram
 depicted in the figure below. We know that there are more elements in the
-full-fledged diagram, but we want to focus on three main stages that are
-present in all supervised learning contexts.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-91"></span>
+full-fledged diagram, but we want to reduce the number of displayed elements
+in order to focus on three main stages that are present in all supervised
+learning contexts.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
 <img src="images/validation/learning-diag-simplified1.svg" alt="Simplified Supervised Learning Diagram" width="85%" />
 <p class="caption">
-Figure 11.1: Simplified Supervised Learning Diagram
+Figure 12.1: Simplified Supervised Learning Diagram
 </p>
 </div>
 <p>In every learning situation, there is a handful of tasks we need to carry out.
-First, we need to fit several models, typically involving working with different
-classes of hypothesis. For example, we can consider four types of regression
-methods: principal components regression (<span class="math inline">\(\mathcal{H_1}\)</span>), partial least
-squares regression (<span class="math inline">\(\mathcal{H_2}\)</span>), ridge regression (<span class="math inline">\(\mathcal{H_3}\)</span>),
+First, we need to fit several models, typically this involves working with
+different classes of hypothesis. For example, we can consider four types of
+regression methods: principal components regression (<span class="math inline">\(\mathcal{H_1}\)</span>), partial
+least squares regression (<span class="math inline">\(\mathcal{H_2}\)</span>), ridge regression (<span class="math inline">\(\mathcal{H_3}\)</span>),
 and lasso (<span class="math inline">\(\mathcal{H_4}\)</span>). All of these types of regression models have
 tuning parameters that cannot be derived analytically from the data, but have
 to be determined through trial-error steps.</p>
 <p>For each hypothesis family, we need to find the optimal tuning parameter,
 which involves choosing a finalist model: the best principal components
 regression, the best partial least regression, etc. Then, we need to select the
-best model among the finalist models. This will be <em>the</em> final model to be
-delivered. And finally, we need to measure the predicting performance of the
-final model: measure how the model will behave with out-of-sample points.</p>
-<p>We can formalize these tasks into three major phases encountered in every
+best model among the finalist models. This will be <em>the</em> final model <span class="math inline">\(\widehat{f}\)</span>$
+to be delivered. And finally, we need to measure the predicting performance of
+the final model: measure how the model will behave with out-of-sample points.</p>
+<p>We can formalize these tasks in three major phases encountered in every
 supervised learning system: 1) model training, 2) model selection, and
 3) model assessment.</p>
 <ul>
 <li><p><strong>Training</strong>: Given some data, and a certain modeling hypothesis
 <span class="math inline">\(\mathcal{H}_m\)</span>, how can we fit/estimate a model <span class="math inline">\(h_m\)</span>? Often, we are also
 interested in telling something about its predicting performance (in a limited sense).</p></li>
-<li><p><strong>Selection</strong>: Choosing a model from a set of candidate models. Typically,
-this has to do with two types of selection:</p>
+<li><p><strong>Selection</strong>: This involves choosing a model from a set of candidate models.
+Typically, this has to do with two types of selection:</p>
 <ul>
 <li><p><strong>Pre-Selection</strong>: choosing a finalist model from a set of models belonging
 to a certain class of hypothesis.</p></li>
@@ -572,31 +574,32 @@ to a certain class of hypothesis.</p></li>
 that is, choosing <em>the</em> very final model.</p></li>
 </ul></li>
 <li><p><strong>Assessment</strong>: Given a final <span class="math inline">\(\widehat{f}\)</span>, how can we
-provide an estimate <span class="math inline">\(\widehat{E}_{out}(\hat{f})\)</span> of the out-of-sample error?
+provide an estimate the out-of-sample error <span class="math inline">\(\widehat{E}_{out}(\hat{f})\)</span>?
 In other words, how to measure the performance of the final model in order to
 provide an estimation of its predictive behavior out-of-sample.</p></li>
 </ul>
 <p>To expand our mental map, let’s place the learning phases in the supervised
 learning diagram (see image below). As you can tell, now we
-are taking a peek inside the learning algorithm section. This is where the
-model training, the pre-selection, and the final-selection tasks occur.
+are taking a peek inside the learning algorithm <span class="math inline">\(\mathcal{A}\)</span> section. This is
+where the model training, the pre-selection, and the final-selection tasks occur.
 In turn, the model assessment part has to do with estimating the out-of-sample
 performance of the final model.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
 <img src="images/validation/learning-diag-simplified2.svg" alt="Schematic of Learning Phases" width="90%" />
 <p class="caption">
-Figure 11.2: Schematic of Learning Phases
+Figure 12.2: Schematic of Learning Phases
 </p>
 </div>
 <p>Having identified the main learning tasks, and knowing how they show up inside
 the supervised learning diagram, the next thing to consider is:
 <strong>What data should we use to perform each task?</strong>
-We will answer this question in the following sections, starting first with the
-model assessment phase, then the selection of the final model, then the
-pre-selection of finalist, and finally the training of candidate models.</p>
+We will answer this question in the following sections, starting backwards,
+that is: first with the model assessment phase, then the selection of the final
+model, then the pre-selection of finalist, and finally the training of candidate
+models.</p>
 </div>
 <div id="model-assessment" class="section level2">
-<h2><span class="header-section-number">11.2</span> Model Assessment</h2>
+<h2><span class="header-section-number">12.2</span> Model Assessment</h2>
 <p>Let us consider a situation in which we have a final model <span class="math inline">\(h\)</span>.
 The next logical step should involve measuring its prediction quality. In other
 words, we want to see how good (or how bad) the predictions of <span class="math inline">\(h\)</span> are.
@@ -618,34 +621,44 @@ measure the predictive quality of a model from these two perspectives. This
 obviously implies having predictions, and errors, of two different natures.
 Aggregating all the discrepancies between the predicted in-sample points
 <span class="math inline">\(\hat{y}_i = h(\mathbf{x_i})\)</span> and their observed values <span class="math inline">\(y_i\)</span>, allows us
-to quantify the in-sample error <span class="math inline">\(E_{in}\)</span>, which inform us
-about the <strong>resubstitution power</strong> of the model <span class="math inline">\(h\)</span> (i.e. how well the model
+to quantify the in-sample error <span class="math inline">\(E_{in}\)</span>, which informs us about the
+<strong>resubstitution power</strong> of the model <span class="math inline">\(h\)</span> (i.e. how well the model
 fits the learning data).</p>
-<p>The more interesting part comes with the out-of-sample points. If we had
-access to all points in <span class="math inline">\(\mathcal{D}_{out}\)</span>, measuring the
+<p><span class="math display" id="eq:405-1">\[
+E_{in}(h) = \frac{1}{|\mathcal{D}_{in}|} \sum_{i \in \mathcal{D}_{in}} err (h(x_i) = \hat{y}_i, y_i) \qquad \text{resubstitution error}
+\tag{12.1}
+\]</span></p>
+<p>The more interesting part comes with the out-of-sample data points. If we had
+access to <em>all</em> points in <span class="math inline">\(\mathcal{D}_{out}\)</span>, measuring the
 discrepancies between the predicted out-of-sample points
 <span class="math inline">\(\hat{y}_0 = h(\mathbf{x_0})\)</span> and their observed values <span class="math inline">\(y_0\)</span>, would allow us
 to quantify the out-of-sample error <span class="math inline">\(E_{out}\)</span>, truly measuring the
 <strong>generalization power</strong> of the model <span class="math inline">\(h\)</span>. In practice, unfortunately, we won’t
-have access to the entire out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</p>
+have access to the entire out-of-sample data.</p>
+<p><span class="math display" id="eq:405-2">\[
+E_{out}(h) = \mathbb{E} [err (h(x_0) = \hat{y}_0 , y_0)] \qquad \text{generalization error}
+\tag{12.2}
+\]</span></p>
 <p>Knowing that the whole out-of-sample data set is not within our reach, the
 second best thing that we can do is to find a proxy set for <span class="math inline">\(\mathcal{D}_{out}\)</span>.
 If we can obtain a data set <span class="math inline">\(\mathcal{D}_{proxy}\)</span> that is a representative
 subset of <span class="math inline">\(\mathcal{D}_{out}\)</span>, then we can compute <span class="math inline">\(E_{proxy}\)</span> and use it to
 approximate <span class="math inline">\(E_{out}\)</span>, thus having a fair estimation of the generalization power
-of <span class="math inline">\(h\)</span>. This is precisely the idea of the so-called term <strong>Model Assessment</strong>:
-How can we estimate <span class="math inline">\(E_{out}(h)\)</span> of a final model? Which basically
-reduces to: how can we find an unbiased sample <span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
-<p><span class="math display">\[
+of a final model <span class="math inline">\(h\)</span>. This is precisely the idea of the so-called term
+<strong>Model Assessment</strong>: How can we estimate <span class="math inline">\(E_{out}(h)\)</span> of a final model? Which
+basically reduces to: how can we find an unbiased sample
+<span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
+<p><span class="math display" id="eq:405-3">\[
 \underbrace{\hat{E}_{out}(h)}_{\mathcal{D}_{proxy}} \ \approx \ \underbrace{E_{out}(h)}_{\mathcal{D}_{out}}
+\tag{12.3}
 \]</span></p>
 <div id="holdout-test-set" class="section level3">
-<h3><span class="header-section-number">11.2.1</span> Holdout Test Set</h3>
+<h3><span class="header-section-number">12.2.1</span> Holdout Test Set</h3>
 <p>In order to answer the question “How can we estimate <span class="math inline">\(E_{out}\)</span>?”, let us
 discuss the theoretical rationale behind the so-called <strong>Holdout Method</strong>,
 also known as <em>Holdout Test Set</em>.</p>
 <p>In practice, we always have some available data
-<span class="math inline">\(\mathcal{D} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>. If we used
+<span class="math inline">\(\mathcal{D} = \{ (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>. If we used
 all the <span class="math inline">\(n\)</span> data points to train/fit a model, we could perfectly measure <span class="math inline">\(E_{in}\)</span>
 but then we wouldn’t have any out-of-sample points to get an honest
 approximation <span class="math inline">\(\widehat{E}_{out}\)</span> of <span class="math inline">\(E_{out}\)</span>. Perhaps you are thinking:
@@ -654,46 +667,53 @@ won’t be a realiable estimate. We may have a model <span class="math inline">\
 small in-sample error, <span class="math inline">\(E_{in} \approx 0\)</span>, but that doesn’t necessarily mean
 that it has good generalization performance out-of-sample.</p>
 <p>Given that the only available data set is <span class="math inline">\(\mathcal{D}\)</span>, the Holdout Method
-proposes to split <span class="math inline">\(\mathcal{D}\)</span> into two subsets: (1) a subset
-<span class="math inline">\(\mathcal{D}_{train}\)</span>, called the <strong>training set</strong>, used to train/fit the model,
-and (2) another subset <span class="math inline">\(\mathcal{D}_{test}\)</span>, called the <strong>test set</strong>, to be used
-as a proxy of <span class="math inline">\(\mathcal{D}_{out}\)</span> for testing/assessment purposes.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
+proposes to split <span class="math inline">\(\mathcal{D}\)</span> into two subsets:</p>
+<ol style="list-style-type: decimal">
+<li><p>a subset <span class="math inline">\(\mathcal{D}_{train}\)</span>, called the <strong>training set</strong>, used to train/fit
+the model, and</p></li>
+<li><p>another subset <span class="math inline">\(\mathcal{D}_{test}\)</span>, called the <strong>test set</strong>, to be used
+as a proxy of <span class="math inline">\(\mathcal{D}_{out}\)</span> for testing/assessment purposes.</p></li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-94"></span>
 <img src="images/validation/training-test-sets.svg" alt="Data split into training and test sets" width="60%" />
 <p class="caption">
-Figure 11.3: Data split into training and test sets
+Figure 12.3: Data split into training and test sets
 </p>
 </div>
 <p>How do we actually obtain these two sets? Usually by taking random
 samples of size <span class="math inline">\(a\)</span>, without replacement, from <span class="math inline">\(\mathcal{D}\)</span>
 (although there are exceptions).</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-4">\[
 \mathcal{D} \to \begin{cases} 
 \text{training } \ \mathcal{D}_{train} &amp; \to \ \text{size } n - a \\ 
 &amp; \\
 \text{test } \ \mathcal{D}_{test} &amp;  \to \ \text{size } a \\ 
 \end{cases}
+\tag{12.4}
 \]</span></p>
 <p>We then fit a particular model using <span class="math inline">\(\mathcal{D}_{train}\)</span>; obtaining a model
 that we’ll call <span class="math inline">\(h^{-}(x)\)</span>, “<span class="math inline">\(h\)</span>-minus”, because it is a model fitted with the
 training set <span class="math inline">\(\mathcal{D}_{train}\)</span>, which is a subset of the available data
 <span class="math inline">\(\mathcal{D}\)</span>. With the remainder points in <span class="math inline">\(\mathcal{D}_{test}\)</span>, we can measure
 the performance of the model <span class="math inline">\(h^{-}(x)\)</span> as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-5">\[
 E_{test}(h^{-}) = \frac{1}{a} \sum_{\ell=1}^{a} err\left( h^{-}(\mathbf{x_\ell}) , y_\ell \right) ; \hspace{5mm} (\mathbf{x_\ell}, y_\ell) \in \mathcal{D}_{test}
+\tag{12.5}
 \]</span></p>
 <p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give a good estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why.</p>
 </div>
 <div id="why-does-a-test-set-work" class="section level3">
-<h3><span class="header-section-number">11.2.2</span> Why does a test set work?</h3>
+<h3><span class="header-section-number">12.2.2</span> Why does a test set work?</h3>
 <p>Consider an out-of-sample point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span> that is part of the test
 set:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-6">\[
 (\mathbf{x_0}, y_0) \in \mathcal{D}_{test}
+\tag{12.6}
 \]</span></p>
 <p>Given a pointwise error function <span class="math inline">\(err()\)</span>, we can measure the error:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-6">\[
 err(h(\mathbf{x_0}), y_0)
+\tag{12.6}
 \]</span></p>
 <p>Moreover, we can treat it as a point estimate of <span class="math inline">\(E_{out}(h)\)</span>.</p>
 <p>Here’s a relevant question: Is <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> an unbiased
@@ -701,40 +721,45 @@ estimate of <span class="math inline">\(E_{out}(h)\)</span>?</p>
 <p>To see whether the point estimate <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> is an unbiased
 estimate of <span class="math inline">\(E_{out}(h)\)</span>, let’s determine its expectation over the input space
 <span class="math inline">\(\mathcal{X}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-7">\[
 \mathbb{E}_{\mathcal{X}} [ err(h(\mathbf{x_0}), y_0) ]
+\tag{12.7}
 \]</span></p>
 <p>Remember what the above expression represent? Yes, it is precisely the
 out-of-sample error <span class="math inline">\(E_{out}(h)\)</span>! Therefore, <span class="math inline">\(err(h(\mathbf{x_0}), y_0)\)</span> is
 an unbiased point estimate of the out-of-sample error.</p>
 <p>What about the variance: <span class="math inline">\(Var[err(h(\mathbf{x_0}), y_0)]\)</span>? For the sake of
 simplicity let’s assume that this variance is constant:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-8">\[
 Var[err(h(\mathbf{x_0}), y_0)] = s^2
+\tag{12.8}
 \]</span></p>
 <p>Obviously this variance could be large (or small). So having just one test
 point <span class="math inline">\((\mathbf{x_0}, y_0)\)</span>, even though it is an unbiased estimate of <span class="math inline">\(E_{out}\)</span>,
 it does not allow us to have an idea of how reliable that estimate is.</p>
 <p>Well, let’s consider a set <span class="math inline">\(D_{test} = \{ (\mathbf{x_1}, y_1), \dots, (\mathbf{x_a}, y_a) \}\)</span> containing <span class="math inline">\(a &gt; 1\)</span> points. We can average their pointwise errors to
 get <span class="math inline">\(E_{test}\)</span></p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-9">\[
 E_{test}(h) = \frac{1}{a} \sum_{\ell=1}^{a} err[ h^{-}(\mathbf{x_\ell}), y_\ell ]
+\tag{12.9}
 \]</span></p>
 <p>The question becomes: is <span class="math inline">\(E_{test}(h)\)</span> an unbiased estimate of <span class="math inline">\(E_{out}(h)\)</span>?</p>
 <p>Let’s find out:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:405-10">\[\begin{align*}
 \mathbb{E}_{\mathcal{X}} [E_{test}(h)] &amp;= \mathbb{E}_{\mathcal{X}} \left [ \frac{1}{a} \sum_{\ell=1}^{a} err[ h^{-}(\mathbf{x_\ell}), y_\ell ] \right ] \\
 &amp;= \frac{1}{a} \sum_{k=1}^{a} \mathbb{E}_{\mathcal{X}} \left [ err \left ( h^{-}(\mathbf{x_\ell}), y_\ell \right) \right ] \\
 &amp;= \frac{1}{a} \sum_{\ell=1}^{a} E_{out}(h) \\
 &amp;= E_{out}(h)
+\tag{12.10}
 \end{align*}\]</span></p>
 <p>Yes, it turns out that <span class="math inline">\(E_{test}(h)\)</span> is an unbiased estimate of <span class="math inline">\(E_{out}(h)\)</span>.
 But what about the variance? Let’s assume that the errors across points are
 independent (this may not be the case in practice, but we make this assumption
 to ease computation): It can be shown that the variance of <span class="math inline">\(E_{test}(h)\)</span>
 is given by:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-11">\[
 Var[E_{test}(h)] = \frac{1}{a^2} \sum_{\ell=1}^{a} Var[ err(h(\mathbf{x_0}), y_0) ] = \frac{s^2}{a}
+\tag{12.11}
 \]</span></p>
 <p>The above equation tells us that, as we increase the number <span class="math inline">\(a\)</span> of test points,
 the variance of the estimator <span class="math inline">\(E_{test}(h)\)</span> will decrease. Simply put, the
@@ -763,8 +788,9 @@ training set <span class="math inline">\(\mathcal{D}_{train}\)</span>.</p></li>
 <li><p>Measure the performance of <span class="math inline">\(h^{-}\)</span> using <span class="math inline">\(\mathcal{D}_{test}\)</span>;
 specifically, compute</p></li>
 </ol>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:405-12">\[
 E_{test}(h^{-}) = \frac{1}{a} \sum_{\ell=1}^{a} err_\ell[ h^{-}(\mathbf{x_\ell}), y_\ell ]
+\tag{12.12}
 \]</span></p>
 <p>where <span class="math inline">\((\mathbf{x_\ell}, y_\ell) \in \mathcal{D}_{test}\)</span>, and <span class="math inline">\(err_\ell\)</span> is
 some measure of pointwise error.</p>
@@ -782,7 +808,7 @@ remaining 20% to the test set.</p>
 </div>
 </div>
 <div id="model-selection" class="section level2">
-<h2><span class="header-section-number">11.3</span> Model Selection</h2>
+<h2><span class="header-section-number">12.3</span> Model Selection</h2>
 <p>Now that we’ve talked about how to measure the generalization performance of a
 given final model, the next thing to discuss is how to compare different models,
 in order to select the best one.</p>
@@ -810,16 +836,16 @@ components to retain:</p>
 </ul>
 <p>How do we select the best model from a set of candidate models?</p>
 <div id="three-way-holdout-method" class="section level3">
-<h3><span class="header-section-number">11.3.1</span> Three-way Holdout Method</h3>
+<h3><span class="header-section-number">12.3.1</span> Three-way Holdout Method</h3>
 <p>We can extend the idea behind the holdout method, to go from one holdout
 set to two holdout sets.
 Namely, instead of splitting <span class="math inline">\(\mathcal{D}\)</span> into two sets (training and test),
 we split it into three sets that we will call: training <span class="math inline">\(\mathcal{D}_{train}\)</span>,
 validation <span class="math inline">\(\mathcal{D}_{val}\)</span>, and test <span class="math inline">\(\mathcal{D}_{test}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-94"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
 <img src="images/validation/training-validation-test-sets.svg" alt="Data split into training, validation, and test sets" width="60%" />
 <p class="caption">
-Figure 11.4: Data split into training, validation, and test sets
+Figure 12.4: Data split into training, validation, and test sets
 </p>
 </div>
 <p>The test set <span class="math inline">\(\mathcal{D}_{test}\)</span> is the set that will be used for assessing
@@ -833,10 +859,10 @@ decision.</p>
 set of finalist models. However, keep in mind that other authors may
 recommend other uses for <span class="math inline">\(\mathcal{D}_{val}\)</span>.</p>
 <p>Here’s our ideal suggestion on how to use the validation set.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
 <img src="images/validation/repeated-3way-holdout.svg" alt="Using a validation set for final-selection" width="70%" />
 <p class="caption">
-Figure 11.5: Using a validation set for final-selection
+Figure 12.5: Using a validation set for final-selection
 </p>
 </div>
 <p><span class="math inline">\(\mathcal{H}_m\)</span> represents the <span class="math inline">\(m\)</span>-th hypothesis, and <span class="math inline">\(h^{-}_m\)</span> represents the
@@ -873,7 +899,7 @@ the very final model.</p>
 </div>
 </div>
 <div id="model-training" class="section level2">
-<h2><span class="header-section-number">11.4</span> Model Training</h2>
+<h2><span class="header-section-number">12.4</span> Model Training</h2>
 <p>In order to perform the pre-selection of finalist models, the selection of the
 final model, and its corresponding assessment, we need to be able to fit
 all candidate models belonging to different classes of hypotheses.</p>
@@ -923,7 +949,7 @@ we discuss this topic in the next chapter.</p>
           </div>
         </div>
       </div>
-<a href="biasvar.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="overfit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="resampling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
