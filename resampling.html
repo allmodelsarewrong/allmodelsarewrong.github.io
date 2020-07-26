@@ -634,7 +634,7 @@ could contain repeated elements).</p></li>
 Hence, the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> will change at each iteration.
 (Note that <span class="math inline">\(\mathcal{D}_{eval-b}\)</span> should <strong>not</strong> contain repeated values).</p></li>
 <li><p>Generate <span class="math inline">\(h^{-}_b\)</span> by fitting a model to <span class="math inline">\(\mathcal{D}_{train-b}\)</span>.</p></li>
-<li><p>Compute <span class="math inline">\(E_{eval} = \frac{1}{r_b} \sum_{i} err_i \big( h^{-}_b(\mathbf{x_i}), y_i \big)\)</span>, where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span> and <span class="math inline">\(r_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>.</p></li>
+<li><p>Compute <span class="math inline">\(E_{eval-b} = \frac{1}{r_b} \sum_{i} err_i \big( h^{-}_b(\mathbf{x_i}), y_i \big)\)</span>, where <span class="math inline">\((\mathbf{x_i}, y_i) \in \mathcal{D}_{eval-b}\)</span> and <span class="math inline">\(r_b\)</span> is the size of <span class="math inline">\(\mathcal{D}_{eval-b}\)</span>.</p></li>
 </ol></li>
 <li><p>Obtain an overall value for bootstrap <span class="math inline">\(E_{eval}\)</span> by averaging the
 <span class="math inline">\(E_{eval-b}\)</span> values:</p></li>
