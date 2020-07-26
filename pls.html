@@ -950,45 +950,47 @@ grow as we add more and more PLS components into the regression equation:</p>
 </div>
 <div id="selecting-number-of-pls-components" class="section level2">
 <h2><span class="header-section-number">16.5</span> Selecting Number of PLS Components</h2>
-<p>The number <span class="math inline">\(q\)</span> of PLS components to use in PLS Regression is a hyperparameter
+<p>The number <span class="math inline">\(k\)</span> of PLS components to use in PLS Regression is a hyperparameter
 or tuning parameter. This means that we cannot derive an analytical expression
-that tells us what the number <span class="math inline">\(q\)</span> of PCs is the optimal to be used. So how do
-we find <span class="math inline">\(q\)</span>? We find <span class="math inline">\(q\)</span> through resampling methods; the most popular resampling
-technique being <span class="math inline">\(K\)</span>-fold cross-validation. Here’s a description
-of the steps to be carried out:</p>
+that tells us what the number <span class="math inline">\(k\)</span> of PCs is the optimal to be used. So how do
+we find <span class="math inline">\(k\)</span>? We find <span class="math inline">\(k\)</span> through resampling methods; the most popular resampling
+technique being <span class="math inline">\(K\)</span>-fold cross-validation, although you can use other type of
+resampling approach. Here’s a description of the steps to be carried out:</p>
 <p>Assumet that we have a training data set consisting of <span class="math inline">\(n\)</span> data points:
 <span class="math inline">\(\mathcal{D}_{train} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>.
-Using <span class="math inline">\(K\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(K\)</span> folds:</p>
-<p><span class="math display" id="eq:503-22">\[
-\mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-K}
-\tag{16.22}
+To avoid confusion between the number of neighbors <span class="math inline">\(k\)</span>, and the number of folds
+<span class="math inline">\(K\)</span>, here we are going to use <span class="math inline">\(Q = K\)</span> to indicate the index of folds.</p>
+<p>Using <span class="math inline">\(Q\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(Q\)</span> folds:</p>
+<p><span class="math display">\[
+\mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-Q}
 \]</span></p>
-<p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-k}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-k}\)</span>.
-Having defined the <span class="math inline">\(k\)</span> fold sets, we form the corresponding <span class="math inline">\(K\)</span> retraining sets:</p>
+<p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-q}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-q}\)</span>.
+Having defined the <span class="math inline">\(Q\)</span> fold sets, we form the corresponding <span class="math inline">\(Q\)</span> retraining sets:</p>
 <ul>
 <li><span class="math inline">\(\mathcal{D}_{train-1} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-1}\)</span></li>
 <li><span class="math inline">\(\mathcal{D}_{train-2} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-2}\)</span></li>
 <li><span class="math inline">\(\dots\)</span></li>
-<li><span class="math inline">\(\mathcal{D}_{train-K} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-K}\)</span></li>
+<li><span class="math inline">\(\mathcal{D}_{train-Q} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-Q}\)</span></li>
 </ul>
 <p>The cross-validation procedure then repeats the following loops:</p>
 <ul>
-<li>For <span class="math inline">\(q = 1, 2, \dots, r = rank(\mathbf{X})\)</span>
+<li>For <span class="math inline">\(k = 1, 2, \dots, r = rank(\mathbf{X})\)</span>
 <ul>
-<li>For <span class="math inline">\(k = 1, \dots, K\)</span>
+<li>For <span class="math inline">\(q = 1, \dots, Q\)</span>
 <ul>
-<li>fit PLSR model <span class="math inline">\(h_{q,k}\)</span> with <span class="math inline">\(q\)</span> PLS-scores on <span class="math inline">\(\mathcal{D}_{train-k}\)</span></li>
-<li>compute and store <span class="math inline">\(E_{eval-k} (h_{q,k})\)</span> using <span class="math inline">\(\mathcal{D}_{eval-k}\)</span></li>
-</ul></li>
-<li>end for <span class="math inline">\(k\)</span></li>
-<li>compute and store <span class="math inline">\(E_{cv_{q}} = \frac{1}{K} \sum_k E_{eval-k}(h_{q,k})\)</span></li>
+<li>fit PLSR model <span class="math inline">\(h_{k,q}\)</span> with <span class="math inline">\(k\)</span> PLS-scores on <span class="math inline">\(\mathcal{D}_{train-q}\)</span></li>
+<li>compute and store <span class="math inline">\(E_{eval-q} (h_{k,q})\)</span> using <span class="math inline">\(\mathcal{D}_{eval-q}\)</span></li>
 </ul></li>
 <li>end for <span class="math inline">\(q\)</span></li>
-<li>Compare all cross-validation errors <span class="math inline">\(E_{cv_1}, E_{cv_2}, \dots, E_{cv_r}\)</span> and choose the smallest of them, say <span class="math inline">\(E_{cv_{q^*}}\)</span></li>
-<li>Use <span class="math inline">\(q^*\)</span> PLS scores to fit the (finalist) PLSR model:
-<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} + \dots + b_q^* \mathbf{z_q^*} = \mathbf{Z_{1:q^*}} \mathbf{b_{q^*}}\)</span></li>
+<li>compute and store <span class="math inline">\(E_{cv_{k}} = \frac{1}{Q} \sum_k E_{eval-q}(h_{k,q})\)</span></li>
+</ul></li>
+<li>end for <span class="math inline">\(k\)</span></li>
+<li>Compare all cross-validation errors <span class="math inline">\(E_{cv_1}, E_{cv_2}, \dots, E_{cv_r}\)</span> and
+choose the smallest of them, say <span class="math inline">\(E_{cv_{k^*}}\)</span></li>
+<li>Use <span class="math inline">\(k^*\)</span> PLS scores to fit the (finalist) PLSR model:
+<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} + \dots + b_k^* \mathbf{z_k^*} = \mathbf{Z_{1:k^*}} \mathbf{b_{1:k^*}}\)</span></li>
 <li>Remember that we can reexpress the PLSR model in terms of the original
-predictors: <span class="math inline">\(\mathbf{\hat{y}} = (\mathbf{X} \mathbf{\overset{*}{W}_{1:q^*}}) \mathbf{b_{q^*}}\)</span></li>
+predictors: <span class="math inline">\(\mathbf{\hat{y}} = (\mathbf{X} \mathbf{\overset{*}{W}_{1:k^*}}) \mathbf{b_{1:k^*}} = \mathbf{X} \mathbf{\overset{*}{b}_k}\)</span></li>
 </ul>
 <div id="remarks-1" class="section level4 unnumbered">
 <h4>Remarks</h4>

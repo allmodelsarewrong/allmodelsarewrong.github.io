@@ -526,7 +526,7 @@ of comments here and there about extensions to the multivariate case. But most
 things covered are for univariate regression. Why? Doing nonparametric
 regression in higher dimensions becomes very quickly statistically and
 computationally inefficient
-(e.g. <a href="https://en.wikipedia.org/wiki/Curse_of_dimensionality">curse of dimensionality</a>).</p>
+(e.g. <a href="https://en.wikipedia.org/wiki/Curse_of_dimensionality" target="_bkanl">curse of dimensionality</a>).</p>
 <div id="conditional-averages" class="section level2">
 <h2><span class="header-section-number">19.1</span> Conditional Averages</h2>
 <p>Consider the following example that has to do with NBA players in the
@@ -606,9 +606,10 @@ Figure 19.5: Only one player with 17 years of experience
 <h2><span class="header-section-number">19.2</span> Looking at the Neighbors</h2>
 <p>Because we only have one player with 17 years of experience, we need to find
 a way of using more of the data points in <span class="math inline">\(X\)</span> to try to improve the prediction.</p>
-<p>Looking at the scatterplot below, there are four players that are very close to
-the one with 17 years of experience. So why not use the salaries of all these
-players to calculate a predicted salary for someone with 17 years of experience?</p>
+<p>Looking at the scatterplot below, there are four players (the orange circles)
+that are very close to the player with 17 years of experience (red circle).
+So why not use the salaries of all these players to calculate a predicted salary
+for someone with 17 years of experience?</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
 <img src="images/nonparam/experience-salary-scatter6.png" alt="Four closest players to 17 years of experience" width="70%" />
 <p class="caption">

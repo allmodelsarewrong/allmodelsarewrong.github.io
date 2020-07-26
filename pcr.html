@@ -692,7 +692,7 @@ PC8  -7606.196   1926.3769   -3.9484    0.0001
 PC9   5473.090   2660.3834    2.0573    0.0404</code></pre>
 <p>If we only take the first two PCs, the regression equation is</p>
 <p><span class="math display" id="eq:502-8">\[
-\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b \mathbf{z_2}
+\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2}
 \tag{15.8}
 \]</span></p>
 <p>and the regression coefficients are:</p>
@@ -718,18 +718,19 @@ SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</spa
 (the matrix of PC’s times the transpose of the matrix of loadings).</p>
 <p>From OLS, we have:</p>
 <p><span class="math display" id="eq:502-9">\[
-\mathbf{\hat{y}} = \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} = \mathbf{Xb}_\text{ols}
+\mathbf{\hat{y}} = \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} = \mathbf{X} \mathbf{\overset{*}{b}}
 \tag{15.9}
 \]</span></p>
-<p>We can replace <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z V^\mathsf{T}}\)</span>:</p>
+<p>Replacing <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z V^\mathsf{T}}\)</span> we get:</p>
 <p><span class="math display" id="eq:502-10">\[\begin{align*}
-\mathbf{\hat{y}} &amp;= \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} \\
+\mathbf{\hat{y}} &amp;= \mathbf{X\overset{*}{b}}\\
+ &amp;= \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} \\
  &amp;= \mathbf{Z V^\mathsf{T}} \left (\mathbf{(Z V^\mathsf{T})^\mathsf{T} Z V^\mathsf{T}} \right )^{-1} \mathbf{(Z V^\mathsf{T})^\mathsf{T} y} \\
  &amp;= \mathbf{Z V^\mathsf{T}} \left (\mathbf{V Z^\mathsf{T} Z V^\mathsf{T}} \right )^{-1} \mathbf{V Z^\mathsf{T} y} \\
  &amp;= \mathbf{Z V^\mathsf{T}} (\mathbf{V \Lambda V^\mathsf{T}})^{-1} \mathbf{V Z^\mathsf{T} y} \\
  &amp;= \mathbf{Z V^\mathsf{T}} (\mathbf{V} \mathbf{\Lambda}^{-1} \mathbf{V^\mathsf{T}}) \mathbf{V Z^\mathsf{T} y} \\
  &amp;= \mathbf{Z} \mathbf{\Lambda}^{-1} \mathbf{Z^\mathsf{T} y} \\
- &amp;= \mathbf{Zb}_\text{pcr}
+ &amp;= \mathbf{Zb^\text{pcr}}
 \tag{15.10}
 \end{align*}\]</span></p>
 <div id="transition-formula" class="section level3">
@@ -737,28 +738,45 @@ SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</spa
 <p>In PCR, if <span class="math inline">\(k = p\)</span> (and assuming <span class="math inline">\(\mathbf{X}\)</span> is of full-rank), which means
 that if you keep all PC’s, what happens is:</p>
 <p><span class="math display" id="eq:502-11">\[\begin{align*}
-\mathbf{\hat{y}} &amp;= \mathbf{X} \mathbf{b}_{\text{ols}} \\
-&amp;= \mathbf{Z V^\mathsf{T}} \mathbf{b}_{\text{ols}} \\
-&amp;= \mathbf{Z} \mathbf{b}_{\text{pcr}}
+\mathbf{\hat{y}} &amp;= \mathbf{Z} \mathbf{b^\text{pcr}} \\
+&amp;= \mathbf{X V} \mathbf{b^\text{pcr}} \\
+&amp;= \mathbf{X} \mathbf{\overset{*}{b}}
 \tag{15.11}
 \end{align*}\]</span></p>
-<p>We can reexpress the PCR coefficients in terms of the original variables.</p>
-<p><span class="math display" id="eq:502-12">\[\begin{align*}
-\mathbf{\hat{y}} &amp;= \mathbf{Z} \mathbf{b}_{\text{pcr}} \\
-&amp;= \mathbf{X V} \mathbf{b}_{\text{pcr}} \\
-&amp;= \mathbf{X} \mathbf{b}_{\text{ols}}
-\tag{15.12}
-\end{align*}\]</span></p>
-<p>In summary, we can go back and forth between regression coefficients
-<span class="math inline">\(\mathbf{b}_\text{pcr}\)</span> for PC scores, and regression coefficients
-<span class="math inline">\(\mathbf{b}_\text{ols}\)</span> for original input features, using the
+<p>In summary, when retaining all PC-scores <span class="math inline">\(k=p\)</span>, we can go back and forth between
+regression coefficients <span class="math inline">\(\mathbf{b^\text{pcr}}\)</span>, and regression coefficients
+<span class="math inline">\(\mathbf{\overset{*}{b}}\)</span> for original input features, using the
 following transition equations:</p>
-<ul>
-<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} \mathbf{b}_\text{ols} = \mathbf{Z V^\mathsf{T}} \mathbf{b}_\text{ols} = \mathbf{Z b}_\text{pcr}\)</span></p></li>
-<li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_\text{pcr} = \mathbf{X V} \mathbf{b}_\text{pcr} = \mathbf{X b}_\text{ols}\)</span></p></li>
-</ul>
+<p><span class="math display" id="eq:502-12">\[
+\mathbf{\overset{*}{b}} = \mathbf{V} \mathbf{b^\text{pcr}}
+\qquad \text{and} \qquad
+\mathbf{b^\text{pcr}} = \mathbf{V}^\mathsf{T} \mathbf{\overset{*}{b}}
+\tag{15.12}
+\]</span></p>
+<p>Now, what if we decide to retain <span class="math inline">\(k &lt; p\)</span> PCs? Let <span class="math inline">\(\mathbf{Z_{1:k}}\)</span> be the
+<span class="math inline">\(n \times k\)</span> matrix with the first <span class="math inline">\(k\)</span> PCs:</p>
+<p><span class="math display" id="eq:502-13">\[
+\mathbf{Z_{1:k}} = [\mathbf{z_1}, \dots, \mathbf{z_p}]
+\tag{15.13}
+\]</span></p>
+<p>and let <span class="math inline">\(\mathbf{b_{1:k}^\text{pcr}}\)</span> be the corresponding vector of <span class="math inline">\(k\)</span>
+regression coefficients such that:</p>
+<p><span class="math display" id="eq:502-14">\[
+\mathbf{\hat{y}} = \mathbf{Z_{1:k}} \mathbf{b_{1:k}^\text{pcr}}
+\tag{15.14}
+\]</span></p>
+<p>The good news is that we can still transition from <span class="math inline">\(Z\)</span>-coefficients to
+<span class="math inline">\(X\)</span>-coefficients, and viceversa.</p>
+<p><span class="math display" id="eq:502-15">\[
+\mathbf{\hat{y}} = \mathbf{Z_{1:k}} \mathbf{b_{1:k}^\text{pcr}} = \mathbf{X V_{1:k}} \mathbf{b_{1:k}^\text{pcr}} = \mathbf{X \overset{*}{b_k}}
+\tag{15.15}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{\overset{*}{b_k}}\)</span> is a vector of length equal to the number of
+columns in <span class="math inline">\(\mathbf{X}\)</span>; the subindex <span class="math inline">\(k\)</span> indicates that it comes from the
+<span class="math inline">\(k\)</span>-length vector <span class="math inline">\(\mathbf{b_{1:k}^\text{pcr}}\)</span>.</p>
 <p>The following output shows the regression coefficients of all nine regression
-equations in terms of the original input variables.</p>
+equations <span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X \overset{*}{b_k}}\)</span> in terms of the
+original input variables for <span class="math inline">\(k=1, \dots, p\)</span>.</p>
 <pre><code>         Z_1:1 Z_1:2 Z_1:3 Z_1:4 Z_1:5 Z_1:6   Z_1:7 Z_1:8 Z_1:9
 engine    1641  2345  5487  5203  1887  1064  2168.5 -3551 -3327
 cyl       1544  2881  7312  7289  2213  1401  -295.5  3856  3766
@@ -770,17 +788,19 @@ wheel     1385 -2392 -2860 -2422 -3009  -187 -3315.7 -4832 -4938
 length    1332 -2634 -2202 -1346  -883 -2778    28.2  1260   447
 width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
 <p>For example, the values in the first column (column <code>Z_1:1</code>) are the regression
-coefficients of the <span class="math inline">\(X\)</span> inputs when using the first PC.</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = b_1^\text{pcr} \mathbf{z_1} = b_1^\text{pcr} \mathbf{Xv_1} = \mathbf{X} (b_1^\text{pcr} \mathbf{v_1}) = \mathbf{X} \mathbf{b^\text{ols}_1}
+<span class="math inline">\(X\)</span>-coefficients <span class="math inline">\(\mathbf{\overset{*}{b_1}}\)</span> when using the first PC.</p>
+<p><span class="math display" id="eq:502-16">\[
+\mathbf{\hat{y}} = b_1^\text{pcr} \mathbf{z_1} = b_1^\text{pcr} \mathbf{Xv_1} = \mathbf{X} (b_1^\text{pcr} \mathbf{v_1}) = \mathbf{X} \mathbf{\overset{*}{b}_1}
+\tag{15.16}
 \]</span></p>
-<p>The values in the second column (<code>Z_1:2</code>) are the coefficients
-<span class="math inline">\(\mathbf{b^\text{ols}_{1:2}}\)</span> when using PC1 and PC2</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z_{1:2}} \mathbf{b^\text{pcr}_{1:2}} = (\mathbf{X V_{1:2}}) \mathbf{b^\text{pcr}_{1:2}} = \mathbf{X} (\mathbf{V_{1:2}} \mathbf{b^\text{pcr}_{1:2}}) = \mathbf{X} \mathbf{b^\text{ols}_{1:2}}
+<p>The values in the second column (<code>Z_1:2</code>) are the <span class="math inline">\(X\)</span>-coefficients
+<span class="math inline">\(\mathbf{\overset{*}{b}_2}\)</span> when using PC1 and PC2</p>
+<p><span class="math display" id="eq:502-17">\[
+\mathbf{\hat{y}} = \mathbf{Z_{1:2}} \mathbf{b^\text{pcr}_{1:2}} = (\mathbf{X V_{1:2}}) \mathbf{b^\text{pcr}_{1:2}} = \mathbf{X} (\mathbf{V_{1:2}} \mathbf{b^\text{pcr}_{1:2}}) = \mathbf{X} \mathbf{\overset{*}{b}_{2}}
+\tag{15.17}
 \]</span></p>
-<p>The values in the third column (<code>Z_1:3</code>) are the coefficients
-<span class="math inline">\(\mathbf{b^\text{ols}_{1:3}}\)</span> when using PC1, PC2 and PC3; and so on.</p>
+<p>The values in the third column (<code>Z_1:3</code>) are the <span class="math inline">\(X\)</span>-coefficients
+<span class="math inline">\(\mathbf{\overset{*}{b}_{3}}\)</span> when using PC1, PC2 and PC3; and so on.</p>
 <p>Obviously, if you keep all components, you aren’t changing anything: you’re
 spending the same amount of money as you were in regular least-squares regression.</p>
 <pre><code>    engine        cyl         hp   city_mpg    hwy_mpg     weight      wheel 
@@ -799,52 +819,56 @@ The typical way is to use cross-validation.</p>
 </div>
 <div id="size-of-coefficients" class="section level3">
 <h3><span class="header-section-number">15.3.2</span> Size of Coefficients</h3>
-<p>Let’s look at the <em>evolution</em> of the PCA regression coefficients. This is a
-very interesting plot that allows us to see how the size of the coefficients
-grow as we add more and more PCs into the regression equation:</p>
+<p>Let’s look at the <em>evolution</em> of the PCR derived coefficients
+<span class="math inline">\(\mathbf{\overset{*}{b}_{k}}\)</span>. This is a very interesting plot that allows us
+to see how the size of the coefficients grow as we add more and more PCs into
+the regression equation.</p>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-134-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="selecting-number-of-pcs" class="section level2">
 <h2><span class="header-section-number">15.4</span> Selecting Number of PCs</h2>
-<p>The number <span class="math inline">\(q\)</span> of PCs to use in PC Regression is a hyperparameter or tuning
+<p>The number <span class="math inline">\(k\)</span> of PCs to use in PC Regression is a hyperparameter or tuning
 parameter. This means that we cannot derive an analytical expression that tells
-us what the number <span class="math inline">\(q\)</span> of PCs is the optimal to be used. So how do we find <span class="math inline">\(q\)</span>?
-We find <span class="math inline">\(q\)</span> through resampling methods; the most popular resampling technique
-that most practioners apply is <span class="math inline">\(K\)</span>-fold cross-validation. Here’s a description
-of the steps to be carried out:</p>
+us what the number <span class="math inline">\(k\)</span> of PCs is the optimal to be used. So how do we find <span class="math inline">\(k\)</span>?
+We find <span class="math inline">\(k\)</span> through resampling methods; the most popular resampling technique
+that most practioners apply is cross-validation, or other type of resampling
+approach. Here’s a description of the steps to be carried out.</p>
 <p>Assumet that we have a training data set consisting of <span class="math inline">\(n\)</span> data points:
 <span class="math inline">\(\mathcal{D}_{train} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>.
-Using <span class="math inline">\(K\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(K\)</span> folds:</p>
+To avoid confusion between the number of components <span class="math inline">\(k\)</span>, and the number of folds
+<span class="math inline">\(K\)</span>, here we are going to use <span class="math inline">\(Q = K\)</span> to indicate the index of folds.</p>
+<p>Using <span class="math inline">\(Q\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(Q\)</span> folds:</p>
 <p><span class="math display">\[
-\mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-K}
+\mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-Q}
 \]</span></p>
-<p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-k}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-k}\)</span>.
-Having defined the <span class="math inline">\(k\)</span> fold sets, we form the corresponding <span class="math inline">\(K\)</span> retraining sets:</p>
+<p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-q}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-q}\)</span>.
+Having defined <span class="math inline">\(Q\)</span> fold sets, we form the corresponding <span class="math inline">\(Q\)</span> retraining sets:</p>
 <ul>
 <li><span class="math inline">\(\mathcal{D}_{train-1} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-1}\)</span></li>
 <li><span class="math inline">\(\mathcal{D}_{train-2} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-2}\)</span></li>
 <li><span class="math inline">\(\dots\)</span></li>
-<li><span class="math inline">\(\mathcal{D}_{train-K} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-K}\)</span></li>
+<li><span class="math inline">\(\mathcal{D}_{train-Q} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-Q}\)</span></li>
 </ul>
-<p>The cross-validation procedure then repeats the following loops:</p>
+<p>The cross-validation procedure then repeats the following loop:</p>
 <ul>
-<li>For <span class="math inline">\(q = 1, 2, \dots, r = rank(\mathbf{X})\)</span>
+<li>For <span class="math inline">\(k = 1, 2, \dots, r = rank(\mathbf{X})\)</span>
 <ul>
-<li>For <span class="math inline">\(k = 1, \dots, K\)</span>
+<li>For <span class="math inline">\(q = 1, \dots, Q\)</span>
 <ul>
-<li>fit PCR model <span class="math inline">\(h_{q,k}\)</span> with <span class="math inline">\(q\)</span>-PCs on <span class="math inline">\(\mathcal{D}_{train-k}\)</span></li>
-<li>compute and store <span class="math inline">\(E_{eval-k} (h_{q,k})\)</span> using <span class="math inline">\(\mathcal{D}_{eval-k}\)</span></li>
-</ul></li>
-<li>end for <span class="math inline">\(k\)</span></li>
-<li>compute and store <span class="math inline">\(E_{cv_{q}} = \frac{1}{K} \sum_k E_{eval-k}(h_{q,k})\)</span></li>
+<li>fit PCR model <span class="math inline">\(h_{k,q}\)</span> with <span class="math inline">\(k\)</span>-PCs on <span class="math inline">\(\mathcal{D}_{train-q}\)</span></li>
+<li>compute and store <span class="math inline">\(E_{eval-q} (h_{k,q})\)</span> using <span class="math inline">\(\mathcal{D}_{eval-q}\)</span></li>
 </ul></li>
 <li>end for <span class="math inline">\(q\)</span></li>
-<li>Compare all cross-validation errors <span class="math inline">\(E_{cv_1}, E_{cv_2}, \dots, E_{cv_r}\)</span> and choose the smallest of them, say <span class="math inline">\(E_{cv_{q^*}}\)</span></li>
-<li>Use <span class="math inline">\(q^*\)</span> PCs to fit the (finalist) PCR model:
-<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} + \dots + b_q^* \mathbf{z_q^*} = \mathbf{Z_{1:q^*}} \mathbf{b_{q^*}}\)</span></li>
+<li>compute and store <span class="math inline">\(E_{cv_{k}} = \frac{1}{Q} \sum_k E_{eval-q}(h_{k,q})\)</span></li>
+</ul></li>
+<li>end for <span class="math inline">\(k\)</span></li>
+<li>Compare all cross-validation errors <span class="math inline">\(E_{cv_1}, E_{cv_2}, \dots, E_{cv_r}\)</span> and
+choose the smallest of them, say <span class="math inline">\(E_{cv_{k^*}}\)</span></li>
+<li>Use <span class="math inline">\(k^*\)</span> PCs to fit the (finalist) PCR model:
+<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} + \dots + b_k^* \mathbf{z_k^*} = \mathbf{Z_{1:k^*}} \mathbf{b_{1:k^*}}\)</span></li>
 <li>Remember that we can reexpress the PCR model in terms of the original
-predictors: <span class="math inline">\(\mathbf{\hat{y}} = (\mathbf{XV_{1:q^*}}) \mathbf{b_{q^*}}\)</span></li>
+predictors: <span class="math inline">\(\mathbf{\hat{y}} = (\mathbf{XV_{1:k^*}}) \mathbf{b_{1:k^*}} = \mathbf{X} \mathbf{\overset{*}{b}_k}\)</span></li>
 </ul>
 <div id="remarks" class="section level4 unnumbered">
 <h4>Remarks</h4>

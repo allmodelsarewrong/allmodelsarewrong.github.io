@@ -620,13 +620,13 @@ Here’s a description of the steps to be carried out.</p>
 <p>Assumet that we have a training data set consisting of <span class="math inline">\(n\)</span> data points:
 <span class="math inline">\(\mathcal{D}_{train} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>.
 To avoid confusion between the number of neighbors <span class="math inline">\(k\)</span>, and the number of folds
-<span class="math inline">\(K\)</span>, here we are going to use <span class="math inline">\(Q = K\)</span> to indicate the index of folds.
-Using <span class="math inline">\(Q\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(Q\)</span> folds:</p>
+<span class="math inline">\(K\)</span>, here we are going to use <span class="math inline">\(Q = K\)</span> to indicate the index of folds.</p>
+<p>Using <span class="math inline">\(Q\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(Q\)</span> folds:</p>
 <p><span class="math display">\[
 \mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-Q}
 \]</span></p>
 <p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-q}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-q}\)</span>.
-Having defined the <span class="math inline">\(Q\)</span> fold sets, we form the corresponding <span class="math inline">\(Q\)</span> retraining sets:</p>
+Having defined <span class="math inline">\(Q\)</span> fold sets, we form the corresponding <span class="math inline">\(Q\)</span> retraining sets:</p>
 <ul>
 <li><span class="math inline">\(\mathcal{D}_{train-1} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-1}\)</span></li>
 <li><span class="math inline">\(\mathcal{D}_{train-2} = \mathcal{D}_{train} \setminus \mathcal{D}_{fold-2}\)</span></li>
