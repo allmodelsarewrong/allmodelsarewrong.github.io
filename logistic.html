@@ -288,8 +288,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>16.3</b> How does PLSR work?</a></li>
 <li class="chapter" data-level="16.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>16.4</b> PLSR Algorithm</a><ul>
 <li class="chapter" data-level="16.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>16.4.1</b> PLS Solution with original variables</a></li>
-<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.2</b> Size of Coefficients</a></li>
-<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.3</b> Some Properties</a></li>
+<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.2</b> Some Properties</a></li>
+<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#pls-regression-for-price-of-cars"><i class="fa fa-check"></i><b>16.4.3</b> PLS Regression for Price of cars</a></li>
+<li class="chapter" data-level="16.4.4" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.4</b> Size of Coefficients</a></li>
 </ul></li>
 <li class="chapter" data-level="16.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>16.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
@@ -579,27 +580,27 @@ b_0 \\ b_1 \\
 \end{pmatrix}
 \]</span></p>
 <p>So let’s see what happens if we use least squares to fit a line for this model.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="logistic.html#cb32-1"></a><span class="co"># fit line via OLS</span></span>
-<span id="cb32-2"><a href="logistic.html#cb32-2"></a>reg =<span class="st"> </span><span class="kw">lm</span>(chd <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> dat)</span>
-<span id="cb32-3"><a href="logistic.html#cb32-3"></a><span class="kw">summary</span>(reg)</span>
-<span id="cb32-4"><a href="logistic.html#cb32-4"></a><span class="co">#&gt; </span></span>
-<span id="cb32-5"><a href="logistic.html#cb32-5"></a><span class="co">#&gt; Call:</span></span>
-<span id="cb32-6"><a href="logistic.html#cb32-6"></a><span class="co">#&gt; lm(formula = chd ~ age, data = dat)</span></span>
-<span id="cb32-7"><a href="logistic.html#cb32-7"></a><span class="co">#&gt; </span></span>
-<span id="cb32-8"><a href="logistic.html#cb32-8"></a><span class="co">#&gt; Residuals:</span></span>
-<span id="cb32-9"><a href="logistic.html#cb32-9"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span id="cb32-10"><a href="logistic.html#cb32-10"></a><span class="co">#&gt; -0.85793 -0.33992 -0.07274  0.31656  0.99269 </span></span>
-<span id="cb32-11"><a href="logistic.html#cb32-11"></a><span class="co">#&gt; </span></span>
-<span id="cb32-12"><a href="logistic.html#cb32-12"></a><span class="co">#&gt; Coefficients:</span></span>
-<span id="cb32-13"><a href="logistic.html#cb32-13"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb32-14"><a href="logistic.html#cb32-14"></a><span class="co">#&gt; (Intercept) -0.537960   0.168809  -3.187  0.00193 ** </span></span>
-<span id="cb32-15"><a href="logistic.html#cb32-15"></a><span class="co">#&gt; age          0.021811   0.003679   5.929 4.57e-08 ***</span></span>
-<span id="cb32-16"><a href="logistic.html#cb32-16"></a><span class="co">#&gt; ---</span></span>
-<span id="cb32-17"><a href="logistic.html#cb32-17"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb32-18"><a href="logistic.html#cb32-18"></a><span class="co">#&gt; </span></span>
-<span id="cb32-19"><a href="logistic.html#cb32-19"></a><span class="co">#&gt; Residual standard error: 0.429 on 98 degrees of freedom</span></span>
-<span id="cb32-20"><a href="logistic.html#cb32-20"></a><span class="co">#&gt; Multiple R-squared:  0.264,  Adjusted R-squared:  0.2565 </span></span>
-<span id="cb32-21"><a href="logistic.html#cb32-21"></a><span class="co">#&gt; F-statistic: 35.15 on 1 and 98 DF,  p-value: 4.575e-08</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="logistic.html#cb31-1"></a><span class="co"># fit line via OLS</span></span>
+<span id="cb31-2"><a href="logistic.html#cb31-2"></a>reg =<span class="st"> </span><span class="kw">lm</span>(chd <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> dat)</span>
+<span id="cb31-3"><a href="logistic.html#cb31-3"></a><span class="kw">summary</span>(reg)</span>
+<span id="cb31-4"><a href="logistic.html#cb31-4"></a><span class="co">#&gt; </span></span>
+<span id="cb31-5"><a href="logistic.html#cb31-5"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb31-6"><a href="logistic.html#cb31-6"></a><span class="co">#&gt; lm(formula = chd ~ age, data = dat)</span></span>
+<span id="cb31-7"><a href="logistic.html#cb31-7"></a><span class="co">#&gt; </span></span>
+<span id="cb31-8"><a href="logistic.html#cb31-8"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb31-9"><a href="logistic.html#cb31-9"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb31-10"><a href="logistic.html#cb31-10"></a><span class="co">#&gt; -0.85793 -0.33992 -0.07274  0.31656  0.99269 </span></span>
+<span id="cb31-11"><a href="logistic.html#cb31-11"></a><span class="co">#&gt; </span></span>
+<span id="cb31-12"><a href="logistic.html#cb31-12"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb31-13"><a href="logistic.html#cb31-13"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb31-14"><a href="logistic.html#cb31-14"></a><span class="co">#&gt; (Intercept) -0.537960   0.168809  -3.187  0.00193 ** </span></span>
+<span id="cb31-15"><a href="logistic.html#cb31-15"></a><span class="co">#&gt; age          0.021811   0.003679   5.929 4.57e-08 ***</span></span>
+<span id="cb31-16"><a href="logistic.html#cb31-16"></a><span class="co">#&gt; ---</span></span>
+<span id="cb31-17"><a href="logistic.html#cb31-17"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb31-18"><a href="logistic.html#cb31-18"></a><span class="co">#&gt; </span></span>
+<span id="cb31-19"><a href="logistic.html#cb31-19"></a><span class="co">#&gt; Residual standard error: 0.429 on 98 degrees of freedom</span></span>
+<span id="cb31-20"><a href="logistic.html#cb31-20"></a><span class="co">#&gt; Multiple R-squared:  0.264,  Adjusted R-squared:  0.2565 </span></span>
+<span id="cb31-21"><a href="logistic.html#cb31-21"></a><span class="co">#&gt; F-statistic: 35.15 on 1 and 98 DF,  p-value: 4.575e-08</span></span></code></pre></div>
 <p>Looking at the estimated coefficients, in particular the coefficient of <em>age</em>,
 there seems to be some sort of positive relation between <em>age</em> and <em>chd</em>.
 Which, in this example, it does make sense and matches what we previously

@@ -288,8 +288,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>16.3</b> How does PLSR work?</a></li>
 <li class="chapter" data-level="16.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>16.4</b> PLSR Algorithm</a><ul>
 <li class="chapter" data-level="16.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>16.4.1</b> PLS Solution with original variables</a></li>
-<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.2</b> Size of Coefficients</a></li>
-<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.3</b> Some Properties</a></li>
+<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.2</b> Some Properties</a></li>
+<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#pls-regression-for-price-of-cars"><i class="fa fa-check"></i><b>16.4.3</b> PLS Regression for Price of cars</a></li>
+<li class="chapter" data-level="16.4.4" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.4</b> Size of Coefficients</a></li>
 </ul></li>
 <li class="chapter" data-level="16.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>16.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
@@ -531,77 +532,77 @@ about this data in the following url:</p>
 <p>The data set consists of
 10 variables measured on 385 cars. Here’s what
 the first six rows (and ten columns) look like:</p>
-<pre><code>#&gt;                               price engine cyl  hp city_mpg
-#&gt; Acura 3.5 RL 4dr              43755    3.5   6 225       18
-#&gt; Acura 3.5 RL w/Navigation 4dr 46100    3.5   6 225       18
-#&gt; Acura MDX                     36945    3.5   6 265       17
-#&gt; Acura NSX coupe 2dr manual S  89765    3.2   6 290       17
-#&gt; Acura RSX Type S 2dr          23820    2.0   4 200       24
-#&gt; Acura TL 4dr                  33195    3.2   6 270       20
-#&gt;                               hwy_mpg weight wheel length width
-#&gt; Acura 3.5 RL 4dr                   24   3880   115    197    72
-#&gt; Acura 3.5 RL w/Navigation 4dr      24   3893   115    197    72
-#&gt; Acura MDX                          23   4451   106    189    77
-#&gt; Acura NSX coupe 2dr manual S       24   3153   100    174    71
-#&gt; Acura RSX Type S 2dr               31   2778   101    172    68
-#&gt; Acura TL 4dr                       28   3575   108    186    72</code></pre>
+<pre><code>                              price engine cyl  hp city_mpg
+Acura 3.5 RL 4dr              43755    3.5   6 225       18
+Acura 3.5 RL w/Navigation 4dr 46100    3.5   6 225       18
+Acura MDX                     36945    3.5   6 265       17
+Acura NSX coupe 2dr manual S  89765    3.2   6 290       17
+Acura RSX Type S 2dr          23820    2.0   4 200       24
+Acura TL 4dr                  33195    3.2   6 270       20
+                              hwy_mpg weight wheel length width
+Acura 3.5 RL 4dr                   24   3880   115    197    72
+Acura 3.5 RL w/Navigation 4dr      24   3893   115    197    72
+Acura MDX                          23   4451   106    189    77
+Acura NSX coupe 2dr manual S       24   3153   100    174    71
+Acura RSX Type S 2dr               31   2778   101    172    68
+Acura TL 4dr                       28   3575   108    186    72</code></pre>
 <p>In this example we take the variable <code>price</code> as the response, and the rest of
 the columns as input or predictor variables:</p>
 <ul>
-<li><code>engine</code></li>
-<li><code>cyl</code></li>
-<li><code>hp</code></li>
-<li><code>city_mpg</code></li>
-<li><code>hw_mpg</code></li>
-<li><code>weight</code></li>
-<li><code>wheel</code></li>
-<li><code>length</code></li>
-<li><code>width</code></li>
+<li><code>engine</code>: engine size (liters)</li>
+<li><code>cyl</code>: number of cylinders</li>
+<li><code>hp</code>: horsepower</li>
+<li><code>city_mpg</code>: city miles per gallon</li>
+<li><code>hw_mpg</code>: highway miles per gallon</li>
+<li><code>weight</code>: weights (pounds)</li>
+<li><code>wheel</code>: wheel base (inches)</li>
+<li><code>length</code>: length (inches)</li>
+<li><code>width</code>: width (inches)</li>
 </ul>
 <p>The regression model is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-1">\[
 \texttt{price} = b_0 + b_1 \texttt{cyl} + b_2 \texttt{hp} + \dots + b_9 \texttt{width} + \boldsymbol{\varepsilon}
+\tag{15.1}
 \]</span></p>
 <p>For exploration purposes, let’s examine the matrix of correlations among all
 variables:</p>
-<pre><code>#&gt;          engine   cyl    hp city_mpg hwy_mpg weight  wheel length  width
-#&gt; price       0.6 0.654 0.836   -0.485  -0.469  0.476  0.204  0.210  0.314
-#&gt; engine          0.912 0.778   -0.706  -0.708  0.812  0.631  0.624  0.727
-#&gt; cyl                   0.792   -0.670  -0.664  0.731  0.553  0.547  0.621
-#&gt; hp                            -0.672  -0.652  0.631  0.396  0.381  0.500
-#&gt; city_mpg                               0.941 -0.736 -0.481 -0.468 -0.590
-#&gt; hwy_mpg                                      -0.789 -0.455 -0.390 -0.585
-#&gt; weight                                               0.751  0.653  0.808
-#&gt; wheel                                                       0.867  0.760
-#&gt; length                                                             0.752</code></pre>
+<pre><code>         engine   cyl    hp city_mpg hwy_mpg weight  wheel length  width
+price       0.6 0.654 0.836   -0.485  -0.469  0.476  0.204  0.210  0.314
+engine          0.912 0.778   -0.706  -0.708  0.812  0.631  0.624  0.727
+cyl                   0.792   -0.670  -0.664  0.731  0.553  0.547  0.621
+hp                            -0.672  -0.652  0.631  0.396  0.381  0.500
+city_mpg                               0.941 -0.736 -0.481 -0.468 -0.590
+hwy_mpg                                      -0.789 -0.455 -0.390 -0.585
+weight                                               0.751  0.653  0.808
+wheel                                                       0.867  0.760
+length                                                             0.752</code></pre>
 <p>And let’s also take a look at the circle of correlations, from the output of
 a PCA on the entire data set:</p>
-<pre><code>#&gt; Error in text.default(cars_pca$var$coord[1, 1], cars_pca$var$coord[1, : plot.new has not been called yet</code></pre>
 <p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-122-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Computing the OLS solution for the regression model of <code>price</code> onto the
 other nine predictors we obtain:</p>
-<pre><code>#&gt;               Estimate  Std. Error  t value   Pr(&gt;|t|)
-#&gt; (Intercept)  32536.025   17777.488   1.8302  6.802e-02
-#&gt; engine       -3273.053    1542.595  -2.1218  3.451e-02
-#&gt; cyl           2520.927     896.202   2.8129  5.168e-03
-#&gt; hp             246.595      13.201  18.6797  1.621e-55
-#&gt; city_mpg      -229.987     332.824  -0.6910  4.900e-01
-#&gt; hwy_mpg        979.967     345.558   2.8359  4.817e-03
-#&gt; weight           9.937       2.045   4.8584  1.741e-06
-#&gt; wheel         -695.392     172.896  -4.0220  6.980e-05
-#&gt; length          33.690      89.660   0.3758  7.073e-01
-#&gt; width         -635.382     306.344  -2.0741  3.875e-02</code></pre>
-<p>Out of curiosity, let’s compare the correlations and the coefficients:</p>
-<pre><code>#&gt;           correlation  coefficient
-#&gt; engine      0.5997873  -3273.05304
-#&gt; cyl         0.6544123   2520.92691
-#&gt; hp          0.8360930    246.59496
-#&gt; city_mpg   -0.4854130   -229.98735
-#&gt; hwy_mpg    -0.4694315    979.96656
-#&gt; weight      0.4760867      9.93652
-#&gt; wheel       0.2035464   -695.39157
-#&gt; length      0.2096682     33.69009
-#&gt; width       0.3135383   -635.38224</code></pre>
+<pre><code>              Estimate  Std. Error  t value   Pr(&gt;|t|)
+(Intercept)  32536.025   17777.488   1.8302  6.802e-02
+engine       -3273.053    1542.595  -2.1218  3.451e-02
+cyl           2520.927     896.202   2.8129  5.168e-03
+hp             246.595      13.201  18.6797  1.621e-55
+city_mpg      -229.987     332.824  -0.6910  4.900e-01
+hwy_mpg        979.967     345.558   2.8359  4.817e-03
+weight           9.937       2.045   4.8584  1.741e-06
+wheel         -695.392     172.896  -4.0220  6.980e-05
+length          33.690      89.660   0.3758  7.073e-01
+width         -635.382     306.344  -2.0741  3.875e-02</code></pre>
+<p>Out of curiosity, let’s compare the correlations—of the predictors and <code>price</code>—with the corresponding regression coefficients:</p>
+<pre><code>          correlation  coefficient
+engine      0.5997873  -3273.05304
+cyl         0.6544123   2520.92691
+hp          0.8360930    246.59496
+city_mpg   -0.4854130   -229.98735
+hwy_mpg    -0.4694315    979.96656
+weight      0.4760867      9.93652
+wheel       0.2035464   -695.39157
+length      0.2096682     33.69009
+width       0.3135383   -635.38224</code></pre>
 <p>As you can tell from the above output, some correlation signs don’t match
 the signs of their corresponding regression coefficients. For example,
 <code>engine</code> is positively correlated with <code>price</code> but it turns out to have a
@@ -610,7 +611,8 @@ correlated with <code>price</code> but it has a positive regression coefficient.
 </div>
 <div id="the-pcr-model" class="section level2">
 <h2><span class="header-section-number">15.2</span> The PCR Model</h2>
-<p>In PCR, we seek principal components <span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>,
+<p>In PCR, like in PCA, we seek principal components
+<span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>,
 linear combinations of the inputs: <span class="math inline">\(\mathbf{z_k} = \mathbf{Xv_k}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-125"></span>
 <img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
@@ -620,8 +622,9 @@ Figure 15.1: PCs as linear combinations of input variables
 </div>
 <p>If we retain all principal components, then we know that we can factorize the
 input matrix <span class="math inline">\(\mathbf{X}\)</span> as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-2">\[
 \mathbf{X} = \mathbf{Z V^\mathsf{T}}
+\tag{15.2}
 \]</span></p>
 <p>where:</p>
 <ul>
@@ -631,9 +634,10 @@ input matrix <span class="math inline">\(\mathbf{X}\)</span> as:</p>
 <p>If we only keep a subset of <span class="math inline">\(k &lt; p\)</span> PCs, then we have a decomposition of the
 data matrix into a <em>signal</em> part captured by <span class="math inline">\(k\)</span> components, and a <em>residual</em>
 or noise part:</p>
-<span class="math display">\[
+<p><span class="math display" id="eq:502-3">\[
 \underset{n \times p}{\mathbf{X}} = \underset{n \times k}{\mathbf{Z}} \hspace{1mm} \underset{k \times p}{\mathbf{V^\mathsf{T}}} + \underset{n \times p}{\mathbf{E}}
-\]</span>
+\tag{15.3}
+\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-126"></span>
 <img src="images/pcr/pcr-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
 <p class="caption">
@@ -643,8 +647,9 @@ Figure 15.2: Matrix diagram for inputs
 <p>The idea is to use the components <span class="math inline">\(\mathbf{Z}\)</span> as predictors of <span class="math inline">\(\mathbf{y}\)</span>.
 More specifically, the idea is to fit a linear regression in order to find
 coefficients <span class="math inline">\(\mathbf{b}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-4">\[
 \mathbf{y} = \mathbf{Zb} + \mathbf{e}
+\tag{15.4}
 \]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-127"></span>
 <img src="images/pcr/pcr-response-model.svg" alt="Matrix diagram for response" width="50%" />
@@ -656,43 +661,52 @@ Figure 15.3: Matrix diagram for response
 In other words, if we only keep a subset of <span class="math inline">\(k &lt; p\)</span> PCs, then the idea of PCR
 remains constant: use the <span class="math inline">\(k\)</span> components in <span class="math inline">\(\mathbf{Z}\)</span> as
 predictors of <span class="math inline">\(\mathbf{y}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-5">\[
 \mathbf{\hat{y}} = \mathbf{Z b}
+\tag{15.5}
 \]</span></p>
 <p>Without loss of generality, suppose the predictors and response are standardized.
 In Principal Components Regression we regress <span class="math inline">\(\mathbf{y}\)</span> onto the PC’s:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-6">\[
 \mathbf{\hat{y}} = b_1 \mathbf{z_1} + b \mathbf{z_2} 
 + \dots + b_p \mathbf{z_k}
+\tag{15.6}
 \]</span></p>
 <p>The vector of PCR coefficients is obtained via ordinary least squares (OLS):</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-7">\[
 \mathbf{b} = \mathbf{(Z^\mathsf{T} Z)^{-1} Z^\mathsf{T} y}
+\tag{15.7}
 \]</span></p>
 <p>Using the <code>cars2004</code> data set, with the PCA of the inputs, we can run a linear
 regression of <code>price</code> onto all nine PCs:</p>
-<pre><code>#&gt; Regression coefficients for all PCs
-#&gt;       Estimate  Std. Error   t value  Pr(&gt;|t|)
-#&gt; PC1  -4470.761    205.1288  -21.7949    0.0000
-#&gt; PC2   7608.419    468.4759   16.2408    0.0000
-#&gt; PC3  -9650.324    660.1829  -14.6177    0.0000
-#&gt; PC4  -1768.547    980.6487   -1.8034    0.0721
-#&gt; PC5  10528.146   1115.0825    9.4416    0.0000
-#&gt; PC6  -5593.736   1177.6700   -4.7498    0.0000
-#&gt; PC7  -5746.452   1721.5725   -3.3379    0.0009
-#&gt; PC8  -7606.196   1926.3769   -3.9484    0.0001
-#&gt; PC9   5473.090   2660.3834    2.0573    0.0404</code></pre>
-<p>If we only take the first two PCs, then the regression coefficients are:</p>
-<pre><code>#&gt;       Estimate  Std. Error   t value  Pr(&gt;|t|)
-#&gt; PC1  -4470.761    205.1288  -21.7949         0
-#&gt; PC2   7608.419    468.4759   16.2408         0</code></pre>
+<pre><code>Regression coefficients for all PCs 
+      Estimate  Std. Error   t value  Pr(&gt;|t|)
+PC1  -4470.761    205.1288  -21.7949    0.0000
+PC2   7608.419    468.4759   16.2408    0.0000
+PC3  -9650.324    660.1829  -14.6177    0.0000
+PC4  -1768.547    980.6487   -1.8034    0.0721
+PC5  10528.146   1115.0825    9.4416    0.0000
+PC6  -5593.736   1177.6700   -4.7498    0.0000
+PC7  -5746.452   1721.5725   -3.3379    0.0009
+PC8  -7606.196   1926.3769   -3.9484    0.0001
+PC9   5473.090   2660.3834    2.0573    0.0404</code></pre>
+<p>If we only take the first two PCs, the regression equation is</p>
+<p><span class="math display" id="eq:502-8">\[
+\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b \mathbf{z_2}
+\tag{15.8}
+\]</span></p>
+<p>and the regression coefficients are:</p>
+<pre><code>      Estimate  Std. Error   t value  Pr(&gt;|t|)
+PC1  -4470.761    205.1288  -21.7949         0
+PC2   7608.419    468.4759   16.2408         0</code></pre>
 <p>Likewise, if take only the first three PCs, then the regression coefficients are:</p>
-<pre><code>#&gt;       Estimate  Std. Error   t value  Pr(&gt;|t|)
-#&gt; PC1  -4470.761    205.1288  -21.7949         0
-#&gt; PC2   7608.419    468.4759   16.2408         0
-#&gt; PC3  -9650.324    660.1829  -14.6177         0</code></pre>
-<p>Because of uncorrelatedness, the contributions and estimated coefficient of
-a PC are unaffected by which other PCs are also included in the regression.</p>
+<pre><code>      Estimate  Std. Error   t value  Pr(&gt;|t|)
+PC1  -4470.761    205.1288  -21.7949         0
+PC2   7608.419    468.4759   16.2408         0
+PC3  -9650.324    660.1829  -14.6177         0</code></pre>
+<p>Because of uncorrelatedness among principal components, the contributions and
+estimated coefficient of a PC are unaffected by which other PCs are also
+included in the regression.</p>
 </div>
 <div id="how-does-pcr-work" class="section level2">
 <h2><span class="header-section-number">15.3</span> How does PCR work?</h2>
@@ -703,11 +717,12 @@ SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</spa
 <span class="math inline">\(\mathbf{X} = \mathbf{Z V^\mathsf{T}}\)</span>
 (the matrix of PC’s times the transpose of the matrix of loadings).</p>
 <p>From OLS, we have:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:502-9">\[
 \mathbf{\hat{y}} = \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} = \mathbf{Xb}_\text{ols}
+\tag{15.9}
 \]</span></p>
 <p>We can replace <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z V^\mathsf{T}}\)</span>:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:502-10">\[\begin{align*}
 \mathbf{\hat{y}} &amp;= \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} \\
  &amp;= \mathbf{Z V^\mathsf{T}} \left (\mathbf{(Z V^\mathsf{T})^\mathsf{T} Z V^\mathsf{T}} \right )^{-1} \mathbf{(Z V^\mathsf{T})^\mathsf{T} y} \\
  &amp;= \mathbf{Z V^\mathsf{T}} \left (\mathbf{V Z^\mathsf{T} Z V^\mathsf{T}} \right )^{-1} \mathbf{V Z^\mathsf{T} y} \\
@@ -715,54 +730,68 @@ SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</spa
  &amp;= \mathbf{Z V^\mathsf{T}} (\mathbf{V} \mathbf{\Lambda}^{-1} \mathbf{V^\mathsf{T}}) \mathbf{V Z^\mathsf{T} y} \\
  &amp;= \mathbf{Z} \mathbf{\Lambda}^{-1} \mathbf{Z^\mathsf{T} y} \\
  &amp;= \mathbf{Zb}_\text{pcr}
+\tag{15.10}
 \end{align*}\]</span></p>
 <div id="transition-formula" class="section level3">
 <h3><span class="header-section-number">15.3.1</span> Transition Formula</h3>
 <p>In PCR, if <span class="math inline">\(k = p\)</span> (and assuming <span class="math inline">\(\mathbf{X}\)</span> is of full-rank), which means
 that if you keep all PC’s, what happens is:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:502-11">\[\begin{align*}
 \mathbf{\hat{y}} &amp;= \mathbf{X} \mathbf{b}_{\text{ols}} \\
 &amp;= \mathbf{Z V^\mathsf{T}} \mathbf{b}_{\text{ols}} \\
 &amp;= \mathbf{Z} \mathbf{b}_{\text{pcr}}
+\tag{15.11}
 \end{align*}\]</span></p>
 <p>We can reexpress the PCR coefficients in terms of the original variables.</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:502-12">\[\begin{align*}
 \mathbf{\hat{y}} &amp;= \mathbf{Z} \mathbf{b}_{\text{pcr}} \\
 &amp;= \mathbf{X V} \mathbf{b}_{\text{pcr}} \\
 &amp;= \mathbf{X} \mathbf{b}_{\text{ols}}
+\tag{15.12}
 \end{align*}\]</span></p>
-<p>In summary, we can go back and forth between regression coefficients for PC
-scores, and regression coefficients for original input features:</p>
+<p>In summary, we can go back and forth between regression coefficients
+<span class="math inline">\(\mathbf{b}_\text{pcr}\)</span> for PC scores, and regression coefficients
+<span class="math inline">\(\mathbf{b}_\text{ols}\)</span> for original input features, using the
+following transition equations:</p>
 <ul>
 <li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X} \mathbf{b}_\text{ols} = \mathbf{Z V^\mathsf{T}} \mathbf{b}_\text{ols} = \mathbf{Z b}_\text{pcr}\)</span></p></li>
 <li><p><span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_\text{pcr} = \mathbf{X V} \mathbf{b}_\text{pcr} = \mathbf{X b}_\text{ols}\)</span></p></li>
 </ul>
 <p>The following output shows the regression coefficients of all nine regression
-equations in terms of the original input variables. For example, the values
-in the first column (column <code>Z_1:1</code>) are the regression coefficients of the
-<span class="math inline">\(X\)</span> inputs when using the first PC. The values in the second column (<code>Z_1:2</code>)
-are the coefficients when using PC1 and PC2; and so on.</p>
-<pre><code>#&gt;          Z_1:1 Z_1:2 Z_1:3 Z_1:4 Z_1:5 Z_1:6   Z_1:7 Z_1:8 Z_1:9
-#&gt; engine    1641  2345  5487  5203  1887  1064  2168.5 -3551 -3327
-#&gt; cyl       1544  2881  7312  7289  2213  1401  -295.5  3856  3766
-#&gt; hp        1377  4148  8402  8755 16016 17348 17585.7 17700 17352
-#&gt; city_mpg -1487 -3864   459  -149  -470   999  1891.3  2151 -1213
-#&gt; hwy_mpg  -1472 -4140   583   516  1633  1468  1477.9  1607  5536
-#&gt; weight    1642  1261  -510 -1187 -2266   707  3557.7  5507  7033
-#&gt; wheel     1385 -2392 -2860 -2422 -3009  -187 -3315.7 -4832 -4938
-#&gt; length    1332 -2634 -2202 -1346  -883 -2778    28.2  1260   447
-#&gt; width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
+equations in terms of the original input variables.</p>
+<pre><code>         Z_1:1 Z_1:2 Z_1:3 Z_1:4 Z_1:5 Z_1:6   Z_1:7 Z_1:8 Z_1:9
+engine    1641  2345  5487  5203  1887  1064  2168.5 -3551 -3327
+cyl       1544  2881  7312  7289  2213  1401  -295.5  3856  3766
+hp        1377  4148  8402  8755 16016 17348 17585.7 17700 17352
+city_mpg -1487 -3864   459  -149  -470   999  1891.3  2151 -1213
+hwy_mpg  -1472 -4140   583   516  1633  1468  1477.9  1607  5536
+weight    1642  1261  -510 -1187 -2266   707  3557.7  5507  7033
+wheel     1385 -2392 -2860 -2422 -3009  -187 -3315.7 -4832 -4938
+length    1332 -2634 -2202 -1346  -883 -2778    28.2  1260   447
+width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
+<p>For example, the values in the first column (column <code>Z_1:1</code>) are the regression
+coefficients of the <span class="math inline">\(X\)</span> inputs when using the first PC.</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = b_1^\text{pcr} \mathbf{z_1} = b_1^\text{pcr} \mathbf{Xv_1} = \mathbf{X} (b_1^\text{pcr} \mathbf{v_1}) = \mathbf{X} \mathbf{b^\text{ols}_1}
+\]</span></p>
+<p>The values in the second column (<code>Z_1:2</code>) are the coefficients
+<span class="math inline">\(\mathbf{b^\text{ols}_{1:2}}\)</span> when using PC1 and PC2</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{Z_{1:2}} \mathbf{b^\text{pcr}_{1:2}} = (\mathbf{X V_{1:2}}) \mathbf{b^\text{pcr}_{1:2}} = \mathbf{X} (\mathbf{V_{1:2}} \mathbf{b^\text{pcr}_{1:2}}) = \mathbf{X} \mathbf{b^\text{ols}_{1:2}}
+\]</span></p>
+<p>The values in the third column (<code>Z_1:3</code>) are the coefficients
+<span class="math inline">\(\mathbf{b^\text{ols}_{1:3}}\)</span> when using PC1, PC2 and PC3; and so on.</p>
 <p>Obviously, if you keep all components, you aren’t changing anything: you’re
 spending the same amount of money as you were in regular least-squares regression.</p>
-<pre><code>#&gt;     engine        cyl         hp   city_mpg    hwy_mpg     weight      wheel 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
-#&gt;     length      width 
-#&gt;   446.9752 -2141.8196</code></pre>
+<pre><code>    engine        cyl         hp   city_mpg    hwy_mpg     weight      wheel 
+-3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
+    length      width 
+  446.9752 -2141.8196 </code></pre>
 <p>compare with the regression coefficients of OLS:</p>
-<pre><code>#&gt;    Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight     Xwheel 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
-#&gt;    Xlength     Xwidth 
-#&gt;   446.9752 -2141.8196</code></pre>
+<pre><code>   Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight     Xwheel 
+-3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
+   Xlength     Xwidth 
+  446.9752 -2141.8196 </code></pre>
 <p>The idea is to keep only a few components. Hence, the goal is to find <span class="math inline">\(k\)</span>
 principal components (with <span class="math inline">\(k \ll p\)</span>; <span class="math inline">\(k\)</span> is called the <strong>tuning parameter</strong>
 or the <strong>hyperparameter</strong>). How do we determine <span class="math inline">\(k\)</span>?

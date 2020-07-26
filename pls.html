@@ -288,8 +288,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.3" data-path="pls.html"><a href="pls.html#how-does-plsr-work"><i class="fa fa-check"></i><b>16.3</b> How does PLSR work?</a></li>
 <li class="chapter" data-level="16.4" data-path="pls.html"><a href="pls.html#plsr-algorithm"><i class="fa fa-check"></i><b>16.4</b> PLSR Algorithm</a><ul>
 <li class="chapter" data-level="16.4.1" data-path="pls.html"><a href="pls.html#pls-solution-with-original-variables"><i class="fa fa-check"></i><b>16.4.1</b> PLS Solution with original variables</a></li>
-<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.2</b> Size of Coefficients</a></li>
-<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.3</b> Some Properties</a></li>
+<li class="chapter" data-level="16.4.2" data-path="pls.html"><a href="pls.html#some-properties"><i class="fa fa-check"></i><b>16.4.2</b> Some Properties</a></li>
+<li class="chapter" data-level="16.4.3" data-path="pls.html"><a href="pls.html#pls-regression-for-price-of-cars"><i class="fa fa-check"></i><b>16.4.3</b> PLS Regression for Price of cars</a></li>
+<li class="chapter" data-level="16.4.4" data-path="pls.html"><a href="pls.html#size-of-coefficients-1"><i class="fa fa-check"></i><b>16.4.4</b> Size of Coefficients</a></li>
 </ul></li>
 <li class="chapter" data-level="16.5" data-path="pls.html"><a href="pls.html#selecting-number-of-pls-components"><i class="fa fa-check"></i><b>16.5</b> Selecting Number of PLS Components</a></li>
 </ul></li>
@@ -542,61 +543,65 @@ criterion explicitly defined.</li>
 subset of the “2004 New Car and Truck Data”. The data set consists of
 10 variables measured on 385 cars. Here’s what
 the first six rows look like:</p>
-<pre><code>#&gt;                               price engine cyl  hp city_mpg
-#&gt; Acura 3.5 RL 4dr              43755    3.5   6 225       18
-#&gt; Acura 3.5 RL w/Navigation 4dr 46100    3.5   6 225       18
-#&gt; Acura MDX                     36945    3.5   6 265       17
-#&gt; Acura NSX coupe 2dr manual S  89765    3.2   6 290       17
-#&gt; Acura RSX Type S 2dr          23820    2.0   4 200       24
-#&gt; Acura TL 4dr                  33195    3.2   6 270       20
-#&gt;                               hwy_mpg weight wheel length width
-#&gt; Acura 3.5 RL 4dr                   24   3880   115    197    72
-#&gt; Acura 3.5 RL w/Navigation 4dr      24   3893   115    197    72
-#&gt; Acura MDX                          23   4451   106    189    77
-#&gt; Acura NSX coupe 2dr manual S       24   3153   100    174    71
-#&gt; Acura RSX Type S 2dr               31   2778   101    172    68
-#&gt; Acura TL 4dr                       28   3575   108    186    72</code></pre>
+<pre><code>                              price engine cyl  hp city_mpg
+Acura 3.5 RL 4dr              43755    3.5   6 225       18
+Acura 3.5 RL w/Navigation 4dr 46100    3.5   6 225       18
+Acura MDX                     36945    3.5   6 265       17
+Acura NSX coupe 2dr manual S  89765    3.2   6 290       17
+Acura RSX Type S 2dr          23820    2.0   4 200       24
+Acura TL 4dr                  33195    3.2   6 270       20
+                              hwy_mpg weight wheel length width
+Acura 3.5 RL 4dr                   24   3880   115    197    72
+Acura 3.5 RL w/Navigation 4dr      24   3893   115    197    72
+Acura MDX                          23   4451   106    189    77
+Acura NSX coupe 2dr manual S       24   3153   100    174    71
+Acura RSX Type S 2dr               31   2778   101    172    68
+Acura TL 4dr                       28   3575   108    186    72</code></pre>
 <p>The response variable is <code>price</code>, and there are nine predictors:</p>
 <ul>
-<li><code>engine</code></li>
-<li><code>cyl</code></li>
-<li><code>hp</code></li>
-<li><code>city_mpg</code></li>
-<li><code>hw_mpg</code></li>
-<li><code>weight</code></li>
-<li><code>wheel</code></li>
-<li><code>length</code></li>
-<li><code>width</code></li>
+<li><code>engine</code>: engine size (liters)</li>
+<li><code>cyl</code>: number of cylinders</li>
+<li><code>hp</code>: horsepower</li>
+<li><code>city_mpg</code>: city miles per gallon</li>
+<li><code>hw_mpg</code>: highway miles per gallon</li>
+<li><code>weight</code>: weights (pounds)</li>
+<li><code>wheel</code>: wheel base (inches)</li>
+<li><code>length</code>: length (inches)</li>
+<li><code>width</code>: width (inches)</li>
 </ul>
 <p>The regression model involves predicting <code>price</code> in terms of the nine inputs:</p>
-<p><span class="math inline">\(\texttt{price} = b_0 + b_1 \texttt{cyl} + b_2 \texttt{hp} + \dots + b_9 \texttt{width} + \boldsymbol{\varepsilon}\)</span></p>
+<p><span class="math display" id="eq:503-1">\[
+\texttt{price} = b_0 + b_1 \texttt{cyl} + b_2 \texttt{hp} + \dots + b_9 \texttt{width} + \boldsymbol{\varepsilon}
+\tag{16.1}
+\]</span></p>
 <p>Computing the OLS solution for the regression model of <code>price</code> onto the
 other nine predictors we obtain the following coefficients (see first column):</p>
-<pre><code>#&gt;               Estimate  Std. Error  t value   Pr(&gt;|t|)
-#&gt; (Intercept)  32536.025   17777.488   1.8302  6.802e-02
-#&gt; engine       -3273.053    1542.595  -2.1218  3.451e-02
-#&gt; cyl           2520.927     896.202   2.8129  5.168e-03
-#&gt; hp             246.595      13.201  18.6797  1.621e-55
-#&gt; city_mpg      -229.987     332.824  -0.6910  4.900e-01
-#&gt; hwy_mpg        979.967     345.558   2.8359  4.817e-03
-#&gt; weight           9.937       2.045   4.8584  1.741e-06
-#&gt; wheel         -695.392     172.896  -4.0220  6.980e-05
-#&gt; length          33.690      89.660   0.3758  7.073e-01
-#&gt; width         -635.382     306.344  -2.0741  3.875e-02</code></pre>
+<pre><code>              Estimate  Std. Error  t value   Pr(&gt;|t|)
+(Intercept)  32536.025   17777.488   1.8302  6.802e-02
+engine       -3273.053    1542.595  -2.1218  3.451e-02
+cyl           2520.927     896.202   2.8129  5.168e-03
+hp             246.595      13.201  18.6797  1.621e-55
+city_mpg      -229.987     332.824  -0.6910  4.900e-01
+hwy_mpg        979.967     345.558   2.8359  4.817e-03
+weight           9.937       2.045   4.8584  1.741e-06
+wheel         -695.392     172.896  -4.0220  6.980e-05
+length          33.690      89.660   0.3758  7.073e-01
+width         -635.382     306.344  -2.0741  3.875e-02</code></pre>
 </div>
 <div id="the-plsr-model" class="section level2">
 <h2><span class="header-section-number">16.2</span> The PLSR Model</h2>
 <p>In PLS regression, like in PCR, we seek components
 <span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>, linear combinations of the inputs
-(e.g. <span class="math inline">\(\mathbf{z_1} = \mathbf{Xw_1}\)</span>), such that
-they are good predictors for both the response <span class="math inline">\(\mathbf{y}\)</span> as well as the
-inputs <span class="math inline">\(\mathbf{x_j}\)</span> for <span class="math inline">\(j = 1,\dots, p\)</span>.</p>
+(e.g. <span class="math inline">\(\mathbf{z_1} = \mathbf{Xw_1}\)</span>). Unlike PCR, in PLS we want to obtain
+components such that they are good predictors for both the response
+<span class="math inline">\(\mathbf{y}\)</span> as well as the inputs <span class="math inline">\(\mathbf{x_j}\)</span> for <span class="math inline">\(j = 1,\dots, p\)</span>.</p>
 <p>Moreover, there is an implicit assumption in the PLS regression model: both
 <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> are assumed to be functions of a reduced (<span class="math inline">\(k &lt; p\)</span>)
 number of components <span class="math inline">\(\mathbf{Z} = [\mathbf{z_1}, \dots, \mathbf{z_k}]\)</span>
-that can be used to decompose the inputs and the response:</p>
-<p><span class="math display">\[
+that can be used to decompose the inputs and the response as follows:</p>
+<p><span class="math display" id="eq:503-2">\[
 \mathbf{X} = \mathbf{Z V^\mathsf{T}} + \mathbf{E}
+\tag{16.2}
 \]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-140"></span>
 <img src="images/pls/pls-inputs-model.svg" alt="Matrix diagram for inputs" width="80%" />
@@ -605,8 +610,9 @@ Figure 16.1: Matrix diagram for inputs
 </p>
 </div>
 <p>and</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-3">\[
 \mathbf{y} = \mathbf{Z b} + \mathbf{e}
+\tag{16.3}
 \]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-141"></span>
 <img src="images/pls/pls-response-model.svg" alt="Matrix diagram for response" width="50%" />
@@ -625,17 +631,20 @@ Figure 16.2: Matrix diagram for response
 <p>By taking a few number of components
 <span class="math inline">\(\mathbf{Z} = [\mathbf{z_1}, \dots, \mathbf{z_k}]\)</span>, we can have approximations
 for the inputs and the response. The model for the <span class="math inline">\(X\)</span>-space is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-4">\[
 \mathbf{\hat{X}} = \mathbf{Z V^{\mathsf{T}}}
+\tag{16.4}
 \]</span></p>
 <p>In turn, the prediction model for <span class="math inline">\(\mathbf{y}\)</span> is given by:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-5">\[
 \mathbf{\hat{y}} = \mathbf{Z b}
+\tag{16.5}
 \]</span></p>
-<p>To avoid confusing the PLSR coefficients with the OLS coefficients, we
-can be more proper and rewirte the previous expression as:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}_{\text{pls}}
+<p>To avoid confusing the PLSR coefficients with the OLS coefficients, or the PCR
+coefficients, we can be more proper and rewrite the previous expression as:</p>
+<p><span class="math display" id="eq:503-6">\[
+\mathbf{\hat{y}} = \mathbf{Z} \mathbf{b}^{\text{pls}}
+\tag{16.6}
 \]</span></p>
 <p>to indicate that the obtained <span class="math inline">\(b\)</span>-coefficients are those associated to the
 PLS components.</p>
@@ -655,88 +664,106 @@ Figure 16.3: Towards the first PLS component.
 </p>
 </div>
 <p>In vector-matrix notation we have:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-7">\[
 \mathbf{\tilde{w}_1} = \mathbf{X^\mathsf{T}y}
+\tag{16.7}
+\]</span></p>
+<p>Alternatively, we can also obtain a rescaled version of <span class="math inline">\(\mathbf{\tilde{w}_1}\)</span>
+by regressing each predictor <span class="math inline">\(\mathbf{x_j}\)</span> onto <span class="math inline">\(\mathbf{y}\)</span>. Notice that this
+alternative option won’t change the direction of the covariances <span class="math inline">\(cov(\mathbf{x_j}, \mathbf{y})\)</span>. In vector-matrix notation we have:</p>
+<p><span class="math display" id="eq:503-8">\[
+\mathbf{\tilde{w}_1} = \mathbf{X^\mathsf{T}y} / \mathbf{y^\mathsf{T} y}
+\tag{16.8}
 \]</span></p>
 <p>For convenience purposes, we normalize the vector of covariances
-<span class="math inline">\(\mathbf{\tilde{w}_1}\)</span>, which gives us a unit-vector <span class="math inline">\(\mathbf{w_1}\)</span>:</p>
-<p><span class="math display">\[
+<span class="math inline">\(\mathbf{\tilde{w}_1}\)</span>, in order to get a unit-vector <span class="math inline">\(\mathbf{w_1}\)</span>:</p>
+<p><span class="math display" id="eq:503-9">\[
 \mathbf{w_1} = \frac{\mathbf{\tilde{w}_1}}{\|\mathbf{\tilde{w}_1}\|}
+\tag{16.9}
 \]</span></p>
-<pre><code>#&gt; first PLS weight
-#&gt;                  [,1]
-#&gt; engine    0.001782118
-#&gt; cyl       0.002857956
-#&gt; hp        0.171985612
-#&gt; city_mpg -0.007484109
-#&gt; hwy_mpg  -0.007752089
-#&gt; weight    0.984987298
-#&gt; wheel     0.004225081
-#&gt; length    0.008131684
-#&gt; width     0.003089621</code></pre>
+<pre><code>first PLS weight 
+                 [,1]
+engine    0.001782118
+cyl       0.002857956
+hp        0.171985612
+city_mpg -0.007484109
+hwy_mpg  -0.007752089
+weight    0.984987298
+wheel     0.004225081
+length    0.008131684
+width     0.003089621</code></pre>
 <p>We use these weights to compute the first component <span class="math inline">\(\mathbf{z_1}\)</span> as a
-linear combination of the inputs:
-<span class="math inline">\(\mathbf{z_1} = w_{11} \mathbf{x_1} + \dots + w_{p1} \mathbf{x_p}\)</span>,</p>
+linear combination of the inputs:</p>
+<p><span class="math display" id="eq:503-10">\[
+\mathbf{z_1} = w_{11} \mathbf{x_1} + \dots + w_{p1} \mathbf{x_p}
+\tag{16.10}
+\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-144"></span>
 <img src="images/pls/pls-path-diag-z1.svg" alt="First PLS component." width="40%" />
 <p class="caption">
 Figure 16.4: First PLS component.
 </p>
 </div>
-<p>or in vector-matrix notation:</p>
-<p><span class="math display">\[
-\mathbf{z_1} = \mathbf{Xw_1}
+<p>Because <span class="math inline">\(\mathbf{w_1}\)</span> is unit-vector, the formula for <span class="math inline">\(\mathbf{z_1}\)</span> can
+be expressed like:</p>
+<p><span class="math display" id="eq:503-11">\[
+\mathbf{z_1} = \mathbf{Xw_1} = \mathbf{Xw_1} / \mathbf{w_1^\mathsf{T} w_1}
+\tag{16.11}
 \]</span></p>
 <p>Here are the first 10 elements of <span class="math inline">\(\mathbf{z_1}\)</span></p>
-<pre><code>#&gt; first PLS component (10 elements only)
-#&gt;                                     [,1]
-#&gt; Acura 3.5 RL 4dr               344.24572
-#&gt; Acura 3.5 RL w/Navigation 4dr  357.05055
-#&gt; Acura MDX                      913.48050
-#&gt; Acura NSX coupe 2dr manual S  -360.90753
-#&gt; Acura RSX Type S 2dr          -745.89228
-#&gt; Acura TL 4dr                    51.39841
-#&gt; Acura TSX 4dr                 -300.53740
-#&gt; Audi A4 1.8T 4dr              -284.07748
-#&gt; Audi A4 3.0 4dr                -68.58479
-#&gt; Audi A4 3.0 convertible 2dr    278.15085</code></pre>
+<pre><code>first PLS component (10 elements only) 
+                                    [,1]
+Acura 3.5 RL 4dr               344.24572
+Acura 3.5 RL w/Navigation 4dr  357.05055
+Acura MDX                      913.48050
+Acura NSX coupe 2dr manual S  -360.90753
+Acura RSX Type S 2dr          -745.89228
+Acura TL 4dr                    51.39841
+Acura TSX 4dr                 -300.53740
+Audi A4 1.8T 4dr              -284.07748
+Audi A4 3.0 4dr                -68.58479
+Audi A4 3.0 convertible 2dr    278.15085</code></pre>
 <p>We use this component to regress both the inputs and the response onto it.
 The regression coefficient <span class="math inline">\(v_{1j}\)</span> of each simple linear regression between
 <span class="math inline">\(\mathbf{z_1}\)</span> and the <span class="math inline">\(j\)</span>-th predictor is called a <strong>PLS loading</strong>. The entire
 vector of loadings <span class="math inline">\(\mathbf{v_1}\)</span> associated to first component is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-12">\[
 \mathbf{v_1} = \mathbf{X^\mathsf{T}z_1} / \mathbf{z_{1}^\mathsf{T}z_1}
+\tag{16.12}
 \]</span></p>
-<pre><code>#&gt; first PLS loading
-#&gt;                  [,1]
-#&gt; engine    0.001176718
-#&gt; cyl       0.001561745
-#&gt; hp        0.064016991
-#&gt; city_mpg -0.005536001
-#&gt; hwy_mpg  -0.006343509
-#&gt; weight    1.003819205
-#&gt; wheel     0.007551534
-#&gt; length    0.012276141
-#&gt; width     0.003862309</code></pre>
+<pre><code>first PLS loading 
+                 [,1]
+engine    0.001176718
+cyl       0.001561745
+hp        0.064016991
+city_mpg -0.005536001
+hwy_mpg  -0.006343509
+weight    1.003819205
+wheel     0.007551534
+length    0.012276141
+width     0.003862309</code></pre>
 <p>In turn, the PLS regression coefficient <span class="math inline">\(b_1\)</span> is obtained by regressing the
 response onto the first component:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-13">\[
 b_1 = \mathbf{y^\mathsf{T} z_1} / \mathbf{z_{1}^\mathsf{T}z_1}
+\tag{16.13}
 \]</span></p>
 <p>In our example, the regression coefficient <span class="math inline">\(b_1\)</span> of the first PLS score
 <span class="math inline">\(\mathbf{z_1}\)</span> is:</p>
-<pre><code>#&gt; first PLS regression coefficient
-#&gt; [1] 13.61137</code></pre>
-<p>We can get a first one-rank approximation
+<pre><code>first PLS regression coefficient 
+[1] 13.61137</code></pre>
+<p>We can then get a first one-rank approximation
 <span class="math inline">\(\mathbf{\hat{X}} = \mathbf{z_1 v^{\mathsf{T}}_1}\)</span>, and then obtain a residual
 matrix <span class="math inline">\(\mathbf{X_1}\)</span> by removing the variation in the inputs captured by
-<span class="math inline">\(\mathbf{z_1}\)</span>:</p>
-<p><span class="math display">\[
+<span class="math inline">\(\mathbf{z_1}\)</span> (this operation is known as <em>deflation</em>):</p>
+<p><span class="math display" id="eq:503-14">\[
 \mathbf{X_1} = \mathbf{X} - \mathbf{\hat{X}} = \mathbf{X} - \mathbf{z_1 v^{\mathsf{T}}_1} \qquad \mathsf{(deflation)}
+\tag{16.14}
 \]</span></p>
 <p>We can also deflate the response:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-15">\[
 \mathbf{y_1} = \mathbf{y} - b_1 \mathbf{z_1}
+\tag{16.15}
 \]</span></p>
 <p>We can obtain further PLS components <span class="math inline">\(\mathbf{z_2}\)</span>, <span class="math inline">\(\mathbf{z_3}\)</span>, etc. by
 repeating the process described above on the residual data matrices <span class="math inline">\(\mathbf{X_1}\)</span>,
@@ -754,7 +781,7 @@ Figure 16.5: Second PLS component.
 <h2><span class="header-section-number">16.4</span> PLSR Algorithm</h2>
 <p>We will describe what we consider the “standard” or “classic” algorithm.
 However, keep in mind that there are a handful of slightly different versions
-that may find in other places.</p>
+that you may find in other places.</p>
 <p>We assume mean-centered and standardized variables <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>We start by setting <span class="math inline">\(\mathbf{X_0} = \mathbf{X}\)</span>, and
@@ -766,7 +793,7 @@ that may find in other places.</p>
 <li><p>Normalize weights: <span class="math inline">\(\mathbf{w_h} = \mathbf{\tilde{w}_h} / \| \mathbf{\tilde{w}_h} \|\)</span></p></li>
 <li><p>Compute PLS component: <span class="math inline">\(\mathbf{z_h} = \mathbf{X_{h-1} w_h} / \mathbf{w_{h}^\mathsf{T} w_h}\)</span></p></li>
 <li><p>Regress <span class="math inline">\(\mathbf{y_h}\)</span> onto <span class="math inline">\(\mathbf{z_h}\)</span>: <span class="math inline">\(b_h = \mathbf{y_{h}^{\mathsf{T}} z_h / z_{h}^{\mathsf{T}} z_h}\)</span></p></li>
-<li><p>Regress <span class="math inline">\(\mathbf{x_j}\)</span> onto <span class="math inline">\(\mathbf{z_h}\)</span>: <span class="math inline">\(\mathbf{v_h} = \mathbf{X_{h-1}}^{\mathsf{T}} \mathbf{z_h} / \mathbf{z_{h}}^{\mathsf{T}} \mathbf{z_h}\)</span></p></li>
+<li><p>Regress all <span class="math inline">\(\mathbf{x_j}\)</span> onto <span class="math inline">\(\mathbf{z_h}\)</span>: <span class="math inline">\(\mathbf{v_h} = \mathbf{X_{h-1}}^{\mathsf{T}} \mathbf{z_h} / \mathbf{z_{h}}^{\mathsf{T}} \mathbf{z_h}\)</span></p></li>
 <li><p>Deflate (residual) predictors:
 <span class="math inline">\(\mathbf{X_h} = \mathbf{X_{h-1}} - \mathbf{z_h} \mathbf{v_{h}^{\mathsf{T}}}\)</span></p></li>
 <li><p>Deflate (residual) response: <span class="math inline">\(\mathbf{y_h} = \mathbf{y_{h-1}} - b_h \mathbf{z_h}\)</span></p></li>
@@ -776,85 +803,72 @@ about it, what PLS is doing is calculating all the different ingredients
 (e.g. <span class="math inline">\(\mathbf{w_h}, \mathbf{z_h}, \mathbf{v_h}, b_h\)</span>) <em>separately</em>, using
 <em>least squares</em> regressions. Hence the reason for its name
 <strong>partial least squares</strong>.</p>
-<p>By default, we can obtain up to <span class="math inline">\(r = rank(\mathbf{X})\)</span> different PLS components.
-In the cars example, we can actually obtain nine scores.
-The following output shows the regression coefficients of all nine regression
-equations:</p>
-<pre><code>#&gt;            Z_1:1  Z_1:2   Z_1:3   Z_1:4   Z_1:5   Z_1:6   Z_1:7    Z_1:8
-#&gt; engine    0.0243   1.44   -3.34  -15.09  -33.59 -113.70 -284.84 -1148.41
-#&gt; cyl       0.0389   3.03    6.87   55.93  166.51  471.47 1056.23  2073.22
-#&gt; hp        2.3410 250.04  248.74  262.63  254.81  251.35  243.73   238.81
-#&gt; city_mpg -0.1019  -4.69   50.66  368.94  210.79  -69.52 -412.43  -171.42
-#&gt; hwy_mpg  -0.1055  -3.49   48.59  464.50  528.56  811.07 1177.28   933.19
-#&gt; weight   13.4070  -2.27    1.80    6.44    8.21    9.61    9.77     9.08
-#&gt; wheel     0.0575  -7.32 -125.75 -387.68 -797.42 -669.88 -680.47  -676.98
-#&gt; length    0.1107  -9.00 -196.71  -90.85   83.57   59.30    2.26    17.07
-#&gt; width     0.0421  -1.61  -43.73 -181.27 -427.09 -940.70 -729.49  -725.37
-#&gt;             Z_1:9
-#&gt; engine   -3273.05
-#&gt; cyl       2520.93
-#&gt; hp         246.59
-#&gt; city_mpg  -229.99
-#&gt; hwy_mpg    979.97
-#&gt; weight       9.94
-#&gt; wheel     -695.39
-#&gt; length      33.69
-#&gt; width     -635.38</code></pre>
-<p>If we keep all components, we get the OLS solution (using standardized data):</p>
-<pre><code>#&gt; Regression coefficients using all 9 PLS components
-#&gt;      engine         cyl          hp    city_mpg     hwy_mpg      weight 
-#&gt; -3273.05304  2520.92691   246.59496  -229.98735   979.96656     9.93652 
-#&gt;       wheel      length       width 
-#&gt;  -695.39157    33.69009  -635.38224</code></pre>
-<p>Compare with the regression coefficients of OLS:</p>
-<pre><code>#&gt;    Xengine       Xcyl        Xhp  Xcity_mpg   Xhwy_mpg    Xweight     Xwheel 
-#&gt; -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
-#&gt;    Xlength     Xwidth 
-#&gt;   446.9752 -2141.8196</code></pre>
-<p>Obviously, reatining all PLS scores does not provide an improvement over the
-OLS regression. This is because we are not changing anything. Using our
-metaphor about “shopping for coefficients”, by keeping all PLS scores we are
-spending the same amount of money that we spend in ordinary least-squares
-regression.</p>
-<p>The dimension reduction idea involves keeping only a few components <span class="math inline">\(k \ll r\)</span>,
-such that the fitted model has a better generalization ability than the full
-model. The number of components <span class="math inline">\(k\)</span> is called the <strong>tuning parameter</strong>
-or <strong>hyperparameter</strong>. How do we determine <span class="math inline">\(k\)</span>? The typical way is to use
-cross-validation.</p>
 <div id="pls-solution-with-original-variables" class="section level3">
 <h3><span class="header-section-number">16.4.1</span> PLS Solution with original variables</h3>
-<p>The PLS regression equation is typically expressed in terms of the original
-variables <span class="math inline">\(\mathbf{X}\)</span> instead of using the deflated matrices <span class="math inline">\(\mathbf{X_{h-1}}\)</span>.
-This re-arrangement is more convenient for prediction purposes.</p>
-<p><span class="math display">\[
-\mathbf{y = X b}_{\text{pls}} + \mathbf{e} 
+<p>More often than not, the PLS regression equation is typically expressed in terms
+of the original variables <span class="math inline">\(\mathbf{X}\)</span> instead of using the PLS components
+<span class="math inline">\(\mathbf{Z}\)</span>. This re-arrangement is more convenient for interpretation purposes
+and makes it easy to work with the input features.</p>
+<p><span class="math display" id="eq:503-16">\[
+\mathbf{\hat{y}} = \mathbf{Z b} \ \longrightarrow \ \mathbf{\hat{y}} = \mathbf{X \overset{*}{b}} 
+\tag{16.16}
 \]</span></p>
-<p>Note that the PLS <span class="math inline">\(\mathbf{b}_{\text{pls}}\)</span>-coefficients of the regression equation are
-not parameters of the PLS regression model. Instead, these are post-hoc calculations
-for making things more maneagable.</p>
+<p>Note that the PLS <span class="math inline">\(X\)</span>-coefficients <span class="math inline">\(\mathbf{\overset{*}{b}}\)</span> are not parameters
+of the PLS regression model. Instead, these are post-hoc calculations
+for making things more maneagable. Let’s find out how to obtain these
+coefficients.</p>
 <div id="transforming-regression-coefficients" class="section level4 unnumbered">
 <h4>Transforming Regression Coefficients</h4>
-<p>PLS components are obtained as linear combinations of residual matrices <span class="math inline">\(\mathbf{X_h}\)</span>,
-but they can also be expressed in terms of the original variables:</p>
-<p><span class="math display">\[\begin{align*}
-\mathbf{z_1} &amp;= \mathbf{X w_1 = X \overset{*}{w}_{1}} \\
-\mathbf{z_2} &amp;= \mathbf{X_1 w_2 = X (I - z_1 v_{1}^{\mathsf{T}}) w_2 = X \overset{*}{w}_{2}} \\
-\mathbf{z_3} &amp;= \mathbf{X_2 w_3 = X (I - z_2 v_{2}^{\mathsf{T}}) w_3 = X \overset{*}{w}_{3}} \\
- &amp; \vdots \\
-\mathbf{z_h} &amp;= \mathbf{X_{h-1} w_h = X (I - z_{h-1} v_{h-1}^{\mathsf{T}}) w_h  = X \overset{*}{w}_{h}} \\
+<p>Recall that PLS components are obtained as linear combinations of residual
+matrices <span class="math inline">\(\mathbf{X_h}\)</span>. Interestingly, PLS components can also be expressed in
+terms of the original variables.</p>
+<p>The first component is directly expressed in terms of the input matrix
+<span class="math inline">\(\mathbf{X}\)</span>:</p>
+<p><span class="math display" id="eq:503-17">\[
+\mathbf{z_1} = \mathbf{X w_1 = X \overset{*}{w}_{1}}
+\tag{16.17}
+\]</span></p>
+<p>The second component is obtained in terms of the first residual matrix
+<span class="math inline">\(\mathbf{X_1}\)</span>, but we can reexpress it in terms of <span class="math inline">\(\mathbf{X}\)</span>:</p>
+<p><span class="math display" id="eq:503-18">\[\begin{align*}
+\mathbf{z_2} &amp;= \mathbf{X_1 w_2} \\
+&amp;= (\mathbf{X} - \mathbf{z_1 v_{1}^\mathsf{T}}) \mathbf{w_2} \\
+&amp;= (\mathbf{X} - (\mathbf{Xw_1}) \mathbf{v_{1}^\mathsf{T}}) \mathbf{w_2} \\
+&amp;= \mathbf{X} \underbrace{(\mathbf{I} - \mathbf{w_1 v_{1}^\mathsf{T}}) \mathbf{w_2}}_{\mathbf{\overset{*}{w}_{2}}} \\
+&amp;= \mathbf{X \overset{*}{w}_{2}}
+\tag{16.18}
+\end{align*}\]</span></p>
+<p>The third component is obtained in terms of the second residual matrix
+<span class="math inline">\(\mathbf{X_2}\)</span>, but we can also reexpress it in terms of <span class="math inline">\(\mathbf{X}\)</span>:</p>
+<p><span class="math display" id="eq:503-19">\[\begin{align*}
+\mathbf{z_3} &amp;= \mathbf{X_2 w_3} \\
+&amp;= (\mathbf{X_1} - \mathbf{z_2 v_{2}^\mathsf{T}}) \mathbf{w_3} \\
+&amp;= (\mathbf{X_1} - \mathbf{X_1} \mathbf{w_2 v_{2}^\mathsf{T}}) \mathbf{w_3} \\
+&amp;= \mathbf{X_1} (\mathbf{I} - \mathbf{w_2 v_{2}^\mathsf{T}}) \mathbf{w_3} \\
+&amp;= \mathbf{X} \underbrace{(\mathbf{I} - \mathbf{w_1 v_{1}^\mathsf{T}}) (\mathbf{I} - \mathbf{w_2 v_{2}^\mathsf{T}}) \mathbf{w_3}}_{\mathbf{\overset{*}{w}_{3}}} \\
+&amp;= \mathbf{X \overset{*}{w}_{3}}
+\tag{16.19}
 \end{align*}\]</span></p>
 <p>Consequently, <span class="math inline">\(\mathbf{Z_h} = [\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_h}] = \mathbf{X \overset{*}{W}_{h}}\)</span></p>
-<p>We know that <span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + \dots + b_h \mathbf{z_h} = \mathbf{Z b}\)</span>.
-And because the PLS components can be expressed in terms of the original variables,
-we can conveniently reexpress the solution in terms of the original predictors:</p>
-<p><span class="math display">\[
-\mathbf{\hat{y}} = \mathbf{Z b} = \mathbf{X \overset{*}{W} b} = \mathbf{X \overset{*}{b}}_\text{pls}
+<p>It can be proved that the matrix of star-vectors
+<span class="math inline">\(\mathbf{\overset{*}{W}_{h}} = [\mathbf{\overset{*}{w}_{1}}, \dots, \mathbf{\overset{*}{w}_{h}}]\)</span>
+can be obtained with the following formula:</p>
+<p><span class="math display" id="eq:503-20">\[
+\mathbf{\overset{*}{W}_{h}} = \prod_{k=1}^{h-1} (\mathbf{I} - \mathbf{w_k v_{k}^\mathsf{T}}) \mathbf{w_h} = \mathbf{W_h} (\mathbf{V_h^\mathsf{T} W_h})^{-1}
+\tag{16.20}
 \]</span></p>
-<p>where <span class="math inline">\(\overset{*}{\mathbf{b}}_\text{pls}\)</span> are the derived PLS-coefficients
+<p>In summary, the PLS regression equation
+<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + \dots + b_h \mathbf{z_h} = \mathbf{Z b}\)</span>
+can be expressed in terms of the original predictors as:</p>
+<p><span class="math display" id="eq:503-21">\[
+\mathbf{\hat{y}} = \mathbf{Z b} = \mathbf{X \overset{*}{W} b} = \mathbf{X \overset{*}{b}}
+\tag{16.21}
+\]</span></p>
+<p>where <span class="math inline">\(\overset{*}{\mathbf{b}}\)</span> are the derived PLS <span class="math inline">\(X\)</span>-coefficients
 (not OLS). Note that these PLS star-coefficients of the regression
 equation are NOT parameters of the PLS regression model. Instead, these are
 post-hoc calculations for making things more maneagable.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-152"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-149"></span>
 <img src="images/pls/pls-path-diag-scores.svg" alt="PLS components in terms of original inputs." width="85%" />
 <p class="caption">
 Figure 16.6: PLS components in terms of original inputs.
@@ -865,15 +879,8 @@ Figure 16.6: PLS components in terms of original inputs.
 coefficients.</p>
 </div>
 </div>
-<div id="size-of-coefficients-1" class="section level3">
-<h3><span class="header-section-number">16.4.2</span> Size of Coefficients</h3>
-<p>Let’s look at the <em>evolution</em> of the PLS regression coefficients. This is a
-very interesting plot that allows us to see how the size of the coefficients
-grow as we add more and more PLS components into the regression equation:</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-153-1.png" width="90%" style="display: block; margin: auto;" /></p>
-</div>
 <div id="some-properties" class="section level3">
-<h3><span class="header-section-number">16.4.3</span> Some Properties</h3>
+<h3><span class="header-section-number">16.4.2</span> Some Properties</h3>
 <p>Some interesting properties of the different elements derived in PLS Regression:</p>
 <ul>
 <li><span class="math inline">\(\mathbf{z_h^{\mathsf{T}} z_l} = 0, \quad l &gt; h\)</span></li>
@@ -884,6 +891,61 @@ grow as we add more and more PLS components into the regression equation:</p>
 <li><span class="math inline">\(\mathbf{z_h^{\mathsf{T}} X_l} = 0, \quad l \geq h\)</span></li>
 <li><span class="math inline">\(\mathbf{X_h} = \mathbf{X} \prod_{j=1}^{p} (\mathbf{I - w_j v_{j}^{\mathsf{T}}}), \quad h \geq 1\)</span></li>
 </ul>
+</div>
+<div id="pls-regression-for-price-of-cars" class="section level3">
+<h3><span class="header-section-number">16.4.3</span> PLS Regression for Price of cars</h3>
+<p>By default, we can obtain up to <span class="math inline">\(r = rank(\mathbf{X})\)</span> different PLS components.
+In the cars example, we can actually obtain nine scores.
+The following output shows the regression coefficients—in terms of the input
+features—of all nine regression equations:</p>
+<pre><code>           Z_1:1  Z_1:2   Z_1:3   Z_1:4   Z_1:5   Z_1:6   Z_1:7    Z_1:8
+engine    0.0243   1.44   -3.34  -15.09  -33.59 -113.70 -284.84 -1148.41
+cyl       0.0389   3.03    6.87   55.93  166.51  471.47 1056.23  2073.22
+hp        2.3410 250.04  248.74  262.63  254.81  251.35  243.73   238.81
+city_mpg -0.1019  -4.69   50.66  368.94  210.79  -69.52 -412.43  -171.42
+hwy_mpg  -0.1055  -3.49   48.59  464.50  528.56  811.07 1177.28   933.19
+weight   13.4070  -2.27    1.80    6.44    8.21    9.61    9.77     9.08
+wheel     0.0575  -7.32 -125.75 -387.68 -797.42 -669.88 -680.47  -676.98
+length    0.1107  -9.00 -196.71  -90.85   83.57   59.30    2.26    17.07
+width     0.0421  -1.61  -43.73 -181.27 -427.09 -940.70 -729.49  -725.37
+            Z_1:9
+engine   -3273.05
+cyl       2520.93
+hp         246.59
+city_mpg  -229.99
+hwy_mpg    979.97
+weight       9.94
+wheel     -695.39
+length      33.69
+width     -635.38</code></pre>
+<p>If we keep all components, we get the OLS solution (using standardized data):</p>
+<pre><code>Regression coefficients using all 9 PLS components 
+     engine         cyl          hp    city_mpg     hwy_mpg      weight 
+-3273.05304  2520.92691   246.59496  -229.98735   979.96656     9.93652 
+      wheel      length       width 
+ -695.39157    33.69009  -635.38224 </code></pre>
+<p>Compare with the regression coefficients of OLS:</p>
+<pre><code>(Intercept)      engine         cyl          hp    city_mpg     hwy_mpg 
+32536.02465 -3273.05304  2520.92691   246.59496  -229.98735   979.96656 
+     weight       wheel      length       width 
+    9.93652  -695.39157    33.69009  -635.38224 </code></pre>
+<p>Obviously, reatining all PLS scores does not provide an improvement over the
+OLS regression. This is because we are not changing anything. Using our
+metaphor about “shopping for coefficients”, by keeping all PLS scores we are
+spending the same amount of money that we spend in ordinary least-squares
+regression.</p>
+<p>The dimension reduction idea involves keeping only a few components <span class="math inline">\(k \ll r\)</span>,
+such that the fitted model has a better generalization ability than the full
+model. The number of components <span class="math inline">\(k\)</span> is called the <strong>tuning parameter</strong>
+or <strong>hyperparameter</strong>. How do we determine <span class="math inline">\(k\)</span>? The typical way is to use
+cross-validation.</p>
+</div>
+<div id="size-of-coefficients-1" class="section level3">
+<h3><span class="header-section-number">16.4.4</span> Size of Coefficients</h3>
+<p>Let’s look at the <em>evolution</em> of the PLS regression coefficients. This is a
+very interesting plot that allows us to see how the size of the coefficients
+grow as we add more and more PLS components into the regression equation:</p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-153-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="selecting-number-of-pls-components" class="section level2">
@@ -897,8 +959,9 @@ of the steps to be carried out:</p>
 <p>Assumet that we have a training data set consisting of <span class="math inline">\(n\)</span> data points:
 <span class="math inline">\(\mathcal{D}_{train} = (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n)\)</span>.
 Using <span class="math inline">\(K\)</span>-fold cross-validation, we (randomly) split the data into <span class="math inline">\(K\)</span> folds:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:503-22">\[
 \mathcal{D}_{train} = \mathcal{D}_{fold-1} \cup \mathcal{D}_{fold-2} \dots \cup \mathcal{D}_{fold-K}
+\tag{16.22}
 \]</span></p>
 <p>Each fold set <span class="math inline">\(\mathcal{D}_{fold-k}\)</span> will play the role of an evaluation set <span class="math inline">\(\mathcal{D}_{eval-k}\)</span>.
 Having defined the <span class="math inline">\(k\)</span> fold sets, we form the corresponding <span class="math inline">\(K\)</span> retraining sets:</p>
