@@ -756,7 +756,7 @@ following transition equations:</p>
 <p>Now, what if we decide to retain <span class="math inline">\(k &lt; p\)</span> PCs? Let <span class="math inline">\(\mathbf{Z_{1:k}}\)</span> be the
 <span class="math inline">\(n \times k\)</span> matrix with the first <span class="math inline">\(k\)</span> PCs:</p>
 <p><span class="math display" id="eq:502-13">\[
-\mathbf{Z_{1:k}} = [\mathbf{z_1}, \dots, \mathbf{z_p}]
+\mathbf{Z_{1:k}} = [\mathbf{z_1}, \dots, \mathbf{z_k}]
 \tag{15.13}
 \]</span></p>
 <p>and let <span class="math inline">\(\mathbf{b_{1:k}^\text{pcr}}\)</span> be the corresponding vector of <span class="math inline">\(k\)</span>
@@ -866,7 +866,7 @@ Having defined <span class="math inline">\(Q\)</span> fold sets, we form the cor
 <li>Compare all cross-validation errors <span class="math inline">\(E_{cv_1}, E_{cv_2}, \dots, E_{cv_r}\)</span> and
 choose the smallest of them, say <span class="math inline">\(E_{cv_{k^*}}\)</span></li>
 <li>Use <span class="math inline">\(k^*\)</span> PCs to fit the (finalist) PCR model:
-<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} + \dots + b_k^* \mathbf{z_k^*} = \mathbf{Z_{1:k^*}} \mathbf{b_{1:k^*}}\)</span></li>
+<span class="math inline">\(\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} + \dots + b_{k^*} \mathbf{z_{k^*}} = \mathbf{Z_{1:k^*}} \mathbf{b_{1:k^*}}\)</span></li>
 <li>Remember that we can reexpress the PCR model in terms of the original
 predictors: <span class="math inline">\(\mathbf{\hat{y}} = (\mathbf{XV_{1:k^*}}) \mathbf{b_{1:k^*}} = \mathbf{X} \mathbf{\overset{*}{b}_k}\)</span></li>
 </ul>
