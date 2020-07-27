@@ -554,17 +554,17 @@ Regression, we have that the predicted output is:</p>
 \mathbf{\hat{y}}_{RR}  = \mathbf{X} (\mathbf{X^\mathsf{T} X} + \lambda \mathbf{I} )^{-1} \mathbf{X^\mathsf{T} y}
 \tag{17.3}
 \]</span></p>
-<p>To understand where this estimator comes from, let’s consider the geometry of
-the MSE function in a regression context.</p>
+<p>To understand where this estimator comes from, let’s consider again the geometry
+of the MSE function in a regression context.</p>
 <div id="a-new-minimization-problem" class="section level2">
 <h2><span class="header-section-number">17.1</span> A New Minimization Problem</h2>
-<p>As you know, in linear regression the overall error function <span class="math inline">\(E_{in}\)</span> that we
+<p>As you know, in linear regression the overall error function <span class="math inline">\(E()\)</span> that we
 are interested in minimizing is the mean squared error (<span class="math inline">\(\text{MSE}\)</span>).
 Moreover, we can look at the geometry of such error measure from the perspective
 of the parameters (i.e. the regression coefficients).
-From this perspective, we denote this error function as <span class="math inline">\(E_{in}(\mathbf{b})\)</span>,
+From this perspective, we denote this error function as <span class="math inline">\(E(\mathbf{b})\)</span>,
 making explicit its dependency on the vector of coefficients <span class="math inline">\(\mathbf{b}\)</span>.
-For illustration purposes, let’s consider two inputs <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and their corresponding parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. The error function <span class="math inline">\(E_{in}(\mathbf{b})\)</span>
+For illustration purposes, let’s consider two inputs <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and their corresponding parameters <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>. The error function <span class="math inline">\(E(\mathbf{b})\)</span>
 will generate a convex error surface with the shape of a bowl, or paraboloid
 (see figure below).</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-155"></span>
@@ -573,9 +573,9 @@ will generate a convex error surface with the shape of a bowl, or paraboloid
 Figure 17.1: Error Surface
 </p>
 </div>
-<p>As usual we can express MSE for <span class="math inline">\(E_{in}(\mathbf{b})\)</span> as follows:</p>
+<p>As usual we can express MSE for <span class="math inline">\(E(\mathbf{b})\)</span> as follows:</p>
 <p><span class="math display" id="eq:504-04">\[
-E_{in}(\mathbf{b}) = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})
+E(\mathbf{b}) = \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})
 \tag{17.4}
 \]</span></p>
 <p>In OLS, we minimize <span class="math inline">\(E(\mathbf{b})\)</span> unconditionally; that is, without any type
@@ -589,22 +589,23 @@ Figure 17.2: Contour Errors with OLS solution
 </div>
 <div id="constraining-regression-coefficients" class="section level3">
 <h3><span class="header-section-number">17.1.1</span> Constraining Regression Coefficients</h3>
-<p>An alternative approach to minimize <span class="math inline">\(E_{in}(\mathbf{b})\)</span> unconditionally is to
+<p>An alternative approach to minimize <span class="math inline">\(E(\mathbf{b})\)</span> unconditionally is to
 impose a restriction on the squared magnitude of the regression coefficients.
 In other words, we still want to minimize the mean squared error
-<span class="math inline">\(E_{in}(\mathbf{b})\)</span> but now we don’t let <span class="math inline">\(\mathbf{b}\)</span> take any kind of values.
+<span class="math inline">\(E(\mathbf{b})\)</span> but now we don’t let <span class="math inline">\(\mathbf{b}\)</span> take any kind of values.
 Instead, we are going to require the following condition on <span class="math inline">\(b_1, \dots, b_p\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:504-05">\[
 \textsf{constraining coefficients:} \quad \sum_{j=1}^{p} b_{j}^2 \leq c
+\tag{17.5}
 \]</span></p>
 <p>Here’s an easy way to think about—and remember—this condition: think of
 <span class="math inline">\(c\)</span> as a <em>budget</em> for how much you can spend on the size of all coefficients
 <span class="math inline">\(b_1, \dots, b_p\)</span> (or their squared values to be more precise).</p>
 <p>Adding this restriction to the MSE, we now have the following constrained
-minimization of <span class="math inline">\(E_{in}(\mathbf{b})\)</span>:</p>
-<p><span class="math display" id="eq:504-05">\[
+minimization of <span class="math inline">\(E(\mathbf{b})\)</span>:</p>
+<p><span class="math display" id="eq:504-06">\[
 \min_{\mathbf{b}} \left\{ \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^{\mathsf{T}} (\mathbf{Xb} - \mathbf{y})  \right\}  \quad \mathrm{s.t.} \quad \| \mathbf{b} \|_{2}^{2} = \mathbf{b^\mathsf{T} b} \leq c
-\tag{17.5}
+\tag{17.6}
 \]</span></p>
 <p>for some “budget” <span class="math inline">\(c\)</span>.</p>
 <p>On the <span class="math inline">\(b_1, b_2\)</span> plane, what is the locus of points such that
@@ -613,9 +614,9 @@ centered at the origin. Hence, sketching the level curves (curves of constant
 errors) as well as this restriction, we obtain the following picture
 (for some value of <span class="math inline">\(c\)</span>):</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-157"></span>
-<img src="images/penalized/ridge-constraint1.svg" alt="Error Contours with Constraint" width="70%" />
+<img src="images/penalized/ridge-constraint1.svg" alt="Error contours with constraint region" width="70%" />
 <p class="caption">
-Figure 17.3: Error Contours with Constraint
+Figure 17.3: Error contours with constraint region
 </p>
 </div>
 <p>Depending on the chosen value for <span class="math inline">\(c\)</span>, we could end up with a big enough
@@ -650,17 +651,17 @@ Figure 17.6: Generic error contour with candidate point
 </p>
 </div>
 <p>As you can tell from the above diagram, the candidate point <span class="math inline">\(\mathbf{b}\)</span> is
-such that <span class="math inline">\(\mathbf{b^\mathsf{T} b} = c\)</span>. However, this point is not fully
-minimizing <span class="math inline">\(E(\mathbf{b})\)</span>, given the constraint. Visually speaking, we could
-find other candidate values for <span class="math inline">\(\mathbf{b}\)</span> along the red circumference that
-would give us smaller <span class="math inline">\(E(\mathbf{b})\)</span>.</p>
+fulfilling the restriction <span class="math inline">\(\mathbf{b^\mathsf{T} b} = c\)</span>. However, this point is
+not fully minimizing <span class="math inline">\(E(\mathbf{b})\)</span>, given the constraint. Visually speaking,
+we could find other candidate values for <span class="math inline">\(\mathbf{b}\)</span> along the red
+circumference that would give us smaller <span class="math inline">\(E(\mathbf{b})\)</span>.</p>
 <p>How do we know that the shown candidate point <span class="math inline">\(\mathbf{b}\)</span> can be improved?
 To answer this question we should visualize the gradient <span class="math inline">\(\nabla E(\mathbf{b})\)</span>
 which, as we know, will be pointing in the direction orthogonal to the contour
 ellipse—i.e. direction of largest change of <span class="math inline">\(E(\mathbf{b})\)</span>. In addition, we
 should also pay attention to the direction of the candidate point, illustrated
-with the red vector. Notice that this vector is normal (i.e. orthogonal) to the
-circumference of the constraint.</p>
+with the red vector in the figure below. Notice that this vector is normal
+(i.e. orthogonal) to the circumference of the constraint.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-161"></span>
 <img src="images/penalized/ridge-constraint5.svg" alt="Gradient of error surface associated to candidate point" width="70%" />
 <p class="caption">
@@ -675,7 +676,7 @@ With this visualization, we get the intuition that <span class="math inline">\(\
 the boundary of the constraint region (i.e., in the 2-D case, on the circle of
 radius <span class="math inline">\(c\)</span> centered at the origin).</p>
 <p>It turns out that the optimal vector <span class="math inline">\(\mathbf{b^*}\)</span> corresponds to the one that
-is exactly the opposite of the gradient.</p>
+is exactly the opposite of the gradient <span class="math inline">\(\nabla E(\mathbf{b})\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-162"></span>
 <img src="images/penalized/ridge-constraint6.svg" alt="Optimal point opposite to the gradient" width="70%" />
 <p class="caption">
@@ -685,48 +686,68 @@ Figure 17.8: Optimal point opposite to the gradient
 <p>At this point, the gradient and normal vectors will be exactly antiparallel
 which, in mathematical terms, means that the normal vector is proportional to
 the gradient:</p>
-<p><span class="math display" id="eq:504-06">\[
-\nabla E_{in}(\mathbf{b}^*) \propto - \mathbf{b}^{*}
-\tag{17.6}
-\]</span></p>
-<p>For convenience purposes, let us choose a proportionality constant of
-<span class="math inline">\(-2 (\lambda / n)\)</span>. That is, we want the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> such that</p>
 <p><span class="math display" id="eq:504-07">\[
-\nabla E_{in}(\mathbf{b}^*) = - 2 \frac{\lambda}{n} \mathbf{b}^{*}
+\nabla E(\mathbf{b}^*) \propto - \mathbf{b}^{*}
 \tag{17.7}
 \]</span></p>
-<p>Rearranging the terms the above equation becomes:</p>
+<p>For mathematical convenience, let us choose a proportionality constant of
+<span class="math inline">\(-2 (\lambda / n)\)</span>. That is, we want the vector <span class="math inline">\(\mathbf{b}^{*}\)</span> such that</p>
 <p><span class="math display" id="eq:504-08">\[
-\nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*} = \mathbf{0}
+\nabla E(\mathbf{b}^*) = - 2 \frac{\lambda}{n} \mathbf{b}^{*}
 \tag{17.8}
+\]</span></p>
+<p>Rearranging some terms, the above equation becomes:</p>
+<p><span class="math display" id="eq:504-09">\[
+\nabla E(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*} = \mathbf{0}
+\tag{17.9}
 \]</span></p>
 <p>Now, notice that the above equation looks like the gradient of something…
 But what is that something? The answer turns out to be:</p>
-<p><span class="math display" id="eq:504-09">\[
-f(\mathbf{b}) = E_{in}(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}
-\tag{17.9}
-\]</span></p>
-<p>You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span> is precisely the left hand
-side of equation <a href="ridge.html#eq:504-08">(17.8)</a>:</p>
 <p><span class="math display" id="eq:504-10">\[
-\nabla f(\mathbf{b}^*) = \nabla E_{in}(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*}
+f(\mathbf{b}) = E(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b}
 \tag{17.10}
 \]</span></p>
-<p>Let us rephrase what we have seen so far. From our initial minimization
-problem <a href="ridge.html#eq:504-05">(17.5)</a>, we saw that its solution is given by the vector
-<span class="math inline">\(\mathbf{b}^{*}\)</span> that solves <em>another</em> minimization problem:</p>
+<p>You can verify directly that <span class="math inline">\(\nabla f(\mathbf{b})\)</span> is precisely the left hand
+side of equation <a href="ridge.html#eq:504-09">(17.9)</a>:</p>
 <p><span class="math display" id="eq:504-11">\[
-\min_{\mathbf{b}} \left\{ E_{in}(\mathbf{b}) + \frac{\lambda}{n} \mathbf{b}^\mathsf{T} \mathbf{b} \right\} 
+\nabla f(\mathbf{b}^*) = \nabla E(\mathbf{b}^*) + 2 \frac{\lambda}{n} \mathbf{b}^{*}
 \tag{17.11}
 \]</span></p>
-<p>In other words, the minimizations <a href="ridge.html#eq:504-05">(17.5)</a> and <a href="ridge.html#eq:504-11">(17.11)</a> are
-exactly equivalent.</p>
-<p>From <a href="ridge.html#eq:504-11">(17.11)</a>, we can obtain the solution,
-namely, the ridge regression estimate of <span class="math inline">\(\mathbf{b}\)</span>:</p>
-<p><span class="math display">\[
-\textsf{ridge coefficients:} \quad \mathbf{b}_{RR} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}
+<p>Let us rephrase what we have seen so far. From our initial minimization
+problem <a href="ridge.html#eq:504-06">(17.6)</a>, we saw that its solution is given by the vector
+<span class="math inline">\(\mathbf{b}^{*}\)</span> that solves <em>another</em> minimization problem:</p>
+<p><span class="math display" id="eq:504-12">\[
+\min_{\mathbf{b}} \left\{ E(\mathbf{b}) + \frac{\lambda}{n} \mathbf{b}^\mathsf{T} \mathbf{b} \right\} 
+\tag{17.12}
 \]</span></p>
-<p>As you can imagine, the optimal vector <span class="math inline">\(\mathbf{b}\)</span> that minimizes <span class="math inline">\(E_{in}\)</span> and
+<p>In other words, the minimizations <a href="ridge.html#eq:504-06">(17.6)</a> and <a href="ridge.html#eq:504-12">(17.12)</a> are
+exactly equivalent.</p>
+<p>From <a href="ridge.html#eq:504-12">(17.12)</a>, we can obtain the solution,
+namely, the ridge regression estimate of <span class="math inline">\(\mathbf{b}\)</span>:</p>
+<p><span class="math display" id="eq:504-13">\[\begin{align*}
+f(\mathbf{b}) &amp;= E(\mathbf{b}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b} \\
+&amp;= \frac{1}{n} (\mathbf{Xb} - \mathbf{y})^\mathsf{T} (\mathbf{Xb} - \mathbf{y}) + (\lambda/n) \mathbf{b}^\mathsf{T} \mathbf{b} \\
+&amp;= \frac{1}{n} \mathbf{b^\mathsf{T}X^\mathsf{T}Xb} - \frac{2}{n} \mathbf{b^\mathsf{T}X^\mathsf{T}y} + \frac{1}{n} \mathbf{y^\mathsf{T}y} + \frac{\lambda}{n} \mathbf{b}^\mathsf{T} \mathbf{b}
+\tag{17.13}
+\end{align*}\]</span></p>
+<p>Deriving <span class="math inline">\(f(\mathbf{b})\)</span> with resepct to <span class="math inline">\(\mathbf{b}\)</span> we get:</p>
+<p><span class="math display" id="eq:504-14">\[
+\nabla f(\mathbf{b}) = \frac{2}{n} \mathbf{X^\mathsf{T}Xb} - \frac{2}{n} \mathbf{X^\mathsf{T}y} + \frac{2 \lambda}{n} \mathbf{b}
+\tag{17.14}
+\]</span></p>
+<p>Setting <span class="math inline">\(\nabla f(\mathbf{b})\)</span> equal to zero:</p>
+<p><span class="math display" id="eq:504-15">\[\begin{align*}
+\mathbf{X^\mathsf{T}Xb} - \mathbf{X^\mathsf{T}y} + \lambda \mathbf{b} &amp;= \mathbf{0} \\
+\Longrightarrow \mathbf{b} (\mathbf{X^\mathsf{T}X} + \lambda \mathbf{I}) &amp;= \mathbf{X^\mathsf{T} y} \\
+\Longrightarrow \mathbf{b} &amp;= (\mathbf{X^\mathsf{T}X} + \lambda \mathbf{I})^{-1} \mathbf{X^\mathsf{T} y}
+\tag{17.15}
+\end{align*}\]</span></p>
+<p>Therefore, the solution is:</p>
+<p><span class="math display" id="eq:504-16">\[
+\textsf{ridge coefficients:} \quad \mathbf{b}_{RR} = (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y}
+\tag{17.16}
+\]</span></p>
+<p>As you can imagine, the optimal vector <span class="math inline">\(\mathbf{b}\)</span> that minimizes <span class="math inline">\(E\)</span> and
 satisfies the constraint, will be on a given contour of constant error. This
 situation is illustrated in the image below. Also, this image depicts the
 general case in which the estimated rigde parameters are biased. That is, the
@@ -747,11 +768,11 @@ OLS estimate).</p>
 <p>In ridge regression, the key ingredient is the hyperparameter <span class="math inline">\(\lambda\)</span>.
 Setting <span class="math inline">\(\lambda = 0\)</span> causes the ridge solution to be the same as the OLS
 solution:</p>
-<p><span class="math display" id="eq:504-12">\[\begin{align*}
+<p><span class="math display" id="eq:504-17">\[\begin{align*}
 \mathbf{b}_{RR} &amp;= (\mathbf{X}^\mathsf{T} \mathbf{X} + 0 \mathbf{I})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y} \\
 &amp;= (\mathbf{X}^\mathsf{T} \mathbf{X})^{-1} \mathbf{X}^\mathsf{T} \mathbf{y} \\
 &amp;= \mathbf{b}_{OLS}
-\tag{17.12}
+\tag{17.17}
 \end{align*}\]</span></p>
 <p>But what about specifying a very large value for <span class="math inline">\(\lambda\)</span>? Let’s think about
 this case. If <span class="math inline">\(\lambda\)</span> becomes larger and larger, the terms on the diagonal of
@@ -759,22 +780,22 @@ this case. If <span class="math inline">\(\lambda\)</span> becomes larger and la
 such <span class="math inline">\(\lambda\)</span> value. Consequently, the matrix inverse,
 <span class="math inline">\((\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1}\)</span>, will basically be
 dominated by the inverse of the terms on its diagonal:</p>
-<p><span class="math display" id="eq:504-13">\[
-\lambda &gt;&gt; 0  \quad \Longrightarrow \quad (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \rightarrow \frac{1}{\lambda} \mathbf{I}
-\tag{17.13}
+<p><span class="math display" id="eq:504-18">\[
+\lambda \gg 0  \quad \Longrightarrow \quad (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \rightarrow \frac{1}{\lambda} \mathbf{I}
+\tag{17.18}
 \]</span></p>
 <p>Taking this idea to the extreme with very large <span class="math inline">\(\lambda\)</span>, will cause
 <span class="math inline">\(1/\lambda\)</span> to be zero, essentially “collapsing”
 <span class="math inline">\((\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1}\)</span> into a
 <span class="math inline">\(p \times p\)</span> matrix full of zeros:</p>
-<p><span class="math display" id="eq:504-14">\[
+<p><span class="math display" id="eq:504-19">\[
 \lambda \rightarrow \infty \quad \Longrightarrow \quad (\mathbf{X}^\mathsf{T} \mathbf{X} + \lambda \mathbf{I})^{-1} \rightarrow \mathbf{0}_{(p,p)}
-\tag{17.14}
+\tag{17.19}
 \]</span></p>
 <p>thus, the ridge regression coefficients will also collapse to zero:</p>
-<p><span class="math display" id="eq:504-15">\[
+<p><span class="math display" id="eq:504-20">\[
 \lambda \rightarrow \infty \quad \Longrightarrow \quad \mathbf{b}_{RR} = \mathbf{0}
-\tag{17.15}
+\tag{17.20}
 \]</span></p>
 <div id="relation-between-lambda-and-c" class="section level4 unnumbered">
 <h4>Relation between <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(c\)</span>?</h4>
@@ -783,7 +804,7 @@ dominated by the inverse of the terms on its diagonal:</p>
 constraint <span class="math inline">\(c\)</span>, results in a small <span class="math inline">\(\lambda\)</span>. The smaller the <span class="math inline">\(\lambda\)</span>, the
 closer <span class="math inline">\(\mathbf{b}_{RR}\)</span> to the OLS solution. Conversely, imposing a small
 budget <span class="math inline">\(c\)</span>, causes <span class="math inline">\(\lambda\)</span> to become large. The larger the <span class="math inline">\(\lambda\)</span>, the
-closer the ridge coefficients to zero.</p>
+smaller the ridge coefficients.</p>
 <p><span class="math display">\[
 \uparrow c \quad \Longrightarrow \quad \downarrow \lambda \\
 \downarrow c \quad \Longrightarrow \quad \uparrow \lambda
