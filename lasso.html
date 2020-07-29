@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Introduction | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>18 Lasso Regression | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Introduction | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="18 Lasso Regression | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Introduction | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="18 Lasso Regression | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="about.html"/>
-<link rel="next" href="duality.html"/>
+<link rel="prev" href="ridge.html"/>
+<link rel="next" href="linear-extensions.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -532,307 +532,179 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction</h1>
-<p>Picture a data set containing scores of several courses for college students.
-For example, courses like matrix algebra, multivariable calculus,
-statistics, and probability. And say we also have historical data about a course
-in Statistical Learning. In particular we have final scores measured on a scale
-from 0 to 100, we also have final grades (in letter grade scale), as well as a
-third interesting variable “Pass - Non-Pass” indicating whether the student
-passed statistical learning.
-Some data like that fits perfectly well in a tabular format. The rows contain
-the records for a bunch of students, and the columns refer to the variables.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">Student</th>
-<th align="center">LinAlg</th>
-<th align="center">Calculus</th>
-<th align="center">Statistics</th>
-<th align="center">StatLearn</th>
-<th align="center">Grade</th>
-<th align="center">P/NP</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">92</td>
-<td align="center">A</td>
-<td align="center">P</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">85</td>
-<td align="center">B</td>
-<td align="center">P</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">40</td>
-<td align="center">F</td>
-<td align="center">NP</td>
-</tr>
-<tr class="even">
-<td align="center">New</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">?</td>
-<td align="center">?</td>
-<td align="center">?</td>
-</tr>
-</tbody>
-</table>
-<p>Suppose that, based on this historical data, we wish to predict the score of a
-new student (whose Linear Algebra, Calculus, and Statistics grades are known)
-in Statistical Learning.
-To do so, we would fit some sort of model to our data; i.e. we would perform
-regression. This is a form of <strong>supervised learning</strong>, since our model is trained
-using known inputs (i.e. LinAlg, Calculus, and Statistics grades) as well as
-known responses (i.e. the Statistical Learning grades of the previous students).</p>
-<p>Likewise, we may be interested in studying the data not from a prediction
-oriented perspective but from a purely exploratory perspective. For example,
-maybe we want to investigate what is the relationship between the courses
-Linear Algebra, Calculus, and Statistics; that is: explore the relationship between
-the features. Or maybe we want to study the resemblance among individuals
-and see what kind of students have similar scores, or if there are “natural”
-groups of individuals based on their features. Both of these tasks are examples
-of <strong>unsupervised learning</strong>. We use the information in the data to discover
-patterns, without focusing on any single variable as a target response.</p>
-<p>In summary, we will focus on two types of learning paradigms:</p>
-<p><strong>Supervised Learning</strong>: where we have inputs, and one (or more) response variable(s).</p>
-<p><strong>Unsupervised Learning</strong>: where we have inputs, but not response variables.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="images/introduction/intro-learning-paradigms.svg" alt="Inputs and outputs in supervised and unsupervised learning" width="85%" />
-<p class="caption">
-Figure 2.1: Inputs and outputs in supervised and unsupervised learning
-</p>
-</div>
-<p>By the way, there are other types of Learning paradigms
-(e.g. <a href="https://en.wikipedia.org/wiki/Deep_learning" target="_blank">deep learning</a>,
-<a href="https://en.wikipedia.org/wiki/Reinforcement_learning" target="_blank">reinforcement learning</a>),
-but we won’t discuss them in this book.</p>
-<p>To visualize the different types of learning, the different types of variables,
-and the methodology associated with each combination of learning/data types,
-we can use the following graphic:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="images/introduction/four-corners.svg" alt="Supervised and Unsupervised Corners" width="80%" />
-<p class="caption">
-Figure 2.2: Supervised and Unsupervised Corners
-</p>
-</div>
-<div id="basic-notation" class="section level2">
-<h2><span class="header-section-number">2.1</span> Basic Notation</h2>
-<p>In this book we are going to use a fair amount of math notation. Becoming
-familiar with the meaning of all the different symbols as soon as possible,
-should allow you to keep the learning curve a little bit less steep.</p>
-<p>The starting point is always the data, which we will assume to be in a tabular
-format, that can be translated into a mathematical matrix object. Here’s an
-example of a data matrix <span class="math inline">\(\mathbf{X}\)</span> of size <span class="math inline">\(n \times p\)</span></p>
-<p><span class="math display" id="eq:101-1">\[
-\mathbf{X} = 
-\
-\begin{bmatrix} 
-x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1j} &amp; \cdots &amp; x_{1p} \\
-x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2j} &amp; \cdots &amp; x_{2p} \\
-\vdots &amp; \vdots &amp;        &amp; \vdots &amp;        &amp; \vdots \\
-x_{i1} &amp; x_{i2} &amp; \cdots &amp; x_{ij} &amp; \cdots &amp; x_{ip} \\
-\vdots &amp; \vdots &amp;        &amp; \vdots &amp;        &amp; \vdots \\
-x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nj} &amp; \cdots &amp; x_{np} \\
-\end{bmatrix}
-\tag{2.1}
+<div id="lasso" class="section level1">
+<h1><span class="header-section-number">18</span> Lasso Regression</h1>
+<p>In this chapter we describe Lasso.</p>
+<p>Though ridge regression has a great many applications and uses, there is one
+thing to note: it does not perform variable selection.</p>
+<p>Let us parse through this statement in more detail. In the previous chapter,
+we saw that the Ridge Regression estimate of <span class="math inline">\(\mathbf{b}_{RR}\)</span> is given by</p>
+<p><span class="math display">\[
+\mathbf{b}_{RR} = \left( \mathbf{X^\mathsf{T} X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X^\mathsf{T}y}
 \]</span></p>
-<p>By default, we will assume that the rows of a data matrix correspond to the
-individuals or objects. Likewise, we will also assume that the columns of a data
-matrix correspond to the variables or features observed on the individuals.
-In this sense, the symbol <span class="math inline">\(x_{ij}\)</span> represents the value observed for the <span class="math inline">\(j\)</span>-th
-variable on the <span class="math inline">\(i\)</span>-th individual.</p>
-<p>Throughout this book, every time you see the letter <span class="math inline">\(i\)</span>, either alone or as an
-index associated with any other symbol (superscript or subscript), it means
-that such term corresponds to an individual or a row of some data matrix.
-For instance, symbols like <span class="math inline">\(x_i\)</span>, <span class="math inline">\(\mathbf{x_i}\)</span>, and <span class="math inline">\(\alpha_i\)</span> are all
-examples that refer to—or denote a connection with—individuals.</p>
-<p>In turn, we will always use the letter <span class="math inline">\(j\)</span> to convey association with variables
-or columns of some data matrix.
-For instance, <span class="math inline">\(x_j\)</span>, <span class="math inline">\(\mathbf{x_j}\)</span>, and <span class="math inline">\(\alpha_j\)</span> are examples that refer
-to—or denote a connection with—variables.</p>
-<p>For better or for worse, we’ve made the decision to represent both the rows
-and the columns of a matrix as vectors using the same notation: as bold lower
-case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and <span class="math inline">\(\mathbf{x_j}\)</span>. Because we know that
-there’s a risk of confusing a vector that corresponds to a row with a vector
-that corresponds to a column, sometimes we will use the arrow notation for
-vectors associated to the row of a data matrix: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
-<p>So, going back to the above data matrix <span class="math inline">\(\mathbf{X}\)</span>, we can represent the first
-variable as a vector <span class="math inline">\(\mathbf{x_1} = (x_{11}, x_{21}, \dots, x_{n1})\)</span>.
-Likewise, we can represent the first individual with the vector
-<span class="math inline">\(\mathbf{\vec{x}_1} = (x_{11}, x_{12}, \dots, x_{1p})\)</span>.</p>
-<p>Here’s a reference table with the most common symbols and notation used
-throughout the book.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(n\)</span></td>
-<td align="left">number of objects or individuals</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(p\)</span></td>
-<td align="left">number of variables or features</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(i\)</span></td>
-<td align="left">running index for rows or individuals</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(j\)</span></td>
-<td align="left">running index for columns or variables</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(k\)</span></td>
-<td align="left">running index determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\ell, m, q\)</span></td>
-<td align="left">other auxiliary indexes</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(f()\)</span>, <span class="math inline">\(h()\)</span>, <span class="math inline">\(d()\)</span></td>
-<td align="left">functions</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\lambda, \mu, \gamma, \alpha\)</span></td>
-<td align="left">greek letters represent scalars</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(\mathbf{y}\)</span></td>
-<td align="left">variables, size determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{w}\)</span>, <span class="math inline">\(\mathbf{a}\)</span>, <span class="math inline">\(\mathbf{b}\)</span></td>
-<td align="left">vectors of weight coefficients</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{z}\)</span>, <span class="math inline">\(\mathbf{t}\)</span>, <span class="math inline">\(\mathbf{u}\)</span></td>
-<td align="left">components or latent variables</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{X} : n \times p\)</span></td>
-<td align="left">data matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(p\)</span> columns</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(x_{ij}\)</span></td>
-<td align="left">element of a matrix in <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{1}\)</span></td>
-<td align="left">vector of ones, size determined by context</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{I}\)</span></td>
-<td align="left">identity matrix, size determined by context</td>
-</tr>
-</tbody>
-</table>
-<p>By the way, there are many more symbols that will appear in later chapters.
-But for now these are the fundamental ones.</p>
-<p>Likewise, the table below contains some of the most common operators that we
-will use in subsequent chapters:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbb{E}[X]\)</span></td>
-<td align="left">expected value of a random variable <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\|\mathbf{a}\|\)</span></td>
-<td align="left">euclidean norm of a vector</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{a}^{\mathsf{T}}\)</span></td>
-<td align="left">transpose of a vector (or matrix)</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{a^{\mathsf{T}}b}\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\langle \mathbf{a}, \mathbf{b} \rangle\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(det(\mathbf{A})\)</span></td>
-<td align="left">determinant of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(tr(\mathbf{A})\)</span></td>
-<td align="left">trace of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{A}^{-1}\)</span></td>
-<td align="left">inverse of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(diag(\mathbf{A})\)</span></td>
-<td align="left">diagonal of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(E()\)</span></td>
-<td align="left">overall error function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(err()\)</span></td>
-<td align="left">pointwise error function</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(sign()\)</span></td>
-<td align="left">sign function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(var()\)</span></td>
-<td align="left">variance function</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(cov()\)</span></td>
-<td align="left">covariance function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(cor()\)</span></td>
-<td align="left">correlation function</td>
-</tr>
-</tbody>
-</table>
+<p>We also encountered the following geometric interpretation of Ridge Regression:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-165"></span>
+<img src="images/penalized/ridge-constraint3.svg" alt="Illustration of Ridge Regression" width="70%" />
+<p class="caption">
+Figure 18.1: Illustration of Ridge Regression
+</p>
+</div>
+<p>Geometrically, we see that ridge coefficients may be set <em>close</em> to zero, but
+never exactly equal to zero.</p>
+<p>You may ask why we want some coefficients to be equal to zero. To answer this
+question, let us return to our general model:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+\]</span></p>
+<p>where <span class="math inline">\(Y\)</span> denotes our response variable and <span class="math inline">\(X_1, \dots, X_p\)</span> denote the
+predictors. If it truly were the case that <span class="math inline">\(\beta_i = 0\)</span>, the entire variable
+<span class="math inline">\(X_i\)</span> is actually irrelevant and can be omitted our model completely. As such,
+if we can find an estimation technique that sets the coefficients of
+“unnecessary” variables equal to 0, we can use this technique to shrink the
+space of input variables.</p>
+<p>So, we’ve now seen why we want some coefficients to be set equal to 0, and we’ve
+seen that Ridge Regression doesn’t actually do this. As such, we posit a new
+estimation technique: the <strong>Least Absolute Shrinkage and Selection Operator</strong>
+(it even has the word “Selection” in its name!), or LASSO for short.</p>
+<div id="mathematical-setup" class="section level2">
+<h2><span class="header-section-number">18.1</span> Mathematical Setup</h2>
+<p>We begin, as we did in Ridge Regression, with a constrained minimization problem:</p>
+<p><span class="math display">\[
+\min_{\mathbf{b} \in \mathbb{R}^{p}} \left\{ \frac{1}{n} \left\| \mathbf{y} - \mathbf{Xb} \right\|_2^2 \right\} \hspace{5mm} \text{subject to} \hspace{5mm} \text{norm}\left( \mathbf{b} \right) &lt; c
+\]</span></p>
+<p>Now, instead of using the <span class="math inline">\(\ell_2\)</span> norm for our constraint, we’ll actually use
+an <span class="math inline">\(\ell_1\)</span> norm:</p>
+<p><span class="math display">\[
+\min_{\mathbf{b} \in \mathbb{R}^{p}} \left\{ \frac{1}{n} \left\| \mathbf{y} - \mathbf{Xb} \right\|_2^2 \right\} \hspace{5mm} \text{subject to} \hspace{5mm} \left\| \mathbf{b} \right\|_1 \leq c
+\]</span></p>
+<p>In case you’re not familiar with the <span class="math inline">\(\ell_1\)</span> norm, what we mean by this
+constraint is</p>
+<p><span class="math display">\[
+\left\| \mathbf{b} \right\|_1 \leq c \iff \sum_{j=1}^{p} | b_j| \leq c
+\]</span></p>
+<p>It can be shown that the minimization in equation (1) is exactly equivalent to</p>
+<p><span class="math display">\[
+\min_{\mathbf{b}} \left\{  \frac{1}{n} \left( \mathbf{y} - \mathbf{Xb} \right)^\mathsf{T}  \left( \mathbf{y} - \mathbf{Xb} \right) + \lambda \sum_{j=1}^{p} |b_j| \right\}
+\]</span></p>
+<div id="closed-form" class="section level3">
+<h3><span class="header-section-number">18.1.1</span> Closed Form?</h3>
+<p>Recall that the vector of Ridge Regression coefficients had a simple closed-form
+solution:</p>
+<p><span class="math display">\[
+\mathbf{b}_{RR} = \left( \mathbf{X^\mathsf{T} X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X^\mathsf{T} y}
+\]</span></p>
+<p>One might ask: do we have a closed-form solution for the LASSO? Unfortunately,
+the answer is, in general, no. Even without extensive mathematical background,
+you might be able to see why this is: minimization problems involve
+differentiation; the LASSO involves an absolute value; differentiation and
+absolute values don’t play well together.</p>
+<p>Now, there are a few exceptions. In particular, when we have only <span class="math inline">\(p = 1\)</span>
+predictors, one can actually find a piecewise-defined (but closed-form) solution
+to the LASSO. When the design matrix <span class="math inline">\(\mathbf{X}\)</span> is orthonormal, it can be shown
+that the LASSO can be expressed as</p>
+<p><span class="math display">\[
+\mathrm{sgn}(b_j) \cdot \left( |b_j| - \lambda \right)_{+}
+\]</span></p>
+<p>where <span class="math inline">\(b_j\)</span> denotes the OLS estimate of <span class="math inline">\(b_j\)</span>, and <span class="math inline">\(x_{+}\)</span> denotes the
+positive-part function (i.e. the positive part of <span class="math inline">\(x\)</span>). However, in general,
+it is nearly impossible to extract a closed-form solution to the LASSO.</p>
+<p>This is not to say we can’t <em>find</em> the coefficients numerically; there exist a
+number of extremely effective and efficient algorithms that can solve <span class="math inline">\(\ell_1\)</span>-minimization problems. For example, we could use Gradient Descent
+(perhaps, more accurately, sub-gradient descent), or we could use
+coordinate descent.</p>
+<p>Note, <em>Gradient Descent</em> cannot actually be used here. The problem is that the
+<span class="math inline">\(\ell_1\)</span> norm term does not take well to gradients (think about derivatives and
+absolute value signs), and as such we don’t have a well-defined update step.</p>
+<p>In practice, however, we use built-in functions to do the heavy lifting. For
+example, in R, the function <code>glmnet()</code> from the package <code>"glmnet"</code> can compute
+both Ridge and LASSO coefficients quite easily.</p>
+</div>
+</div>
+<div id="geometric-visualization" class="section level2">
+<h2><span class="header-section-number">18.2</span> Geometric Visualization</h2>
+<p>Just because we can’t always find neat closed-form solutions to the LASSO, that
+isn’t to say we can gain some intuition behind what’s going on. As we did with
+Ridge Regression, we can sketch our constraint region and level sets of constant
+error (MSE):</p>
+<p><strong>INSERT DIAGRAM</strong></p>
+<p>Here’s the kicker: in LASSO, we could have the following situation:</p>
+<p><strong>INSERT DIAGRAM</strong></p>
+<p>Here we see the <strong>variable selection</strong> advertised in the beginning of this
+chapter. In this particular scenario, the ideal point has <span class="math inline">\(b_1-\)</span>coordinate equal
+to 0, meaning the LASSO has completely zeroed-out <span class="math inline">\(b_1\)</span> in the model, reducing
+the number of covariates from <span class="math inline">\(2\)</span> down to <span class="math inline">\(1\)</span>.</p>
+<div id="some-more-math-variable-selection-in-action" class="section level3">
+<h3><span class="header-section-number">18.2.1</span> Some More Math: Variable Selection in Action</h3>
+<p>It may be insightful to see some concrete math behind the idea that the LASSO
+performs variable selection, whereas Ridge Regression does not. For now, we make
+the simplifying assumption that <span class="math inline">\(\mathbf{X}\)</span> is orthonormal (this ensures a
+closed-form solution to the LASSO). As mentioned in <strong>ESL (page 71)</strong>, we have</p>
+<p><span class="math display">\[
+b_{j-RR} = \frac{b_j}{1 + \lambda} ; \hspace{5mm}  b_{j-LASSO} =  \mathrm{sign}(b_j) (|b_j| - \lambda)_{+}
+\]</span></p>
+<p>It should be clear now that <span class="math inline">\(\mathbf{b}_{RR} = \mathbf{0}\)</span> only when
+<span class="math inline">\(\lambda = \infty\)</span> (which, of course, is a mathematically ill-phrased statement)
+which is to say that <span class="math inline">\(\mathbf{b}_{RR}\)</span> is never equal to zero. With LASSO, on
+the other hand, setting <span class="math inline">\(\lambda = |b_j|\)</span> results in a <span class="math inline">\(\mathbf{b}_{LASSO}\)</span>
+value of exactly zero.</p>
+</div>
+<div id="example-with-mtcars" class="section level3">
+<h3><span class="header-section-number">18.2.2</span> Example with <code>mtcars</code></h3>
+<p>As an example, consider the built-in <code>mtcars</code> dataset from R. We may use
+<code>glmnet()</code> to compute the LASSO coefficients, for different values of the tuning
+parameter <span class="math inline">\(\lambda\)</span> (<span class="math inline">\(\lambda\)</span> was chosen to increase from 0 to 1 in steps of 0.1):</p>
+<p><strong>INSERT code for ggplot figure</strong></p>
+<p>LASSO coefficients for different <span class="math inline">\(\lambda\)</span> values; as we see, the LASSO
+eventually sets coefficients equal to <span class="math inline">\(0\)</span>, thereby eliminating their
+corresponding covariate from the original model.</p>
+<p>Compare this with the coefficients obtained through Ridge Regression (for the
+same <span class="math inline">\(\lambda\)</span> values):</p>
+<p><strong>INSERT code for ggplot figure</strong></p>
+<p>Ridge coefficients for different <span class="math inline">\(\lambda\)</span> values; as we see, Ridge Regression
+does not set coefficients equal to 0.</p>
+<p>As with Ridge Regression, there isn’t an analytic expression we can use to
+find the optimal value of <span class="math inline">\(\lambda\)</span>. Rather, <span class="math inline">\(\lambda\)</span> should be chosen using
+cross-validation.</p>
+</div>
+</div>
+<div id="going-beyond" class="section level2">
+<h2><span class="header-section-number">18.3</span> Going Beyond</h2>
+<p>So far, we’ve seen <span class="math inline">\(\ell_2\)</span> norms (through Ridge Regression) and <span class="math inline">\(\ell_1\)</span> norms
+(through the LASSO). In general, we define the <span class="math inline">\(\ell_p\)</span> norm to be</p>
+<p><span class="math display">\[
+\left\| \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \\ \end{bmatrix} \right\|_p = \sum_{j=1}^{n} | v_i |^p
+\]</span></p>
+<p>One could plausibly replace the <span class="math inline">\(\ell_1\)</span> norm in the LASSO with an <span class="math inline">\(\ell_p\)</span>
+norm (for a different choice of <span class="math inline">\(p\)</span>) to yield yet another type of estimator!
+One note; for <span class="math inline">\(p &gt; 1\)</span>, the resulting estimator will not perform variable
+selection. This is because <span class="math inline">\(|b_j|^p\)</span> <em>is</em> differentiable at <span class="math inline">\(0\)</span> for <span class="math inline">\(p &gt; 1\)</span>.</p>
+<p>Another popular penalty (widely regarded as a “compromise” between Ridge
+Regression and LASSO) is the <strong>elastic-net penalty</strong> (Zou and Hastie, 2005),
+which replaces the <span class="math inline">\(\ell_1\)</span> norm in equation (1) with</p>
+<p><span class="math display">\[
+\lambda \sum_{j=1}^{p} \left[ \alpha b_j^2 + (1 - \alpha) | b_j | \right]
+\]</span></p>
+<p>The elastic net does perform variable selection (due to the absolute value term
+in its penalty), but also performs shrinkage on the remaining variables
+(like Ridge).</p>
+<p>The LASSO is just the tip of the iceberg. In fact, we can consider a whole
+plethora of models with the form</p>
+<p><span class="math display">\[
+\min_{\mathbf{b}} \left\{  \frac{1}{n} \left( \mathbf{y} - \mathbf{Xb} \right)^\mathsf{T}  \left( \mathbf{y} - \mathbf{Xb} \right) + \lambda \sum_{j=1}^{p} |b_j| \right\}
+\]</span></p>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="about.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="duality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ridge.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-extensions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

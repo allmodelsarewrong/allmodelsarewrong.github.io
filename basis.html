@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Introduction | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>20 Basis Expansion | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Introduction | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="20 Basis Expansion | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Introduction | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="20 Basis Expansion | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="about.html"/>
-<link rel="next" href="duality.html"/>
+<link rel="prev" href="linear-extensions.html"/>
+<link rel="next" href="nonparametric.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -532,297 +532,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction</h1>
-<p>Picture a data set containing scores of several courses for college students.
-For example, courses like matrix algebra, multivariable calculus,
-statistics, and probability. And say we also have historical data about a course
-in Statistical Learning. In particular we have final scores measured on a scale
-from 0 to 100, we also have final grades (in letter grade scale), as well as a
-third interesting variable “Pass - Non-Pass” indicating whether the student
-passed statistical learning.
-Some data like that fits perfectly well in a tabular format. The rows contain
-the records for a bunch of students, and the columns refer to the variables.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">Student</th>
-<th align="center">LinAlg</th>
-<th align="center">Calculus</th>
-<th align="center">Statistics</th>
-<th align="center">StatLearn</th>
-<th align="center">Grade</th>
-<th align="center">P/NP</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">92</td>
-<td align="center">A</td>
-<td align="center">P</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">85</td>
-<td align="center">B</td>
-<td align="center">P</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">40</td>
-<td align="center">F</td>
-<td align="center">NP</td>
-</tr>
-<tr class="even">
-<td align="center">New</td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center"><span class="math inline">\(\bigcirc\)</span></td>
-<td align="center">?</td>
-<td align="center">?</td>
-<td align="center">?</td>
-</tr>
-</tbody>
-</table>
-<p>Suppose that, based on this historical data, we wish to predict the score of a
-new student (whose Linear Algebra, Calculus, and Statistics grades are known)
-in Statistical Learning.
-To do so, we would fit some sort of model to our data; i.e. we would perform
-regression. This is a form of <strong>supervised learning</strong>, since our model is trained
-using known inputs (i.e. LinAlg, Calculus, and Statistics grades) as well as
-known responses (i.e. the Statistical Learning grades of the previous students).</p>
-<p>Likewise, we may be interested in studying the data not from a prediction
-oriented perspective but from a purely exploratory perspective. For example,
-maybe we want to investigate what is the relationship between the courses
-Linear Algebra, Calculus, and Statistics; that is: explore the relationship between
-the features. Or maybe we want to study the resemblance among individuals
-and see what kind of students have similar scores, or if there are “natural”
-groups of individuals based on their features. Both of these tasks are examples
-of <strong>unsupervised learning</strong>. We use the information in the data to discover
-patterns, without focusing on any single variable as a target response.</p>
-<p>In summary, we will focus on two types of learning paradigms:</p>
-<p><strong>Supervised Learning</strong>: where we have inputs, and one (or more) response variable(s).</p>
-<p><strong>Unsupervised Learning</strong>: where we have inputs, but not response variables.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
-<img src="images/introduction/intro-learning-paradigms.svg" alt="Inputs and outputs in supervised and unsupervised learning" width="85%" />
-<p class="caption">
-Figure 2.1: Inputs and outputs in supervised and unsupervised learning
-</p>
-</div>
-<p>By the way, there are other types of Learning paradigms
-(e.g. <a href="https://en.wikipedia.org/wiki/Deep_learning" target="_blank">deep learning</a>,
-<a href="https://en.wikipedia.org/wiki/Reinforcement_learning" target="_blank">reinforcement learning</a>),
-but we won’t discuss them in this book.</p>
-<p>To visualize the different types of learning, the different types of variables,
-and the methodology associated with each combination of learning/data types,
-we can use the following graphic:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
-<img src="images/introduction/four-corners.svg" alt="Supervised and Unsupervised Corners" width="80%" />
-<p class="caption">
-Figure 2.2: Supervised and Unsupervised Corners
-</p>
-</div>
-<div id="basic-notation" class="section level2">
-<h2><span class="header-section-number">2.1</span> Basic Notation</h2>
-<p>In this book we are going to use a fair amount of math notation. Becoming
-familiar with the meaning of all the different symbols as soon as possible,
-should allow you to keep the learning curve a little bit less steep.</p>
-<p>The starting point is always the data, which we will assume to be in a tabular
-format, that can be translated into a mathematical matrix object. Here’s an
-example of a data matrix <span class="math inline">\(\mathbf{X}\)</span> of size <span class="math inline">\(n \times p\)</span></p>
-<p><span class="math display" id="eq:101-1">\[
-\mathbf{X} = 
-\
-\begin{bmatrix} 
-x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1j} &amp; \cdots &amp; x_{1p} \\
-x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2j} &amp; \cdots &amp; x_{2p} \\
-\vdots &amp; \vdots &amp;        &amp; \vdots &amp;        &amp; \vdots \\
-x_{i1} &amp; x_{i2} &amp; \cdots &amp; x_{ij} &amp; \cdots &amp; x_{ip} \\
-\vdots &amp; \vdots &amp;        &amp; \vdots &amp;        &amp; \vdots \\
-x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{nj} &amp; \cdots &amp; x_{np} \\
-\end{bmatrix}
-\tag{2.1}
+<div id="basis" class="section level1">
+<h1><span class="header-section-number">20</span> Basis Expansion</h1>
+<p>In this chapter we describe function basis expansion for regression models.</p>
+<div id="basis-functions" class="section level2">
+<h2><span class="header-section-number">20.1</span> Basis Functions</h2>
+<p>So far we have talked about regression models in their most basic way: linear
+regression models. So let’s take a step back and recall the general regression
+framework in which the main idea is to find a function <span class="math inline">\(f()\)</span> that takes in one
+or more input features, and returns a response value. In addition, we also
+suppose that there is a noise or error term to indicate the imperfect nature
+of our model:</p>
+<p>Assumet that we have a data set consisting of <span class="math inline">\(n\)</span> data points:
+<span class="math inline">\(\mathcal{D} = \{ (\mathbf{x_1}, y_1), \dots, (\mathbf{x_n}, y_n) \}\)</span>,
+where <span class="math inline">\(\mathbf{x_i} \in \mathcal{X}\)</span>, and <span class="math inline">\(y_i \in \mathbb{R}\)</span>. In regression
+we assume an unknown target function <span class="math inline">\(f: \mathcal{X} \to \mathbb{R}\)</span>.
+In the simplest case when we only have one input feature then
+<span class="math inline">\(\mathcal{X} = \mathbb{R}\)</span>. In the multidimensional case when there are <span class="math inline">\(p\)</span>
+predictors, we have that <span class="math inline">\(\mathcal{X} = \mathbb{R^p}\)</span>.</p>
+<p>Perhaps the simplest way to extend linear models is to look for <span class="math inline">\(f\)</span> in a
+finite dimensional space of functions spanned by a given basis. In other words,
+we specify a set of functions <span class="math inline">\(\phi_0, \phi_1, \dots, \phi_m\)</span> from <span class="math inline">\(\mathcal{X}\)</span>
+to <span class="math inline">\(\mathbb{R}\)</span>, and estimate <span class="math inline">\(f\)</span> in the form of a linear combination as:</p>
+<p><span class="math display">\[
+\widehat{f}(x) = \sum_{q=0}^{m} b_q \ \phi_q(x)
 \]</span></p>
-<p>By default, we will assume that the rows of a data matrix correspond to the
-individuals or objects. Likewise, we will also assume that the columns of a data
-matrix correspond to the variables or features observed on the individuals.
-In this sense, the symbol <span class="math inline">\(x_{ij}\)</span> represents the value observed for the <span class="math inline">\(j\)</span>-th
-variable on the <span class="math inline">\(i\)</span>-th individual.</p>
-<p>Throughout this book, every time you see the letter <span class="math inline">\(i\)</span>, either alone or as an
-index associated with any other symbol (superscript or subscript), it means
-that such term corresponds to an individual or a row of some data matrix.
-For instance, symbols like <span class="math inline">\(x_i\)</span>, <span class="math inline">\(\mathbf{x_i}\)</span>, and <span class="math inline">\(\alpha_i\)</span> are all
-examples that refer to—or denote a connection with—individuals.</p>
-<p>In turn, we will always use the letter <span class="math inline">\(j\)</span> to convey association with variables
-or columns of some data matrix.
-For instance, <span class="math inline">\(x_j\)</span>, <span class="math inline">\(\mathbf{x_j}\)</span>, and <span class="math inline">\(\alpha_j\)</span> are examples that refer
-to—or denote a connection with—variables.</p>
-<p>For better or for worse, we’ve made the decision to represent both the rows
-and the columns of a matrix as vectors using the same notation: as bold lower
-case letters such as <span class="math inline">\(\mathbf{x_i}\)</span> and <span class="math inline">\(\mathbf{x_j}\)</span>. Because we know that
-there’s a risk of confusing a vector that corresponds to a row with a vector
-that corresponds to a column, sometimes we will use the arrow notation for
-vectors associated to the row of a data matrix: <span class="math inline">\(\mathbf{\vec{x}_i}\)</span>.</p>
-<p>So, going back to the above data matrix <span class="math inline">\(\mathbf{X}\)</span>, we can represent the first
-variable as a vector <span class="math inline">\(\mathbf{x_1} = (x_{11}, x_{21}, \dots, x_{n1})\)</span>.
-Likewise, we can represent the first individual with the vector
-<span class="math inline">\(\mathbf{\vec{x}_1} = (x_{11}, x_{12}, \dots, x_{1p})\)</span>.</p>
-<p>Here’s a reference table with the most common symbols and notation used
-throughout the book.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(n\)</span></td>
-<td align="left">number of objects or individuals</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(p\)</span></td>
-<td align="left">number of variables or features</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(i\)</span></td>
-<td align="left">running index for rows or individuals</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(j\)</span></td>
-<td align="left">running index for columns or variables</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(k\)</span></td>
-<td align="left">running index determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\ell, m, q\)</span></td>
-<td align="left">other auxiliary indexes</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(f()\)</span>, <span class="math inline">\(h()\)</span>, <span class="math inline">\(d()\)</span></td>
-<td align="left">functions</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\lambda, \mu, \gamma, \alpha\)</span></td>
-<td align="left">greek letters represent scalars</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(\mathbf{y}\)</span></td>
-<td align="left">variables, size determined by context</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{w}\)</span>, <span class="math inline">\(\mathbf{a}\)</span>, <span class="math inline">\(\mathbf{b}\)</span></td>
-<td align="left">vectors of weight coefficients</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{z}\)</span>, <span class="math inline">\(\mathbf{t}\)</span>, <span class="math inline">\(\mathbf{u}\)</span></td>
-<td align="left">components or latent variables</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{X} : n \times p\)</span></td>
-<td align="left">data matrix with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(p\)</span> columns</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(x_{ij}\)</span></td>
-<td align="left">element of a matrix in <span class="math inline">\(i\)</span>-th row and <span class="math inline">\(j\)</span>-th column</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{1}\)</span></td>
-<td align="left">vector of ones, size determined by context</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{I}\)</span></td>
-<td align="left">identity matrix, size determined by context</td>
-</tr>
-</tbody>
-</table>
-<p>By the way, there are many more symbols that will appear in later chapters.
-But for now these are the fundamental ones.</p>
-<p>Likewise, the table below contains some of the most common operators that we
-will use in subsequent chapters:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Symbol</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbb{E}[X]\)</span></td>
-<td align="left">expected value of a random variable <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\|\mathbf{a}\|\)</span></td>
-<td align="left">euclidean norm of a vector</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\mathbf{a}^{\mathsf{T}}\)</span></td>
-<td align="left">transpose of a vector (or matrix)</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{a^{\mathsf{T}}b}\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(\langle \mathbf{a}, \mathbf{b} \rangle\)</span></td>
-<td align="left">inner product of two vectors</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(det(\mathbf{A})\)</span></td>
-<td align="left">determinant of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(tr(\mathbf{A})\)</span></td>
-<td align="left">trace of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(\mathbf{A}^{-1}\)</span></td>
-<td align="left">inverse of a square matrix</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(diag(\mathbf{A})\)</span></td>
-<td align="left">diagonal of a square matrix</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(E()\)</span></td>
-<td align="left">overall error function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(err()\)</span></td>
-<td align="left">pointwise error function</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(sign()\)</span></td>
-<td align="left">sign function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(var()\)</span></td>
-<td align="left">variance function</td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(cov()\)</span></td>
-<td align="left">covariance function</td>
-</tr>
-<tr class="odd">
-<td align="left"><span class="math inline">\(cor()\)</span></td>
-<td align="left">correlation function</td>
-</tr>
-</tbody>
-</table>
+<p>In this way, performing the regression then reduces to finding the parameters
+<span class="math inline">\(b_0, b_1, \dots, b_m\)</span>.</p>
+</div>
+<div id="linear-regression" class="section level2">
+<h2><span class="header-section-number">20.2</span> Linear Regression</h2>
+<p>In the one dimensional case, we can use <span class="math inline">\(\phi_0(x) = 1\)</span> and <span class="math inline">\(\phi_1(x) = x\)</span>.
+This gives the simple linear regression</p>
+<p><span class="math display">\[
+\widehat{f}(x) = b_0 \phi_0(x) + b_1 \phi_1(x) = b_0 + b_1 x
+\]</span></p>
+<p>In the multidimensional case, we can take <span class="math inline">\(\phi_1(\mathbf{x}) = [\mathbf{x}]_1\)</span>,
+<span class="math inline">\(\phi_2(\mathbf{x}) = [\mathbf{x}]_2\)</span>, all the way to
+<span class="math inline">\(\phi_p(\mathbf{x}) = [\mathbf{x}]_p\)</span>. Here <span class="math inline">\([\mathbf{x}]_j\)</span> denotes the <span class="math inline">\(j\)</span>-th
+element of the input vector <span class="math inline">\(\mathbf{x} \in \mathcal{X}\)</span>.</p>
+<p><span class="math display">\[\begin{align*}
+\widehat{f}(\mathbf{x_i}) &amp;= b_0 \phi_0(\mathbf{x_i}) + b_1 \phi_1(\mathbf{x_i}) + \dots + b_p \phi_p(\mathbf{x_i}) \\
+&amp;= b_0 + b_1 [\mathbf{x_i}]_1 + \dots + b_p [\mathbf{x_i}]_p \\
+&amp;= b_0 + b_1 x_{i1} + \dots + b_p x_{ip}
+\end{align*}\]</span></p>
+<p>Notice that the constant term <span class="math inline">\(\phi_0(x) = 1\)</span> will be common to all the
+function classes covered in the next sections.</p>
+</div>
+<div id="polynomial-regression" class="section level2">
+<h2><span class="header-section-number">20.3</span> Polynomial Regression</h2>
+<p>Another possible choice of basis (in the one-dimensional case) is to choose
+<span class="math inline">\(\phi_q(x) = x^q\)</span> for <span class="math inline">\(q = 1, 2, \dots, m\)</span>. This allows us to fit <span class="math inline">\(f\)</span> from
+the class of polynomial functions of degree at most <span class="math inline">\(m\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+\widehat{f}(x) &amp;= \sum_{q=0}^{m} b_q \phi_q(x) \\
+&amp;= b_0 \phi_0(x) + b_1 \phi_1(x) + b_2 \phi_2(x) + \dots + b_m \phi_m(x) \\
+&amp;= b_0 + b_1 x + b_2 x^2 + \dots + b_m x^m
+\end{align*}\]</span></p>
+<p>What about the multidimensional case? Let’s consider an example with <span class="math inline">\(p=2\)</span> input
+features <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and a polynomial of degree <span class="math inline">\(m=2\)</span>.</p>
+<p><span class="math display">\[
+\widehat{f}(X_1, X_2) = b_0 + b_1 X_1 + b_2 X_2 + b_3 X_1 X_2 + b_4 X_1^2 + b_5 X_2^2
+\]</span></p>
+<p>As you can tell, the notation with the <span class="math inline">\(j\)</span>-index for the features, and the
+<span class="math inline">\(q\)</span>-index for the basis functions becomes a challenge. One possibility to
+have a more logical notation, although it also becomes more cluttered is to
+use a multi-index <span class="math inline">\(q = (q_1, q_2)\)</span> with <span class="math inline">\(q_1 + q_2 \leq m\)</span>. Here’s how the
+above equation would be written with the modified index notation:</p>
+<p><span class="math display">\[
+\widehat{f}(X_1, X_2) = b_0 + b_{(1,0)} X_1 + b_{(0,1)} X_2 + b_{(1,1)} X_1 X_2 + b_{(2,0)} X_1^2 + b_{(0,2)} X_2^2
+\]</span></p>
+<p>Taking into account the notation <span class="math inline">\([\mathbf{x}]_j\)</span> denoting the <span class="math inline">\(j\)</span>-th
+element of the input vector <span class="math inline">\(\mathbf{x} \in \mathcal{X}\)</span>, the above equation
+becomes:</p>
+<p><span class="math display">\[
+\widehat{f}(\mathbf{x}) = b_0 + b_{(1,0)} [\mathbf{x}]_1 + b_{(0,1)} [\mathbf{x}]_2 + b_{(1,1)} [\mathbf{x}]_1 [\mathbf{x}]_2 + b_{(2,0)} [\mathbf{x}]_1^2 + b_{(0,2)} [\mathbf{x}]_2^2
+\]</span></p>
+<p>With this modified notation <span class="math inline">\(q = (q_1, q_2)\)</span>, the model can be compactly
+expressed as:</p>
+<p><span class="math display">\[
+\widehat{f}(\mathbf{x}) = \sum_{(q_1, q_2)} b_{q} \phi_q (\mathbf{x})
+\]</span></p>
+<p>Again, this is not the most beautiful notation, but it makes sense.</p>
+</div>
+<div id="gaussian-rbfs" class="section level2">
+<h2><span class="header-section-number">20.4</span> Gaussian RBF’s</h2>
+<p>Another possible basis function is that of Gaussian Radial Basis Functions
+(RBF’s)</p>
+<p><span class="math display">\[
+\phi_z = exp \left\{ \frac{-\| x - z\|^2}{2 \sigma^2} \right\}
+\]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is a pre-set scale parameter.</p>
 
 </div>
 </div>
@@ -831,8 +631,8 @@ will use in subsequent chapters:</p>
           </div>
         </div>
       </div>
-<a href="about.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="duality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-extensions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="nonparametric.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

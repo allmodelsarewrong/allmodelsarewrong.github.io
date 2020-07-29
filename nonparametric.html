@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>19 Nonparametric Regression | All Models Are Wrong: Concepts of Statistical Learning</title>
+  <title>21 Nonparametric Regression | All Models Are Wrong: Concepts of Statistical Learning</title>
   <meta name="description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="19 Nonparametric Regression | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta property="og:title" content="21 Nonparametric Regression | All Models Are Wrong: Concepts of Statistical Learning" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://allmodelsarewrong.github.io" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="allmodelsarewrong/allmodelsarewrong.github.io" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="19 Nonparametric Regression | All Models Are Wrong: Concepts of Statistical Learning" />
+  <meta name="twitter:title" content="21 Nonparametric Regression | All Models Are Wrong: Concepts of Statistical Learning" />
   
   <meta name="twitter:description" content="This is a text about the fundamental concepts of Statistical Learning Methods." />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="linear-extensions.html"/>
+<link rel="prev" href="basis.html"/>
 <link rel="next" href="knn.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -303,197 +303,213 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.3.1" data-path="ridge.html"><a href="ridge.html#how-to-find-lambda"><i class="fa fa-check"></i><b>17.3.1</b> How to find <span class="math inline">\(\lambda\)</span>?</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="18" data-path="lasso.html"><a href="lasso.html"><i class="fa fa-check"></i><b>18</b> Lasso Regression</a><ul>
+<li class="chapter" data-level="18.1" data-path="lasso.html"><a href="lasso.html#mathematical-setup"><i class="fa fa-check"></i><b>18.1</b> Mathematical Setup</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="lasso.html"><a href="lasso.html#closed-form"><i class="fa fa-check"></i><b>18.1.1</b> Closed Form?</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="lasso.html"><a href="lasso.html#geometric-visualization"><i class="fa fa-check"></i><b>18.2</b> Geometric Visualization</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="lasso.html"><a href="lasso.html#some-more-math-variable-selection-in-action"><i class="fa fa-check"></i><b>18.2.1</b> Some More Math: Variable Selection in Action</a></li>
+<li class="chapter" data-level="18.2.2" data-path="lasso.html"><a href="lasso.html#example-with-mtcars"><i class="fa fa-check"></i><b>18.2.2</b> Example with <code>mtcars</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="lasso.html"><a href="lasso.html#going-beyond"><i class="fa fa-check"></i><b>18.3</b> Going Beyond</a></li>
+</ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
-<li class="chapter" data-level="18" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>18</b> Beyond Linear Regression</a><ul>
-<li class="chapter" data-level="18.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>18.1</b> Introduction</a></li>
-<li class="chapter" data-level="18.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>18.2</b> Expanding the Regression Horizon</a><ul>
-<li class="chapter" data-level="18.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>18.2.1</b> Linearity</a></li>
-<li class="chapter" data-level="18.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>18.2.2</b> Parametric and Nonparametric</a></li>
+<li class="chapter" data-level="19" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>19</b> Beyond Linear Regression</a><ul>
+<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>19.2</b> Expanding the Regression Horizon</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>19.2.1</b> Linearity</a></li>
+<li class="chapter" data-level="19.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>19.2.2</b> Parametric and Nonparametric</a></li>
 </ul></li>
-<li class="chapter" data-level="18.3" data-path="linear-extensions.html"><a href="linear-extensions.html#transforming-features"><i class="fa fa-check"></i><b>18.3</b> Transforming Features</a></li>
+<li class="chapter" data-level="19.3" data-path="linear-extensions.html"><a href="linear-extensions.html#transforming-features"><i class="fa fa-check"></i><b>19.3</b> Transforming Features</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="nonparametric.html"><a href="nonparametric.html"><i class="fa fa-check"></i><b>19</b> Nonparametric Regression</a><ul>
-<li class="chapter" data-level="19.1" data-path="nonparametric.html"><a href="nonparametric.html#conditional-averages"><i class="fa fa-check"></i><b>19.1</b> Conditional Averages</a></li>
-<li class="chapter" data-level="19.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>19.2</b> Looking at the Neighbors</a></li>
+<li class="chapter" data-level="20" data-path="basis.html"><a href="basis.html"><i class="fa fa-check"></i><b>20</b> Basis Expansion</a><ul>
+<li class="chapter" data-level="20.1" data-path="basis.html"><a href="basis.html#basis-functions"><i class="fa fa-check"></i><b>20.1</b> Basis Functions</a></li>
+<li class="chapter" data-level="20.2" data-path="basis.html"><a href="basis.html#linear-regression"><i class="fa fa-check"></i><b>20.2</b> Linear Regression</a></li>
+<li class="chapter" data-level="20.3" data-path="basis.html"><a href="basis.html#polynomial-regression"><i class="fa fa-check"></i><b>20.3</b> Polynomial Regression</a></li>
+<li class="chapter" data-level="20.4" data-path="basis.html"><a href="basis.html#gaussian-rbfs"><i class="fa fa-check"></i><b>20.4</b> Gaussian RBF’s</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>20</b> Nearest Neighbor Estimates</a><ul>
-<li class="chapter" data-level="20.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>20.1</b> Introduction</a></li>
-<li class="chapter" data-level="20.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>20.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
-<li class="chapter" data-level="20.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>20.2.1</b> Distance Measures</a></li>
-<li class="chapter" data-level="20.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>20.2.2</b> KNN Estimator</a></li>
-<li class="chapter" data-level="20.2.3" data-path="knn.html"><a href="knn.html#how-to-find-k"><i class="fa fa-check"></i><b>20.2.3</b> How to find <span class="math inline">\(k\)</span>?</a></li>
+<li class="chapter" data-level="21" data-path="nonparametric.html"><a href="nonparametric.html"><i class="fa fa-check"></i><b>21</b> Nonparametric Regression</a><ul>
+<li class="chapter" data-level="21.1" data-path="nonparametric.html"><a href="nonparametric.html#conditional-averages"><i class="fa fa-check"></i><b>21.1</b> Conditional Averages</a></li>
+<li class="chapter" data-level="21.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>21.2</b> Looking at the Neighbors</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>22</b> Nearest Neighbor Estimates</a><ul>
+<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
+<li class="chapter" data-level="22.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>22.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>22.2.1</b> Distance Measures</a></li>
+<li class="chapter" data-level="22.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>22.2.2</b> KNN Estimator</a></li>
+<li class="chapter" data-level="22.2.3" data-path="knn.html"><a href="knn.html#how-to-find-k"><i class="fa fa-check"></i><b>22.2.3</b> How to find <span class="math inline">\(k\)</span>?</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>21</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="21.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
-<li class="chapter" data-level="21.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>21.2</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="21.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>21.2.1</b> Kernel Functions</a></li>
-<li class="chapter" data-level="21.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>21.2.2</b> Weights from Kernels</a></li>
-<li class="chapter" data-level="21.2.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-estimator"><i class="fa fa-check"></i><b>21.2.3</b> Kernel Estimator</a></li>
+<li class="chapter" data-level="23" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>23</b> Kernel Smoothers</a><ul>
+<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>23.2</b> Kernel Smoothers</a><ul>
+<li class="chapter" data-level="23.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>23.2.1</b> Kernel Functions</a></li>
+<li class="chapter" data-level="23.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>23.2.2</b> Weights from Kernels</a></li>
+<li class="chapter" data-level="23.2.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-estimator"><i class="fa fa-check"></i><b>23.2.3</b> Kernel Estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#local-polynomial-estimators"><i class="fa fa-check"></i><b>21.3</b> Local Polynomial Estimators</a></li>
+<li class="chapter" data-level="23.3" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#local-polynomial-estimators"><i class="fa fa-check"></i><b>23.3</b> Local Polynomial Estimators</a></li>
 </ul></li>
 <li class="part"><span><b>VIII Classification</b></span></li>
-<li class="chapter" data-level="22" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>22</b> Classification</a><ul>
-<li class="chapter" data-level="22.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>22.1</b> Introduction</a><ul>
-<li class="chapter" data-level="22.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>22.1.1</b> Credit Score Example</a></li>
-<li class="chapter" data-level="22.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>22.1.2</b> Toy Example</a></li>
-<li class="chapter" data-level="22.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>22.1.3</b> Two-class Problem</a></li>
-<li class="chapter" data-level="22.1.4" data-path="classif.html"><a href="classif.html#bayes-rule-reminder"><i class="fa fa-check"></i><b>22.1.4</b> Bayes’ Rule Reminder</a></li>
+<li class="chapter" data-level="24" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>24</b> Classification</a><ul>
+<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
+<li class="chapter" data-level="24.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>24.1.1</b> Credit Score Example</a></li>
+<li class="chapter" data-level="24.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>24.1.2</b> Toy Example</a></li>
+<li class="chapter" data-level="24.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>24.1.3</b> Two-class Problem</a></li>
+<li class="chapter" data-level="24.1.4" data-path="classif.html"><a href="classif.html#bayes-rule-reminder"><i class="fa fa-check"></i><b>24.1.4</b> Bayes’ Rule Reminder</a></li>
 </ul></li>
-<li class="chapter" data-level="22.2" data-path="classif.html"><a href="classif.html#bayes-classifier"><i class="fa fa-check"></i><b>22.2</b> Bayes Classifier</a></li>
+<li class="chapter" data-level="24.2" data-path="classif.html"><a href="classif.html#bayes-classifier"><i class="fa fa-check"></i><b>24.2</b> Bayes Classifier</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>23</b> Logistic Regression</a><ul>
-<li class="chapter" data-level="23.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>23.1</b> Motivation</a><ul>
-<li class="chapter" data-level="23.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>23.1.1</b> First Approach: Fitting a Line</a></li>
-<li class="chapter" data-level="23.1.2" data-path="logistic.html"><a href="logistic.html#second-approach-harsh-thresholding"><i class="fa fa-check"></i><b>23.1.2</b> Second Approach: Harsh Thresholding</a></li>
-<li class="chapter" data-level="23.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>23.1.3</b> Third Approach: Conditional Means</a></li>
+<li class="chapter" data-level="25" data-path="logistic.html"><a href="logistic.html"><i class="fa fa-check"></i><b>25</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="25.1" data-path="logistic.html"><a href="logistic.html#motivation-1"><i class="fa fa-check"></i><b>25.1</b> Motivation</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="logistic.html"><a href="logistic.html#first-approach-fitting-a-line"><i class="fa fa-check"></i><b>25.1.1</b> First Approach: Fitting a Line</a></li>
+<li class="chapter" data-level="25.1.2" data-path="logistic.html"><a href="logistic.html#second-approach-harsh-thresholding"><i class="fa fa-check"></i><b>25.1.2</b> Second Approach: Harsh Thresholding</a></li>
+<li class="chapter" data-level="25.1.3" data-path="logistic.html"><a href="logistic.html#third-approach-conditional-means"><i class="fa fa-check"></i><b>25.1.3</b> Third Approach: Conditional Means</a></li>
 </ul></li>
-<li class="chapter" data-level="23.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>23.2</b> Logistic Regression Model</a><ul>
-<li class="chapter" data-level="23.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>23.2.1</b> The Criterion Being Optimized</a></li>
-<li class="chapter" data-level="23.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>23.2.2</b> Another Way to Solve Logistic Regression</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="24" data-path="discrim.html"><a href="discrim.html"><i class="fa fa-check"></i><b>24</b> Preamble for Discriminant Analysis</a><ul>
-<li class="chapter" data-level="24.1" data-path="discrim.html"><a href="discrim.html#motivation-2"><i class="fa fa-check"></i><b>24.1</b> Motivation</a><ul>
-<li class="chapter" data-level="24.1.1" data-path="discrim.html"><a href="discrim.html#distinguishing-species"><i class="fa fa-check"></i><b>24.1.1</b> Distinguishing Species</a></li>
-<li class="chapter" data-level="24.1.2" data-path="discrim.html"><a href="discrim.html#sum-of-squares-decomposition"><i class="fa fa-check"></i><b>24.1.2</b> Sum of Squares Decomposition</a></li>
-</ul></li>
-<li class="chapter" data-level="24.2" data-path="discrim.html"><a href="discrim.html#derived-ratios-from-sum-of-squares"><i class="fa fa-check"></i><b>24.2</b> Derived Ratios from Sum-of-Squares</a><ul>
-<li class="chapter" data-level="24.2.1" data-path="discrim.html"><a href="discrim.html#correlation-ratio"><i class="fa fa-check"></i><b>24.2.1</b> Correlation Ratio</a></li>
-<li class="chapter" data-level="24.2.2" data-path="discrim.html"><a href="discrim.html#f-ratio"><i class="fa fa-check"></i><b>24.2.2</b> F-Ratio</a></li>
-</ul></li>
-<li class="chapter" data-level="24.3" data-path="discrim.html"><a href="discrim.html#geometric-perspective"><i class="fa fa-check"></i><b>24.3</b> Geometric Perspective</a><ul>
-<li class="chapter" data-level="24.3.1" data-path="discrim.html"><a href="discrim.html#clouds-from-class-structure"><i class="fa fa-check"></i><b>24.3.1</b> Clouds from Class Structure</a></li>
-<li class="chapter" data-level="24.3.2" data-path="discrim.html"><a href="discrim.html#dispersion-decomposition"><i class="fa fa-check"></i><b>24.3.2</b> Dispersion Decomposition</a></li>
+<li class="chapter" data-level="25.2" data-path="logistic.html"><a href="logistic.html#logistic-regression-model"><i class="fa fa-check"></i><b>25.2</b> Logistic Regression Model</a><ul>
+<li class="chapter" data-level="25.2.1" data-path="logistic.html"><a href="logistic.html#the-criterion-being-optimized"><i class="fa fa-check"></i><b>25.2.1</b> The Criterion Being Optimized</a></li>
+<li class="chapter" data-level="25.2.2" data-path="logistic.html"><a href="logistic.html#another-way-to-solve-logistic-regression"><i class="fa fa-check"></i><b>25.2.2</b> Another Way to Solve Logistic Regression</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>25</b> Canonical Discriminant Analysis</a><ul>
-<li class="chapter" data-level="25.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>25.1</b> CDA: Semi-Supervised Aspect</a></li>
-<li class="chapter" data-level="25.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>25.2</b> Looking for a discriminant axis</a></li>
-<li class="chapter" data-level="25.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>25.3</b> Looking for a Compromise Criterion</a><ul>
-<li class="chapter" data-level="25.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>25.3.1</b> Correlation Ratio Criterion</a></li>
-<li class="chapter" data-level="25.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>25.3.2</b> F-ratio Criterion</a></li>
-<li class="chapter" data-level="25.3.3" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>25.3.3</b> A Special PCA</a></li>
+<li class="chapter" data-level="26" data-path="discrim.html"><a href="discrim.html"><i class="fa fa-check"></i><b>26</b> Preamble for Discriminant Analysis</a><ul>
+<li class="chapter" data-level="26.1" data-path="discrim.html"><a href="discrim.html#motivation-2"><i class="fa fa-check"></i><b>26.1</b> Motivation</a><ul>
+<li class="chapter" data-level="26.1.1" data-path="discrim.html"><a href="discrim.html#distinguishing-species"><i class="fa fa-check"></i><b>26.1.1</b> Distinguishing Species</a></li>
+<li class="chapter" data-level="26.1.2" data-path="discrim.html"><a href="discrim.html#sum-of-squares-decomposition"><i class="fa fa-check"></i><b>26.1.2</b> Sum of Squares Decomposition</a></li>
 </ul></li>
-<li class="chapter" data-level="25.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>25.4</b> CDA: Supervised Aspect</a><ul>
-<li class="chapter" data-level="25.4.1" data-path="cda.html"><a href="cda.html#distance-behind-cda"><i class="fa fa-check"></i><b>25.4.1</b> Distance behind CDA</a></li>
-<li class="chapter" data-level="25.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>25.4.2</b> Predictive Idea</a></li>
-<li class="chapter" data-level="25.4.3" data-path="cda.html"><a href="cda.html#cda-classifier"><i class="fa fa-check"></i><b>25.4.3</b> CDA Classifier</a></li>
-<li class="chapter" data-level="25.4.4" data-path="cda.html"><a href="cda.html#limitations-of-cda-classifier"><i class="fa fa-check"></i><b>25.4.4</b> Limitations of CDA classifier</a></li>
+<li class="chapter" data-level="26.2" data-path="discrim.html"><a href="discrim.html#derived-ratios-from-sum-of-squares"><i class="fa fa-check"></i><b>26.2</b> Derived Ratios from Sum-of-Squares</a><ul>
+<li class="chapter" data-level="26.2.1" data-path="discrim.html"><a href="discrim.html#correlation-ratio"><i class="fa fa-check"></i><b>26.2.1</b> Correlation Ratio</a></li>
+<li class="chapter" data-level="26.2.2" data-path="discrim.html"><a href="discrim.html#f-ratio"><i class="fa fa-check"></i><b>26.2.2</b> F-Ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="26.3" data-path="discrim.html"><a href="discrim.html#geometric-perspective"><i class="fa fa-check"></i><b>26.3</b> Geometric Perspective</a><ul>
+<li class="chapter" data-level="26.3.1" data-path="discrim.html"><a href="discrim.html#clouds-from-class-structure"><i class="fa fa-check"></i><b>26.3.1</b> Clouds from Class Structure</a></li>
+<li class="chapter" data-level="26.3.2" data-path="discrim.html"><a href="discrim.html#dispersion-decomposition"><i class="fa fa-check"></i><b>26.3.2</b> Dispersion Decomposition</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="26" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>26</b> Discriminant Analysis</a><ul>
-<li class="chapter" data-level="26.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>26.1</b> Probabilistic DA</a><ul>
-<li class="chapter" data-level="26.1.1" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>26.1.1</b> Normal Distributions</a></li>
-<li class="chapter" data-level="26.1.2" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>26.1.2</b> Estimating Parameters of Normal Distributions</a></li>
+<li class="chapter" data-level="27" data-path="cda.html"><a href="cda.html"><i class="fa fa-check"></i><b>27</b> Canonical Discriminant Analysis</a><ul>
+<li class="chapter" data-level="27.1" data-path="cda.html"><a href="cda.html#cda-semi-supervised-aspect"><i class="fa fa-check"></i><b>27.1</b> CDA: Semi-Supervised Aspect</a></li>
+<li class="chapter" data-level="27.2" data-path="cda.html"><a href="cda.html#looking-for-a-discriminant-axis"><i class="fa fa-check"></i><b>27.2</b> Looking for a discriminant axis</a></li>
+<li class="chapter" data-level="27.3" data-path="cda.html"><a href="cda.html#looking-for-a-compromise-criterion"><i class="fa fa-check"></i><b>27.3</b> Looking for a Compromise Criterion</a><ul>
+<li class="chapter" data-level="27.3.1" data-path="cda.html"><a href="cda.html#correlation-ratio-criterion"><i class="fa fa-check"></i><b>27.3.1</b> Correlation Ratio Criterion</a></li>
+<li class="chapter" data-level="27.3.2" data-path="cda.html"><a href="cda.html#f-ratio-criterion"><i class="fa fa-check"></i><b>27.3.2</b> F-ratio Criterion</a></li>
+<li class="chapter" data-level="27.3.3" data-path="cda.html"><a href="cda.html#a-special-pca"><i class="fa fa-check"></i><b>27.3.3</b> A Special PCA</a></li>
 </ul></li>
-<li class="chapter" data-level="26.2" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>26.2</b> Discriminant Functions</a></li>
-<li class="chapter" data-level="26.3" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>26.3</b> Quadratic Discriminant Analysis (QDA)</a></li>
-<li class="chapter" data-level="26.4" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>26.4</b> Linear Discriminant Analysis</a><ul>
-<li class="chapter" data-level="26.4.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>26.4.1</b> Canonical Discriminant Analysis</a></li>
-<li class="chapter" data-level="26.4.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>26.4.2</b> Naive Bayes</a></li>
-<li class="chapter" data-level="26.4.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>26.4.3</b> Fifth Case</a></li>
+<li class="chapter" data-level="27.4" data-path="cda.html"><a href="cda.html#cda-supervised-aspect"><i class="fa fa-check"></i><b>27.4</b> CDA: Supervised Aspect</a><ul>
+<li class="chapter" data-level="27.4.1" data-path="cda.html"><a href="cda.html#distance-behind-cda"><i class="fa fa-check"></i><b>27.4.1</b> Distance behind CDA</a></li>
+<li class="chapter" data-level="27.4.2" data-path="cda.html"><a href="cda.html#predictive-idea"><i class="fa fa-check"></i><b>27.4.2</b> Predictive Idea</a></li>
+<li class="chapter" data-level="27.4.3" data-path="cda.html"><a href="cda.html#cda-classifier"><i class="fa fa-check"></i><b>27.4.3</b> CDA Classifier</a></li>
+<li class="chapter" data-level="27.4.4" data-path="cda.html"><a href="cda.html#limitations-of-cda-classifier"><i class="fa fa-check"></i><b>27.4.4</b> Limitations of CDA classifier</a></li>
 </ul></li>
-<li class="chapter" data-level="26.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>26.5</b> Comparing the Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="27" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>27</b> Performance of Classifiers</a><ul>
-<li class="chapter" data-level="27.1" data-path="classperformance.html"><a href="classperformance.html#classification-error-measures"><i class="fa fa-check"></i><b>27.1</b> Classification Error Measures</a><ul>
-<li class="chapter" data-level="27.1.1" data-path="classperformance.html"><a href="classperformance.html#errors-for-binary-response"><i class="fa fa-check"></i><b>27.1.1</b> Errors for Binary Response</a></li>
-<li class="chapter" data-level="27.1.2" data-path="classperformance.html"><a href="classperformance.html#error-for-categorical-response"><i class="fa fa-check"></i><b>27.1.2</b> Error for Categorical Response</a></li>
+<li class="chapter" data-level="28" data-path="discanalysis.html"><a href="discanalysis.html"><i class="fa fa-check"></i><b>28</b> Discriminant Analysis</a><ul>
+<li class="chapter" data-level="28.1" data-path="discanalysis.html"><a href="discanalysis.html#probabilistic-da"><i class="fa fa-check"></i><b>28.1</b> Probabilistic DA</a><ul>
+<li class="chapter" data-level="28.1.1" data-path="discanalysis.html"><a href="discanalysis.html#normal-distributions"><i class="fa fa-check"></i><b>28.1.1</b> Normal Distributions</a></li>
+<li class="chapter" data-level="28.1.2" data-path="discanalysis.html"><a href="discanalysis.html#estimating-parameters-of-normal-distributions"><i class="fa fa-check"></i><b>28.1.2</b> Estimating Parameters of Normal Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="27.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>27.2</b> Confusion Matrices</a></li>
-<li class="chapter" data-level="27.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>27.3</b> Binary Response Example</a><ul>
-<li class="chapter" data-level="27.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>27.3.1</b> Application for Checking Account</a></li>
-<li class="chapter" data-level="27.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>27.3.2</b> Application for Loan</a></li>
+<li class="chapter" data-level="28.2" data-path="discanalysis.html"><a href="discanalysis.html#discriminant-functions"><i class="fa fa-check"></i><b>28.2</b> Discriminant Functions</a></li>
+<li class="chapter" data-level="28.3" data-path="discanalysis.html"><a href="discanalysis.html#quadratic-discriminant-analysis-qda"><i class="fa fa-check"></i><b>28.3</b> Quadratic Discriminant Analysis (QDA)</a></li>
+<li class="chapter" data-level="28.4" data-path="discanalysis.html"><a href="discanalysis.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>28.4</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="28.4.1" data-path="discanalysis.html"><a href="discanalysis.html#canonical-discriminant-analysis"><i class="fa fa-check"></i><b>28.4.1</b> Canonical Discriminant Analysis</a></li>
+<li class="chapter" data-level="28.4.2" data-path="discanalysis.html"><a href="discanalysis.html#naive-bayes"><i class="fa fa-check"></i><b>28.4.2</b> Naive Bayes</a></li>
+<li class="chapter" data-level="28.4.3" data-path="discanalysis.html"><a href="discanalysis.html#fifth-case"><i class="fa fa-check"></i><b>28.4.3</b> Fifth Case</a></li>
 </ul></li>
-<li class="chapter" data-level="27.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>27.4</b> Decision Rules and Errors</a></li>
-<li class="chapter" data-level="27.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>27.5</b> ROC Curves</a><ul>
-<li class="chapter" data-level="27.5.1" data-path="classperformance.html"><a href="classperformance.html#graphing-roc-curves"><i class="fa fa-check"></i><b>27.5.1</b> Graphing ROC curves</a></li>
+<li class="chapter" data-level="28.5" data-path="discanalysis.html"><a href="discanalysis.html#comparing-the-cases"><i class="fa fa-check"></i><b>28.5</b> Comparing the Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="classperformance.html"><a href="classperformance.html"><i class="fa fa-check"></i><b>29</b> Performance of Classifiers</a><ul>
+<li class="chapter" data-level="29.1" data-path="classperformance.html"><a href="classperformance.html#classification-error-measures"><i class="fa fa-check"></i><b>29.1</b> Classification Error Measures</a><ul>
+<li class="chapter" data-level="29.1.1" data-path="classperformance.html"><a href="classperformance.html#errors-for-binary-response"><i class="fa fa-check"></i><b>29.1.1</b> Errors for Binary Response</a></li>
+<li class="chapter" data-level="29.1.2" data-path="classperformance.html"><a href="classperformance.html#error-for-categorical-response"><i class="fa fa-check"></i><b>29.1.2</b> Error for Categorical Response</a></li>
+</ul></li>
+<li class="chapter" data-level="29.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>29.2</b> Confusion Matrices</a></li>
+<li class="chapter" data-level="29.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>29.3</b> Binary Response Example</a><ul>
+<li class="chapter" data-level="29.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>29.3.1</b> Application for Checking Account</a></li>
+<li class="chapter" data-level="29.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>29.3.2</b> Application for Loan</a></li>
+</ul></li>
+<li class="chapter" data-level="29.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>29.4</b> Decision Rules and Errors</a></li>
+<li class="chapter" data-level="29.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>29.5</b> ROC Curves</a><ul>
+<li class="chapter" data-level="29.5.1" data-path="classperformance.html"><a href="classperformance.html#graphing-roc-curves"><i class="fa fa-check"></i><b>29.5.1</b> Graphing ROC curves</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IX Unsupervised II: Clustering</b></span></li>
-<li class="chapter" data-level="28" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>28</b> Clustering</a><ul>
-<li class="chapter" data-level="28.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>28.1</b> About Clustering</a><ul>
-<li class="chapter" data-level="28.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>28.1.1</b> Types of Clustering</a></li>
-<li class="chapter" data-level="28.1.2" data-path="clustering.html"><a href="clustering.html#hard-clustering"><i class="fa fa-check"></i><b>28.1.2</b> Hard Clustering</a></li>
+<li class="chapter" data-level="30" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>30</b> Clustering</a><ul>
+<li class="chapter" data-level="30.1" data-path="clustering.html"><a href="clustering.html#about-clustering"><i class="fa fa-check"></i><b>30.1</b> About Clustering</a><ul>
+<li class="chapter" data-level="30.1.1" data-path="clustering.html"><a href="clustering.html#types-of-clustering"><i class="fa fa-check"></i><b>30.1.1</b> Types of Clustering</a></li>
+<li class="chapter" data-level="30.1.2" data-path="clustering.html"><a href="clustering.html#hard-clustering"><i class="fa fa-check"></i><b>30.1.2</b> Hard Clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="28.2" data-path="clustering.html"><a href="clustering.html#dispersion-measures"><i class="fa fa-check"></i><b>28.2</b> Dispersion Measures</a></li>
-<li class="chapter" data-level="28.3" data-path="clustering.html"><a href="clustering.html#complexity-in-clustering"><i class="fa fa-check"></i><b>28.3</b> Complexity in Clustering</a></li>
+<li class="chapter" data-level="30.2" data-path="clustering.html"><a href="clustering.html#dispersion-measures"><i class="fa fa-check"></i><b>30.2</b> Dispersion Measures</a></li>
+<li class="chapter" data-level="30.3" data-path="clustering.html"><a href="clustering.html#complexity-in-clustering"><i class="fa fa-check"></i><b>30.3</b> Complexity in Clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="29" data-path="kmeans.html"><a href="kmeans.html"><i class="fa fa-check"></i><b>29</b> K-Means</a><ul>
-<li class="chapter" data-level="29.1" data-path="kmeans.html"><a href="kmeans.html#toy-example-2"><i class="fa fa-check"></i><b>29.1</b> Toy Example</a></li>
-<li class="chapter" data-level="29.2" data-path="kmeans.html"><a href="kmeans.html#what-does-k-means-do"><i class="fa fa-check"></i><b>29.2</b> What does K-means do?</a></li>
-<li class="chapter" data-level="29.3" data-path="kmeans.html"><a href="kmeans.html#k-means-algorithms"><i class="fa fa-check"></i><b>29.3</b> K-Means Algorithms</a><ul>
-<li class="chapter" data-level="29.3.1" data-path="kmeans.html"><a href="kmeans.html#classic-version"><i class="fa fa-check"></i><b>29.3.1</b> Classic Version</a></li>
-<li class="chapter" data-level="29.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>29.3.2</b> Moving Centers Algorithm</a></li>
-<li class="chapter" data-level="29.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>29.3.3</b> Dynamic Clouds</a></li>
-<li class="chapter" data-level="29.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>29.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
-<li class="chapter" data-level="29.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>29.3.5</b> Comments</a></li>
+<li class="chapter" data-level="31" data-path="kmeans.html"><a href="kmeans.html"><i class="fa fa-check"></i><b>31</b> K-Means</a><ul>
+<li class="chapter" data-level="31.1" data-path="kmeans.html"><a href="kmeans.html#toy-example-2"><i class="fa fa-check"></i><b>31.1</b> Toy Example</a></li>
+<li class="chapter" data-level="31.2" data-path="kmeans.html"><a href="kmeans.html#what-does-k-means-do"><i class="fa fa-check"></i><b>31.2</b> What does K-means do?</a></li>
+<li class="chapter" data-level="31.3" data-path="kmeans.html"><a href="kmeans.html#k-means-algorithms"><i class="fa fa-check"></i><b>31.3</b> K-Means Algorithms</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="kmeans.html"><a href="kmeans.html#classic-version"><i class="fa fa-check"></i><b>31.3.1</b> Classic Version</a></li>
+<li class="chapter" data-level="31.3.2" data-path="kmeans.html"><a href="kmeans.html#moving-centers-algorithm"><i class="fa fa-check"></i><b>31.3.2</b> Moving Centers Algorithm</a></li>
+<li class="chapter" data-level="31.3.3" data-path="kmeans.html"><a href="kmeans.html#dynamic-clouds"><i class="fa fa-check"></i><b>31.3.3</b> Dynamic Clouds</a></li>
+<li class="chapter" data-level="31.3.4" data-path="kmeans.html"><a href="kmeans.html#choosing-k"><i class="fa fa-check"></i><b>31.3.4</b> Choosing <span class="math inline">\(K\)</span></a></li>
+<li class="chapter" data-level="31.3.5" data-path="kmeans.html"><a href="kmeans.html#comments"><i class="fa fa-check"></i><b>31.3.5</b> Comments</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="30" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>30</b> Hierarchical Clustering</a><ul>
-<li class="chapter" data-level="30.1" data-path="hclus.html"><a href="hclus.html#agglomerative-methods"><i class="fa fa-check"></i><b>30.1</b> Agglomerative Methods</a></li>
-<li class="chapter" data-level="30.2" data-path="hclus.html"><a href="hclus.html#example-single-linkage"><i class="fa fa-check"></i><b>30.2</b> Example: Single Linkage</a><ul>
-<li class="chapter" data-level="30.2.1" data-path="hclus.html"><a href="hclus.html#dendrogram"><i class="fa fa-check"></i><b>30.2.1</b> Dendrogram</a></li>
+<li class="chapter" data-level="32" data-path="hclus.html"><a href="hclus.html"><i class="fa fa-check"></i><b>32</b> Hierarchical Clustering</a><ul>
+<li class="chapter" data-level="32.1" data-path="hclus.html"><a href="hclus.html#agglomerative-methods"><i class="fa fa-check"></i><b>32.1</b> Agglomerative Methods</a></li>
+<li class="chapter" data-level="32.2" data-path="hclus.html"><a href="hclus.html#example-single-linkage"><i class="fa fa-check"></i><b>32.2</b> Example: Single Linkage</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="hclus.html"><a href="hclus.html#dendrogram"><i class="fa fa-check"></i><b>32.2.1</b> Dendrogram</a></li>
 </ul></li>
-<li class="chapter" data-level="30.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>30.3</b> Example: Complete Linkage</a><ul>
-<li class="chapter" data-level="30.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>30.3.1</b> Cutting Dendograms</a></li>
-<li class="chapter" data-level="30.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>30.3.2</b> Pros and COons</a></li>
+<li class="chapter" data-level="32.3" data-path="hclus.html"><a href="hclus.html#example-complete-linkage"><i class="fa fa-check"></i><b>32.3</b> Example: Complete Linkage</a><ul>
+<li class="chapter" data-level="32.3.1" data-path="hclus.html"><a href="hclus.html#cutting-dendograms"><i class="fa fa-check"></i><b>32.3.1</b> Cutting Dendograms</a></li>
+<li class="chapter" data-level="32.3.2" data-path="hclus.html"><a href="hclus.html#pros-and-coons"><i class="fa fa-check"></i><b>32.3.2</b> Pros and COons</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
-<li class="chapter" data-level="31" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>31</b> Intro to Decision Trees</a><ul>
-<li class="chapter" data-level="31.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>31.1</b> Introduction</a></li>
-<li class="chapter" data-level="31.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>31.2</b> Some Terminology</a><ul>
-<li class="chapter" data-level="31.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>31.2.1</b> Binary Trees</a></li>
+<li class="chapter" data-level="33" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>33</b> Intro to Decision Trees</a><ul>
+<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
+<li class="chapter" data-level="33.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>33.2</b> Some Terminology</a><ul>
+<li class="chapter" data-level="33.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>33.2.1</b> Binary Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="31.3" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>31.3</b> Space Partitions</a><ul>
-<li class="chapter" data-level="31.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>31.3.1</b> The Process of Building a Tree</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="32" data-path="tree-impurities.html"><a href="tree-impurities.html"><i class="fa fa-check"></i><b>32</b> Binary Splits and Impurity</a><ul>
-<li class="chapter" data-level="32.1" data-path="tree-impurities.html"><a href="tree-impurities.html#binary-partitions"><i class="fa fa-check"></i><b>32.1</b> Binary Partitions</a><ul>
-<li class="chapter" data-level="32.1.1" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-binary-variables"><i class="fa fa-check"></i><b>32.1.1</b> Splits of Binary variables</a></li>
-<li class="chapter" data-level="32.1.2" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-nominal-variables"><i class="fa fa-check"></i><b>32.1.2</b> Splits of Nominal Variables</a></li>
-<li class="chapter" data-level="32.1.3" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-ordinal-variables"><i class="fa fa-check"></i><b>32.1.3</b> Splits of Ordinal Variables</a></li>
-<li class="chapter" data-level="32.1.4" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-continuous-variables"><i class="fa fa-check"></i><b>32.1.4</b> Splits Continuous variables</a></li>
-</ul></li>
-<li class="chapter" data-level="32.2" data-path="tree-impurities.html"><a href="tree-impurities.html#measures-of-impurity"><i class="fa fa-check"></i><b>32.2</b> Measures of Impurity</a><ul>
-<li class="chapter" data-level="32.2.1" data-path="tree-impurities.html"><a href="tree-impurities.html#entropy"><i class="fa fa-check"></i><b>32.2.1</b> Entropy</a></li>
-<li class="chapter" data-level="32.2.2" data-path="tree-impurities.html"><a href="tree-impurities.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>32.2.2</b> The Math Behind Entropy</a></li>
-<li class="chapter" data-level="32.2.3" data-path="tree-impurities.html"><a href="tree-impurities.html#gini-impurity"><i class="fa fa-check"></i><b>32.2.3</b> Gini Impurity</a></li>
-<li class="chapter" data-level="32.2.4" data-path="tree-impurities.html"><a href="tree-impurities.html#variance-based-impurity"><i class="fa fa-check"></i><b>32.2.4</b> Variance-based Impurity</a></li>
+<li class="chapter" data-level="33.3" data-path="trees.html"><a href="trees.html#space-partitions"><i class="fa fa-check"></i><b>33.3</b> Space Partitions</a><ul>
+<li class="chapter" data-level="33.3.1" data-path="trees.html"><a href="trees.html#the-process-of-building-a-tree"><i class="fa fa-check"></i><b>33.3.1</b> The Process of Building a Tree</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="33" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>33</b> Splitting Nodes</a><ul>
-<li class="chapter" data-level="33.1" data-path="tree-splits.html"><a href="tree-splits.html#entropy-based-splits"><i class="fa fa-check"></i><b>33.1</b> Entropy-based Splits</a></li>
-<li class="chapter" data-level="33.2" data-path="tree-splits.html"><a href="tree-splits.html#gini-index-based-splits"><i class="fa fa-check"></i><b>33.2</b> Gini-index based Splits</a></li>
-<li class="chapter" data-level="33.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>33.3</b> Looking for the best split</a></li>
+<li class="chapter" data-level="34" data-path="tree-impurities.html"><a href="tree-impurities.html"><i class="fa fa-check"></i><b>34</b> Binary Splits and Impurity</a><ul>
+<li class="chapter" data-level="34.1" data-path="tree-impurities.html"><a href="tree-impurities.html#binary-partitions"><i class="fa fa-check"></i><b>34.1</b> Binary Partitions</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-binary-variables"><i class="fa fa-check"></i><b>34.1.1</b> Splits of Binary variables</a></li>
+<li class="chapter" data-level="34.1.2" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-nominal-variables"><i class="fa fa-check"></i><b>34.1.2</b> Splits of Nominal Variables</a></li>
+<li class="chapter" data-level="34.1.3" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-of-ordinal-variables"><i class="fa fa-check"></i><b>34.1.3</b> Splits of Ordinal Variables</a></li>
+<li class="chapter" data-level="34.1.4" data-path="tree-impurities.html"><a href="tree-impurities.html#splits-continuous-variables"><i class="fa fa-check"></i><b>34.1.4</b> Splits Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="34" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>34</b> Building Binary Trees</a><ul>
-<li class="chapter" data-level="34.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>34.1</b> Node-Splitting Stopping Criteria</a></li>
-<li class="chapter" data-level="34.2" data-path="tree-basics.html"><a href="tree-basics.html#issues-with-trees"><i class="fa fa-check"></i><b>34.2</b> Issues with Trees</a><ul>
-<li class="chapter" data-level="34.2.1" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>34.2.1</b> Bias-Variance of Trees</a></li>
-</ul></li>
-<li class="chapter" data-level="34.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>34.3</b> Pruning a Tree</a></li>
-<li class="chapter" data-level="34.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>34.4</b> Pros and Cons of Trees</a><ul>
-<li class="chapter" data-level="34.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>34.4.1</b> Advantages of Trees</a></li>
-<li class="chapter" data-level="34.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>34.4.2</b> Disadvantages of Trees</a></li>
+<li class="chapter" data-level="34.2" data-path="tree-impurities.html"><a href="tree-impurities.html#measures-of-impurity"><i class="fa fa-check"></i><b>34.2</b> Measures of Impurity</a><ul>
+<li class="chapter" data-level="34.2.1" data-path="tree-impurities.html"><a href="tree-impurities.html#entropy"><i class="fa fa-check"></i><b>34.2.1</b> Entropy</a></li>
+<li class="chapter" data-level="34.2.2" data-path="tree-impurities.html"><a href="tree-impurities.html#the-math-behind-entropy"><i class="fa fa-check"></i><b>34.2.2</b> The Math Behind Entropy</a></li>
+<li class="chapter" data-level="34.2.3" data-path="tree-impurities.html"><a href="tree-impurities.html#gini-impurity"><i class="fa fa-check"></i><b>34.2.3</b> Gini Impurity</a></li>
+<li class="chapter" data-level="34.2.4" data-path="tree-impurities.html"><a href="tree-impurities.html#variance-based-impurity"><i class="fa fa-check"></i><b>34.2.4</b> Variance-based Impurity</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="35" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>35</b> Bagging</a><ul>
-<li class="chapter" data-level="35.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>35.1</b> Introduction</a><ul>
-<li class="chapter" data-level="35.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>35.1.1</b> Idea of Bagging</a></li>
+<li class="chapter" data-level="35" data-path="tree-splits.html"><a href="tree-splits.html"><i class="fa fa-check"></i><b>35</b> Splitting Nodes</a><ul>
+<li class="chapter" data-level="35.1" data-path="tree-splits.html"><a href="tree-splits.html#entropy-based-splits"><i class="fa fa-check"></i><b>35.1</b> Entropy-based Splits</a></li>
+<li class="chapter" data-level="35.2" data-path="tree-splits.html"><a href="tree-splits.html#gini-index-based-splits"><i class="fa fa-check"></i><b>35.2</b> Gini-index based Splits</a></li>
+<li class="chapter" data-level="35.3" data-path="tree-splits.html"><a href="tree-splits.html#looking-for-the-best-split"><i class="fa fa-check"></i><b>35.3</b> Looking for the best split</a></li>
 </ul></li>
-<li class="chapter" data-level="35.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>35.2</b> Why Bother Bagging?</a></li>
+<li class="chapter" data-level="36" data-path="tree-basics.html"><a href="tree-basics.html"><i class="fa fa-check"></i><b>36</b> Building Binary Trees</a><ul>
+<li class="chapter" data-level="36.1" data-path="tree-basics.html"><a href="tree-basics.html#node-splitting-stopping-criteria"><i class="fa fa-check"></i><b>36.1</b> Node-Splitting Stopping Criteria</a></li>
+<li class="chapter" data-level="36.2" data-path="tree-basics.html"><a href="tree-basics.html#issues-with-trees"><i class="fa fa-check"></i><b>36.2</b> Issues with Trees</a><ul>
+<li class="chapter" data-level="36.2.1" data-path="tree-basics.html"><a href="tree-basics.html#bias-variance-of-trees"><i class="fa fa-check"></i><b>36.2.1</b> Bias-Variance of Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="36" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>36</b> Random Forests</a><ul>
-<li class="chapter" data-level="36.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>36.1</b> Introduction</a></li>
-<li class="chapter" data-level="36.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>36.2</b> Algorithm</a><ul>
-<li class="chapter" data-level="36.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>36.2.1</b> Two Sources of Randomness</a></li>
-<li class="chapter" data-level="36.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>36.2.2</b> Regressions and Classification Forests</a></li>
-<li class="chapter" data-level="36.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>36.2.3</b> Key Advantage of Random Forests</a></li>
+<li class="chapter" data-level="36.3" data-path="tree-basics.html"><a href="tree-basics.html#pruning-a-tree"><i class="fa fa-check"></i><b>36.3</b> Pruning a Tree</a></li>
+<li class="chapter" data-level="36.4" data-path="tree-basics.html"><a href="tree-basics.html#pros-and-cons-of-trees"><i class="fa fa-check"></i><b>36.4</b> Pros and Cons of Trees</a><ul>
+<li class="chapter" data-level="36.4.1" data-path="tree-basics.html"><a href="tree-basics.html#advantages-of-trees"><i class="fa fa-check"></i><b>36.4.1</b> Advantages of Trees</a></li>
+<li class="chapter" data-level="36.4.2" data-path="tree-basics.html"><a href="tree-basics.html#disadvantages-of-trees"><i class="fa fa-check"></i><b>36.4.2</b> Disadvantages of Trees</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="37" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>37</b> Bagging</a><ul>
+<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
+<li class="chapter" data-level="37.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>37.1.1</b> Idea of Bagging</a></li>
+</ul></li>
+<li class="chapter" data-level="37.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>37.2</b> Why Bother Bagging?</a></li>
+</ul></li>
+<li class="chapter" data-level="38" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>38</b> Random Forests</a><ul>
+<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
+<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="38.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>38.2.1</b> Two Sources of Randomness</a></li>
+<li class="chapter" data-level="38.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>38.2.2</b> Regressions and Classification Forests</a></li>
+<li class="chapter" data-level="38.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>38.2.3</b> Key Advantage of Random Forests</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -517,7 +533,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="nonparametric" class="section level1">
-<h1><span class="header-section-number">19</span> Nonparametric Regression</h1>
+<h1><span class="header-section-number">21</span> Nonparametric Regression</h1>
 <p>In this chapter we provide a high level intuition behind nonparametric
 regression procedures.
 Full disclaimer: most of what we talk about in the next chapters is going to
@@ -528,16 +544,16 @@ regression in higher dimensions becomes very quickly statistically and
 computationally inefficient
 (e.g. <a href="https://en.wikipedia.org/wiki/Curse_of_dimensionality" target="_bkanl">curse of dimensionality</a>).</p>
 <div id="conditional-averages" class="section level2">
-<h2><span class="header-section-number">19.1</span> Conditional Averages</h2>
+<h2><span class="header-section-number">21.1</span> Conditional Averages</h2>
 <p>Consider the following example that has to do with NBA players in the
 2018 season. Specifically, we are looking at two variables: years of
 experience, and salary (in millions of dollars). Let’s assume that salary is
 the response <span class="math inline">\(Y\)</span>, and experience is the predictor <span class="math inline">\(X\)</span>. The image below depicts
 the scatterplot between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-169"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-172"></span>
 <img src="images/nonparam/experience-salary-scatter1.png" alt="Salary -vs- Experience of NBA players" width="70%" />
 <p class="caption">
-Figure 19.1: Salary -vs- Experience of NBA players
+Figure 21.1: Salary -vs- Experience of NBA players
 </p>
 </div>
 <p>As you can tell, the relationship between Experience and Salary does not seem
@@ -550,10 +566,10 @@ mean:</p>
 \]</span></p>
 <p>A natural thing to do is to look at the salaries <span class="math inline">\(y_i\)</span> of all players that
 have 4 years of experience: <span class="math inline">\(x_i = 4 \text{ years}\)</span>,</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-170"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-173"></span>
 <img src="images/nonparam/experience-salary-scatter2.png" alt="Salaries of players with 4 years of Experience" width="70%" />
 <p class="caption">
-Figure 19.2: Salaries of players with 4 years of Experience
+Figure 21.2: Salaries of players with 4 years of Experience
 </p>
 </div>
 <p>and then aggregate such
@@ -568,19 +584,19 @@ of regression, which as we know, is defined in terms of conditional expectation:
 \]</span></p>
 <p>We can compute all the average salaries for each value of years of experience,
 and make another plot with such averages:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-171"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
 <img src="images/nonparam/experience-salary-scatter3.png" alt="Average Salaries by years of Experience" width="70%" />
 <p class="caption">
-Figure 19.3: Average Salaries by years of Experience
+Figure 21.3: Average Salaries by years of Experience
 </p>
 </div>
 <p>Taking a further step, we can enrich the graph by connecting the dots of
 average salaries, in order to get a nonparametric regression line, displayed in
 the following image:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-172"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-175"></span>
 <img src="images/nonparam/experience-salary-scatter4.png" alt="Average Salaries by years of Experience" width="70%" />
 <p class="caption">
-Figure 19.4: Average Salaries by years of Experience
+Figure 21.4: Average Salaries by years of Experience
 </p>
 </div>
 <p>Notice that this approach is surprisingly simple, and it does match the
@@ -595,25 +611,25 @@ Consider for example the case of players with 17 years of experience in the NBA.
 The data from the 2018 season contains only one player with 17 years
 of experience. With just one data point, the predicted salary will be
 highly unreliable.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-173"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-176"></span>
 <img src="images/nonparam/experience-salary-scatter5.png" alt="Only one player with 17 years of experience" width="70%" />
 <p class="caption">
-Figure 19.5: Only one player with 17 years of experience
+Figure 21.5: Only one player with 17 years of experience
 </p>
 </div>
 </div>
 <div id="looking-at-the-neighbors" class="section level2">
-<h2><span class="header-section-number">19.2</span> Looking at the Neighbors</h2>
+<h2><span class="header-section-number">21.2</span> Looking at the Neighbors</h2>
 <p>Because we only have one player with 17 years of experience, we need to find
 a way of using more of the data points in <span class="math inline">\(X\)</span> to try to improve the prediction.</p>
 <p>Looking at the scatterplot below, there are four players (the orange circles)
 that are very close to the player with 17 years of experience (red circle).
 So why not use the salaries of all these players to calculate a predicted salary
 for someone with 17 years of experience?</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-174"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-177"></span>
 <img src="images/nonparam/experience-salary-scatter6.png" alt="Four closest players to 17 years of experience" width="70%" />
 <p class="caption">
-Figure 19.6: Four closest players to 17 years of experience
+Figure 21.6: Four closest players to 17 years of experience
 </p>
 </div>
 <p>Some common options that we can use to profit from the neighboring data points
@@ -646,7 +662,7 @@ of what is known as <strong>linear smoothers</strong>.</p>
           </div>
         </div>
       </div>
-<a href="linear-extensions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="basis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="knn.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
