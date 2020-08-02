@@ -656,14 +656,16 @@ Figure 3.6: Average individual
 </p>
 </div>
 <p>Algebraically we have: individuals <span class="math inline">\(x_1, x_2, \dots, x_n\)</span>, and the average is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-01">\[
 \bar{x} = \frac{x_1 + \dots + x_n}{n} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\tag{3.1}
 \]</span></p>
 <p>In vector notation, the average can be calculated with an inner product between
 <span class="math inline">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span>, and a constant vector of <span class="math inline">\(n\)</span>-elements
 <span class="math inline">\((1/n)\mathbf{1}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-02">\[
 \bar{x} = \frac{1}{n} \mathbf{x^\mathsf{T}1}
+\tag{3.2}
 \]</span></p>
 <p>What about the multivariate case? It turns out that we can also ask about the
 average individual of a cloud of points, like in the following figure:</p>
@@ -675,8 +677,9 @@ Figure 3.7: Cloud of points with centroid (i.e. average individual)
 </div>
 <p>The average individual, in a <span class="math inline">\(p\)</span>-dimensional space is the point <span class="math inline">\(\mathbf{\vec{g}}\)</span>
 containing as coordiantes the averages of all the variables:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-03">\[
 \mathbf{\vec{g}} = (\bar{x}_1, \bar{x}_2, \dots, \bar{x}_p)
+\tag{3.3}
 \]</span></p>
 <p>where <span class="math inline">\(\bar{x}_j\)</span> is the average of the <span class="math inline">\(j\)</span>-th variable.</p>
 <p>This average individual <span class="math inline">\(\mathbf{\vec{g}}\)</span> is also known as the <strong>centroid</strong>,
@@ -698,12 +701,14 @@ Figure 3.8: Cloud of points of mean-centered data
 <p>In the unidimensional case, say we have <span class="math inline">\(n\)</span> individuals
 <span class="math inline">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span>
 with a mean of <span class="math inline">\(\bar{x} = \sum_i^n x_i\)</span>. The vector of centered values are:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-04">\[
 \mathbf{\bar{x}} = (x_1 - \bar{x}, x_2 - \bar{x}, \dots, x_n - \bar{x})
+\tag{3.4}
 \]</span></p>
 <p>In the multidimensional case, the set of centered data values are:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-05">\[
 \mathbf{x_1} - \mathbf{g}, \mathbf{x_2} - \mathbf{g}, \dots, \mathbf{x_n} - \mathbf{g}
+\tag{3.5}
 \]</span></p>
 </div>
 <div id="distance-between-individuals" class="section level3">
@@ -721,22 +726,25 @@ Figure 3.9: Distance between two individuals
 </div>
 <p>If you have one variable <span class="math inline">\(X\)</span>, then the squared distance <span class="math inline">\(d^2(i,\ell)\)</span> between
 two individuals <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_\ell\)</span> is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-06">\[
 d^2(i,\ell) = (x_i - x_\ell)^2
+\tag{3.6}
 \]</span></p>
 <p>In general, with <span class="math inline">\(p\)</span> variables, the squared distance between the <span class="math inline">\(i\)</span>-th individual
 and the <span class="math inline">\(\ell\)</span>-th individual is:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:102-07">\[\begin{align*}
 d^2(i,\ell) &amp;= (x_{i1} - x_{\ell 1})^2 + (x_{i2} - x_{\ell 2})^2 + \dots + (x_{ip} - x_{\ell p})^2 \\
 &amp;= (\mathbf{\vec{x}_i} - \mathbf{\vec{x}_\ell})^\mathsf{T} (\mathbf{\vec{x}_i} - \mathbf{\vec{x}_\ell})
+\tag{3.7}
 \end{align*}\]</span></p>
 </div>
 <div id="distance-to-the-centroid" class="section level3">
 <h3><span class="header-section-number">3.3.4</span> Distance to the centroid</h3>
 <p>A special case is the distance between any individual <span class="math inline">\(i\)</span> and the average individual:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:102-08">\[\begin{align*}
 d^2(i,g) &amp;= (x_{i1} - \bar{x}_1)^2 + (x_{i2} - \bar{x}_2)^2 + \dots + (x_{ip} - \bar{x}_p)^2 \\
 &amp;= (\mathbf{\vec{x}_i} - \mathbf{\vec{g}})^\mathsf{T} (\mathbf{\vec{x}_i} - \mathbf{\vec{g}})
+\tag{3.8}
 \end{align*}\]</span></p>
 </div>
 <div id="measures-of-dispersion" class="section level3">
@@ -752,17 +760,19 @@ measure of spread.</p>
 squared distances between pairs of individuals. For instance, say you have three
 individuals <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(c\)</span>. We can calculate all pairwise distances and add
 them up:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-09">\[
 d^2(a,a) + d^2(b,b) + d^2(c,c) + \\
 d^2(a,b) + d^2(b,a) + \\
 d^2(a,c) + d^2(c,a) + \\
 d^2(b,c) + d^2(c,b)
+\tag{3.9}
 \]</span></p>
 <p>In general, when you have <span class="math inline">\(n\)</span> individuals, you can obtain up to <span class="math inline">\(n^2\)</span> squared
 distances. We will give the generic name of <strong>Overall Dispersion</strong> to the sum
 of all squared pairwise distances:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-10">\[
 \text{overall dispersion} = \sum_{i=1}^{n} \sum_{\ell=1}^{n} d^2(i,\ell)
+\tag{3.10}
 \]</span></p>
 </div>
 <div id="inertia" class="section level4 unnumbered">
@@ -776,29 +786,34 @@ Figure 3.10: Inertia as a measure of spread around the centroid
 </p>
 </div>
 <p>The average sum of squared distances from each point to the centroid then becomes</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-11">\[
 \frac{1}{n} \sum_{i=1}^{n} d^2(i,g) = \frac{1}{n} \sum_{i=1}^{n} (\mathbf{\vec{x}_i} - \mathbf{\vec{g}})^\mathsf{T} (\mathbf{\vec{x}_i} - \mathbf{\vec{g}})
+\tag{3.11}
 \]</span></p>
 <p>We will name this measure <strong>Inertia</strong>, borrowing this term from the concept of
 inertia used in mechanics (in physics).</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-12">\[
 \text{Inertia} = \frac{1}{n} \sum_{i=1}^{n} d^2(i,g)
+\tag{3.12}
 \]</span></p>
 <p>What is the motivation behind this measure? Consider the <span class="math inline">\(p = 1\)</span> case; i.e. 
 when <span class="math inline">\(\mathbf{X}\)</span> is simply a column vector</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-13">\[
 \mathbf{X} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \\ \end{pmatrix}
+\tag{3.13}
 \]</span></p>
 <p>The centroid will simply be the mean of these points: i.e. 
 <span class="math inline">\(\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i\)</span>.</p>
 <p>The sum of squared-distances from each point to the centroid then becomes:</p>
-<p><span class="math display">\[
-(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \dots + (x_n - \bar{x})^2 = \sum_{i=1}^{n} (x_i - \bar{x})^2
+<p><span class="math display" id="eq:102-14">\[
+(x_1 - \bar{x})^2 + \dots + (x_n - \bar{x})^2 = \sum_{i=1}^{n} (x_i - \bar{x})^2
+\tag{3.14}
 \]</span></p>
 <p>Does the above formula look familiar? What if we take the average of the squared
 distances to the centroid?</p>
-<p><span class="math display">\[
-\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 = \frac{(x_1 - \bar{x})^2 + (x_2 - \bar{x})^2 + \dots + (x_n - \bar{x})^2}{n}
+<p><span class="math display" id="eq:102-15">\[
+\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 = \frac{(x_1 - \bar{x})^2 + \dots + (x_n - \bar{x})^2}{n}
+\tag{3.15}
 \]</span></p>
 <p>Same question: Do you recognize this formula? You better do…
 This is nothing else than the
@@ -810,10 +825,11 @@ which gives the typical squared distance around the centroid.</p>
 <h4>Overall Dispersion and Inertia</h4>
 <p>Interestingly, the <em>overall dispersion</em> and the <em>inertia</em> are connected through
 the following relation:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:102-16">\[\begin{align*}
 \text{overall dispersion} &amp;= \sum_{i=1}^{n} \sum_{\ell=1}^{n} d^2(i,\ell) \\
 &amp;= 2n \sum_{i=1}^{n} d^2(i,g) \\
 &amp;= (2n^2) \text{Inertia}
+\tag{3.16}
 \end{align*}\]</span></p>
 <p>The proof of this relation is left as a homework exercise.</p>
 </div>
@@ -837,24 +853,30 @@ measures of center, location, central tendency, or centrality.</p>
 is the <strong>mean</strong>, sometimes referred to as average. The mean of an <span class="math inline">\(n-\)</span>element
 variable <span class="math inline">\(X = (x_1, x_2, \dots, x_n)\)</span>, represented by <span class="math inline">\(\bar{x}\)</span>, is obtained by
 adding all the <span class="math inline">\(x_i\)</span> values and then dividing by their total number <span class="math inline">\(n\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-17">\[
 \bar{x} = \frac{x_1 + x_2 + \dots + x_n}{n}
+\tag{3.17}
 \]</span></p>
 <p>Using summation notation we can express <span class="math inline">\(\bar{x}\)</span> in a very compact way as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-18">\[
 \bar{x} = \frac{1}{n} \sum_{i = 1}^{n} x_i
+\tag{3.18}
 \]</span></p>
 <p>If you associate a constant weight of <span class="math inline">\(1/n\)</span> to each observation <span class="math inline">\(x_i\)</span>, you can look at the formula of the mean as a weighted sum:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-19">\[
 \bar{x} = \frac{1}{n} x_1 + \frac{1}{n} x_2 + \dots + \frac{1}{n} x_n
+\tag{3.19}
 \]</span></p>
 <p>This is a slightly different way of looking at the mean that will allow you to
 generalize the concept of an “average” as a <em>weighted aggregation of information</em>.
 For example, if we denote the weight of the <span class="math inline">\(i\)</span>-th individual as <span class="math inline">\(w_i\)</span>, then the
 average can be expressed as:</p>
-<p><span class="math display">\[
-\bar{x} = w_1 x_1 + w_2 x_2 + \dots + w_n x_n = \sum_{i=1}^{n} w_i x_i = \mathbf{w^\mathsf{T} x}
-\]</span></p>
+<p><span class="math display" id="eq:102-20">\[\begin{align*}
+\bar{x} &amp;= w_1 x_1 + w_2 x_2 + \dots + w_n x_n \\
+&amp;= \sum_{i=1}^{n} w_i x_i \\
+&amp;= \mathbf{w^\mathsf{T} x}
+\tag{3.20}
+\end{align*}\]</span></p>
 </div>
 <div id="variance-of-a-variable" class="section level3">
 <h3><span class="header-section-number">3.4.2</span> Variance of a Variable</h3>
@@ -868,9 +890,11 @@ will focus on one particular measure of spread: the <strong>variance</strong>
 behind the calculation of the variance is to quantify the typical concentration
 of values around the mean. The way this is done is by averaging the squared
 deviations from the mean.</p>
-<p><span class="math display">\[
-var(X) = \frac{(x_1 - \bar{x})^2 + \dots + (x_n - \bar{x})^2}{n} = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2
-\]</span></p>
+<p><span class="math display" id="eq:102-21">\[\begin{align*}
+Var(X) &amp;= \frac{(x_1 - \bar{x})^2 + \dots + (x_n - \bar{x})^2}{n} \\
+&amp;= \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2
+\tag{3.21}
+\end{align*}\]</span></p>
 <p>Let’s disect the terms and operations involved in the formula of the variance.</p>
 <ul>
 <li><p>the main terms are the <em>deviations from the mean</em> <span class="math inline">\((x_i - \bar{x})\)</span>, that is,
@@ -887,8 +911,9 @@ means getting the squared distance from <span class="math inline">\(x_i\)</span>
 <p>Because the variance has squared units, we need to take the square root to
 “recover” the original units in which <span class="math inline">\(X\)</span> is expressed.
 This gives us the <strong>standard deviation</strong></p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-22">\[
 sd(X) = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2}
+\tag{3.22}
 \]</span></p>
 <p>In this sense, you can say that the standard deviation is roughly the average
 distance that the data points vary from the mean.</p>
@@ -900,13 +925,15 @@ in which the division is done by <span class="math inline">\(n-1\)</span>. Each 
 statistical inference view of variance in terms of whether the data comes from
 the <em>population</em> or from a <em>sample</em> of the population.</p>
 <p>The <em>population variance</em> is obtained dividing by <span class="math inline">\(n\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-23">\[
 \textsf{population variance:} \quad \frac{1}{(n)} \sum_{i=1}^{n} (x_i - \bar{x})^2
+\tag{3.23}
 \]</span></p>
 <p>The <em>sample variance</em> is obtained dividing by <span class="math inline">\(n - 1\)</span> instead of dividing by <span class="math inline">\(n\)</span>.
 The reason for doing this is to get an unbiased estimor of the population variance:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-24">\[
 \textsf{sample variance:} \quad \frac{1}{(n-1)} \sum_{i=1}^{n} (x_i - \bar{x})^2
+\tag{3.24}
 \]</span></p>
 <p>It is important to note that most statistical software compute the variance with
 the unbiased version.
@@ -928,34 +955,39 @@ Second, recall that a sum of numbers can be expressed with an inner product by
 using the unit vector (or summation operator). If we denote the mean vector as
 <span class="math inline">\(\mathbf{\bar{x}}\)</span>, then the variance of a vector <span class="math inline">\(\mathbf{x}\)</span> can be
 obtained with the following inner product:</p>
-<p><span class="math display">\[
-var(\mathbf{x}) = \frac{1}{n} (\mathbf{x} - \mathbf{\bar{x}})^\mathsf{T} (\mathbf{x} - \mathbf{\bar{x}})
+<p><span class="math display" id="eq:102-25">\[
+Var(\mathbf{x}) = \frac{1}{n} (\mathbf{x} - \mathbf{\bar{x}})^\mathsf{T} (\mathbf{x} - \mathbf{\bar{x}})
+\tag{3.25}
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{\bar{x}}\)</span> is an <span class="math inline">\(n\)</span>-element vector of mean values <span class="math inline">\(\bar{x}\)</span>.</p>
 <p>Assuming that <span class="math inline">\(\mathbf{x}\)</span> is already mean-centered, then the variance is
 proportional to the squared norm of <span class="math inline">\(\mathbf{x}\)</span></p>
-<p><span class="math display">\[
-var(\mathbf{x}) = \frac{1}{n} \hspace{1mm} \mathbf{x}^{\mathsf{T}} \mathbf{x} = \frac{1}{n} \| \mathbf{x} \|^2
+<p><span class="math display" id="eq:102-26">\[
+Var(\mathbf{x}) = \frac{1}{n} \hspace{1mm} \mathbf{x}^{\mathsf{T}} \mathbf{x} = \frac{1}{n} \| \mathbf{x} \|^2
+\tag{3.26}
 \]</span></p>
 <p>This means that we can formulate the variance with the general notion of an
 inner product:</p>
-<p><span class="math display">\[
-var(\mathbf{x}) = \frac{1}{n} \langle \mathbf{x}, \mathbf{x} \rangle
+<p><span class="math display" id="eq:102-27">\[
+Var(\mathbf{x}) = \frac{1}{n} \langle \mathbf{x}, \mathbf{x} \rangle
+\tag{3.27}
 \]</span></p>
 </div>
 <div id="standard-deviation-as-a-norm" class="section level3">
 <h3><span class="header-section-number">3.4.4</span> Standard Deviation as a Norm</h3>
 <p>If we use a metric matrix <span class="math inline">\(\mathbf{D} = diag(1/n)\)</span> then we have that the variance
 is given by a special type of inner product:</p>
-<p><span class="math display">\[
-var(\mathbf{x}) = \langle \mathbf{x}, \mathbf{x} \rangle_{D} = \mathbf{x}^{\mathsf{T}} \mathbf{D x}
+<p><span class="math display" id="eq:102-28">\[
+Var(\mathbf{x}) = \langle \mathbf{x}, \mathbf{x} \rangle_{D} = \mathbf{x}^{\mathsf{T}} \mathbf{D x}
+\tag{3.28}
 \]</span></p>
 <p>From this point of view, we can say that the variance of <span class="math inline">\(\mathbf{x}\)</span> is
 equivalent to its squared norm when the vector space is endowed with a metric
 <span class="math inline">\(\mathbf{D}\)</span>. Consequently, the standard deviation is simply the length of
 <span class="math inline">\(\mathbf{x}\)</span> in this particular geometric space.</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-29">\[
 sd(\mathbf{x}) = \| \mathbf{x} \|_{D}
+\tag{3.29}
 \]</span></p>
 <p>When looking at the standard deviation from this perspective, you can actually
 say that the amount of spread of a vector <span class="math inline">\(\mathbf{x}\)</span> is actually its length
@@ -964,65 +996,78 @@ say that the amount of spread of a vector <span class="math inline">\(\mathbf{x}
 <div id="covariance" class="section level3">
 <h3><span class="header-section-number">3.4.5</span> Covariance</h3>
 <p>The covariance generalizes the concept of variance for two variables. Recall that the formula for the covariance between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-30">\[
 cov(\mathbf{x, y}) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x}) (y_i - \bar{y})
+\tag{3.30}
 \]</span></p>
 <p>where <span class="math inline">\(\bar{x}\)</span> is the mean value of <span class="math inline">\(\mathbf{x}\)</span> obtained as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-31">\[
 \bar{x} = \frac{1}{n} (x_1 + x_2 + \dots + x_n) = \frac{1}{n} \sum_{i = 1}^{n} x_i
+\tag{3.31}
 \]</span></p>
 <p>and <span class="math inline">\(\bar{y}\)</span> is the mean value of <span class="math inline">\(\mathbf{y}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-32">\[
 \bar{y} = \frac{1}{n} (y_1 + y_2 + \dots + y_n) = \frac{1}{n} \sum_{i = 1}^{n} y_i
+\tag{3.32}
 \]</span></p>
 <p>Basically, the covariance is a statistical summary that is used to assess the
 <strong>linear association between pairs of variables</strong>.</p>
 <p>Assuming that the variables are mean-centered, we can get a more compact
 expression of the covariance in vector notation:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-33">\[
 cov(\mathbf{x, y}) = \frac{1}{n} (\mathbf{x^{\mathsf{T}} y})
+\tag{3.33}
 \]</span></p>
 <p>Properties of covariance:</p>
 <ul>
 <li>the covariance is a symmetric index: <span class="math inline">\(cov(X,Y) = cov(Y,X)\)</span></li>
 <li>the covariance can take any real value (negative, null, positive)</li>
-<li>the covariance is linked to variances under the name of the Cauchy-Schwarz inequality:
-<span class="math display">\[cov(X,Y)^2 \leq var(X) var(Y) \]</span></li>
+<li>the covariance is linked to variances under the name of the Cauchy-Schwarz inequality:</li>
 </ul>
+<p><span class="math display" id="eq:102-34">\[
+cov(X,Y)^2 \leq var(X) var(Y)
+\tag{3.34}
+\]</span></p>
 </div>
 <div id="correlation" class="section level3">
 <h3><span class="header-section-number">3.4.6</span> Correlation</h3>
 <p>Although the covariance indicates the direction—positive or negative—of a possible linear relation, it does not tell us how big or small the relation might be. To have a more interpretable index, we must transform the convariance into a unit-free measure. To do this we must consider the standard deviations of the variables so we can normalize the covariance. The result of this normalization is the coefficient of linear correlation defined as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-35">\[
 cor(X, Y) = \frac{cov(X, Y)}{\sqrt{var(X)} \sqrt{var(Y)}}
+\tag{3.35}
 \]</span></p>
 <p>Representing <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> as vectors <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>, we can
 express the correlation as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-36">\[
 cor(\mathbf{x}, \mathbf{y}) = \frac{cov(\mathbf{x}, \mathbf{y})}{\sqrt{var(\mathbf{x})} \sqrt{var(\mathbf{y})}}
+\tag{3.36}
 \]</span></p>
 <p>Assuming that <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> are mean-centered, we can express
 the correlation as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-37">\[
 cor(\mathbf{x, y}) = \frac{\mathbf{x^{\mathsf{T}} y}}{\|\mathbf{x}\| \hspace{1mm} \|\mathbf{y}\|}
+\tag{3.37}
 \]</span></p>
 <p>As it turns out, the norm of a mean-centered variable <span class="math inline">\(\mathbf{x}\)</span> is
 proportional to the square root of its variance (or standard deviation):</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-38">\[
 \| \mathbf{x} \| = \sqrt{\mathbf{x^{\mathsf{T}} x}} 
  = \frac{1}{\sqrt{n}} \sqrt{var(\mathbf{x})}
+\tag{3.38}
 \]</span></p>
 <p>Consequently, we can also express the correlation with inner products as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-39">\[
 cor(\mathbf{x, y}) = \frac{\mathbf{x^{\mathsf{T}} y}}{\sqrt{(\mathbf{x^{\mathsf{T}} x})} \sqrt{(\mathbf{y^{\mathsf{T}} y})}}
+\tag{3.39}
 \]</span></p>
 <p>or equivalently:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-40">\[
 cor(\mathbf{x, y}) = \frac{\mathbf{x^{\mathsf{T}} y}}{\| \mathbf{x} \| \hspace{1mm} \| \mathbf{y} \|}
+\tag{3.40}
 \]</span></p>
 <p>In the case that both <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> are standardized (mean zero
 and unit variance), that is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-41">\[
 \mathbf{x} = \begin{bmatrix}
 \frac{x_1 - \bar{x}}{\sigma_{x}} \\
 \frac{x_2 - \bar{x}}{\sigma_{x}} \\
@@ -1036,10 +1081,12 @@ and unit variance), that is:</p>
 \vdots \\
 \frac{y_n - \bar{y}}{\sigma_{y}}
 \end{bmatrix}
+\tag{3.41}
 \]</span></p>
 <p>the correlation is simply the inner product:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-42">\[
 cor(\mathbf{x, y}) = \mathbf{x^{\mathsf{T}} y} \hspace{5mm} \textsf{(standardized variables)}
+\tag{3.42}
 \]</span></p>
 </div>
 <div id="geometry-of-correlation" class="section level3">
@@ -1052,12 +1099,14 @@ Figure 3.11: Two vectors in a 2-dimensional space
 </p>
 </div>
 <p>The inner product ot two mean-centered vectors <span class="math inline">\(\langle \mathbf{x}, \mathbf{y} \rangle\)</span> is obtained with the following equation:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-43">\[
 \mathbf{x^{\mathsf{T}} y} = \|\mathbf{x}\| \hspace{1mm} \|\mathbf{y}\| \hspace{1mm} cos(\theta_{x,y})
+\tag{3.43}
 \]</span></p>
 <p>where <span class="math inline">\(cos(\theta_{x,y})\)</span> is the angle between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>. Rearranging the terms in the previous equation we get that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-44">\[
 cos(\theta_{x,y}) = \frac{\mathbf{x^\mathsf{T} y}}{\|\mathbf{x}\| \hspace{1mm} \|\mathbf{y}\|} = cor(\mathbf{x, y}) 
+\tag{3.44}
 \]</span></p>
 <p>which means that the correlation between mean-centered vectors <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> turns out to be the cosine of the angle between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span>.</p>
 </div>
@@ -1080,8 +1129,9 @@ Figure 3.12: Two vectors in n-dimensional space
 <p>We can think of several ways to approximate <span class="math inline">\(\mathbf{y}\)</span> in terms of
 <span class="math inline">\(\mathbf{x}\)</span>. The approximation of <span class="math inline">\(\mathbf{y}\)</span>, denoted by <span class="math inline">\(\mathbf{\hat{y}}\)</span>,
 means finding a scalar <span class="math inline">\(b\)</span> such that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-45">\[
 \mathbf{\hat{y}} = b \mathbf{x}
+\tag{3.45}
 \]</span></p>
 <p>The common approach to get <span class="math inline">\(\mathbf{\hat{y}}\)</span> in some optimal way is by
 minimizing the square difference between <span class="math inline">\(\mathbf{y}\)</span> and <span class="math inline">\(\mathbf{\hat{y}}\)</span>.</p>
@@ -1093,17 +1143,20 @@ Figure 3.13: Orthogonal projection of y onto x
 </div>
 <p>The answer to this question comes in the form of a projection. More precisely,
 we orthogonally project <span class="math inline">\(\mathbf{y}\)</span> onto <span class="math inline">\(\mathbf{x}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-46">\[
 \mathbf{\hat{y}} = \mathbf{x} \left( \frac{\mathbf{y^\mathsf{T} x}}{\mathbf{x^\mathsf{T} x}} \right)
+\tag{3.46}
 \]</span></p>
 <p>or equivalently:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-47">\[
 \mathbf{\hat{y}} = \mathbf{x} \left( \frac{\mathbf{y^\mathsf{T} x}}{\| \mathbf{x} \|^2} \right)
+\tag{3.47}
 \]</span></p>
 <p>For convenience purposes, we can rewrite the above equation in a slightly different
 format:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-48">\[
 \mathbf{\hat{y}} = \mathbf{x} (\mathbf{x^\mathsf{T}x})^{-1} \mathbf{x^\mathsf{T}y}
+\tag{3.48}
 \]</span></p>
 <p>If you are familiar with linear regression, you should be able to recognize
 this equation. We’ll come back to this when we get to the chapter about
@@ -1130,20 +1183,23 @@ Figure 3.15: Orthogonal projection of vector x onto constant vector 1
 </p>
 </div>
 <p>This projection is expressed in vector notation as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-49">\[
 \mathbf{\hat{x}} = \mathbf{1} \left( \frac{\mathbf{x^\mathsf{T} 1}}{\mathbf{1^\mathsf{T} 1}} \right)
+\tag{3.49}
 \]</span></p>
 <p>or equivalently:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-50">\[
 \mathbf{\hat{x}} = \mathbf{1} \left( \frac{\mathbf{x^\mathsf{T} 1}}{\| \mathbf{1} \|^2} \right)
+\tag{3.50}
 \]</span></p>
 <p>Note that the term in parenthesis is just a scalar, so we can actually express
 <span class="math inline">\(\mathbf{\hat{x}}\)</span> as <span class="math inline">\(b \mathbf{1}\)</span>. This means that a projection implies
 multiplying <span class="math inline">\(\mathbf{1}\)</span> by some number <span class="math inline">\(b\)</span>, such that
 <span class="math inline">\(\mathbf{\hat{x}} = b \mathbf{1}\)</span> is a stretched or shrinked version of
 <span class="math inline">\(\mathbf{1}\)</span>. So, what is the scalar <span class="math inline">\(b\)</span>? It is simply the mean of <span class="math inline">\(\mathbf{x}\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:102-51">\[
 \mathbf{\hat{x}} = \mathbf{1} \left( \frac{\mathbf{x^\mathsf{T} 1}}{\| \mathbf{1} \|^2} \right) = \bar{x} \mathbf{1}
+\tag{3.51}
 \]</span></p>
 <p>This is better appreciated in the following figure.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
