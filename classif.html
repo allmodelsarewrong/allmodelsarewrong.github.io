@@ -624,8 +624,9 @@ Figure 24.3: Some elements of the Supervised Learning Diagram
 attributes <span class="math inline">\(X = \mathbf{x}\)</span>, to what class <span class="math inline">\(y\)</span> we should assign this customer?
 Ideally (although not mandatory), we would like to know what is the conditional
 probability:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-01">\[
 P(y \mid X = \mathbf{x})
+\tag{24.1}
 \]</span></p>
 <p>For example, we can think of <span class="math inline">\(n\)</span> individuals in a <span class="math inline">\(p\)</span>-dimensional space.
 Moreover, assume that each class of customers forms its own cloud: the <em>good</em>
@@ -683,8 +684,9 @@ Figure 24.8: Cloud of n customers in p-dimensional space
 evidence (i.e. training data set). A first step may involve studying how <span class="math inline">\(X\)</span>
 values vary according to a given class <span class="math inline">\(\mathcal{C_k}\)</span>. In other words, we may
 start exploring the class-conditional distribution of</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-02">\[
 P(X = \mathbf{x} \mid y = k)
+\tag{24.2}
 \]</span></p>
 <p>For instance, we may ask “How does <span class="math inline">\(X_j \mid y = 1\)</span> compare with
 <span class="math inline">\(X_j \mid y = 2\)</span>?” Similarly, “How does <span class="math inline">\(X_q \mid y = 1\)</span> compare with
@@ -699,22 +701,26 @@ Figure 24.9: Exploring conditional distributions
 summary statistics, and compare visual displays of these distributions.
 If we found a way to get the <em>class-conditional</em> distribution <span class="math inline">\(P(X \mid y = k)\)</span>,
 we could compute:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-03">\[
 P(X = \mathbf{x} \mid \text{Good}) = \frac{P(\text{applicant is Good and has attributes } \mathbf{x})}{P(\text{applicant is Good})}
+\tag{24.3}
 \]</span></p>
 <p>and</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-04">\[
 P(X =\mathbf{x} \mid \text{Bad}) = \frac{P(\text{applicant is Bad and has attributes } \mathbf{x})}{P(\text{applicant is Bad})}
+\tag{24.4}
 \]</span></p>
 <p>However, the probability that we are interested in at the end of the day is the
 conditional probability <span class="math inline">\(P(y = k \mid X = \mathbf{x})\)</span>. This is the unknown
 target distribution in the supervised learning diargam.</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-05">\[
 P(\text{Good} \mid X = \mathbf{x}) = \frac{P(\text{applicant has attributes } \mathbf{x} \text{ and is Good})}{P(\text{applicant has attributes } \mathbf{x})}
+\tag{24.5}
 \]</span></p>
 <p>similarly</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-06">\[
 P(\text{Bad} \mid X = \mathbf{x}) = \frac{P(\text{applicant has attributes } \mathbf{x} \text{ and is Bad})}{P(\text{applicant has attributes } \mathbf{x})}
+\tag{24.6}
 \]</span></p>
 <p>In order to connect all the previous probabilities, we have to review the
 Bayes’ rule.</p>
@@ -722,30 +728,36 @@ Bayes’ rule.</p>
 <div id="bayes-rule-reminder" class="section level3">
 <h3><span class="header-section-number">24.1.4</span> Bayes’ Rule Reminder</h3>
 <p>Let’s look at both types of conditional probabilities:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-07">\[
 P(X = \mathbf{x} \mid y = k) = \frac{P(y = k , X = \mathbf{x})}{P(y = k)}
+\tag{24.7}
 \]</span></p>
 <p>and</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-08">\[
 P(y = k \mid X = \mathbf{x}) = \frac{P(X = \mathbf{x} , y = k)}{P(X = \mathbf{x})}
+\tag{24.8}
 \]</span></p>
 <p>And consider the joint distribution</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:701-09">\[\begin{align*}
 P(X = \mathbf{x} , y = k) &amp;= P(y = k \mid X = \mathbf{x}) P(X = \mathbf{x}) \\
 &amp;= P(X = \mathbf{x} \mid y = k) P(y = k)
+\tag{24.9}
 \end{align*}\]</span></p>
 <p>Solving for the joint distribution <span class="math inline">\(P(X = \mathbf{x} , y = k)\)</span> we have that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-10">\[
 P(X = \mathbf{x} \mid y = k) P(y = k) \hspace{1mm} = \hspace{1mm} P(y = k \mid X = \mathbf{x}) P(X = \mathbf{x})
+\tag{24.10}
 \]</span></p>
 <p>Thus:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-11">\[
 P(y = k \mid X = \mathbf{x}) = \frac{P(X = \mathbf{x} \mid y = k) P(y = k)}{P(X = \mathbf{x})}
+\tag{24.11}
 \]</span></p>
 <p>where the marginal probability <span class="math inline">\(P(X = \mathbf{x})\)</span> is calculated with the total
 probability formula:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-12">\[
 P(X = \mathbf{x}) = \sum_{k} P(X = \mathbf{x} \mid y = k) P(y = k)
+\tag{24.12}
 \]</span></p>
 <p>We can use Bayes’ Theorem for classification purposes, changing some of the
 notation, let:</p>
@@ -756,14 +768,16 @@ density for inputs <span class="math inline">\(X\)</span> in class <span class="
 </ul>
 <p>Thus, the posterior probability (the conditional probability of the response
 given the inputs) is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-13">\[
 P(y = k \mid X = \mathbf{x}) = \frac{f_k(\mathbf{x}) \hspace{1mm} \pi_k}{\sum_{k=1}^{K} f_k(\mathbf{x}) \pi_k}
+\tag{24.13}
 \]</span></p>
 <p>By using Bayes’ theorem we are essentially modeling the posterior probability
 <span class="math inline">\(P(y=k \mid X=\mathbf{x})\)</span> in terms of likelihood densities <span class="math inline">\(f_k(\mathbf{x})\)</span>
 and prior probabilities <span class="math inline">\(\pi_k\)</span>.</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:701-14">\[
 \text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}
+\tag{24.14}
 \]</span></p>
 </div>
 </div>

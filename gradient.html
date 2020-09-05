@@ -762,7 +762,8 @@ E(\mathbf{b}) &amp; = \frac{1}{n} \left( \mathbf{y} - \mathbf{X} \mathbf{b} \rig
 \end{align*}\]</span></p>
 <p>We can find a closed form for its gradient <span class="math inline">\(\nabla E(\mathbf{b})\)</span>:</p>
 <p><span class="math display" id="eq:302-12">\[\begin{align*}
-\nabla E(\mathbf{b}) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) 
+\nabla E(\mathbf{b}) &amp; = \frac{1}{n} \left( 2 \mathbf{X}^\mathsf{T} \mathbf{X} \mathbf{b} - 2 \mathbf{X}^\mathsf{T} \mathbf{y} \right) \\
+&amp;= \frac{2}{n} \mathbf{X}^\mathsf{T} (\mathbf{X} - \mathbf{X^\mathsf{T}y})
 \tag{6.12}
 \end{align*}\]</span></p>
 <p>The above formula involves the columns point of view. However, we can also find

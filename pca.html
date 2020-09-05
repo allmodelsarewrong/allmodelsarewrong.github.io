@@ -51,6 +51,70 @@
 
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -507,7 +571,7 @@ mentioned before, we think of the individuals as forming a cloud of points in a
 <span class="math inline">\(p\)</span>-dim space, and the variables forming a cloud of arrows in an <span class="math inline">\(n\)</span>-dim space.</p>
 <p>Pretend that you have some data in which its cloud of points has the shape of
 a mug, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
 <img src="images/pca/mug-data.png" alt="Cloud of points in the form of a mug" width="30%" />
 <p class="caption">
 Figure 4.1: Cloud of points in the form of a mug
@@ -519,7 +583,7 @@ we can get a low-dimensional representation of this data?</p>
 <p>Luckily, the answer is: YES, we can!</p>
 <p>How? Well, the name of the game is <strong>projections</strong>: we can look for projections
 of the data into sub-spaces of lower dimension, like in the diagram below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
 <img src="images/pca/mug-projections.png" alt="Various projections onto subspaces" width="70%" />
 <p class="caption">
 Figure 4.2: Various projections onto subspaces
@@ -539,7 +603,7 @@ in which the image of the mug is as similar as possible to the original object.<
 projections, subspace <span class="math inline">\(\mathbb{H}_C\)</span> is the one that provides the best low
 dimensional representation, in the sense that the projected silhouette is the
 most similar to the original mug shape.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
 <img src="images/pca/mug-subspace.png" alt="The shape of the projection is similar to the original mug shape." width="70%" />
 <p class="caption">
 Figure 4.3: The shape of the projection is similar to the original mug shape.
@@ -559,7 +623,7 @@ concept, and its implications.</p>
 that form the mug (see figure below). Keep in mind that these data points are
 in a <span class="math inline">\(p\)</span>-dimensional space, and the cloud will have its centroid <span class="math inline">\(\mathbf{g}\)</span>
 (i.e. average individual).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
 <img src="images/pca/pca-scalar-projection0.svg" alt="Set of individuals in p-dim space." width="55%" />
 <p class="caption">
 Figure 4.4: Set of individuals in p-dim space.
@@ -570,7 +634,7 @@ we can start by considering the simplest type of low-dimensional representations
 a one-dimensional space. This in turn can be graphically displayed as one axis.
 In the above diagram (as well as the one below) this dimension is depicted with
 the yellow line, labeled as <span class="math inline">\(dim_{\mathbf{v}}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
 <img src="images/pca/pca-scalar-projection1.svg" alt="Set of individuals in p-dim space." width="70%" />
 <p class="caption">
 Figure 4.5: Set of individuals in p-dim space.
@@ -579,7 +643,7 @@ Figure 4.5: Set of individuals in p-dim space.
 <p>We should note that we don’t really manipulate dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span>
 directly. Instead, what we manipulate is a vector <span class="math inline">\(\mathbf{v}\)</span> along this
 dimension.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
 <img src="images/pca/pca-scalar-projection2.svg" alt="Dimension spanned by vector v" width="70%" />
 <p class="caption">
 Figure 4.6: Dimension spanned by vector v
@@ -588,7 +652,7 @@ Figure 4.6: Dimension spanned by vector v
 <p>At the end of the day, we want to project the individuals onto this dimension.
 In particular, the type of projections that we are interested in are orthogonal
 projections.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
 <img src="images/pca/pca-scalar-projection3.svg" alt="Projections onto one dimension" width="70%" />
 <p class="caption">
 Figure 4.7: Projections onto one dimension
@@ -602,7 +666,7 @@ In this way, the dimension that we are looking for has to pass through the
 centroid of this cloud. Obtaining the orthogonal projection of the <span class="math inline">\(i\)</span>-th
 individual onto the dimension <span class="math inline">\(dim_{\mathbf{v}}\)</span> involves projecting
 <span class="math inline">\(\mathbf{x_i}\)</span> onto any vector <span class="math inline">\(\mathbf{v}\)</span> along this dimension.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/pca/pca-scalar-projection4.svg" alt="Projection of an individual onto one dimension" width="70%" />
 <p class="caption">
 Figure 4.8: Projection of an individual onto one dimension
@@ -623,7 +687,7 @@ comp_{\mathbf{v}} (\mathbf{x_i}) = \frac{\mathbf{x_{i}^\mathsf{T}v}}{\|\mathbf{v
 \tag{4.2}
 \]</span></p>
 <p>The following diagram displays both types of projections:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
 <img src="images/pca/pca-scalar-projection5.svg" alt="Scalar and vector projections of i-th individual onto vector v" width="70%" />
 <p class="caption">
 Figure 4.9: Scalar and vector projections of i-th individual onto vector v
@@ -640,7 +704,7 @@ obtain the coordinate of the <span class="math inline">\(i\)</span>-th individua
 photo of the mug (i.e. cloud of points). This can be translated as finding a
 subspace in which the distances between the points are most similar to those on
 the actual mug.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="images/pca/pca-projection-goal.svg" alt="Projection Goal" width="90%" />
 <p class="caption">
 Figure 4.10: Projection Goal
@@ -820,14 +884,14 @@ we want to obtain new <span class="math inline">\(k\)</span> variables
 <p>A principal component is a linear combination of the <span class="math inline">\(p\)</span> variables:
 <span class="math inline">\(\mathbf{z} = \mathbf{Xv}\)</span>. The first PC is a linear mix which we graphically
 depict like this:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="images/pca/pca-path-diag1.svg" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
 Figure 4.11: PCs as linear combinations of X-variables
 </p>
 </div>
 <p>The second PC is another linear mix:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
 <img src="images/pca/pca-path-diag2.svg" alt="PCs as linear combinations of X-variables" width="55%" />
 <p class="caption">
 Figure 4.12: PCs as linear combinations of X-variables
@@ -852,7 +916,7 @@ Figure 4.12: PCs as linear combinations of X-variables
 <span class="math inline">\(\mathbf{V}\)</span> is a <span class="math inline">\(p \times k\)</span> matrix of weights, also known as directional
 vectors of the principal axes. The following figure shows a graphical
 representation of a PCA problem in diagram notation:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
 <img src="images/pca/pca-path-diag4.svg" alt="PCs as linear combinations of X-variables" width="70%" />
 <p class="caption">
 Figure 4.13: PCs as linear combinations of X-variables
