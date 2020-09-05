@@ -51,70 +51,6 @@
 
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -221,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -608,7 +544,7 @@ experience, 2PTS, 3PTS) are the <strong>inputs</strong> denoted as <span class="
 \tag{8.1}
 \]</span></p>
 <p>which is a function mapping from the inputs’ space <span class="math inline">\(\mathcal{X}\)</span> to the output
-space <span class="math inline">\(\mathcal{y}\)</span>). Keep in mind that this function is an <em>ideal</em>, and remains
+space <span class="math inline">\(\mathcal{y}\)</span>. Keep in mind that this function is an <em>ideal</em>, and remains
 unknown throughout our computations. Here’s a metaphor that we like to use.
 Pretend that the target function is some sort of mythical creature, like a
 unicorn (or your preferred creature). We are trying to find this elusive guy.</p>
@@ -632,7 +568,7 @@ models, also known as a <em>hypothesis set</em>,
 <span class="math inline">\(h^*_m\)</span> will be the one used as our <em>final</em> model <span class="math inline">\(\widehat{f}\)</span>.</p>
 <p>We can sketch these basic ideas in a sort of mental map; we will refer to the
 following picture as the “diagram for supervised learning”.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-63"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
 <img src="images/theory/learning-diag0.svg" alt="Supervised Learning Diagram (ver 1)" width="85%" />
 <p class="caption">
 Figure 8.1: Supervised Learning Diagram (ver 1)
@@ -685,10 +621,13 @@ On the other hand, we can also compute <span class="math inline">\(\hat{y}_0 = \
 <div id="two-types-of-data" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Two Types of Data</h3>
 <p>The two distinct types of predictions involve two slightly different kinds of
-data. The data points <span class="math inline">\(x_i\)</span> that we use to fit a model is what we call training
-or learning data. The data points <span class="math inline">\(x_0\)</span> that we use to assess the performance
-of a model are points NOT supposed to be part of the training set.</p>
-<p>This implies that, at least in theory, we need two kinds of data sets:</p>
+data. The data points <span class="math inline">\(x_i\)</span> that we use to fit a model is what most authors
+call learning data. The data points <span class="math inline">\(x_0\)</span> that we use to assess the performance
+of a model are points NOT supposed to be part of the learning set. In this
+book we are going to give special names to these data points. We will use the
+name <em>In-sample data</em> to refer to the learning data, and <em>Out-of-sample data</em>
+to refer to those data points not used to learn a model.</p>
+<p>To summarize, we have at least in theory, two kinds of data sets:</p>
 <ul>
 <li><p><strong>In-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{in}\)</span>, used to fit a model</p></li>
 <li><p><strong>Out-of-sample data</strong>, denoted <span class="math inline">\(\mathcal{D}_{out}\)</span>, used to measure the
@@ -697,16 +636,17 @@ predictive quality of a model</p></li>
 </div>
 <div id="two-types-of-predictions" class="section level3">
 <h3><span class="header-section-number">8.2.2</span> Two Types of Predictions</h3>
-<p>Given the two kinds of data points, we have two types of predictions:</p>
+<p>Given the two kinds of data points, we have two corresponding types of
+predictions:</p>
 <ol style="list-style-type: decimal">
 <li><p>predictions <span class="math inline">\(\hat{y}_i\)</span> of observed/seen values <span class="math inline">\(x_i\)</span></p></li>
 <li><p>predicitons <span class="math inline">\(\hat{y}_0\)</span> of unobserved/unseed values <span class="math inline">\(x_0\)</span></p></li>
 </ol>
 <p>Each type of prediction is associated with a certain behavioral feature of a
 model. The predictions of observed data, <span class="math inline">\(\hat{y}_i\)</span>, have to do with the
-memorizing aspect (apparent error, resubstitution error). The predictions of
-unobserved data, <span class="math inline">\(\hat{y}_0\)</span>, have to do with the generalization aspect
-(generalization error, prediction error).</p>
+memorizing aspect (i.e. apparent error, resubstitution error). The predictions
+of unobserved data, <span class="math inline">\(\hat{y}_0\)</span>, have to do with the generalization aspect
+(i.e. generalization error, prediction error).</p>
 <p>Both kinds of predictions are important, and each of them is interesting in
 its own right. However, from the supervised learning standpoint, it is the
 second type of predictions that we are ultimately interested in. That is,
@@ -775,8 +715,8 @@ based on the type of data that is used to assess the individual errors:</p>
 <li><p><strong>In-sample Error</strong>, denoted <span class="math inline">\(E_{in}\)</span></p></li>
 <li><p><strong>Out-of-sample Error</strong>, denoted <span class="math inline">\(E_{out}\)</span></p></li>
 </ul>
-<p>The in-sample error is the average of pointwise errors from data points of the
-in-sample data <span class="math inline">\(\mathcal{D}_{in}\)</span>:</p>
+<p>The in-sample error is typically defined as the average of pointwise errors
+from data points of the in-sample data <span class="math inline">\(\mathcal{D}_{in}\)</span>:</p>
 <p><span class="math display" id="eq:401-7">\[
 E_{in} (\widehat{f}, f) = \frac{1}{n} \sum_{i} err_i
 \tag{8.7}
@@ -796,31 +736,32 @@ be formally known as <strong>cost functions</strong> or <strong>risks</strong>.<
 <p>Let’s update our supervised learning diagram to include error measures (see
 figure below). We add a new box (in blue) involving an overall error measure
 as well as some pointwise error function.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-64"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
 <img src="images/theory/learning-diag1.svg" alt="Supervised Learning Diagram (ver 2)" width="85%" />
 <p class="caption">
 Figure 8.2: Supervised Learning Diagram (ver 2)
 </p>
 </div>
 <p>Notice the connections of the error elements to both the learning algortihm
-<span class="math inline">\(\mathcal{A}\)</span>, and the final model <span class="math inline">\(\hat{f}\)</span>. Why is this? As we will learn in
+<span class="math inline">\(\mathcal{A}\)</span>, and the final model <span class="math inline">\(\widehat{f}\)</span>. Why is this? As we will learn in
 the upcoming chapters, learning algorithms use—implicitly or explicitly—a
 pointwise error function <span class="math inline">\(err()\)</span>. In turn, in order to determine which candidate
 model <span class="math inline">\(h()\)</span> is the best approximation to the target model <span class="math inline">\(f()\)</span>, we need to
 use an overall measure of error <span class="math inline">\(E()\)</span>.</p>
 </div>
-<div id="auxiliary-technicality" class="section level3">
-<h3><span class="header-section-number">8.3.3</span> Auxiliary Technicality</h3>
-<p>We need to assume some probability distribution <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>. That is,
-we assume our vectors <span class="math inline">\(\mathbf{x_1}, \dots, \mathbf{x_n}\)</span> are independent
-identically distributed (i.i.d.) samples from this distribution <span class="math inline">\(P\)</span>.
-(Exactly what distribution you pick - normal, chi-squared, <span class="math inline">\(t\)</span>, etc. - is, for the moment, irrelevant).</p>
+<div id="probability-as-an-auxiliary-technicality" class="section level3">
+<h3><span class="header-section-number">8.3.3</span> Probability as an Auxiliary Technicality</h3>
+<p>For theoretical reasons, we need to assume some probability distribution over
+the input space: <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>. That is, we assume our vectors
+<span class="math inline">\(\mathbf{x_1}, \dots, \mathbf{x_n}\)</span> are independent identically distributed
+(i.i.d.) samples from this distribution <span class="math inline">\(P\)</span>. (Exactly what distribution you
+pick—normal, chi-squared, <span class="math inline">\(t\)</span>, etc.—is, for the moment, irrelevant).</p>
 <p>Recall that out-of-sample data is highly theoretical; we will never be able to
-obtain it in its entirety. The best we can do is obtain a subset of the
-out-of-sample data (the test data), and estimate the rest of the data.
-Our imposition of a distributional structure on <span class="math inline">\(\mathcal{X}\)</span> enables us to link the
-in-sample error with the out-of-sample data.</p>
-<p>Recall that our ultimate goal is to get a good function <span class="math inline">\(\widehat{f} \approx f\)</span>.
+obtain it in its entirety. The best we can do is to obtain a subset of the
+out-of-sample data (called the test data). Our imposition of a distributional
+structure on <span class="math inline">\(\mathcal{X}\)</span> enables us to link the in-sample error with the
+out-of-sample data.</p>
+<p>Our ultimate goal is to get a good function <span class="math inline">\(\widehat{f} \approx f\)</span>.
 What do we mean by the symbol “<span class="math inline">\(\approx\)</span>”? Technically speaking, we want
 <span class="math inline">\(E_{\mathrm{out}}(\widehat{f}) \approx 0\)</span>. If this is the case, we can safely
 say that our model has been successfully trained. However, we can never check
@@ -831,12 +772,13 @@ E_{\mathrm{out}} (\widehat{f}) \approx 0 \ \Rightarrow \begin{cases} E_{\mathrm{
 &amp; \\
 E_{\mathrm{out}}(\widehat{f}) \approx E_{\mathrm{in}}(\widehat{f}) &amp;  \text{technical/theoretical result}  \\ \end{cases}
 \]</span></p>
-<p>The first condition is easy to check. How do we check the second? We check the
-second condition by invoking our distributional assumption <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>.
+<p>The first condition is easy to check because we do have access to the in-sample
+data. How do we check the second condition? We check the second condition by
+invoking our distributional assumption <span class="math inline">\(P\)</span> on <span class="math inline">\(\mathcal{X}\)</span>.
 Using our assumption, we can cite various theorems to assert that the second
-result indeed holds true. We will later find ways to estimate
-<span class="math inline">\(E_{\mathrm{out}}(\widehat{f})\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-65"></span>
+result indeed holds true (this part is out of this book’s scope). We will later
+find ways to estimate <span class="math inline">\(E_{\mathrm{out}}(\widehat{f})\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
 <img src="images/theory/learning-diag2.svg" alt="Supervised Learning Diagram (ver 3)" width="85%" />
 <p class="caption">
 Figure 8.3: Supervised Learning Diagram (ver 3)
@@ -846,10 +788,10 @@ Figure 8.3: Supervised Learning Diagram (ver 3)
 </div>
 <div id="noisy-targets" class="section level2">
 <h2><span class="header-section-number">8.4</span> Noisy Targets</h2>
-<p>In practice, our function won’t necessarily be a nice (or smooth) function.
-Rather, there will be some <strong>noise</strong>. Hence, instead of saying <span class="math inline">\(y = f(x)\)</span> where
-<span class="math inline">\(f : \mathcal{X} \to \mathcal{Y}\)</span>, a better statement might be something
-like <span class="math inline">\(y = f(x) + \varepsilon\)</span>. But even this notation has some flaws;
+<p>In practice, the target function won’t necessarily be a nice (or smooth)
+function. Rather, there will be some <strong>noise</strong>. Hence, instead of saying
+<span class="math inline">\(y = f(x)\)</span> where <span class="math inline">\(f : \mathcal{X} \to \mathcal{Y}\)</span>, a better statement might be
+something like <span class="math inline">\(y = f(x) + \varepsilon\)</span>. But even this notation has some flaws;
 for example, we could have multiple inputs mapping to the same output
 (which cannot happen if <span class="math inline">\(f\)</span> is a proper “function”). That is, we may have two
 individuals with the exact same inputs <span class="math inline">\(\mathbf{x_A} = \mathbf{x_B}\)</span> but with
@@ -863,7 +805,7 @@ P(\mathbf{x}, y) = P(\mathbf{x})  P(y \mid \mathbf{x})
 \]</span></p>
 <p>Here’s the updated version of the supervised learning diagram with a modified
 orange cloud containing the unknown target distribution, and the noisy function.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-66"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="images/theory/learning-diag3.svg" alt="Supervised Learning Diagram (ver 4)" width="85%" />
 <p class="caption">
 Figure 8.4: Supervised Learning Diagram (ver 4)

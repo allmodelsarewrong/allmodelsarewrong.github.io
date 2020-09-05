@@ -51,70 +51,6 @@
 
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -221,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -555,25 +491,26 @@ depicted in the figure below. We know that there are more elements in the
 full-fledged diagram, but we want to reduce the number of displayed elements
 in order to focus on three main stages that are present in all supervised
 learning contexts.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-92"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
 <img src="images/validation/learning-diag-simplified1.svg" alt="Simplified Supervised Learning Diagram" width="85%" />
 <p class="caption">
 Figure 12.1: Simplified Supervised Learning Diagram
 </p>
 </div>
-<p>In every learning situation, there is a handful of tasks we need to carry out.
-First, we need to fit several models, typically this involves working with
-different classes of hypothesis. For example, we can consider four types of
+<p>In every learning situation, there is a handful of tasks we need to carry out.</p>
+<p><strong>1)</strong> First, we need to fit several models, typically this involves working
+with different classes of hypothesis. For example, we can consider four types of
 regression methods: principal components regression (<span class="math inline">\(\mathcal{H_1}\)</span>), partial
 least squares regression (<span class="math inline">\(\mathcal{H_2}\)</span>), ridge regression (<span class="math inline">\(\mathcal{H_3}\)</span>),
 and lasso (<span class="math inline">\(\mathcal{H_4}\)</span>). All of these types of regression models have
 tuning parameters that cannot be derived analytically from the data, but have
 to be determined through trial-error steps.</p>
-<p>For each hypothesis family, we need to find the optimal tuning parameter,
+<p><strong>2)</strong> For each hypothesis family, we need to find the optimal tuning parameter,
 which involves choosing a finalist model: the best principal components
 regression, the best partial least regression, etc. Then, we need to select the
-best model among the finalist models. This will be <em>the</em> final model <span class="math inline">\(\widehat{f}\)</span>
-to be delivered. And finally, we need to measure the predicting performance of
+best model among the finalist models. This will be <em>the</em> final model
+<span class="math inline">\(\widehat{f}\)</span> to be delivered.</p>
+<p><strong>3)</strong> Finally, we need to measure the predicting performance of
 the final model: measure how the model will behave with out-of-sample points.</p>
 <p>We can formalize these tasks in three major phases encountered in every
 supervised learning system: 1) model training, 2) model selection, and
@@ -601,7 +538,7 @@ are taking a peek inside the learning algorithm <span class="math inline">\(\mat
 where the model training, the pre-selection, and the final-selection tasks occur.
 In turn, the model assessment part has to do with estimating the out-of-sample
 performance of the final model.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
 <img src="images/validation/learning-diag-simplified2.svg" alt="Schematic of Learning Phases" width="90%" />
 <p class="caption">
 Figure 12.2: Schematic of Learning Phases
@@ -612,8 +549,8 @@ the supervised learning diagram, the next thing to consider is:
 <strong>What data should we use to perform each task?</strong>
 We will answer this question in the following sections, starting backwards,
 that is: first with the model assessment phase, then the selection of the final
-model, then the pre-selection of finalist, and finally the training of candidate
-models.</p>
+model, then the pre-selection of a finalist model, and finally the training of
+candidate models.</p>
 </div>
 <div id="model-assessment" class="section level2">
 <h2><span class="header-section-number">12.2</span> Model Assessment</h2>
@@ -642,7 +579,7 @@ to quantify the in-sample error <span class="math inline">\(E_{in}\)</span>, whi
 <strong>resubstitution power</strong> of the model <span class="math inline">\(h\)</span> (i.e. how well the model
 fits the learning data).</p>
 <p><span class="math display" id="eq:405-1">\[
-E_{in}(h) = \frac{1}{|\mathcal{D}_{in}|} \sum_{i \in \mathcal{D}_{in}} err (h(x_i) = \hat{y}_i, y_i) \qquad \text{resubstitution error}
+E_{in}(h) = \frac{1}{|\mathcal{D}_{in}|} \sum_{i \in \mathcal{D}_{in}} err \big( h(x_i) = \hat{y}_i, y_i \big) \qquad \text{resubstitution error}
 \tag{12.1}
 \]</span></p>
 <p>The more interesting part comes with the out-of-sample data points. If we had
@@ -664,7 +601,8 @@ approximate <span class="math inline">\(E_{out}\)</span>, thus having a fair est
 of a final model <span class="math inline">\(h\)</span>. This is precisely the idea of the so-called term
 <strong>Model Assessment</strong>: How can we estimate <span class="math inline">\(E_{out}(h)\)</span> of a final model? Which
 basically reduces to: how can we find an unbiased sample
-<span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to get <span class="math inline">\(\hat{E}_{out}\)</span>?</p>
+<span class="math inline">\(\mathcal{D}_{proxy} \subset \mathcal{D}_{out}\)</span> in order to get
+<span class="math inline">\(\widehat{E}_{out}\)</span>?</p>
 <p><span class="math display" id="eq:405-3">\[
 \underbrace{\widehat{E}_{out}(h)}_{\mathcal{D}_{proxy}} \ \approx \ \underbrace{E_{out}(h)}_{\mathcal{D}_{out}}
 \tag{12.3}
@@ -691,7 +629,7 @@ the model, and</p></li>
 <li><p>another subset <span class="math inline">\(\mathcal{D}_{test}\)</span>, called the <strong>test set</strong>, to be used
 as a proxy of <span class="math inline">\(\mathcal{D}_{out}\)</span> for testing/assessment purposes.</p></li>
 </ol>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-94"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="images/validation/training-test-sets.svg" alt="Data split into training and test sets" width="60%" />
 <p class="caption">
 Figure 12.3: Data split into training and test sets
@@ -717,7 +655,7 @@ the performance of the model <span class="math inline">\(h^{-}(x)\)</span> as:</
 E_{test}(h^{-}) = \frac{1}{a} \sum_{\ell=1}^{a} err\left( h^{-}(\mathbf{x_\ell}) , y_\ell \right) ; \hspace{5mm} (\mathbf{x_\ell}, y_\ell) \in \mathcal{D}_{test}
 \tag{12.5}
 \]</span></p>
-<p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give a good estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why.</p>
+<p>As long as <span class="math inline">\(\mathcal{D}_{test}\)</span> is a representative sample of <span class="math inline">\(\mathcal{D}_{out}\)</span>, <span class="math inline">\(E_{test}\)</span> should give an unbiased estimate of <span class="math inline">\(E_{out}\)</span>. Let’s see why.</p>
 </div>
 <div id="why-does-a-test-set-work" class="section level3">
 <h3><span class="header-section-number">12.2.2</span> Why does a test set work?</h3>
@@ -785,10 +723,10 @@ Of course, <span class="math inline">\(a\)</span> is not freely selectable; the 
 training dataset will be.</p>
 <p>In any case, the important thing is that reserving some points
 <span class="math inline">\(\mathcal{D}_{test}\)</span> from a learning set <span class="math inline">\(\mathcal{D}\)</span> to use them for testing
-purposes is a very wise idea. It definitely allows us to have a war for
+purposes is a very wise idea. It definitely allows us to have a way for
 estimating the performance of a model <span class="math inline">\(h\)</span>, when applied to out-of-sample points.</p>
 <p>Again, the holdout method is simply a conceptual starting point. Also, depending
-on how you form your training and test sests, you may end up with a split that
+on how you form your training and test sets, you may end up with a split that
 may not be truly representative of the studied phenomenon. So instead of using
 just one split, some authors propose to use several splits of training-test sets
 obtained through resampling methods. We talk about this topic with more detail
@@ -859,7 +797,7 @@ set to two holdout sets.
 Namely, instead of splitting <span class="math inline">\(\mathcal{D}\)</span> into two sets (training and test),
 we split it into three sets that we will call: training <span class="math inline">\(\mathcal{D}_{train}\)</span>,
 validation <span class="math inline">\(\mathcal{D}_{val}\)</span>, and test <span class="math inline">\(\mathcal{D}_{test}\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
 <img src="images/validation/training-validation-test-sets.svg" alt="Data split into training, validation, and test sets" width="60%" />
 <p class="caption">
 Figure 12.4: Data split into training, validation, and test sets
@@ -876,7 +814,7 @@ decision.</p>
 set of finalist models. However, keep in mind that other authors may
 recommend other uses for <span class="math inline">\(\mathcal{D}_{val}\)</span>.</p>
 <p>Here’s our ideal suggestion on how to use the validation set.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
 <img src="images/validation/repeated-3way-holdout.svg" alt="Using a validation set for final-selection" width="70%" />
 <p class="caption">
 Figure 12.5: Using a validation set for final-selection
@@ -892,12 +830,12 @@ as the final model.</p>
 <p>After the best model <span class="math inline">\(h^{-}_{m}\)</span> has been selected (with the smallest <span class="math inline">\(E_{val}\)</span>),
 a model <span class="math inline">\(h_{\overset{*}m}\)</span> is fitted using <span class="math inline">\(\mathcal{D}_{train} \cap \mathcal{D}_{val}\)</span>.
 The performance of this model is assessed by using <span class="math inline">\(\mathcal{D}_{test}\)</span> to
-obtain <span class="math inline">\(E_{test}(h_{m}^{*})\)</span>. Finally, the “official” model is the model fitted
-on the entire data set <span class="math inline">\(\mathcal{D}\)</span>, but the reported performance is
-<span class="math inline">\(E^{m}_{test}\)</span>.</p>
+obtain <span class="math inline">\(E^{m}_{test} = E_{test}(h_{m}^{*})\)</span>. Finally, the “official” model is
+the model fitted on the entire data set <span class="math inline">\(\mathcal{D}\)</span>, but the reported
+performance is <span class="math inline">\(E^{m}_{test}\)</span>.</p>
 <p>One important thing to notice is that <span class="math inline">\(E^{m}_{test}\)</span> is an unbiased estimate of
 the out-of-sample performance of <span class="math inline">\(h_{\overset{*}m}\)</span>, even though the actual
-model <span class="math inline">\(h_m\)</span> that is delivered is the fitted on the entire data.</p>
+model <span class="math inline">\(h_m\)</span> that is delivered is the one fitted on the entire data.</p>
 <p>Why are we calling <span class="math inline">\(\mathcal{D}_{val}\)</span> a “validation” set, when it appears to
 be serving the same role as a “test” set? Because choosing the “best” model
 (i.e. the model with the smallest <span class="math inline">\(E_{val}\)</span>) is a <strong>learning decision</strong>.
@@ -909,10 +847,10 @@ namely, <span class="math inline">\(E_{val}^{m}\)</span> for the chosen model <s
 <p>Of course, there is still a tradeoff when working with a 3-way split, which
 is precisely the fact that we need to split our data into <em>three</em> sets. The
 larger our test and validations sets are, the more reliable the estimates of
-the out-of-sample performance will be. At the same time, however, the mode
+the out-of-sample performance will be. At the same time, however, the more
 data points for validation and testing, the smaller our training set will be.
 Which will very likely produce far from optimal finalist models, as well as
-the very final model.</p>
+a suboptimal very final model.</p>
 </div>
 </div>
 <div id="model-training" class="section level2">

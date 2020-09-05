@@ -51,70 +51,6 @@
 
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -221,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -569,7 +505,7 @@ two separate wishes that are supposed to be fulfilled simultaneously:</p>
 <p>Achieving both wishes essentially means that <span class="math inline">\(\hat{f}\)</span> is a good model.</p>
 <p>Now, before discussing how to get <span class="math inline">\(E_{out}(\hat{f}) \approx E_{in}(\hat{f})\)</span>,
 we are going to first study some aspects about <span class="math inline">\(E_{out}(\hat{f})\)</span>. More
-specifically, we are going to study the theoretical behavior of
+specifically, we are going to study the <strong>theoretical behavior</strong> of
 <span class="math inline">\(E_{out}(\hat{f})\)</span> from a regression perspective, and taking the form of
 Mean Squared Error (MSE).</p>
 </div>
@@ -582,8 +518,8 @@ f(x) = sin(\pi x)
 \]</span></p>
 <p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>, like in the following
 picture:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-76"></span>
-<img src="allmodelsarewrong_files/figure-html/unnamed-chunk-76-1.png" alt="Target function" width="70%" height="80%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="allmodelsarewrong_files/figure-html/unnamed-chunk-2-1.png" alt="Target function" width="70%" height="80%" />
 <p class="caption">
 Figure 10.1: Target function
 </p>
@@ -597,8 +533,8 @@ fit the data using one of two models <span class="math inline">\(\mathcal{H}_0\)
 <li><p><span class="math inline">\(\mathcal{H}_0\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b\)</span></p></li>
 <li><p><span class="math inline">\(\mathcal{H}_1\)</span>: Set of all lines of the form <span class="math inline">\(h(x) = b_0 + b_1 x\)</span></p></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-78"></span>
-<img src="allmodelsarewrong_files/figure-html/unnamed-chunk-78-1.png" alt="Two Learning hypothesis models" width="85%" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="allmodelsarewrong_files/figure-html/unnamed-chunk-4-1.png" alt="Two Learning hypothesis models" width="85%" />
 <p class="caption">
 Figure 10.2: Two Learning hypothesis models
 </p>
@@ -625,7 +561,7 @@ the horizontal line at the midpoint <span class="math inline">\(b = \frac{y_1 + 
 <li><p><span class="math inline">\(h_0(x) = 0.646544\)</span></p></li>
 <li><p><span class="math inline">\(h_1(x) = 0.123472 + 1.794385 \hspace{1mm} x\)</span></p></li>
 </ul>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-81-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-7-1.png" width="85%" style="display: block; margin: auto;" /></p>
 <p>As you can tell, the fitted lines are very different. As expected, <span class="math inline">\(h_0\)</span>
 is a constant line (with zero slope), while <span class="math inline">\(h_1\)</span> has a steep positive slope.
 Obviously the fitted lines depend on which two points are sampled. As you can
@@ -640,7 +576,7 @@ and fit both models <span class="math inline">\(h_0\)</span> and <span class="ma
 <p>The figures which follow show the resulting 500 fits on the same (random)
 data sets for both methods. We are also displaying the average hypotheses
 <span class="math inline">\(\bar{h}_0\)</span> and <span class="math inline">\(\bar{h}_1\)</span> (colored in red), in each case.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-85-1.png" width="85%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-11-1.png" width="85%" style="display: block; margin: auto;" /></p>
 <p>Look at the plot of <span class="math inline">\(\mathcal{H}_0\)</span> models (the constant lines). If we average
 all 500 fitted models, we get <span class="math inline">\(\bar{h}_0\)</span> which roughly corresponds to
 the horizontal line at <span class="math inline">\(y = 0\)</span> (i.e. the red horizontal line). Generally speaking,
@@ -822,9 +758,9 @@ the out-of-sample data <span class="math inline">\(\mathcal{D}_{out}\)</span>.</
 <div id="the-tradeoff" class="section level2">
 <h2><span class="header-section-number">10.5</span> The Tradeoff</h2>
 <p>We finish this chapter with a brief discussion of the so-called bias-variance
-tradeoff. Keep in mind that BV is a good <em>theoretical</em> device; i.e. we can never
-compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in which case
-we wouldn’t really need Statistical Learning in the first place!)</p>
+(BV) tradeoff. Keep in mind that BV is a good <em>theoretical</em> device; i.e. we can
+never compute it in practice (if we could, we would have access to <span class="math inline">\(f\)</span>, in
+which case we wouldn’t really need Statistical Learning in the first place!)</p>
 <div id="bias-variance-tradeoff-picture" class="section level3">
 <h3><span class="header-section-number">10.5.1</span> Bias-Variance Tradeoff Picture</h3>
 <p>Consider several classes of hypothesis, for example a class <span class="math inline">\(\mathcal{H}_1\)</span>
@@ -832,7 +768,7 @@ of cubic polynomials; a class <span class="math inline">\(\mathcal{H}_2\)</span>
 <span class="math inline">\(\mathcal{H}_3\)</span> of linear models. For visualization purposes suppose that
 we can look at the (abstract) space that contains these types of models, like
 in the diagram below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-86"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
 <img src="images/theory/hypothesis-space1.svg" alt="An abstract space of hypotheses." width="65%" />
 <p class="caption">
 Figure 10.3: An abstract space of hypotheses.
@@ -845,7 +781,7 @@ represents fits based on linear models, each circle represents some linear
 polynomial <span class="math inline">\(ax + b\)</span> with coefficients <span class="math inline">\(a, b\)</span> that change depending on the sample.
 We can slightly modify the diagram by grouping all models of the same class,
 like in the following figure.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-87"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="images/theory/hypothesis-space2.svg" alt="Space of hypotheses." width="65%" />
 <p class="caption">
 Figure 10.4: Space of hypotheses.
@@ -856,7 +792,7 @@ in each class of models (see diagram below). In this way, the dashed lines
 represent the deviations of each fitted model against their average hypothesis.
 That is, the set of all dashed lines conveys the idea of <strong>variance</strong> in each
 model class: i.e. how spread out the models within each class are.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-88"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
 <img src="images/theory/hypothesis-space3.svg" alt="Each class of hypothesis has a certain variability." width="65%" />
 <p class="caption">
 Figure 10.5: Each class of hypothesis has a certain variability.
@@ -869,7 +805,7 @@ hypothesis and the target
 function represent the <strong>bias</strong> of each class of model. In practice, of course,
 we won’t have access to either the average models (shown in solid colors;
 i.e. the solid square, triangle, and circle) or the true model (shown in gray).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-89"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
 <img src="images/theory/hypothesis-space4.svg" alt="Each class has a certain bias w.r.t. the target function." width="65%" />
 <p class="caption">
 Figure 10.6: Each class has a certain bias w.r.t. the target function.
@@ -907,9 +843,9 @@ vice-versa.</p>
 computing <span class="math inline">\(\bar{h}\)</span> requires first computing <em>every</em> model of a particular
 type (e.g. linear, quadratic, etc.).</p>
 <ul>
-<li><p>More complex/flexible models tend to have less bias, and therefore a better
-opportunity to approximate <span class="math inline">\(f(x)\)</span>. They also tend to produce small in-sample
-error: <span class="math inline">\(E_{in} \approx 0\)</span>.</p></li>
+<li><p>More complex/flexible models tend to have less bias, and therefore they have
+a better opportunity to approximate <span class="math inline">\(f(x)\)</span>. They also tend to produce small
+in-sample error: <span class="math inline">\(E_{in} \approx 0\)</span>.</p></li>
 <li><p>On the downside, more complex models tend to have higher variance. They also
 have a higher risk of producing large out-of-sample error: <span class="math inline">\(E_{out}(h) \neq 0\)</span>.
 You will also need more resources (training data, as well as computational
