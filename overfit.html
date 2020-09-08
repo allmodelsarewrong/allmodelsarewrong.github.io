@@ -182,8 +182,13 @@
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a><ul>
-<li class="chapter" data-level="11.1" data-path="overfit.html"><a href="overfit.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
-<li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a></li>
+<li class="chapter" data-level="11.1" data-path="overfit.html"><a href="overfit.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="overfit.html"><a href="overfit.html#bias-variance-reminder-and-pitfalls"><i class="fa fa-check"></i><b>11.1.1</b> Bias-Variance Reminder and Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occurs"><i class="fa fa-check"></i><b>11.2.1</b> When does overfitting occurs?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>12</b> Learning Phases</a><ul>
 <li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -473,101 +478,205 @@
             <section class="normal" id="section-">
 <div id="overfit" class="section level1">
 <h1><span class="header-section-number">11</span> Overfitting</h1>
-<p>In this chapter we discuss the notions of underfitting and overfitting.</p>
+<p>In supervised learning, one of the major risks we run when fitting a model is
+to overestimate how well it will do when we use it in the real world. This risk
+is commonly known under the name of <em>overfitting</em>, and it also has its little
+sibling <em>underfitting</em>. In this chapter we discuss these topics, or to be more
+precise:</p>
+<ul>
+<li>What is overfitting? and why is it troublesome?</li>
+<li>What causes overfitting?</li>
+<li>What can be done to prevent/mitigate overfitting?</li>
+</ul>
 <div id="introduction-1" class="section level2">
 <h2><span class="header-section-number">11.1</span> Introduction</h2>
-<p>In supervised learning, one of the major risks we run when fitting a model is
-to overestimate how well it will do when we use it. This risk has its own name:
-<strong>overfitting</strong>, and it is something that every statistical learning user
-should learn about.</p>
-<p>The phenomenon of overfitting is very similar to when we feel overconfident
+<p>The phenomenon of overfitting is very similar to when we felt overconfident
 before taking a test, and then finding out that we were not as well prepared
 for the actual test as we presumptively thought.
 Following on this metaphor of studying for a test, we are pretty sure you
 have experienced the following situations:</p>
 <ul>
-<li><p>You studied for a test, and were able to grasp the general idea for some
-topics, but lacked many of the important details.</p></li>
-<li><p>You studied for a test, focusing too much on certain topics, memorizing most
-or even all of their details, at the expense of other topics.</p></li>
-<li><p>Despite your best disposition to study for a test, you were not able to
-study properly because of major distractions, for example: you got distracted
-with all the notifications in your phone, or an emergency happened that affected
-your studying plans, or you got distracted with the noise produced by those loud
-reparations in your building.</p></li>
+<li><p><strong>Limited capacity</strong>: You studied for a test, and were able to grasp—in a
+more or less superficial way—the general idea for some topics, but lacked
+many of the important details. For instance, you read about simple linear
+regression, understanding the idea of fitting a line, but not being able to
+explain how to derive the formula of the regression line.</p></li>
+<li><p><strong>Too much focus</strong>: You studied for a test, focusing too much on certain
+topics, memorizing most or even all of their details (without necessarily
+understanding the things that you memorized), at the expense of other topics.
+For example, you memorized the derivation of the normal equations in a linear
+regression model, and you even memorized the coefficients of the linear
+regression example in the book, but at the expense of leaving out the role and
+properties of the hat matrix.</p></li>
+<li><p><strong>Distraction by “noise”</strong>: Despite your best disposition to study for a test,
+you were not able to study properly because of major distractions. For example:
+you got distracted with all the notifications in your phone, or an emergency
+happened that affected your studying plans, or you got distracted with the noise
+produced by those loud reparations taking place in your neighbor’s building.</p></li>
 </ul>
 <p>Those of us who have experienced these pitfalls, know very well that they
 typically lead to poor performance on the test, or at least they result in a
 lower than expected performance.</p>
 <p>It turns out that these issues are also shared by supervised learning systems,
-and we have special names for each of them:</p>
+and they are directly related with the ingredients of the Bias-Variance
+decomposition. So, in order to identify the three previous pitfalls, here’s a
+reminder of the BV decomposition.</p>
+<div id="bias-variance-reminder-and-pitfalls" class="section level3">
+<h3><span class="header-section-number">11.1.1</span> Bias-Variance Reminder and Pitfalls</h3>
+<p>We assume a response variable <span class="math inline">\(y = f(x) + \varepsilon\)</span>, and we seek to find a
+model <span class="math inline">\(\widehat{h}\)</span> that is a good approximation to the target model <span class="math inline">\(f\)</span>. Given
+a learning data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>,
+the expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>,
+over all possible learning sets, is expressed as:</p>
+<p><span class="math display" id="eq:404-1">\[\begin{align}
+\mathbb{E}_{\mathcal{D}} \left [ \left( h^{(\mathcal{D})}(x_0) - f(x_0) \right)^2 \right ] 
+&amp;= 
+\underbrace{\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - \bar{h}(x_0) \right)^2 \right ]}_{\text{variance}} \\
+&amp;+
+\underbrace{ \big( \ \bar{h}(x_0) - f(x_0) \big)^2 }_{\text{bias}^2} \\
+&amp;+
+\underbrace{ \sigma^2 }_{\text{noise}} \\
+&amp;= \text{var} + \text{bias}^2 + \sigma^2
+\tag{11.1}
+\end{align}\]</span></p>
+<p>where:</p>
+<p><span class="math display" id="eq:404-2">\[
+\bar{h}(x_0) = \mathbb{E}_{\mathcal{D}} \left[ h^{(\mathcal{D})}(x_0) \right] \quad \text{is the average hypothesis}
+\tag{11.2}
+\]</span></p>
+<p>In summary:</p>
 <ul>
 <li><p>Bias: how much of the target model’s behavior your class of model
 <span class="math inline">\(\bar{h}()\)</span> can approximate.</p></li>
 <li><p>Variance: how much variation the fitted model <span class="math inline">\(h()\)</span> experiments
-when exposed to new learning data.</p></li>
+when exposed to a given learning data set.</p></li>
 <li><p>Noise: random or irreducible noise <span class="math inline">\(\sigma^2\)</span> in the data.</p></li>
 </ul>
-<p>This, of course, brings us back to the bias-variance decomposition and its
-famous tradeoff:</p>
-<p><span class="math display" id="eq:404-01">\[
-\mathbb{E}_{\mathcal{D}} \left [ \left (h^{(\mathcal{D})}(x_0) - y_0 \right)^2 \right ] = \text{var} + \text{bias}^2 + \sigma^2
-\tag{11.1}
-\]</span></p>
-<p>We have two characteristic situations:</p>
+<div id="pitfalls" class="section level4 unnumbered">
+<h4>Pitfalls</h4>
+<p>Having reviewed the BV-decomposition, we can now give names to the three kind
+of pitfalls shared by supervised learning systems:</p>
 <ul>
-<li><p>Underfitting: when the model has limited learning capacity, and gets only the
-“general ideal”</p></li>
-<li><p>Overfitting: when the model shows good performance in-sample, but when applied
-to out-of-sample data, it performs poorly</p></li>
+<li><p><strong>Large Bias</strong> is the equivalent of suffering from a “limited learning
+capacity”. Models, or to be more precise <strong>class</strong> of models, that are largely biased have too little capacity to get close enough to the true model.</p></li>
+<li><p><strong>Large Variance</strong> is the equivalent of focusing too much on certain details, that may well not be that important, at the expense of other equally or more
+important details.</p></li>
+<li><p><strong>Large Noise</strong> is the equivalent of getting distracted by the noise in the
+data. This is especially serious when working with <em>bad</em> data, extremely messy,
+perhaps having many missing values, or just simple being of poor quality.</p></li>
 </ul>
-<p>We should say that Overfitting is a bit more complex. Think of overfitting as
-a phenomenon or process.</p>
+<p>At this point, it would be nice to consider a simulation example in order to
+illustrate each of the listed pitfalls, and how they are connected to the
+so-called notions of overfitting and underfitting.</p>
+</div>
+</div>
 </div>
 <div id="simulation" class="section level2">
 <h2><span class="header-section-number">11.2</span> Simulation</h2>
-<p>For illustration purposes, let’s carry out a simple simulation. To keep things
-simple, we consider a target function with some noise.</p>
+<p>Let’s carry out a simple simulation. We are going to consider a target function
+with some noise given by the following expression:</p>
 <p><span class="math display">\[
 f(x) = sin(1 + x^2) + \varepsilon
 \]</span></p>
-<p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([-1,1]\)</span>, and the noise term
-<span class="math inline">\(\varepsilon\)</span> having mean zero and constant variance <span class="math inline">\(\sigma^2 = 0.09\)</span>.</p>
-<p>The signal <span class="math inline">\(sin(1 + x^2)\)</span> is depicted in the figure below:</p>
+<p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([0,1]\)</span>, and the noise term
+<span class="math inline">\(\varepsilon \sim N(\mu=0, \sigma=0.03)\)</span>.</p>
+<p>The function of the signal, <span class="math inline">\(sin(1 + x^2)\)</span>, is depicted in the figure below.
+Keep min mind that in real life we will never have this knowledge: we won’t
+really know the true form of the target function.</p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit1-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>We randomly generate 10 in-sample points (blue circles), and 10 out-of-sample
-points (red crosses)</p>
+<p>We have a model to play with. But, what about the data? We are going to simulate
+one <em>in-sample</em> set of 10 points <span class="math inline">\((x_i, y_i)\)</span>, and one <em>out-of-sample</em> set of
+also 10 points <span class="math inline">\((x_0, y_0)\)</span>.</p>
+<pre><code>       x_in     y_in    x_out    y_out
+1    0.6364   0.9822   0.1313   0.8135
+2    0.9293   0.9124   0.1515   0.8359
+3    0.1919   0.8315   0.4444   0.9253
+4    0.5354   0.9559   0.4141   0.9360
+5    0.9091   0.9722   0.7879   1.0430
+6    0.0808   0.8342   0.4545   0.9379
+7    0.7374   1.0224   0.7980   0.9723
+8    0.4040   0.8918   0.3232   0.8815
+9    0.0101   0.8237   0.9394   0.8863
+10   0.1717   0.8584   0.6869   0.9474</code></pre>
+<p>In the figure below, the in-sample points are
+depicted as blue circles, and the out-of-sample points are depicted as red
+crosses. We should emphasize the fact that this out-of-sample set is just for
+simulation purposes. A more formal out-of-sample set should include all
+<span class="math inline">\(x\)</span>-values in the interval <span class="math inline">\([0,1]\)</span>. Likewise, we are including the curve of
+the signal just for visualization (in practice you won’t have this luxury).</p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>In this simulation analysis, we are interested in fitting several regression
+models taking the form of polynomials of various degrees. In theory, we could
+start by fitting a polynomial of degree zero, that is, a constant model. But
+we are going to skip this basic model and instead begin by fitting a linear
+model (i.e. degree 1 polynomial). Then a second degree polynomial, a third
+degree model, and so on and so forth. Having only 10 in-sample points, the
+maximum degree polynomial that can be fitted is a 9-degree polynomial.</p>
 <div id="linear-model" class="section level4 unnumbered">
 <h4>Linear Model</h4>
-<p>The first fitted model is a linear model</p>
+<p>The first fitted model is a linear model fo the form:</p>
 <p><span class="math display">\[
-h(x) = b_0 + b_1 x
+h_1(x) = b_0 + b_1 x
 \]</span></p>
+<p>The actual regression model is shown in the figure below (see blue line).</p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>With the obtained model, the corresponding in-sample error <span class="math inline">\(E_{in}\)</span> and
+out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
+<pre><code>    Ein      Eout   
+0.00147   0.00215   </code></pre>
 </div>
 <div id="quadratic-model" class="section level4 unnumbered">
 <h4>Quadratic Model</h4>
 <p>The second fitted model is a quadratic model (i.e. polynomial of degree 2)</p>
 <p><span class="math display">\[
-h(x) = b_0 + b_1 x + b_2 x^2
+h_2(x) = b_0 + b_1 x + b_2 x^2
 \]</span></p>
+<p>The following picture displays the fitted model (see blue curve).</p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit4-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>In this case, the corresponding in-sample error <span class="math inline">\(E_{in}\)</span> and
+out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
+<pre><code>    Ein      Eout   
+0.00093   0.00137   </code></pre>
 </div>
 <div id="nonic-model" class="section level4 unnumbered">
 <h4>Nonic Model</h4>
 <p>Because we have <span class="math inline">\(n = 10\)</span> data points, we can fit a polynomial up to degree 9,
 which is called a <em>nonic</em>:</p>
 <p><span class="math display">\[
-h(x) = b_0 + b_1 x + b_2 x^2 + \dots + b_8 x^8 + b_9 x^9
+h_9(x) = b_0 + b_1 x + b_2 x^2 + \dots + b_8 x^8 + b_9 x^9
 \]</span></p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit5-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The corresponding in-sample error <span class="math inline">\(E_{in}\)</span> and out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
+<pre><code>    Ein      Eout   
+0.00000   0.00231   </code></pre>
+</div>
+<div id="so-far" class="section level4 unnumbered">
+<h4>So far …</h4>
+<p>With these three models fitted so far (linear, quadratic and nonic), the one
+that best fits the in-sample data is the degree 9 polynomial which achieves
+zero in-sample error. Form this narrow perspective, it is very tempting to
+select <span class="math inline">\(h_9(x)\)</span> as our winner model.</p>
+<p><img src="allmodelsarewrong_files/figure-html/plotoverfit6-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="various-polynomials" class="section level4 unnumbered">
 <h4>Various Polynomials</h4>
-<p>We fit polynomials of various degress, from degree 1 to 9.</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit6-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>and compute both the in-sample error and the out-of-sample error:</p>
+<p>It would actually be interesting to compare all fitted polynomials, from degree
+1 to 9, and evaluate not just their in-sample performance, but also their
+out-of-sample behavior. In fact, the out-of-sample performace is what we care
+about when deploying a model to the real world.</p>
+<p>The figure below depicts all nine polynomials.
+As you can tell, the linear model does not have enough capacity. Although it
+does approximates the general positive trend between <span class="math inline">\(y\)</span> and most of the range
+of <span class="math inline">\(x\)</span>-values, its in-sample error is the largest of all.</p>
+<p>The quadratic model does a better job than the linear model, but still misses
+the sigmoidal shape of the signal. Interestingly, the polynomials of degrees 3,
+4, and 5 are able to approximate most of the overall shape of the target model.</p>
+<p>In turn, the degree-9 polynomial, while it does a terrific job of passing
+through all the in-sample points, it is too wiggly. Formally, we say that this
+model is too flexible.</p>
+<p><img src="allmodelsarewrong_files/figure-html/plotoverfit7-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>The table below shows both the in-sample error and the out-of-sample error
+for each of the nine regression models:</p>
 <pre><code>    degree       Ein      Eout
 1        1   0.00147   0.00215
 2        2   0.00093   0.00137
@@ -579,9 +688,49 @@ h(x) = b_0 + b_1 x + b_2 x^2 + \dots + b_8 x^8 + b_9 x^9
 8        8   0.00003   0.00151
 9        9   0.00000   0.00231</code></pre>
 <p>which we can display graphically</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit7-1.png" width="70%" style="display: block; margin: auto;" /></p>
-
+<p><img src="allmodelsarewrong_files/figure-html/plotoverfit8-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
+<div id="when-does-overfitting-occurs" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> When does overfitting occurs?</h3>
+<p>Simply put, overfitting happens when we fit the data more than is necessary.
+More formally, overfitting is the phenomenon when we choose the model with
+smaller <span class="math inline">\(E_{in}\)</span>, and it turns out in bigger <span class="math inline">\(E_{out}\)</span>. This implies that the
+in-sample error <span class="math inline">\(E_{in}\)</span>, in and of itself, is no longer a good indicator for
+the chosen model’s generalization power when predicting out-of-sample data.</p>
+<p>Under-fit models perform poorly on unseen data because of their little capacity.
+The fitted models are not of the right class, and they suffer from bias.
+In practice, it’s generally impossible to know the class of model for the
+target function. How can we really know that <span class="math inline">\(f(x)\)</span> is a cubic model, or that
+it is polynomial of a certain degree? However, we can get an idea of the
+complexity of the hypothesis. In general, low complexity models tend to
+be biased. The more complexity, the amount of bias decreases. How much exactly?
+That’s impossible to say.</p>
+<p>If none of the proposed hypothesized models contain the truth, they will be
+biased. Some models may have more bias, other models may have less, but they
+still will be biased. Keep in mind that the amount of bias does not depend on
+the size of the in-sample set. This means that increasing the number of
+learning points won’t give you a better chance to approximate <span class="math inline">\(f()\)</span>.</p>
+<p>The thing that does depend on the number of learning points is the variance
+of the model. As <span class="math inline">\(n\)</span> increases, large-capacity models will experience a
+reduction in variability, and their higher flexibility becomes an advantage.</p>
+<p>There is nothing remarkable about polynomials here. All of the same comments
+and remarks apply to other flexible classes of models, such as non-parametric
+regression models (e.g. kernel models), k-nearest neighbors, locally weighted
+regressions, dimension reduction techniques, penalized models, etc.</p>
+</div>
+</div>
+<div id="in-summary" class="section level2">
+<h2><span class="header-section-number">11.3</span> In Summary</h2>
+<p>We have two characteristic situations:</p>
+<ul>
+<li><p>Underfitting: when the model has limited learning capacity, and gets only the
+“general ideal”</p></li>
+<li><p>Overfitting: when the model shows good performance in-sample, but when applied
+to out-of-sample data, it performs poorly</p></li>
+</ul>
+<p>We should say that Overfitting is a bit more complex. Think of overfitting as
+a phenomenon or process.</p>
+
 </div>
 </div>
             </section>
