@@ -186,7 +186,9 @@
 <li class="chapter" data-level="11.1.1" data-path="overfit.html"><a href="overfit.html#bias-variance-reminder-and-pitfalls"><i class="fa fa-check"></i><b>11.1.1</b> Bias-Variance Reminder and Pitfalls</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occurs"><i class="fa fa-check"></i><b>11.2.1</b> When does overfitting occurs?</a></li>
+<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#underfitting-overfitting-and-okayfitting"><i class="fa fa-check"></i><b>11.2.1</b> Underfitting, Overfitting and Okayfitting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="overfit.html"><a href="overfit.html#more-learning-sets"><i class="fa fa-check"></i><b>11.2.2</b> More learning sets</a></li>
+<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occurs"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occurs?</a></li>
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
 </ul></li>
@@ -563,7 +565,7 @@ capacity”. Models, or to be more precise <strong>class</strong> of models, tha
 important details.</p></li>
 <li><p><strong>Large Noise</strong> is the equivalent of getting distracted by the noise in the
 data. This is especially serious when working with <em>bad</em> data, extremely messy,
-perhaps having many missing values, or just simple being of poor quality.</p></li>
+perhaps having many missing values, or just simply being of poor quality.</p></li>
 </ul>
 <p>At this point, it would be nice to consider a simulation example in order to
 illustrate each of the listed pitfalls, and how they are connected to the
@@ -581,9 +583,14 @@ f(x) = sin(1 + x^2) + \varepsilon
 <p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([0,1]\)</span>, and the noise term
 <span class="math inline">\(\varepsilon \sim N(\mu=0, \sigma=0.03)\)</span>.</p>
 <p>The function of the signal, <span class="math inline">\(sin(1 + x^2)\)</span>, is depicted in the figure below.
-Keep min mind that in real life we will never have this knowledge: we won’t
+Keep in mind that in real life we will never have this knowledge: we won’t
 really know the true form of the target function.</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit1-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit1"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit1-1.png" alt="Target signal function" width="70%" />
+<p class="caption">
+Figure 11.1: Target signal function
+</p>
+</div>
 <p>We have a model to play with. But, what about the data? We are going to simulate
 one <em>in-sample</em> set of 10 points <span class="math inline">\((x_i, y_i)\)</span>, and one <em>out-of-sample</em> set of
 also 10 points <span class="math inline">\((x_0, y_0)\)</span>.</p>
@@ -604,7 +611,12 @@ crosses. We should emphasize the fact that this out-of-sample set is just for
 simulation purposes. A more formal out-of-sample set should include all
 <span class="math inline">\(x\)</span>-values in the interval <span class="math inline">\([0,1]\)</span>. Likewise, we are including the curve of
 the signal just for visualization (in practice you won’t have this luxury).</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit2-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit2"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit2-1.png" alt="Target signal with 10 in-sample points, and 10 out-of-sample points" width="70%" />
+<p class="caption">
+Figure 11.2: Target signal with 10 in-sample points, and 10 out-of-sample points
+</p>
+</div>
 <p>In this simulation analysis, we are interested in fitting several regression
 models taking the form of polynomials of various degrees. In theory, we could
 start by fitting a polynomial of degree zero, that is, a constant model. But
@@ -614,12 +626,17 @@ degree model, and so on and so forth. Having only 10 in-sample points, the
 maximum degree polynomial that can be fitted is a 9-degree polynomial.</p>
 <div id="linear-model" class="section level4 unnumbered">
 <h4>Linear Model</h4>
-<p>The first fitted model is a linear model fo the form:</p>
+<p>The first fitted model is a linear model of the form:</p>
 <p><span class="math display">\[
 h_1(x) = b_0 + b_1 x
 \]</span></p>
-<p>The actual regression model is shown in the figure below (see blue line).</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit3-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The fitted regression model is shown in the figure below (see blue line).</p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit3"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit3-1.png" alt="Linear model fit on in-sample points" width="70%" />
+<p class="caption">
+Figure 11.3: Linear model fit on in-sample points
+</p>
+</div>
 <p>With the obtained model, the corresponding in-sample error <span class="math inline">\(E_{in}\)</span> and
 out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
 <pre><code>    Ein      Eout   
@@ -632,7 +649,12 @@ out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
 h_2(x) = b_0 + b_1 x + b_2 x^2
 \]</span></p>
 <p>The following picture displays the fitted model (see blue curve).</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit4-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit4"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit4-1.png" alt="Quadratic model fit on in-sample points" width="70%" />
+<p class="caption">
+Figure 11.4: Quadratic model fit on in-sample points
+</p>
+</div>
 <p>In this case, the corresponding in-sample error <span class="math inline">\(E_{in}\)</span> and
 out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
 <pre><code>    Ein      Eout   
@@ -645,7 +667,12 @@ which is called a <em>nonic</em>:</p>
 <p><span class="math display">\[
 h_9(x) = b_0 + b_1 x + b_2 x^2 + \dots + b_8 x^8 + b_9 x^9
 \]</span></p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit5-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit5"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit5-1.png" alt="Nonic model fit on in-sample points" width="70%" />
+<p class="caption">
+Figure 11.5: Nonic model fit on in-sample points
+</p>
+</div>
 <p>The corresponding in-sample error <span class="math inline">\(E_{in}\)</span> and out-of-sample error <span class="math inline">\(E_{out}\)</span> are:</p>
 <pre><code>    Ein      Eout   
 0.00000   0.00231   </code></pre>
@@ -653,29 +680,27 @@ h_9(x) = b_0 + b_1 x + b_2 x^2 + \dots + b_8 x^8 + b_9 x^9
 <div id="so-far" class="section level4 unnumbered">
 <h4>So far …</h4>
 <p>With these three models fitted so far (linear, quadratic and nonic), the one
-that best fits the in-sample data is the degree 9 polynomial which achieves
-zero in-sample error. Form this narrow perspective, it is very tempting to
-select <span class="math inline">\(h_9(x)\)</span> as our winner model.</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit6-1.png" width="90%" style="display: block; margin: auto;" /></p>
+that best fits the in-sample data is the 9-degree polynomial which achieves
+zero in-sample error. From this narrow perspective, it is very tempting to
+select <span class="math inline">\(h_9(x)\)</span> as our winner model. After all, this is the model with a
+perfect fit to the learning data. But is this a wise idea?</p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit6"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit6-1.png" alt="Linear, quadratic and nonic regression lines with in-sample error values" width="90%" />
+<p class="caption">
+Figure 11.6: Linear, quadratic and nonic regression lines with in-sample error values
+</p>
 </div>
-<div id="various-polynomials" class="section level4 unnumbered">
-<h4>Various Polynomials</h4>
-<p>It would actually be interesting to compare all fitted polynomials, from degree
-1 to 9, and evaluate not just their in-sample performance, but also their
-out-of-sample behavior. In fact, the out-of-sample performace is what we care
-about when deploying a model to the real world.</p>
-<p>The figure below depicts all nine polynomials.
-As you can tell, the linear model does not have enough capacity. Although it
-does approximates the general positive trend between <span class="math inline">\(y\)</span> and most of the range
-of <span class="math inline">\(x\)</span>-values, its in-sample error is the largest of all.</p>
-<p>The quadratic model does a better job than the linear model, but still misses
-the sigmoidal shape of the signal. Interestingly, the polynomials of degrees 3,
-4, and 5 are able to approximate most of the overall shape of the target model.</p>
-<p>In turn, the degree-9 polynomial, while it does a terrific job of passing
-through all the in-sample points, it is too wiggly. Formally, we say that this
-model is too flexible.</p>
+</div>
+<div id="underfitting-overfitting-and-okayfitting" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Underfitting, Overfitting and Okayfitting</h3>
+<p>To better unerstand the behavor of low-order versus high-order polynomials, it
+would be nice to compare all fitted polynomials from degree 1 to 9, and
+evaluate not just their in-sample performance, but also their out-of-sample
+behavior (see figure and table below). In fact, at the end of the day it is the
+out-of-sample performace that we care about when deploying a model to the real
+world.</p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit7-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>The table below shows both the in-sample error and the out-of-sample error
+<p>The following table shows both the in-sample error and the out-of-sample error
 for each of the nine regression models:</p>
 <pre><code>    degree       Ein      Eout
 1        1   0.00147   0.00215
@@ -687,32 +712,76 @@ for each of the nine regression models:</p>
 7        7   0.00004   0.00118
 8        8   0.00003   0.00151
 9        9   0.00000   0.00231</code></pre>
-<p>which we can display graphically</p>
+<p>As you can tell, the linear model does not have enough capacity. Although it
+does approximate the general positive trend between <span class="math inline">\(y\)</span> and most of the range
+of <span class="math inline">\(x\)</span>-values, its in-sample error is the largest of all. Compared to the rest
+of the models, we say that this polynomial underfits the data. This means that
+we could increase a more complex model producing lower <span class="math inline">\(E_{in}\)</span> and <span class="math inline">\(E_{out}\)</span>.</p>
+<p>The quadratic model does a slightly better job than the linear model, but still
+misses the sigmoidal shape of the signal. Compared to the more flexibile
+polynomials, we can also say that this model is underfitting.</p>
+<p>Interestingly, the polynomials of degrees 3, 4, and 5 are able to approximate
+most of the overall shape of the target model. And at least visually, we can
+tell that the cubic polynomial is the model with an “okayfit”.</p>
+<p>In turn, the degree-9 polynomial, while it does a terrific job of passing
+through all the in-sample points, it is too wiggly. Formally, we say that this
+model is too flexible.</p>
+<p>To facilitate the comparison between in-sample error versus out-of-sample error,
+we graph them as error curves along their level complexity in terms of the
+polynomial degree.</p>
 <p><img src="allmodelsarewrong_files/figure-html/plotoverfit8-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>As you might suspect, selecting the 9-order polynomial out of all nine models
+because it is the one that has perfect in-sample prediction is not the best
+decision. Compared to the rest of the models, we say that the 9-order regression
+model overfits the data. And so do the 8-order and 7-order polynomial to a
+lesser extent. Overfitting means that an attractively small <span class="math inline">\(E_{in}\)</span> value is
+no longer a good indicator of a model’s out-of-sample performance.</p>
+</div>
+<div id="more-learning-sets" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> More learning sets</h3>
+<p>Having the “view of the gods”, we can easily see how
+wiggly the 9-degree polynomial model is compared to the true signal. It is not
+hard to imagine that a different learning set of 10 points following the same target distribution, will result in completely different 9-order polynomials.
+This situation is illustrated in the following diagram, in which three new
+learning sets of size <span class="math inline">\(n = 10\)</span> have been generated, each with the fitted class
+of polynomial.</p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit9"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit9-1.png" alt="Three additional models based on three different learning sets" width="90%" />
+<p class="caption">
+Figure 11.7: Three additional models based on three different learning sets
+</p>
+</div>
+<p>Notice again the high flexibility of the high-order polynomials, namely those
+of degree 7, 8 and 9. Because each learning set contains 10 points, all the
+9-order polynomials fit them perfectly. However, they all show an extremely
+volatile behavior. In contrast, the low-order polynomials, namely the linear,
+the quadratic and the cubic models are much more stable.</p>
 </div>
 <div id="when-does-overfitting-occurs" class="section level3">
-<h3><span class="header-section-number">11.2.1</span> When does overfitting occurs?</h3>
+<h3><span class="header-section-number">11.2.3</span> When does overfitting occurs?</h3>
 <p>Simply put, overfitting happens when we fit the data more than is necessary.
 More formally, overfitting is the phenomenon when we choose the model with
 smaller <span class="math inline">\(E_{in}\)</span>, and it turns out in bigger <span class="math inline">\(E_{out}\)</span>. This implies that the
 in-sample error <span class="math inline">\(E_{in}\)</span>, in and of itself, is no longer a good indicator for
 the chosen model’s generalization power when predicting out-of-sample data.</p>
-<p>Under-fit models perform poorly on unseen data because of their little capacity.
-The fitted models are not of the right class, and they suffer from bias.
-In practice, it’s generally impossible to know the class of model for the
-target function. How can we really know that <span class="math inline">\(f(x)\)</span> is a cubic model, or that
-it is polynomial of a certain degree? However, we can get an idea of the
-complexity of the hypothesis. In general, low complexity models tend to
-be biased. The more complexity, the amount of bias decreases. How much exactly?
-That’s impossible to say.</p>
-<p>If none of the proposed hypothesized models contain the truth, they will be
-biased. Some models may have more bias, other models may have less, but they
-still will be biased. Keep in mind that the amount of bias does not depend on
-the size of the in-sample set. This means that increasing the number of
-learning points won’t give you a better chance to approximate <span class="math inline">\(f()\)</span>.</p>
+<p>What about underfitting? This occurs with models that perform poorly on unseen
+data because of their little capacity or flexibility. Under-fit models are not
+of the right class, and they suffer from large bias. In practice, of course,
+it is generally impossible to know the true class of model for the target
+function. How can we really know that <span class="math inline">\(f(x)\)</span> is a cubic model, or that
+it is polynomial of a certain degree? Well, we can’t. However, we can get an
+idea of the complexity of our hypothesis models. In general, low complexity
+models tend to be biased, and viceversa, with more complex models the amount of
+bias decreases.</p>
+<p>The important thing, al least in theory, is that if none of the proposed
+hypothesized models contain the truth, they will be biased. Keep in mind that
+the amount of bias does not depend on the size of the in-sample set. This means
+that increasing the number of learning points won’t give you a better chance to
+approximate <span class="math inline">\(f()\)</span>.</p>
 <p>The thing that does depend on the number of learning points is the variance
 of the model. As <span class="math inline">\(n\)</span> increases, large-capacity models will experience a
-reduction in variability, and their higher flexibility becomes an advantage.</p>
+reduction in variability, and their higher flexibility tends to become an
+advantage.</p>
 <p>There is nothing remarkable about polynomials here. All of the same comments
 and remarks apply to other flexible classes of models, such as non-parametric
 regression models (e.g. kernel models), k-nearest neighbors, locally weighted
