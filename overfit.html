@@ -139,7 +139,10 @@
 <li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gd-algorithm-for-linear-regression"><i class="fa fa-check"></i><b>6.4</b> GD Algorithm for Linear Regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-vector-matrix-notation"><i class="fa fa-check"></i><b>6.4.1</b> GD Algorithm in vector-matrix notation</a></li>
+<li class="chapter" data-level="6.4.2" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-pointwise-notation"><i class="fa fa-check"></i><b>6.4.2</b> GD algorithm in pointwise notation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="olsml.html"><a href="olsml.html"><i class="fa fa-check"></i><b>7</b> Regression via Maximum Likelihood</a><ul>
 <li class="chapter" data-level="7.1" data-path="olsml.html"><a href="olsml.html#linear-regression-reminder"><i class="fa fa-check"></i><b>7.1</b> Linear Regression Reminder</a><ul>
@@ -452,7 +455,7 @@
 </ul></li>
 <li class="chapter" data-level="38" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>38</b> Random Forests</a><ul>
 <li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-9"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
-<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-2"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
 <li class="chapter" data-level="38.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>38.2.1</b> Two Sources of Randomness</a></li>
 <li class="chapter" data-level="38.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>38.2.2</b> Regressions and Classification Forests</a></li>
 <li class="chapter" data-level="38.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>38.2.3</b> Key Advantage of Random Forests</a></li>
@@ -773,7 +776,7 @@ it is polynomial of a certain degree? Well, we can’t. However, we can get an
 idea of the complexity of our hypothesis models. In general, low complexity
 models tend to be biased, and viceversa, with more complex models the amount of
 bias decreases.</p>
-<p>The important thing, al least in theory, is that if none of the proposed
+<p>The important thing, at least in theory, is that if none of the proposed
 hypothesized models contain the truth, they will be biased. Keep in mind that
 the amount of bias does not depend on the size of the in-sample set. This means
 that increasing the number of learning points won’t give you a better chance to
@@ -786,40 +789,31 @@ advantage.</p>
 and remarks apply to other flexible classes of models, such as non-parametric
 regression models (e.g. kernel models), k-nearest neighbors, locally weighted
 regressions, dimension reduction techniques, penalized models, etc.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">ABC</th>
-<th align="center">DEF</th>
-<th align="center">GHI</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">Juan</td>
-<td align="center">12</td>
-<td align="center">no</td>
-</tr>
-<tr class="even">
-<td align="center">Ana</td>
-<td align="center">23</td>
-<td align="center">yes</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div id="in-summary" class="section level2">
 <h2><span class="header-section-number">11.3</span> In Summary</h2>
-<p>We have two characteristic situations:</p>
+<p>We have three characteristic situations:</p>
 <ul>
 <li><p>Underfitting: when the model has limited learning capacity, and gets only the
-“general ideal”</p></li>
+“general ideal”.</p></li>
 <li><p>Overfitting: when the model shows good performance in-sample, but when applied
-to out-of-sample data, it performs poorly</p></li>
+to out-of-sample data, it performs poorly.</p></li>
+<li><p>Okayfitting: when the model reaches the “ritgh amount” of learning capacity,
+with good performance both in-sample as well as out-of-sample.</p></li>
 </ul>
-<p>We should say that Overfitting is a bit more complex. Think of overfitting as
-a phenomenon or process.</p>
+<p>Overfitting is not just “bad generalization”, it is more complex than that.
+Think of overfitting as a phenomenon or process in which as the complexity or
+flexibility of the model increases, the in-sample error decreases while
+the out-of-sample error increases. The trick is to find the sweet spot of
+adequate complexity such that both in-sample and out-of-sample errors have an
+okay low performance, as depicted in the following diagram.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="images/theory/underfit-overfit1.svg" alt="Moving from underfitting to okayfitting to overfitting" width="85%" />
+<p class="caption">
+Figure 11.8: Moving from underfitting to okayfitting to overfitting
+</p>
+</div>
 
 </div>
 </div>
