@@ -614,8 +614,9 @@ they will be, and viceversa. What regularization pursuits is to find ways
 of controlling the behavior (i.e. the variance) of more flexible models in
 order to obtain lower generalization errors. How? By indirectly simplifying or reducing the flexibility of models in a manner that their variance goes down
 without sacrifing too much bias.</p>
-<p>Having exposed the high-intuition of regularization, let’s discuss one of the
-typical causes for having irregular behavior in linear models: multicollinearity.</p>
+<p>Having exposed the high-level intuition of regularization, let’s discuss one of
+the typical causes for having irregular behavior in linear regression models:
+multicollinearity.</p>
 </div>
 <div id="multicollinearity-issues" class="section level2">
 <h2><span class="header-section-number">14.2</span> Multicollinearity Issues</h2>
@@ -905,7 +906,7 @@ inverses of the eigenvalues of <span class="math inline">\(\mathbf{R}\)</span>.<
 <p>This formula is useful in interpreting collinearity. If we have perfect
 collinearity, some of the eigenvalues of <span class="math inline">\((\mathbf{X}^\mathsf{T} \mathbf{X})^{-1}\)</span>
 would be equal to 0. In the case of near-perfect collinearity, some eigenvalues
-will be very close to 0. That is, <span class="math inline">\(\frac{1}{\lambda_i}\)</span> will be very large.
+will be very close to 0. That is, <span class="math inline">\(\frac{1}{\lambda_l}\)</span> will be very large.
 Stated differently: if we have multicollinearity, our OLS coefficients will
 have large variance.</p>
 <p>In summary:</p>
