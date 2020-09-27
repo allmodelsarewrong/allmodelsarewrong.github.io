@@ -191,7 +191,7 @@
 <li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
 <li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#underfitting-overfitting-and-okayfitting"><i class="fa fa-check"></i><b>11.2.1</b> Underfitting, Overfitting and Okayfitting</a></li>
 <li class="chapter" data-level="11.2.2" data-path="overfit.html"><a href="overfit.html#more-learning-sets"><i class="fa fa-check"></i><b>11.2.2</b> More learning sets</a></li>
-<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occurs"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occurs?</a></li>
+<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occur"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occur?</a></li>
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
 </ul></li>
@@ -216,11 +216,12 @@
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
 <li class="chapter" data-level="14" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>14</b> Regularization Techniques</a><ul>
-<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.1</b> Multicollinearity Issues</a><ul>
-<li class="chapter" data-level="14.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.1.1</b> Toy Example</a></li>
+<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#example"><i class="fa fa-check"></i><b>14.1</b> Example</a></li>
+<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.2</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.2.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.2</b> Irregular Coefficients</a></li>
-<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.3</b> Connection to Regularization</a></li>
+<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.3</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="14.4" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.4</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>15</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="15.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
@@ -529,7 +530,7 @@ reminder of the BV decomposition.</p>
 <div id="bias-variance-reminder-and-pitfalls" class="section level3">
 <h3><span class="header-section-number">11.1.1</span> Bias-Variance Reminder and Pitfalls</h3>
 <p>We assume a response variable <span class="math inline">\(y = f(x) + \varepsilon\)</span>, and we seek to find a
-model <span class="math inline">\(\widehat{h}\)</span> that is a good approximation to the target model <span class="math inline">\(f\)</span>. Given
+model <span class="math inline">\(h(x)\)</span> that is a good approximation to the target model <span class="math inline">\(f\)</span>. Given
 a learning data set <span class="math inline">\(\mathcal{D}\)</span> of <span class="math inline">\(n\)</span> points, and a hypothesis <span class="math inline">\(h(x)\)</span>,
 the expectation of the Squared Error for a given out-of-sample point <span class="math inline">\(x_0\)</span>,
 over all possible learning sets, is expressed as:</p>
@@ -700,9 +701,14 @@ Figure 11.6: Linear, quadratic and nonic regression lines with in-sample error v
 would be nice to compare all fitted polynomials from degree 1 to 9, and
 evaluate not just their in-sample performance, but also their out-of-sample
 behavior (see figure and table below). In fact, at the end of the day it is the
-out-of-sample performace that we care about when deploying a model to the real
+out-of-sample performance that we care about when deploying a model to the real
 world.</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit7-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit7"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit7-1.png" alt="Fitting various polynomials of increasing complexity" width="90%" />
+<p class="caption">
+Figure 11.7: Fitting various polynomials of increasing complexity
+</p>
+</div>
 <p>The following table shows both the in-sample error and the out-of-sample error
 for each of the nine regression models:</p>
 <pre><code>    degree       Ein      Eout
@@ -732,7 +738,12 @@ model is too flexible.</p>
 <p>To facilitate the comparison between in-sample error versus out-of-sample error,
 we graph them as error curves along their level complexity in terms of the
 polynomial degree.</p>
-<p><img src="allmodelsarewrong_files/figure-html/plotoverfit8-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfit8"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfit8-1.png" alt="In-sample and Out-of-sample errors" width="70%" />
+<p class="caption">
+Figure 11.8: In-sample and Out-of-sample errors
+</p>
+</div>
 <p>As you might suspect, selecting the 9-order polynomial out of all nine models
 because it is the one that has perfect in-sample prediction is not the best
 decision. Compared to the rest of the models, we say that the 9-order regression
@@ -744,14 +755,15 @@ no longer a good indicator of a model’s out-of-sample performance.</p>
 <h3><span class="header-section-number">11.2.2</span> More learning sets</h3>
 <p>Having the “view of the gods”, we can easily see how
 wiggly the 9-degree polynomial model is compared to the true signal. It is not
-hard to imagine that a different learning set of 10 points following the same target distribution, will result in completely different 9-order polynomials.
+hard to imagine that a different learning set of 10 points following the same
+target distribution, will result in completely different 9-order polynomials.
 This situation is illustrated in the following diagram, in which three new
 learning sets of size <span class="math inline">\(n = 10\)</span> have been generated, each with the fitted class
 of polynomial.</p>
 <div class="figure" style="text-align: center"><span id="fig:plotoverfit9"></span>
 <img src="allmodelsarewrong_files/figure-html/plotoverfit9-1.png" alt="Three additional models based on three different learning sets" width="90%" />
 <p class="caption">
-Figure 11.7: Three additional models based on three different learning sets
+Figure 11.9: Three additional models based on three different learning sets
 </p>
 </div>
 <p>Notice again the high flexibility of the high-order polynomials, namely those
@@ -760,8 +772,8 @@ of degree 7, 8 and 9. Because each learning set contains 10 points, all the
 volatile behavior. In contrast, the low-order polynomials, namely the linear,
 the quadratic and the cubic models are much more stable.</p>
 </div>
-<div id="when-does-overfitting-occurs" class="section level3">
-<h3><span class="header-section-number">11.2.3</span> When does overfitting occurs?</h3>
+<div id="when-does-overfitting-occur" class="section level3">
+<h3><span class="header-section-number">11.2.3</span> When does overfitting occur?</h3>
 <p>Simply put, overfitting happens when we fit the data more than is necessary.
 More formally, overfitting is the phenomenon when we choose the model with
 smaller <span class="math inline">\(E_{in}\)</span>, and it turns out in bigger <span class="math inline">\(E_{out}\)</span>. This implies that the
@@ -811,7 +823,7 @@ okay low performance, as depicted in the following diagram.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
 <img src="images/theory/underfit-overfit1.svg" alt="Moving from underfitting to okayfitting to overfitting" width="85%" />
 <p class="caption">
-Figure 11.8: Moving from underfitting to okayfitting to overfitting
+Figure 11.10: Moving from underfitting to okayfitting to overfitting
 </p>
 </div>
 

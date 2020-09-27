@@ -203,7 +203,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gd-algorithm-for-linear-regression"><i class="fa fa-check"></i><b>6.4</b> GD Algorithm for Linear Regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-vector-matrix-notation"><i class="fa fa-check"></i><b>6.4.1</b> GD Algorithm in vector-matrix notation</a></li>
+<li class="chapter" data-level="6.4.2" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-pointwise-notation"><i class="fa fa-check"></i><b>6.4.2</b> GD algorithm in pointwise notation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="olsml.html"><a href="olsml.html"><i class="fa fa-check"></i><b>7</b> Regression via Maximum Likelihood</a><ul>
 <li class="chapter" data-level="7.1" data-path="olsml.html"><a href="olsml.html#linear-regression-reminder"><i class="fa fa-check"></i><b>7.1</b> Linear Regression Reminder</a><ul>
@@ -221,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -245,9 +248,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>10.5.1</b> Bias-Variance Tradeoff Picture</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a></li>
+<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a><ul>
+<li class="chapter" data-level="11.1" data-path="overfit.html"><a href="overfit.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="overfit.html"><a href="overfit.html#bias-variance-reminder-and-pitfalls"><i class="fa fa-check"></i><b>11.1.1</b> Bias-Variance Reminder and Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#underfitting-overfitting-and-okayfitting"><i class="fa fa-check"></i><b>11.2.1</b> Underfitting, Overfitting and Okayfitting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="overfit.html"><a href="overfit.html#more-learning-sets"><i class="fa fa-check"></i><b>11.2.2</b> More learning sets</a></li>
+<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occur"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occur?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>12</b> Learning Phases</a><ul>
-<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
 <li class="chapter" data-level="12.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>12.2</b> Model Assessment</a><ul>
 <li class="chapter" data-level="12.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>12.2.1</b> Holdout Test Set</a></li>
 <li class="chapter" data-level="12.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>12.2.2</b> Why does a test set work?</a></li>
@@ -267,11 +280,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
 <li class="chapter" data-level="14" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>14</b> Regularization Techniques</a><ul>
-<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.1</b> Multicollinearity Issues</a><ul>
-<li class="chapter" data-level="14.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.1.1</b> Toy Example</a></li>
+<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#example-regularity-in-models"><i class="fa fa-check"></i><b>14.1</b> Example: Regularity in Models</a></li>
+<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.2</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.2.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.2</b> Irregular Coefficients</a></li>
-<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.3</b> Connection to Regularization</a></li>
+<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.3</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="14.4" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.4</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>15</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="15.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
@@ -315,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
 <li class="chapter" data-level="19" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>19</b> Beyond Linear Regression</a><ul>
-<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 <li class="chapter" data-level="19.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>19.2</b> Expanding the Regression Horizon</a><ul>
 <li class="chapter" data-level="19.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>19.2.1</b> Linearity</a></li>
 <li class="chapter" data-level="19.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>19.2.2</b> Parametric and Nonparametric</a></li>
@@ -333,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>21.2</b> Looking at the Neighbors</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>22</b> Nearest Neighbor Estimates</a><ul>
-<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
+<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-4"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
 <li class="chapter" data-level="22.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>22.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
 <li class="chapter" data-level="22.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>22.2.1</b> Distance Measures</a></li>
 <li class="chapter" data-level="22.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>22.2.2</b> KNN Estimator</a></li>
@@ -341,7 +355,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>23</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-5"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
 <li class="chapter" data-level="23.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>23.2</b> Kernel Smoothers</a><ul>
 <li class="chapter" data-level="23.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>23.2.1</b> Kernel Functions</a></li>
 <li class="chapter" data-level="23.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>23.2.2</b> Weights from Kernels</a></li>
@@ -351,7 +365,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VIII Classification</b></span></li>
 <li class="chapter" data-level="24" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>24</b> Classification</a><ul>
-<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
+<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-6"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
 <li class="chapter" data-level="24.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>24.1.1</b> Credit Score Example</a></li>
 <li class="chapter" data-level="24.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>24.1.2</b> Toy Example</a></li>
 <li class="chapter" data-level="24.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>24.1.3</b> Two-class Problem</a></li>
@@ -460,7 +474,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
 <li class="chapter" data-level="33" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>33</b> Intro to Decision Trees</a><ul>
-<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
+<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-7"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
 <li class="chapter" data-level="33.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>33.2</b> Some Terminology</a><ul>
 <li class="chapter" data-level="33.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>33.2.1</b> Binary Trees</a></li>
 </ul></li>
@@ -499,14 +513,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="37" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>37</b> Bagging</a><ul>
-<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
+<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-8"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
 <li class="chapter" data-level="37.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>37.1.1</b> Idea of Bagging</a></li>
 </ul></li>
 <li class="chapter" data-level="37.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>37.2</b> Why Bother Bagging?</a></li>
 </ul></li>
 <li class="chapter" data-level="38" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>38</b> Random Forests</a><ul>
-<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
-<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-9"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
+<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-2"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
 <li class="chapter" data-level="38.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>38.2.1</b> Two Sources of Randomness</a></li>
 <li class="chapter" data-level="38.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>38.2.2</b> Regressions and Classification Forests</a></li>
 <li class="chapter" data-level="38.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>38.2.3</b> Key Advantage of Random Forests</a></li>
@@ -547,21 +561,70 @@ in non-linear contexts.</p>
 <p>Simply put: regularization has to do with “making things regular”.</p>
 <p>But what about <em>regularization</em> in the context of supervised learning? What are
 the “irregular” things that need to be made “regular”? In order to answer this
-question, we will first motivate the discussion by looking at the effects of
-having predictors with high multicollinearity.</p>
-<p>We will discuss two main types of approaches to achieve regularization:</p>
-<ul>
-<li><p><strong>Dimension Reduction</strong>: Principal Components Regression (PCR), Partial Least Squares regression (PLSR)</p></li>
-<li><p><strong>Penalized Methods</strong>: Ridge Regression, Lasso regression.</p></li>
-</ul>
+question, we will first motivate the discussion by looking at the simulation
+example used in chapter <a href="overfit.html#overfit">Overfitting</a>, and then we will focus on
+the effects of having predictors with high multicollinearity.</p>
+<div id="example-regularity-in-models" class="section level2">
+<h2><span class="header-section-number">14.1</span> Example: Regularity in Models</h2>
+<p>Let’s use the simulation example from chapter <a href="overfit.html#overfit">Overfitting</a>.</p>
+<p>We consider a target function with some noise given by the following expression:</p>
+<p><span class="math display">\[
+f(x) = sin(1 + x^2) + \varepsilon
+\]</span></p>
+<p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([0,1]\)</span>, and the noise term
+<span class="math inline">\(\varepsilon \sim N(\mu=0, \sigma=0.03)\)</span>.</p>
+<p>The function of the signal, <span class="math inline">\(sin(1 + x^2)\)</span>, is depicted in the figure below.
+Keep in mind that in real life we will never have this knowledge.</p>
+<div class="figure" style="text-align: center"><span id="fig:targetplot"></span>
+<img src="allmodelsarewrong_files/figure-html/targetplot-1.png" alt="Target signal function" width="60%" />
+<p class="caption">
+Figure 14.1: Target signal function
+</p>
+</div>
+<p>We randomly simulate seven <em>in-sample</em> sets each of size 10 points
+<span class="math inline">\((x_i, y_i)\)</span>; and for each set we fit several regression models using
+polynomials of various degrees from 1 to 9 (see figure below).</p>
+<div class="figure" style="text-align: center"><span id="fig:plotoverfits"></span>
+<img src="allmodelsarewrong_files/figure-html/plotoverfits-1.png" alt="Fitting various polynomials of increasing complexity" width="90%" />
+<p class="caption">
+Figure 14.2: Fitting various polynomials of increasing complexity
+</p>
+</div>
+<p>Notice again the high flexibility of the high-order polynomials, namely those
+of degree 7, 8 and 9. These polynomials show an extremely volatile behavior. In
+contrast, the low-order polynomials (e.g. degrees 1 t o 3) are much more stable.</p>
+<p>In general, we can say that the low-order polynomials are very “regular” because
+even though the data sets change for every fittted model, the obtained fits
+are fairly similar. Likewise, we can say that the mid-order polynomials of
+order 4-to-6 are somewhat “regular” with one or two data sets resulting in
+atypical fits compared to the rest. Finally, the high-order polynomials are
+very “irregular”; by this we mean that changing from one in-sample data set to
+another produces a remarkably different fit.</p>
+<p>On one hand, we know that low-complexity models behave more regularly but
+they tend to have low learning capacity. Put in more formal terms: they tend
+to have smaller variance but at the expense of exhibiting large bias.</p>
+<p>On the other hand, we also know that high-complexity models tend to have more
+learning capacity with a better opportunity to get closer to the target model.
+However, this increased capacity comes at the expense of larger variance.
+In other words, they tend to have low bias but at the expense of exhibiting a
+more irregular behavior.</p>
+<p>In summary, the notion of regularization is tightly connected to the
+bias-variance tradeoff. The larger the variance of models, the more irregular
+they will be, and viceversa. What regularization pursuits is to find ways
+of controlling the behavior (i.e. the variance) of more flexible models in
+order to obtain lower generalization errors. How? By indirectly simplifying or reducing the flexibility of models in a manner that their variance goes down
+without sacrifing too much bias.</p>
+<p>Having exposed the high-intuition of regularization, let’s discuss one of the
+typical causes for having irregular behavior in linear models: multicollinearity.</p>
+</div>
 <div id="multicollinearity-issues" class="section level2">
-<h2><span class="header-section-number">14.1</span> Multicollinearity Issues</h2>
+<h2><span class="header-section-number">14.2</span> Multicollinearity Issues</h2>
 <p>One of the issues when fitting regression models is due to multicollinearity:
 the condition that arises when two or more predictors are highly correlated.</p>
 <p>How does this affect OLS regression?</p>
 <p>When one or more predictors are linear combinations of other predictors, then
 <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is singular. This is known as <em>exact collinearity</em>.
-When this happends, there is no unique least squares estimate <span class="math inline">\(\mathbf{b}\)</span>.</p>
+When this happens, there is no unique least squares estimate <span class="math inline">\(\mathbf{b}\)</span>.</p>
 <p>A more challenging problem arises when <span class="math inline">\(\mathbf{X^\mathsf{T} X}\)</span> is close but
 not exactly singular.
 This is usually referred to as <em>near perfect collinearity</em> or, more commonly,
@@ -574,7 +637,7 @@ to imprecise (unstable) estimates <span class="math inline">\(\mathbf{b}\)</span
 <li>There are more predictors than observations <span class="math inline">\(p &gt; n\)</span></li>
 </ul>
 <div id="toy-example" class="section level3">
-<h3><span class="header-section-number">14.1.1</span> Toy Example</h3>
+<h3><span class="header-section-number">14.2.1</span> Toy Example</h3>
 <p>To illustrate the issues of dealing with multicollinearity, let’s play with
 <code>mtcars</code>, one of the built-in data sets in R.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regular.html#cb1-1"></a>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ]</span>
@@ -614,7 +677,7 @@ to imprecise (unstable) estimates <span class="math inline">\(\mathbf{b}\)</span
 <p>If we look at the circle of correlations from a principal components analysis,
 we see the following pattern: <code>hp</code>, <code>disp</code>, and <code>wt</code> are positively correlated;
 indicated by the fact the arrows are pointing in a common general direction.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-108-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Carrying out an ordinary least squares regression, that is, regressing <code>mpg</code>
 onto <code>disp</code>, <code>hp</code>, and <code>wt</code> we get the following output provided the
 linear model function <code>lm()</code>:</p>
@@ -745,7 +808,7 @@ technically singular, but have a large degree of multicollinearity.</p>
 </div>
 </div>
 <div id="irregular-coefficients" class="section level2">
-<h2><span class="header-section-number">14.2</span> Irregular Coefficients</h2>
+<h2><span class="header-section-number">14.3</span> Irregular Coefficients</h2>
 <p>Another interesting thing to look at in linear regression—via OLS—, is the
 theoretical variance-covariance matrix of the regression coefficients,
 given by:</p>
@@ -783,8 +846,8 @@ the residuals <span class="math inline">\(\mathbf{e = y - \hat{y}}\)</span></li>
 \]</span></p>
 <div id="effect-of-multicollinearity" class="section level4 unnumbered">
 <h4>Effect of Multicollinearity</h4>
-<p>Assuming standardized variables, <span class="math inline">\(\mathbf{X^\mathsf{T} X} = n \mathbf{R}\)</span>
-It can be shown that:</p>
+<p>Assuming standardized variables, <span class="math inline">\(\mathbf{X^\mathsf{T} X} = n \mathbf{R}\)</span>,
+it can be shown that:</p>
 <p><span class="math display">\[
 Var(\boldsymbol{\hat{\beta}}) = \sigma^2 \left ( \frac{\mathbf{R}^{-1}}{n} \right )
 \]</span></p>
@@ -796,8 +859,8 @@ Var(\hat{\beta}_j) = \frac{\sigma^2}{n} [\mathbf{R}^{-1}]_{jj}
 <p><span class="math display">\[
 [\mathbf{R}^{-1}]_{jj} = \frac{1}{1 - R_{j}^{2}}
 \]</span></p>
-<p>is known as the <strong>Variance Inflation Factor</strong> or VIF. If <span class="math inline">\(R_{j}^{2}\)</span> is close
-to 1, then VIF will be large, and so <span class="math inline">\(Var(\hat{\beta})\)</span> will also be large.</p>
+<p>which is known as the <strong>Variance Inflation Factor</strong> or VIF. If <span class="math inline">\(R_{j}^{2}\)</span> is
+close to 1, then VIF will be large, and so <span class="math inline">\(Var(\hat{\beta})\)</span> will also be large.</p>
 <p>If we write the eigenvalue decomposition of <span class="math inline">\(\mathbf{R}\)</span> as:</p>
 <p><span class="math display">\[
 \mathbf{R = V \boldsymbol{\Lambda} V^\mathsf{T}}
@@ -863,7 +926,7 @@ have large variance.</p>
 </div>
 </div>
 <div id="connection-to-regularization" class="section level2">
-<h2><span class="header-section-number">14.3</span> Connection to Regularization</h2>
+<h2><span class="header-section-number">14.4</span> Connection to Regularization</h2>
 <p>So how all of the previous discussion connects with regularization?
 Generally speaking, we know that <em>regularization</em> has to do with
 “making things regular.” So, if you think about it, regularization implies
@@ -883,10 +946,10 @@ involves finding ways to mitigate the effects of these irregular coefficients.</
 the issue with “irregular” coefficients. As you know, in OLS regression, we
 want to find parameters that give us a linear combination of our
 response variables.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-116"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
 <img src="images/ols/ols-path-diagram-betas1.svg" alt="Linear combination without constant term" width="40%" />
 <p class="caption">
-Figure 14.1: Linear combination without constant term
+Figure 14.3: Linear combination without constant term
 </p>
 </div>
 <p>Think of finding the parameters <span class="math inline">\(b_1, \dots, b_p\)</span> as if you go “shopping”
@@ -902,6 +965,12 @@ spend when buying parameters.</p>
 <p>In dimension reduction, there are no explicit penalties, but we still impose a
 “cost” on the regressors that are highly collinear. We reduce the number of
 parameters that we can buy.</p>
+<p>The approaches that we will study—in the next chapters—for achieving
+regularization are:</p>
+<ul>
+<li><p><strong>Dimension Reduction</strong>: Principal Components Regression (PCR), Partial Least Squares regression (PLSR)</p></li>
+<li><p><strong>Penalized Methods</strong>: Ridge Regression, Lasso regression.</p></li>
+</ul>
 
 </div>
 </div>
