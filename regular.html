@@ -864,7 +864,7 @@ Var(\hat{\beta}_j) = \frac{\sigma^2}{n} [\mathbf{R}^{-1}]_{jj}
 close to 1, then VIF will be large, and so <span class="math inline">\(Var(\hat{\beta})\)</span> will also be large.</p>
 <p>If we write the eigenvalue decomposition of <span class="math inline">\(\mathbf{R}\)</span> as:</p>
 <p><span class="math display">\[
-\mathbf{R = V \boldsymbol{\Lambda} V^\mathsf{T}}
+\mathbf{R} = n \mathbf{V \boldsymbol{\Lambda} V^\mathsf{T}}
 \]</span></p>
 <p>Let us decompose this expression further. Consider the EVD of
 <span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span>: that is, write
@@ -889,24 +889,24 @@ Substituting this into the variance assumption yields:</p>
 \end{align}\]</span></p>
 <p>Therefore, the inverse of <span class="math inline">\(\mathbf{R}\)</span> becomes:</p>
 <p><span class="math display">\[
-\mathbf{R^{-1} = V \boldsymbol{\Lambda}^{-1} V^\mathsf{T}}
+\mathbf{R}^{-1} = \frac{1}{n} \mathbf{V \boldsymbol{\Lambda}}^{-1} \mathbf{V^\mathsf{T}}
 \]</span></p>
-<p>In this way, we obtain a formula for <span class="math inline">\(V(\hat{b}_j)\)</span> involving the eigenvectors
-and eigenvalues of <span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span> (as well as <span class="math inline">\(\sigma^2\)</span>):</p>
+<p>In this way, we obtain a formula for <span class="math inline">\(V(\hat{\beta}_j)\)</span> involving the eigenvectors
+and eigenvalues of <span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span> (as well as <span class="math inline">\(\sigma^2 / n\)</span>):</p>
 <p><span class="math display">\[
-V(\hat{b}_j) = \frac{1}{n} \left ( \frac{\sigma^2}{\lambda_1} v_{1j}^2 + \frac{\sigma^2}{\lambda_2} v_{2j}^2 + \dots + \frac{\sigma^2}{\lambda_p} v_{pj}^2 \right) = \frac{\sigma^2}{n} \sum_{\ell=1}^{p} \frac{1}{\lambda_i} v_{\ell j}^2
+V(\hat{\beta}_j) = \frac{1}{n} \left ( \frac{\sigma^2}{\lambda_1} v_{1j}^2 + \frac{\sigma^2}{\lambda_2} v_{2j}^2 + \dots + \frac{\sigma^2}{\lambda_p} v_{pj}^2 \right) = \frac{\sigma^2}{n} \sum_{\ell=1}^{p} \frac{1}{\lambda_\ell} v_{\ell j}^2
 \]</span></p>
 <p>where <span class="math inline">\(v_{ij}\)</span> denotes the <span class="math inline">\(i\)</span>th eigenvalue, <span class="math inline">\(j\)</span>th position.</p>
 <p><span class="math display">\[
-Var(\hat{\beta}_j) = \left ( \frac{\sigma^2}{n} \right )  \sum_{l=1}^{p} \frac{v^{2}_{jl}}{\lambda_l}
+Var(\hat{\beta}_j) = \left ( \frac{\sigma^2}{n} \right )  \sum_{\ell=1}^{p} \frac{v^{2}_{j \ell}}{\lambda_\ell}
 \]</span></p>
 <p>The block matrix diagram above is designed to help visualize how we got these
-<span class="math inline">\(v_{ij}^2\)</span> terms. As you can tell, the variance of the estimators depends on the
-inverses of the eigenvalues of <span class="math inline">\(\mathbf{R}\)</span>.</p>
+<span class="math inline">\(v_{\ell j}^2\)</span> terms. As you can tell, the variance of the estimators depends
+on the inverses of the eigenvalues of <span class="math inline">\(\mathbf{R}\)</span>.</p>
 <p>This formula is useful in interpreting collinearity. If we have perfect
 collinearity, some of the eigenvalues of <span class="math inline">\((\mathbf{X}^\mathsf{T} \mathbf{X})^{-1}\)</span>
 would be equal to 0. In the case of near-perfect collinearity, some eigenvalues
-will be very close to 0. That is, <span class="math inline">\(\frac{1}{\lambda_l}\)</span> will be very large.
+will be very close to 0. That is, <span class="math inline">\(\frac{1}{\lambda_\ell}\)</span> will be very large.
 Stated differently: if we have multicollinearity, our OLS coefficients will
 have large variance.</p>
 <p>In summary:</p>
@@ -937,8 +937,8 @@ things that we are interested in “making regular”?</p>
 <p>Within linear regression, regularization means reducing the
 variability—and therefore the size—of the vector of predicted coefficients.
 What we have seen is that if there is multicollinearity, some of the elements
-of <span class="math inline">\(\mathbf{b}_{ols}\)</span> will have high variance. In other words,
-<span class="math inline">\(\| \mathbf{b}_{ols} \|_{\ell, p}\)</span> will be very large. When this is the case,
+of <span class="math inline">\(\mathbf{b}_{ols}\)</span> will have high variance. In other words, the norm
+<span class="math inline">\(\| \mathbf{b}_{ols} \|\)</span> will be very large. When this is the case,
 we say that the coefficients are <strong>irregular</strong>. Consequently, regularization
 involves finding ways to mitigate the effects of these irregular coefficients.</p>
 <div id="regularization-metaphor" class="section level4 unnumbered">
