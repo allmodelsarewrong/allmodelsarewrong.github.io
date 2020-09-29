@@ -568,8 +568,9 @@ the effects of having predictors with high multicollinearity.</p>
 <h2><span class="header-section-number">14.1</span> Example: Regularity in Models</h2>
 <p>Let’s use the simulation example from chapter <a href="overfit.html#overfit">Overfitting</a>.</p>
 <p>We consider a target function with some noise given by the following expression:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-1">\[
 f(x) = sin(1 + x^2) + \varepsilon
+\tag{14.1}
 \]</span></p>
 <p>with the input variable <span class="math inline">\(x\)</span> in the interval <span class="math inline">\([0,1]\)</span>, and the noise term
 <span class="math inline">\(\varepsilon \sim N(\mu=0, \sigma=0.03)\)</span>.</p>
@@ -667,8 +668,9 @@ to imprecise (i.e. unstable, irregular) estimates <span class="math inline">\(\
 <span id="cb2-10"><a href="regular.html#cb2-10"></a>X &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, hp, wt))</span></code></pre></div>
 <p>Let’s inspect the correlation matrix given by the equation below, assuming the
 data matrix of predictors <span class="math inline">\(\mathbf{X}\)</span> is mean-centered:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-2">\[
 \mathbf{R} = \frac{1}{n-1} \mathbf{X^\mathsf{T} X}
+\tag{14.2}
 \]</span></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regular.html#cb3-1"></a><span class="co"># correlation matrix</span></span>
 <span id="cb3-2"><a href="regular.html#cb3-2"></a><span class="kw">cor</span>(X)</span>
@@ -843,7 +845,7 @@ technically singular, but have a large degree of multicollinearity.</p>
 <p>Another interesting thing to look at in linear regression—via OLS—, is the
 theoretical variance-covariance matrix of the regression coefficients,
 given by:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-3">\[
 Var(\mathbf{\boldsymbol{\hat{\beta}}}) = 
 \
 \begin{bmatrix} 
@@ -852,15 +854,18 @@ Cov(\hat{\beta}_2, \hat{\beta}_1) &amp; Var(\hat{\beta}_2) &amp; \cdots &amp; Co
 \vdots &amp;  &amp; \ddots &amp; \vdots \\
 Cov(\hat{\beta}_p, \hat{\beta}_1) &amp; Cov(\hat{\beta}_p, \hat{\beta}_2) &amp; \cdots &amp; Var(\hat{\beta}_p) \\
 \end{bmatrix}
+\tag{14.3}
 \]</span></p>
 <p>Doing some algebra, the matrix <span class="math inline">\(Var(\boldsymbol{\hat{\beta}})\)</span> can be
 compactly expressed in matrix notation as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-4">\[
 Var(\boldsymbol{\hat{\beta}}) = \sigma^2 (\mathbf{X^\mathsf{T} X})^{-1}
+\tag{14.4}
 \]</span></p>
 <p>The variance of a particular coefficient <span class="math inline">\(\hat{\beta}_j\)</span> is given by:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-5">\[
 Var(\hat{\beta}_j) = \sigma^2 \left [ (\mathbf{X^\mathsf{T} X})^{-1} \right ]_{jj} 
+\tag{14.5}
 \]</span></p>
 <p>where <span class="math inline">\(\left [ (\mathbf{X^\mathsf{T} X})^{-1} \right ]_{jj}\)</span> is the <span class="math inline">\(j\)</span>-th
 diagonal element of <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)</span></p>
@@ -872,36 +877,38 @@ diagonal element of <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)
 the residuals <span class="math inline">\(\mathbf{e = y - \hat{y}}\)</span></li>
 <li>We also have the Residual Sum of Squares (RSS)</li>
 </ul>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-6">\[
 \text{RSS} = \sum_{i=1}^{n} e_{i}^{2} = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\tag{14.6}
 \]</span></p>
 <div id="effect-of-multicollinearity" class="section level4 unnumbered">
 <h4>Effect of Multicollinearity</h4>
 <p>Assuming standardized variables, <span class="math inline">\(\mathbf{X^\mathsf{T} X} = n \mathbf{R}\)</span>,
 it can be shown that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-7">\[
 Var(\boldsymbol{\hat{\beta}}) = \sigma^2 \left ( \frac{\mathbf{R}^{-1}}{n} \right )
+\tag{14.7}
 \]</span></p>
 <p>and <span class="math inline">\(Var(\hat{\beta}_j)\)</span> can then be expressed as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-8">\[
 Var(\hat{\beta}_j) = \frac{\sigma^2}{n} [\mathbf{R}^{-1}]_{jj}
+\tag{14.8}
 \]</span></p>
 <p>It turns out that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:501-9">\[
 [\mathbf{R}^{-1}]_{jj} = \frac{1}{1 - R_{j}^{2}}
+\tag{14.9}
 \]</span></p>
 <p>which is known as the <strong>Variance Inflation Factor</strong> or VIF. If <span class="math inline">\(R_{j}^{2}\)</span> is
-close to 1, then VIF will be large, and so <span class="math inline">\(Var(\hat{\beta})\)</span> will also be large.</p>
-<p>If we write the eigenvalue decomposition of <span class="math inline">\(\mathbf{R}\)</span> as:</p>
-<p><span class="math display">\[
-\mathbf{R} = n \mathbf{V \boldsymbol{\Lambda} V^\mathsf{T}}
+close to 1, then VIF will be large, and so <span class="math inline">\(Var(\hat{\beta}_j)\)</span> will also be large.</p>
+<p>Let us write the eigenvalue decomposition of <span class="math inline">\(\mathbf{R}\)</span> as:</p>
+<p><span class="math display" id="eq:501-10">\[
+\mathbf{R} = \mathbf{V \boldsymbol{\Lambda} V^\mathsf{T}}
+\tag{14.10}
 \]</span></p>
-<p>Let us decompose this expression further. Consider the EVD of
-<span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span>: that is, write
-<span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X} = \mathbf{V \Lambda} \mathbf{V}^\mathsf{T}\)</span>.
-Substituting this into the variance assumption yields:</p>
-<p><span class="math display">\[\begin{align}
-(\mathbf{X}^\mathsf{T} \mathbf{X})^{-1} &amp;= (\mathbf{V \Lambda} \mathbf{V}^\mathsf{T})^{-1} \\
+<p>And then express <span class="math inline">\(\mathbf{R}^{-1}\)</span> in terms of the above decomposition:</p>
+<p><span class="math display" id="eq:501-11">\[\begin{align}
+\mathbf{R}^{-1} &amp;= (\mathbf{V \Lambda} \mathbf{V}^\mathsf{T})^{-1} \\
 &amp;= \mathbf{V} \mathbf{\Lambda}^{-1} \mathbf{V}^\mathsf{T} \\
 &amp;= \begin{bmatrix} 
 \mid &amp; \mid &amp;  &amp; \mid \\ 
@@ -916,19 +923,18 @@ Substituting this into the variance assumption yields:</p>
 \end{pmatrix} 
 \begin{bmatrix} - \mathbf{v^\mathsf{T}_1} - \\ - \mathbf{v^\mathsf{T}_2} - \\ \vdots \\ - \mathbf{v^\mathsf{T}_p} - \\  
 \end{bmatrix}
+\tag{14.11}
 \end{align}\]</span></p>
-<p>Therefore, the inverse of <span class="math inline">\(\mathbf{R}\)</span> becomes:</p>
-<p><span class="math display">\[
-\mathbf{R}^{-1} = \frac{1}{n} \mathbf{V \boldsymbol{\Lambda}}^{-1} \mathbf{V^\mathsf{T}}
-\]</span></p>
 <p>In this way, we obtain a formula for <span class="math inline">\(V(\hat{\beta}_j)\)</span> involving the eigenvectors
-and eigenvalues of <span class="math inline">\(\mathbf{X}^\mathsf{T} \mathbf{X}\)</span> (as well as <span class="math inline">\(\sigma^2 / n\)</span>):</p>
-<p><span class="math display">\[
-V(\hat{\beta}_j) = \frac{1}{n} \left ( \frac{\sigma^2}{\lambda_1} v_{1j}^2 + \frac{\sigma^2}{\lambda_2} v_{2j}^2 + \dots + \frac{\sigma^2}{\lambda_p} v_{pj}^2 \right) = \frac{\sigma^2}{n} \sum_{\ell=1}^{p} \frac{1}{\lambda_\ell} v_{\ell j}^2
+and eigenvalues of <span class="math inline">\(\mathbf{R}\)</span> (as well as <span class="math inline">\(\sigma^2 / n\)</span>):</p>
+<p><span class="math display" id="eq:501-12">\[
+V(\hat{\beta}_j) = \frac{1}{n} \left ( \frac{\sigma^2}{\lambda_1} v_{j1}^2 + \frac{\sigma^2}{\lambda_2} v_{j2}^2 + \dots + \frac{\sigma^2}{\lambda_p} v_{jp}^2 \right) = \frac{\sigma^2}{n} \sum_{\ell=1}^{p} \frac{1}{\lambda_\ell} v_{j \ell}^2
+\tag{14.12}
 \]</span></p>
-<p>where <span class="math inline">\(v_{ij}\)</span> denotes the <span class="math inline">\(i\)</span>th eigenvalue, <span class="math inline">\(j\)</span>th position.</p>
-<p><span class="math display">\[
+<p>where <span class="math inline">\(v_{j \ell}\)</span> denotes the <span class="math inline">\(j\)</span>-th entry of the <span class="math inline">\(\ell\)</span> eigenvector.</p>
+<p><span class="math display" id="eq:501-13">\[
 Var(\hat{\beta}_j) = \left ( \frac{\sigma^2}{n} \right )  \sum_{\ell=1}^{p} \frac{v^{2}_{j \ell}}{\lambda_\ell}
+\tag{14.13}
 \]</span></p>
 <p>The block matrix diagram above is designed to help visualize how we got these
 <span class="math inline">\(v_{\ell j}^2\)</span> terms. As you can tell, the variance of the estimators depends
