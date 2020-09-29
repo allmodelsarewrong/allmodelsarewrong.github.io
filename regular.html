@@ -594,15 +594,15 @@ Figure 14.2: Fitting various polynomials of increasing complexity
 of degree 7, 8 and 9. These polynomials show an extremely volatile behavior. In
 contrast, the low-order polynomials (e.g. degrees 1 t o 3) are much more stable.</p>
 <p>In general, we can say that the low-order polynomials are very “regular” because
-even though the data sets change for every fittted model, the obtained fits
+even though the data sets change for every fitted model, the obtained fits
 are fairly similar. Likewise, we can say that the mid-order polynomials of
-order 4-to-6 are somewhat “regular” with one or two data sets resulting in
+degrees 4-to-6 are somewhat “regular” with one or two data sets resulting in
 atypical fits compared to the rest. Finally, the high-order polynomials are
 very “irregular”; by this we mean that changing from one in-sample data set to
 another produces a remarkably different fit.</p>
 <p>On one hand, we know that low-complexity models behave more regularly but
 they tend to have low learning capacity. Put in more formal terms: they tend
-to have smaller variance but at the expense of exhibiting large bias.</p>
+to have small variance but at the expense of exhibiting large bias.</p>
 <p>On the other hand, we also know that high-complexity models tend to have more
 learning capacity with a better opportunity to get closer to the target model.
 However, this increased capacity comes at the expense of larger variance.
@@ -612,11 +612,12 @@ more irregular behavior.</p>
 bias-variance tradeoff. The larger the variance of models, the more irregular
 they will be, and viceversa. What regularization pursuits is to find ways
 of controlling the behavior (i.e. the variance) of more flexible models in
-order to obtain lower generalization errors. How? By indirectly simplifying or reducing the flexibility of models in a manner that their variance goes down
+order to obtain lower generalization errors. How? By simplifying or reducing
+the flexibility of models in a manner that their variance goes down
 without sacrifing too much bias.</p>
 <p>Having exposed the high-level intuition of regularization, let’s discuss one of
 the typical causes for having irregular behavior in linear regression models:
-multicollinearity.</p>
+<strong>multicollinearity</strong>.</p>
 </div>
 <div id="multicollinearity-issues" class="section level2">
 <h2><span class="header-section-number">14.2</span> Multicollinearity Issues</h2>
@@ -630,7 +631,7 @@ When this happens, there is no unique least squares estimate <span class="math i
 not exactly singular.
 This is usually referred to as <em>near perfect collinearity</em> or, more commonly,
 as <em>multicollinearity</em>. Why is this a problem? Because multicollinearity leads
-to imprecise (unstable) estimates <span class="math inline">\(\mathbf{b}\)</span>.</p>
+to imprecise (i.e. unstable, irregular) estimates <span class="math inline">\(\mathbf{b}\)</span>.</p>
 <p>What are the typical causes of multicollinearity?</p>
 <ul>
 <li>One or more predictors are linear combinations of other predictors</li>
@@ -664,8 +665,8 @@ to imprecise (unstable) estimates <span class="math inline">\(\mathbf{b}\)</span
 <span id="cb2-8"><a href="regular.html#cb2-8"></a></span>
 <span id="cb2-9"><a href="regular.html#cb2-9"></a><span class="co"># standardized predictors</span></span>
 <span id="cb2-10"><a href="regular.html#cb2-10"></a>X &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, hp, wt))</span></code></pre></div>
-<p>Let’s inspect the correlation matrix, assuming the data matrix of predictors
-<span class="math inline">\(\mathbf{X}\)</span> is mean-centered:</p>
+<p>Let’s inspect the correlation matrix given by the equation below, assuming the
+data matrix of predictors <span class="math inline">\(\mathbf{X}\)</span> is mean-centered:</p>
 <p><span class="math display">\[
 \mathbf{R} = \frac{1}{n-1} \mathbf{X^\mathsf{T} X}
 \]</span></p>
@@ -752,59 +753,88 @@ matrix <code>X2</code>:</p>
 <span id="cb7-10"><a href="regular.html#cb7-10"></a><span class="co">#&gt; hp       1.010559   -1.101748  0.09032362  0.02220277</span></span>
 <span id="cb7-11"><a href="regular.html#cb7-11"></a><span class="co">#&gt; wt       1.993833   -2.157191  0.02220277  0.16411837</span></span></code></pre></div>
 <p>In this case, R was able to invert the matrix <span class="math inline">\(\mathbf{X_{2}^\mathsf{T} X_2}\)</span>.
-But if we compare <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)</span> against
-<span class="math inline">\((\mathbf{X_{2}^\mathsf{T} X_2})^{-1}\)</span>, we’ll see that the diagonal entry of the
-matrices associated to <code>disp</code> are very different.</p>
+How does this compare with <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)</span>?</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regular.html#cb8-1"></a><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)</span>
+<span id="cb8-2"><a href="regular.html#cb8-2"></a><span class="co">#&gt;             disp          hp          wt</span></span>
+<span id="cb8-3"><a href="regular.html#cb8-3"></a><span class="co">#&gt; disp  0.23627475 -0.08598357 -0.15316573</span></span>
+<span id="cb8-4"><a href="regular.html#cb8-4"></a><span class="co">#&gt; hp   -0.08598357  0.08827847  0.01819843</span></span>
+<span id="cb8-5"><a href="regular.html#cb8-5"></a><span class="co">#&gt; wt   -0.15316573  0.01819843  0.15627798</span></span></code></pre></div>
+<p>When we compare <span class="math inline">\((\mathbf{X^\mathsf{T} X})^{-1}\)</span> against
+<span class="math inline">\((\mathbf{X_{2}^\mathsf{T} X_2})^{-1}\)</span>, we see that the first entry in the
+diagonal of both matrices (the entry associated to <code>disp</code>) are very different.</p>
 </div>
 <div id="more-extreme-near-exact-collinearity" class="section level4 unnumbered">
 <h4>More Extreme Near-Exact Collinearity</h4>
 <p>Let’s make things even more extreme! What about increasing the amount of
 near-exact collinearity by creating a new variable <code>disp3</code>
-which is almost a perfect clone of <code>disp</code>. This time we put everything in a
-new matrix <code>X3</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="regular.html#cb8-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb8-2"><a href="regular.html#cb8-2"></a>disp3 &lt;-<span class="st"> </span>disp <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(disp), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">0.1</span>)</span>
-<span id="cb8-3"><a href="regular.html#cb8-3"></a></span>
-<span id="cb8-4"><a href="regular.html#cb8-4"></a>X3 &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, disp3, hp, wt))</span>
-<span id="cb8-5"><a href="regular.html#cb8-5"></a></span>
-<span id="cb8-6"><a href="regular.html#cb8-6"></a><span class="kw">cor</span>(disp, disp3)</span>
-<span id="cb8-7"><a href="regular.html#cb8-7"></a><span class="co">#&gt; [1] 0.9999997</span></span></code></pre></div>
+which is almost a perfect clone of <code>disp? This time we put everything in a  new matrix</code>X3`:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regular.html#cb9-1"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb9-2"><a href="regular.html#cb9-2"></a>disp3 &lt;-<span class="st"> </span>disp <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(disp), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">0.1</span>)</span>
+<span id="cb9-3"><a href="regular.html#cb9-3"></a></span>
+<span id="cb9-4"><a href="regular.html#cb9-4"></a>X3 &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, disp3, hp, wt))</span>
+<span id="cb9-5"><a href="regular.html#cb9-5"></a></span>
+<span id="cb9-6"><a href="regular.html#cb9-6"></a><span class="kw">cor</span>(disp, disp3)</span>
+<span id="cb9-7"><a href="regular.html#cb9-7"></a><span class="co">#&gt; [1] 0.9999997</span></span></code></pre></div>
 <p>And to make things more interesting, let’s create one more matrix,
 denoted <code>X31</code>, that is a copy of <code>X3</code> but contains a tiny modification,
 that in theory, would hardly have any effect:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regular.html#cb9-1"></a><span class="co"># small changes may have a &quot;butterfly&quot; effect</span></span>
-<span id="cb9-2"><a href="regular.html#cb9-2"></a>disp31 &lt;-<span class="st"> </span>disp3</span>
-<span id="cb9-3"><a href="regular.html#cb9-3"></a></span>
-<span id="cb9-4"><a href="regular.html#cb9-4"></a><span class="co"># change just one observation</span></span>
-<span id="cb9-5"><a href="regular.html#cb9-5"></a>disp31[<span class="dv">1</span>] &lt;-<span class="st"> </span>disp3[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span><span class="fl">1.01</span></span>
-<span id="cb9-6"><a href="regular.html#cb9-6"></a></span>
-<span id="cb9-7"><a href="regular.html#cb9-7"></a>X31 &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, disp31, hp, wt))</span>
-<span id="cb9-8"><a href="regular.html#cb9-8"></a></span>
-<span id="cb9-9"><a href="regular.html#cb9-9"></a><span class="kw">cor</span>(disp, disp31)</span>
-<span id="cb9-10"><a href="regular.html#cb9-10"></a><span class="co">#&gt; [1] 0.9999973</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regular.html#cb10-1"></a><span class="co"># small changes may have a &quot;butterfly&quot; effect</span></span>
+<span id="cb10-2"><a href="regular.html#cb10-2"></a>disp31 &lt;-<span class="st"> </span>disp3</span>
+<span id="cb10-3"><a href="regular.html#cb10-3"></a></span>
+<span id="cb10-4"><a href="regular.html#cb10-4"></a><span class="co"># change just one observation</span></span>
+<span id="cb10-5"><a href="regular.html#cb10-5"></a>disp31[<span class="dv">1</span>] &lt;-<span class="st"> </span>disp3[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span><span class="fl">1.01</span></span>
+<span id="cb10-6"><a href="regular.html#cb10-6"></a></span>
+<span id="cb10-7"><a href="regular.html#cb10-7"></a>X31 &lt;-<span class="st"> </span><span class="kw">scale</span>(<span class="kw">cbind</span>(disp, disp31, hp, wt))</span>
+<span id="cb10-8"><a href="regular.html#cb10-8"></a></span>
+<span id="cb10-9"><a href="regular.html#cb10-9"></a><span class="kw">cor</span>(disp, disp31)</span>
+<span id="cb10-10"><a href="regular.html#cb10-10"></a><span class="co">#&gt; [1] 0.9999973</span></span></code></pre></div>
 <p>When we calculate the inverse of both
 <span class="math inline">\(\mathbf{X}_{3}^\mathsf{T} \mathbf{X}_{3}\)</span> and
 <span class="math inline">\(\mathbf{X}_{31}^\mathsf{T} \mathbf{X}_{31}\)</span>,
 something weird happens:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regular.html#cb10-1"></a><span class="kw">solve</span>(<span class="kw">t</span>(X3) <span class="op">%*%</span><span class="st"> </span>X3)</span>
-<span id="cb10-2"><a href="regular.html#cb10-2"></a><span class="co">#&gt;               disp        disp3           hp           wt</span></span>
-<span id="cb10-3"><a href="regular.html#cb10-3"></a><span class="co">#&gt; disp   59175.36325 -59202.97211  10.91501090  21.38646548</span></span>
-<span id="cb10-4"><a href="regular.html#cb10-4"></a><span class="co">#&gt; disp3 -59202.97211  59230.83035 -11.00617104 -21.54976679</span></span>
-<span id="cb10-5"><a href="regular.html#cb10-5"></a><span class="co">#&gt; hp        10.91501    -11.00617   0.09032362   0.02220277</span></span>
-<span id="cb10-6"><a href="regular.html#cb10-6"></a><span class="co">#&gt; wt        21.38647    -21.54977   0.02220277   0.16411837</span></span>
-<span id="cb10-7"><a href="regular.html#cb10-7"></a></span>
-<span id="cb10-8"><a href="regular.html#cb10-8"></a><span class="kw">solve</span>(<span class="kw">t</span>(X31) <span class="op">%*%</span><span class="st"> </span>X31)</span>
-<span id="cb10-9"><a href="regular.html#cb10-9"></a><span class="co">#&gt;                 disp        disp31          hp          wt</span></span>
-<span id="cb10-10"><a href="regular.html#cb10-10"></a><span class="co">#&gt; disp    5941.5946101 -5942.3977358  0.30661752  0.64947961</span></span>
-<span id="cb10-11"><a href="regular.html#cb10-11"></a><span class="co">#&gt; disp31 -5942.3977358  5943.4373181 -0.39266978 -0.80278577</span></span>
-<span id="cb10-12"><a href="regular.html#cb10-12"></a><span class="co">#&gt; hp         0.3066175    -0.3926698  0.08830442  0.01825147</span></span>
-<span id="cb10-13"><a href="regular.html#cb10-13"></a><span class="co">#&gt; wt         0.6494796    -0.8027858  0.01825147  0.15638642</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regular.html#cb11-1"></a><span class="kw">solve</span>(<span class="kw">t</span>(X3) <span class="op">%*%</span><span class="st"> </span>X3)</span>
+<span id="cb11-2"><a href="regular.html#cb11-2"></a><span class="co">#&gt;               disp        disp3           hp           wt</span></span>
+<span id="cb11-3"><a href="regular.html#cb11-3"></a><span class="co">#&gt; disp   59175.36325 -59202.97211  10.91501090  21.38646548</span></span>
+<span id="cb11-4"><a href="regular.html#cb11-4"></a><span class="co">#&gt; disp3 -59202.97211  59230.83035 -11.00617104 -21.54976679</span></span>
+<span id="cb11-5"><a href="regular.html#cb11-5"></a><span class="co">#&gt; hp        10.91501    -11.00617   0.09032362   0.02220277</span></span>
+<span id="cb11-6"><a href="regular.html#cb11-6"></a><span class="co">#&gt; wt        21.38647    -21.54977   0.02220277   0.16411837</span></span>
+<span id="cb11-7"><a href="regular.html#cb11-7"></a></span>
+<span id="cb11-8"><a href="regular.html#cb11-8"></a><span class="kw">solve</span>(<span class="kw">t</span>(X31) <span class="op">%*%</span><span class="st"> </span>X31)</span>
+<span id="cb11-9"><a href="regular.html#cb11-9"></a><span class="co">#&gt;                 disp        disp31          hp          wt</span></span>
+<span id="cb11-10"><a href="regular.html#cb11-10"></a><span class="co">#&gt; disp    5941.5946101 -5942.3977358  0.30661752  0.64947961</span></span>
+<span id="cb11-11"><a href="regular.html#cb11-11"></a><span class="co">#&gt; disp31 -5942.3977358  5943.4373181 -0.39266978 -0.80278577</span></span>
+<span id="cb11-12"><a href="regular.html#cb11-12"></a><span class="co">#&gt; hp         0.3066175    -0.3926698  0.08830442  0.01825147</span></span>
+<span id="cb11-13"><a href="regular.html#cb11-13"></a><span class="co">#&gt; wt         0.6494796    -0.8027858  0.01825147  0.15638642</span></span></code></pre></div>
 <p>This is what we may call a “butterfly effect.” By modifying just one cell in
-<span class="math inline">\(\mathbf{X}_{31}\)</span> by adding a little amount of random noise, the inverses</p>
-<p><span class="math inline">\((\mathbf{X}_{3}^\mathsf{T} \mathbf{X}_{3})^{-1}\)</span> and
+<span class="math inline">\(\mathbf{X}_{31}\)</span> by adding a little amount of random noise, the inverses
+<span class="math inline">\((\mathbf{X}_{3}^\mathsf{T} \mathbf{X}_{3})^{-1}\)</span> and
 <span class="math inline">\((\mathbf{X}_{31}^\mathsf{T} \mathbf{X}_{31})^{-1}\)</span> have changed dramatically.
 Which illustrates some of the issues when dealing with matrices that are not
 technically singular, but have a large degree of multicollinearity.</p>
+<p>For comparison purposes:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="regular.html#cb12-1"></a><span class="co"># using predictors in X</span></span>
+<span id="cb12-2"><a href="regular.html#cb12-2"></a>reg &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>wt)</span>
+<span id="cb12-3"><a href="regular.html#cb12-3"></a>reg<span class="op">$</span>coefficients</span>
+<span id="cb12-4"><a href="regular.html#cb12-4"></a><span class="co">#&gt;   (Intercept)          disp            hp            wt </span></span>
+<span id="cb12-5"><a href="regular.html#cb12-5"></a><span class="co">#&gt; 37.1055052690 -0.0009370091 -0.0311565508 -3.8008905826</span></span>
+<span id="cb12-6"><a href="regular.html#cb12-6"></a></span>
+<span id="cb12-7"><a href="regular.html#cb12-7"></a><span class="co"># using predictors in X</span></span>
+<span id="cb12-8"><a href="regular.html#cb12-8"></a>reg2 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>disp2 <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>wt)</span>
+<span id="cb12-9"><a href="regular.html#cb12-9"></a>reg2<span class="op">$</span>coefficients</span>
+<span id="cb12-10"><a href="regular.html#cb12-10"></a><span class="co">#&gt; (Intercept)        disp       disp2          hp          wt </span></span>
+<span id="cb12-11"><a href="regular.html#cb12-11"></a><span class="co">#&gt; 36.59121161  0.43074188 -0.43323471 -0.02970117 -3.60121209</span></span>
+<span id="cb12-12"><a href="regular.html#cb12-12"></a></span>
+<span id="cb12-13"><a href="regular.html#cb12-13"></a><span class="co"># using predictors in X3</span></span>
+<span id="cb12-14"><a href="regular.html#cb12-14"></a>reg3 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st">  </span>disp3  <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>wt)</span>
+<span id="cb12-15"><a href="regular.html#cb12-15"></a>reg3<span class="op">$</span>coefficients</span>
+<span id="cb12-16"><a href="regular.html#cb12-16"></a><span class="co">#&gt; (Intercept)        disp       disp3          hp          wt </span></span>
+<span id="cb12-17"><a href="regular.html#cb12-17"></a><span class="co">#&gt; 36.59121161  4.32985428 -4.33234711 -0.02970117 -3.60121209</span></span>
+<span id="cb12-18"><a href="regular.html#cb12-18"></a></span>
+<span id="cb12-19"><a href="regular.html#cb12-19"></a><span class="co"># using predictors in X31</span></span>
+<span id="cb12-20"><a href="regular.html#cb12-20"></a>reg31 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">+</span><span class="st"> </span>disp31 <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>wt)</span>
+<span id="cb12-21"><a href="regular.html#cb12-21"></a>reg31<span class="op">$</span>coefficients</span>
+<span id="cb12-22"><a href="regular.html#cb12-22"></a><span class="co">#&gt; (Intercept)        disp      disp31          hp          wt </span></span>
+<span id="cb12-23"><a href="regular.html#cb12-23"></a><span class="co">#&gt; 37.19129692  2.02426582 -2.02580803 -0.03091464 -3.76623514</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -947,7 +977,7 @@ involves finding ways to mitigate the effects of these irregular coefficients.</
 the issue with “irregular” coefficients. As you know, in OLS regression, we
 want to find parameters that give us a linear combination of our
 response variables.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
 <img src="images/ols/ols-path-diagram-betas1.svg" alt="Linear combination without constant term" width="40%" />
 <p class="caption">
 Figure 14.3: Linear combination without constant term
