@@ -578,7 +578,7 @@ correlated with <code>price</code> but it has a positive regression coefficient.
 <div id="the-pcr-model" class="section level2">
 <h2><span class="header-section-number">15.2</span> The PCR Model</h2>
 <p>In PCR, like in PCA, we seek principal components
-<span class="math inline">\(\mathbf{z_1}, \dots, \mathbf{z_k}\)</span>,
+<span class="math inline">\(\mathbf{z_1}, \mathbf{z_2}, \dots, \mathbf{z_r}\)</span>,
 linear combinations of the inputs: <span class="math inline">\(\mathbf{z_k} = \mathbf{Xv_k}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
 <img src="images/pcr/pcr-path-diag-scores.svg" alt="PCs as linear combinations of input variables" width="85%" />
@@ -634,8 +634,8 @@ predictors of <span class="math inline">\(\mathbf{y}\)</span>:</p>
 <p>Without loss of generality, suppose the predictors and response are standardized.
 In Principal Components Regression we regress <span class="math inline">\(\mathbf{y}\)</span> onto the PC’s:</p>
 <p><span class="math display" id="eq:502-6">\[
-\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b \mathbf{z_2} 
-+ \dots + b_p \mathbf{z_k}
+\mathbf{\hat{y}} = b_1 \mathbf{z_1} + b_2 \mathbf{z_2} 
++ \dots + b_k \mathbf{z_k}
 \tag{15.6}
 \]</span></p>
 <p>The vector of PCR coefficients is obtained via ordinary least squares (OLS):</p>
@@ -689,12 +689,14 @@ Then, perform PCA on <span class="math inline">\(\mathbf{X}\)</span>: either an 
 SVD of <span class="math inline">\(\mathbf{X} = \mathbf{U D V^\mathsf{T}}\)</span>. In either case,
 <span class="math inline">\(\mathbf{X} = \mathbf{Z V^\mathsf{T}}\)</span>
 (the matrix of PC’s times the transpose of the matrix of loadings).</p>
-<p>From OLS, we have:</p>
+<p>From <a href="ols.html#ols">OLS</a>, we have:</p>
 <p><span class="math display" id="eq:502-9">\[
 \mathbf{\hat{y}} = \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} = \mathbf{X} \mathbf{\overset{*}{b}}
 \tag{15.9}
 \]</span></p>
-<p>Replacing <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z V^\mathsf{T}}\)</span> we get:</p>
+<p>Without loss of generality, let’s assume that <span class="math inline">\(\mathbf{X}\)</span> is of full column
+rank <span class="math inline">\(p\)</span>. Assuming that we retain all principal components (<span class="math inline">\(k = p\)</span>), then we
+can replace <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z V^\mathsf{T}}\)</span> and therefore obtain:</p>
 <p><span class="math display" id="eq:502-10">\[\begin{align*}
 \mathbf{\hat{y}} &amp;= \mathbf{X\overset{*}{b}}\\
  &amp;= \mathbf{X (X^\mathsf{T} X)^{-1} X^\mathsf{T} y} \\
@@ -738,8 +740,9 @@ regression coefficients such that:</p>
 \mathbf{\hat{y}} = \mathbf{Z_{1:k}} \mathbf{b_{1:k}^\text{pcr}}
 \tag{15.14}
 \]</span></p>
-<p>The good news is that we can still transition from <span class="math inline">\(Z\)</span>-coefficients to
-<span class="math inline">\(X\)</span>-coefficients, and viceversa.</p>
+<p>The good news is that we can still transition from <span class="math inline">\(Z\)</span>-coefficients
+<span class="math inline">\(\mathbf{b_{1:k}^\text{pcr}}\)</span> to <span class="math inline">\(X\)</span>-coefficients <span class="math inline">\(\mathbf{X \overset{*}{b_k}}\)</span>,
+and viceversa.</p>
 <p><span class="math display" id="eq:502-15">\[
 \mathbf{\hat{y}} = \mathbf{Z_{1:k}} \mathbf{b_{1:k}^\text{pcr}} = \mathbf{X V_{1:k}} \mathbf{b_{1:k}^\text{pcr}} = \mathbf{X \overset{*}{b_k}}
 \tag{15.15}
@@ -749,7 +752,8 @@ columns in <span class="math inline">\(\mathbf{X}\)</span>; the subindex <span c
 <span class="math inline">\(k\)</span>-length vector <span class="math inline">\(\mathbf{b_{1:k}^\text{pcr}}\)</span>.</p>
 <p>The following output shows the regression coefficients of all nine regression
 equations <span class="math inline">\(\mathbf{\hat{y}} = \mathbf{X \overset{*}{b_k}}\)</span> in terms of the
-original input variables for <span class="math inline">\(k=1, \dots, p\)</span>.</p>
+original input variables when we retain different number of components
+<span class="math inline">\(k=1, \dots, p\)</span>.</p>
 <pre><code>         Z_1:1 Z_1:2 Z_1:3 Z_1:4 Z_1:5 Z_1:6   Z_1:7 Z_1:8 Z_1:9
 engine    1641  2345  5487  5203  1887  1064  2168.5 -3551 -3327
 cyl       1544  2881  7312  7289  2213  1401  -295.5  3856  3766
@@ -761,7 +765,7 @@ wheel     1385 -2392 -2860 -2422 -3009  -187 -3315.7 -4832 -4938
 length    1332 -2634 -2202 -1346  -883 -2778    28.2  1260   447
 width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
 <p>For example, the values in the first column (column <code>Z_1:1</code>) are the regression
-<span class="math inline">\(X\)</span>-coefficients <span class="math inline">\(\mathbf{\overset{*}{b_1}}\)</span> when using the first PC.</p>
+<span class="math inline">\(X\)</span>-coefficients <span class="math inline">\(\mathbf{\overset{*}{b_1}}\)</span> when using just the first PC.</p>
 <p><span class="math display" id="eq:502-16">\[
 \mathbf{\hat{y}} = b_1^\text{pcr} \mathbf{z_1} = b_1^\text{pcr} \mathbf{Xv_1} = \mathbf{X} (b_1^\text{pcr} \mathbf{v_1}) = \mathbf{X} \mathbf{\overset{*}{b}_1}
 \tag{15.16}
@@ -774,8 +778,8 @@ width     1501  -738 -1731 -2811  1464  -904 -2413.8 -1978 -2142</code></pre>
 \]</span></p>
 <p>The values in the third column (<code>Z_1:3</code>) are the <span class="math inline">\(X\)</span>-coefficients
 <span class="math inline">\(\mathbf{\overset{*}{b}_{3}}\)</span> when using PC1, PC2 and PC3; and so on.</p>
-<p>Obviously, if you keep all components, you aren’t changing anything: you’re
-spending the same amount of money as you were in regular least-squares regression.</p>
+<p>Obviously, if you keep all components, you aren’t changing anything: “you’re
+spending the same amount of money as you were in regular least-squares regression”.</p>
 <pre><code>    engine        cyl         hp   city_mpg    hwy_mpg     weight      wheel 
 -3326.7904  3766.1495 17352.2185 -1213.0142  5535.9355  7032.5383 -4937.8106 
     length      width 
