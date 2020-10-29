@@ -51,70 +51,6 @@
 
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -203,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gd-algorithm-for-linear-regression"><i class="fa fa-check"></i><b>6.4</b> GD Algorithm for Linear Regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-vector-matrix-notation"><i class="fa fa-check"></i><b>6.4.1</b> GD Algorithm in vector-matrix notation</a></li>
+<li class="chapter" data-level="6.4.2" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-pointwise-notation"><i class="fa fa-check"></i><b>6.4.2</b> GD algorithm in pointwise notation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="olsml.html"><a href="olsml.html"><i class="fa fa-check"></i><b>7</b> Regression via Maximum Likelihood</a><ul>
 <li class="chapter" data-level="7.1" data-path="olsml.html"><a href="olsml.html#linear-regression-reminder"><i class="fa fa-check"></i><b>7.1</b> Linear Regression Reminder</a><ul>
@@ -221,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -245,9 +184,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>10.5.1</b> Bias-Variance Tradeoff Picture</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a></li>
+<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a><ul>
+<li class="chapter" data-level="11.1" data-path="overfit.html"><a href="overfit.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="overfit.html"><a href="overfit.html#bias-variance-reminder-and-pitfalls"><i class="fa fa-check"></i><b>11.1.1</b> Bias-Variance Reminder and Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#underfitting-overfitting-and-okayfitting"><i class="fa fa-check"></i><b>11.2.1</b> Underfitting, Overfitting and Okayfitting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="overfit.html"><a href="overfit.html#more-learning-sets"><i class="fa fa-check"></i><b>11.2.2</b> More learning sets</a></li>
+<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occur"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occur?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>12</b> Learning Phases</a><ul>
-<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
 <li class="chapter" data-level="12.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>12.2</b> Model Assessment</a><ul>
 <li class="chapter" data-level="12.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>12.2.1</b> Holdout Test Set</a></li>
 <li class="chapter" data-level="12.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>12.2.2</b> Why does a test set work?</a></li>
@@ -267,11 +216,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
 <li class="chapter" data-level="14" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>14</b> Regularization Techniques</a><ul>
-<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.1</b> Multicollinearity Issues</a><ul>
-<li class="chapter" data-level="14.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.1.1</b> Toy Example</a></li>
+<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#example-regularity-in-models"><i class="fa fa-check"></i><b>14.1</b> Example: Regularity in Models</a></li>
+<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.2</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.2.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.2</b> Irregular Coefficients</a></li>
-<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.3</b> Connection to Regularization</a></li>
+<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.3</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="14.4" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.4</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>15</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="15.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
@@ -315,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
 <li class="chapter" data-level="19" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>19</b> Beyond Linear Regression</a><ul>
-<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 <li class="chapter" data-level="19.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>19.2</b> Expanding the Regression Horizon</a><ul>
 <li class="chapter" data-level="19.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>19.2.1</b> Linearity</a></li>
 <li class="chapter" data-level="19.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>19.2.2</b> Parametric and Nonparametric</a></li>
@@ -333,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>21.2</b> Looking at the Neighbors</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>22</b> Nearest Neighbor Estimates</a><ul>
-<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
+<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-4"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
 <li class="chapter" data-level="22.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>22.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
 <li class="chapter" data-level="22.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>22.2.1</b> Distance Measures</a></li>
 <li class="chapter" data-level="22.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>22.2.2</b> KNN Estimator</a></li>
@@ -341,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>23</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-5"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
 <li class="chapter" data-level="23.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>23.2</b> Kernel Smoothers</a><ul>
 <li class="chapter" data-level="23.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>23.2.1</b> Kernel Functions</a></li>
 <li class="chapter" data-level="23.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>23.2.2</b> Weights from Kernels</a></li>
@@ -351,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VIII Classification</b></span></li>
 <li class="chapter" data-level="24" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>24</b> Classification</a><ul>
-<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
+<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-6"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
 <li class="chapter" data-level="24.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>24.1.1</b> Credit Score Example</a></li>
 <li class="chapter" data-level="24.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>24.1.2</b> Toy Example</a></li>
 <li class="chapter" data-level="24.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>24.1.3</b> Two-class Problem</a></li>
@@ -420,8 +370,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="29.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>29.2</b> Confusion Matrices</a></li>
 <li class="chapter" data-level="29.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>29.3</b> Binary Response Example</a><ul>
-<li class="chapter" data-level="29.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>29.3.1</b> Application for Checking Account</a></li>
-<li class="chapter" data-level="29.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>29.3.2</b> Application for Loan</a></li>
+<li class="chapter" data-level="29.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-a-checking-account"><i class="fa fa-check"></i><b>29.3.1</b> Application for a Checking Account</a></li>
+<li class="chapter" data-level="29.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-a-loan"><i class="fa fa-check"></i><b>29.3.2</b> Application for a Loan</a></li>
 </ul></li>
 <li class="chapter" data-level="29.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>29.4</b> Decision Rules and Errors</a></li>
 <li class="chapter" data-level="29.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>29.5</b> ROC Curves</a><ul>
@@ -460,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
 <li class="chapter" data-level="33" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>33</b> Intro to Decision Trees</a><ul>
-<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
+<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-7"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
 <li class="chapter" data-level="33.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>33.2</b> Some Terminology</a><ul>
 <li class="chapter" data-level="33.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>33.2.1</b> Binary Trees</a></li>
 </ul></li>
@@ -499,14 +449,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="37" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>37</b> Bagging</a><ul>
-<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
+<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-8"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
 <li class="chapter" data-level="37.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>37.1.1</b> Idea of Bagging</a></li>
 </ul></li>
 <li class="chapter" data-level="37.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>37.2</b> Why Bother Bagging?</a></li>
 </ul></li>
 <li class="chapter" data-level="38" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>38</b> Random Forests</a><ul>
-<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
-<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-9"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
+<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-2"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
 <li class="chapter" data-level="38.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>38.2.1</b> Two Sources of Randomness</a></li>
 <li class="chapter" data-level="38.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>38.2.2</b> Regressions and Classification Forests</a></li>
 <li class="chapter" data-level="38.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>38.2.3</b> Key Advantage of Random Forests</a></li>
@@ -541,12 +491,13 @@ question is: How do we measure the performance of a classifier?</p>
 <h2><span class="header-section-number">29.1</span> Classification Error Measures</h2>
 <p>Recall that, in supervised learning, we are interested in obtaining models that
 give accurate predictions. At the conceptual level we need some mechanism to
-quantify how different the fitted model is from the target function <span class="math inline">\(f\)</span>:</p>
+quantify how different a fitted model <span class="math inline">\(\widehat{f}\)</span> is from the target function
+<span class="math inline">\(f\)</span>:</p>
 <p><span class="math display">\[
 \widehat{f} \text{ -vs- } f
 \]</span></p>
-<p>This means that we need a function that summarizes the total amount of error,
-also referred to as the <em>Overall Measure of Error</em>:</p>
+<p>This means that we need an error function that summarizes the total amount of
+error, also referred to as the <em>Overall Measure of Error</em>:</p>
 <p><span class="math display">\[
 \text{Overall Measure of Error:} \quad E(\widehat{f},f) 
 \]</span></p>
@@ -558,7 +509,8 @@ Usually, most overall errors aggregate pointwise errors into a single measure:</
 E(\widehat{f},f) = \text{measure} \left( \sum err_i(\hat{y}_i, y_i) \right )
 \]</span></p>
 <p>In a classification setting we still have response observations <span class="math inline">\(y_i\)</span> and
-predicted values <span class="math inline">\(\hat{y}_i\)</span>; we still want a way to compare <span class="math inline">\(y_i\)</span> and <span class="math inline">\(\hat{y}_i\)</span>; and we still need an overall measure of error.</p>
+predicted values <span class="math inline">\(\hat{y}_i\)</span>; we still want a way to compare <span class="math inline">\(y_i\)</span> versus
+<span class="math inline">\(\hat{y}_i\)</span>; and we still need an overall measure of error.</p>
 <div id="errors-for-binary-response" class="section level3">
 <h3><span class="header-section-number">29.1.1</span> Errors for Binary Response</h3>
 <p>The starting point involves finding a pointwise error function. Assuming that
@@ -612,11 +564,11 @@ defined to be:</p>
 \end{cases}
 \]</span></p>
 <p>This type of error function is adequate for classification purposes, and it
-works well for the case in which we have a binary response, as wel as when we
+works well for the case in which we have a binary response, as well as when we
 have a response with more than two categories. Moreover, averaging these binary
-errors over our observations yields the <strong>misclassification error rate</strong>:</p>
+errors over our observations yields the <strong>classification error rate</strong>:</p>
 <p><span class="math display">\[
-\frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
+\text{classif. error rate:} \quad \frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
 \]</span></p>
 </div>
 <div id="error-for-categorical-response" class="section level3">
@@ -661,19 +613,19 @@ observed response values <span class="math inline">\(y_i\)</span> and the corres
 confusion matrix has the following format:</p>
 <p><img src="images/classif/confusion-matrix0.svg" width="35%" style="display: block; margin: auto;" /></p>
 <p>Any entry in this matrix contains information about how our predicted
-classifications compare with the observed classifications. For example, the
+classes compare with the observed classes. For example, the
 entry in row-1 and column-1 represents the number of observations
 that are correctly classified as being of class <span class="math inline">\(0\)</span>. In contrast, the entry in
 the row-2 and column-1 indicates the number of observations that are classified
-as <span class="math inline">\(1\)</span> when in fact they are actually in class <span class="math inline">\(0\)</span>. As such, the off-diagonal
+as <span class="math inline">\(1\)</span> when in fact they are actually of class <span class="math inline">\(0\)</span>. As such, the off-diagonal
 entries represent observations that are misclassified.</p>
 <p>In general, for a response with more than 2 categories, for example <span class="math inline">\(K=4\)</span>, the
-confusion matrix will take the form:</p>
+confusion matrix will take the form of a <span class="math inline">\(K \times K\)</span> matrix:</p>
 <p><img src="images/classif/confusion-matrix1.svg" width="50%" style="display: block; margin: auto;" /></p>
 <p>The way we read this crosstable is the same as in the binary-response case.
 For example, the number in the entry of row-1 and column-2 represents the number
 of observations that are classified as being of class <span class="math inline">\(a\)</span> when in fact they are
-actually in class <span class="math inline">\(b\)</span>. Likewise, the off-diagonal entries represent observations
+actually of class <span class="math inline">\(b\)</span>. Likewise, the off-diagonal entries represent observations
 that are misclassified. We can calculate the misclassification error from the
 confusion matrix using the following formula:</p>
 <p><span class="math display">\[\begin{align*}
@@ -681,9 +633,9 @@ confusion matrix using the following formula:</p>
 &amp;= \frac{\sum (\text{all cells off-diagonal}) }{n} \\
 &amp;= \frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
 \end{align*}\]</span></p>
-<p>In this way, the “ideal” confusion matrix is one that is completely diagonal,
-with all off-diagonal entries equal to <span class="math inline">\(0\)</span>. The higher the off-diagonal entries,
-the worse our model is performing.</p>
+<p>In this way, the “ideal” confusion matrix of a perfect classifier is one that
+is completely diagonal, with all off-diagonal entries equal to <span class="math inline">\(0\)</span>. The higher
+the off-diagonal entries, the worse our model is performing.</p>
 </div>
 <div id="binary-response-example" class="section level2">
 <h2><span class="header-section-number">29.3</span> Binary Response Example</h2>
@@ -709,13 +661,13 @@ form for a credit card (btw: as of this writing, one of the book authors owns
 such credit card, but he’s not affiliated with the brand):</p>
 <p><img src="images/classif/credit-card-application.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>Using some or all of the descriptors for a customer, we want a model <span class="math inline">\(f\)</span> that
-takes the answers to these questions <span class="math inline">\(\mathbf{x_i}\)</span>, and spits out either
-<span class="math inline">\(\text{accept}\)</span> or <span class="math inline">\(\text{reject}\)</span>. Pictorially:</p>
+takes the answers to these questions, denoted as <span class="math inline">\(\mathbf{x_i}\)</span>, and spits out
+either <span class="math inline">\(\text{accept}\)</span> or <span class="math inline">\(\text{reject}\)</span>. Pictorially:</p>
 <p><span class="math display">\[
 \mathbf{x_i} \to \boxed{\hat{f}} \to \hat{y}_i = 
-\begin{cases} \text{accept} \\ 
+\begin{cases} \text{accept application} \\ 
 &amp; \\
-\text{reject} \\ 
+\text{reject application} \\ 
 \end{cases}
 \]</span></p>
 <p>Now, given past data on acceptances and rejections of previous customers, the
@@ -737,8 +689,8 @@ classification errors. In our hypothetical example: Are both types of errors,
 there may be situations in which a false acceptance is “worse” (in some way)
 than a false rejection, and vice versa. We explore these considerations with
 a couple of examples in the next sections.</p>
-<div id="application-for-checking-account" class="section level3">
-<h3><span class="header-section-number">29.3.1</span> Application for Checking Account</h3>
+<div id="application-for-a-checking-account" class="section level3">
+<h3><span class="header-section-number">29.3.1</span> Application for a Checking Account</h3>
 <p>Let’s further investigate the different types of errors that may occur in a
 classification scenario. For instance, let’s consider an application process
 for a financial product like a checking (or a savings) account.</p>
@@ -775,28 +727,38 @@ false accept, this is a type of error that the bank can better tolerate, and
 the lucky customer will receive the cash bonus.</p>
 <p>Hence, when constructing the confusion matrix, we might want to assign
 different penalties to the different errors. For example we can give a penalty
-of 5 for a false reject, and a penalty of 1 for a false accept.</p>
+of 5 for a false reject, and a penalty of 1 for a false accept. We do this
+because the false reject is considered to be more costly than a false accept.</p>
 <p><img src="images/classif/accept-reject3.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>Note that the values 1 and 5 were somewhat arbitrary; the actual values
 are less important as the relative <em>magnitude</em> of them (for example we could
-have just as easily used <span class="math inline">\(20\)</span> and <span class="math inline">\(50\)</span>, respectively, instead).</p>
+have just as easily used <span class="math inline">\(20\)</span> and <span class="math inline">\(50\)</span>, respectively, instead). Obviously the
+amount of penalty values depend on expertise information, and will vary from
+one classification problem to another.</p>
 </div>
-<div id="application-for-loan" class="section level3">
-<h3><span class="header-section-number">29.3.2</span> Application for Loan</h3>
+<div id="application-for-a-loan" class="section level3">
+<h3><span class="header-section-number">29.3.2</span> Application for a Loan</h3>
 <p>Now, suppose that the application process in question is for a loan
 (e.g. mortgage loan, or car loan).</p>
 <p><img src="images/classif/customer-bank3.svg" width="70%" style="display: block; margin: auto;" /></p>
 <p>The two types of errors still stand: false rejection and false acceptance.</p>
 <p><img src="images/classif/accept-reject1.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p>Compared to the previous example about the checking account, now the two
-errors have different interpretations and consequences:</p>
+<p>Like in the previous example about the checking account, we also have the
+same two types of errors:</p>
 <ul>
-<li><p><strong>False Rejection</strong>: The bank loses money that they could have gathered
-through interest from the customer.</p></li>
-<li><p><strong>False Acceptance</strong>: The bank loses money because the customer will
-ultimately default and not pay back the loan.</p></li>
+<li><p><strong>False Rejection</strong>: This occurs when a customer fills out an application for
+a loan, and despite the fact that they are theoretically eligible to borrow
+money, this customer is rejected.</p></li>
+<li><p><strong>False Acceptance</strong>: This occurs when a customer who is (theoretically) an
+unsuited customer for the bank, still gets approved to borrow money.</p></li>
 </ul>
-<p>Same question: which error is more costly (from the bank’s point of view)?</p>
+<p>Same question: which error is more costly (from the bank’s point of view)?
+If you think about it, now the two errors have different interpretations and
+consequences:</p>
+<p>With <strong>false reject</strong>, the bank loses money that they could have gathered
+through interest from the customer.</p>
+<p>With <strong>false acceptance</strong>, the bank loses money because the customer will
+ultimately default and not pay back the loan.</p>
 <p>It shouldn’t be too difficult to notice that a false acceptance is worse than
 a false rejection. If the bank grants a loan to someone who won’t be able to
 pay it back in the long run, the bank will lose money (likely more money than
@@ -814,7 +776,7 @@ user.</p>
 <div id="decision-rules-and-errors" class="section level2">
 <h2><span class="header-section-number">29.4</span> Decision Rules and Errors</h2>
 <p>Another aspect that we need to discuss involves dealing with classifiers that
-produce a class assignment proabability, or a score that is used to make a
+produce a class assignment probability, or a score that is used to make a
 decision. A typical example is logistic regression.</p>
 <p>Recall that in logistic regression we model the posterior probabilities of the
 response given the data as:</p>
@@ -944,7 +906,7 @@ convert classification scores into predicted responses. To be more precise,
 a ROC curve is used to show in a visual way the tradeoff between sensitivity
 and specificity for every possible cut-off or threshould value <span class="math inline">\(\tau\)</span>, for
 a binary classification score.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-270"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
 <img src="images/classif/roc-curve1.svg" alt="Example of a ROC Curve" width="50%" />
 <p class="caption">
 Figure 29.1: Example of a ROC Curve
@@ -960,7 +922,7 @@ response. One of the classifiers is a linear discriminant model (LDA), while
 the other one is a quadratic discriminant model (QDA). Given a candidate
 threshold value <span class="math inline">\(\tau\)</span>, the TPR and FPR are graphed against each other. With a
 large set of thresholds, graphed pairs of TPR and FPR result in a ROC curve.</p>
-<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-271-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="allmodelsarewrong_files/figure-html/unnamed-chunk-23-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>In the figure above, the ROC curve associated to the QDA indicates that this
 method has better sensitivity and specificity performance than LDA.</p>
 <p>One of the purposes of the plot is to give us guidance for selecting a

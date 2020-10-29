@@ -51,70 +51,6 @@
 
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -203,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gd-algorithm-for-linear-regression"><i class="fa fa-check"></i><b>6.4</b> GD Algorithm for Linear Regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-vector-matrix-notation"><i class="fa fa-check"></i><b>6.4.1</b> GD Algorithm in vector-matrix notation</a></li>
+<li class="chapter" data-level="6.4.2" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-pointwise-notation"><i class="fa fa-check"></i><b>6.4.2</b> GD algorithm in pointwise notation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="olsml.html"><a href="olsml.html"><i class="fa fa-check"></i><b>7</b> Regression via Maximum Likelihood</a><ul>
 <li class="chapter" data-level="7.1" data-path="olsml.html"><a href="olsml.html#linear-regression-reminder"><i class="fa fa-check"></i><b>7.1</b> Linear Regression Reminder</a><ul>
@@ -221,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -245,9 +184,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>10.5.1</b> Bias-Variance Tradeoff Picture</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a></li>
+<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a><ul>
+<li class="chapter" data-level="11.1" data-path="overfit.html"><a href="overfit.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="overfit.html"><a href="overfit.html#bias-variance-reminder-and-pitfalls"><i class="fa fa-check"></i><b>11.1.1</b> Bias-Variance Reminder and Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#underfitting-overfitting-and-okayfitting"><i class="fa fa-check"></i><b>11.2.1</b> Underfitting, Overfitting and Okayfitting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="overfit.html"><a href="overfit.html#more-learning-sets"><i class="fa fa-check"></i><b>11.2.2</b> More learning sets</a></li>
+<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occur"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occur?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>12</b> Learning Phases</a><ul>
-<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
 <li class="chapter" data-level="12.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>12.2</b> Model Assessment</a><ul>
 <li class="chapter" data-level="12.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>12.2.1</b> Holdout Test Set</a></li>
 <li class="chapter" data-level="12.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>12.2.2</b> Why does a test set work?</a></li>
@@ -267,11 +216,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
 <li class="chapter" data-level="14" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>14</b> Regularization Techniques</a><ul>
-<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.1</b> Multicollinearity Issues</a><ul>
-<li class="chapter" data-level="14.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.1.1</b> Toy Example</a></li>
+<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#example-regularity-in-models"><i class="fa fa-check"></i><b>14.1</b> Example: Regularity in Models</a></li>
+<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.2</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.2.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.2</b> Irregular Coefficients</a></li>
-<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.3</b> Connection to Regularization</a></li>
+<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.3</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="14.4" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.4</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>15</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="15.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
@@ -315,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
 <li class="chapter" data-level="19" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>19</b> Beyond Linear Regression</a><ul>
-<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 <li class="chapter" data-level="19.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>19.2</b> Expanding the Regression Horizon</a><ul>
 <li class="chapter" data-level="19.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>19.2.1</b> Linearity</a></li>
 <li class="chapter" data-level="19.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>19.2.2</b> Parametric and Nonparametric</a></li>
@@ -333,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>21.2</b> Looking at the Neighbors</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>22</b> Nearest Neighbor Estimates</a><ul>
-<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
+<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-4"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
 <li class="chapter" data-level="22.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>22.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
 <li class="chapter" data-level="22.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>22.2.1</b> Distance Measures</a></li>
 <li class="chapter" data-level="22.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>22.2.2</b> KNN Estimator</a></li>
@@ -341,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>23</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-5"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
 <li class="chapter" data-level="23.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>23.2</b> Kernel Smoothers</a><ul>
 <li class="chapter" data-level="23.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>23.2.1</b> Kernel Functions</a></li>
 <li class="chapter" data-level="23.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>23.2.2</b> Weights from Kernels</a></li>
@@ -351,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VIII Classification</b></span></li>
 <li class="chapter" data-level="24" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>24</b> Classification</a><ul>
-<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
+<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-6"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
 <li class="chapter" data-level="24.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>24.1.1</b> Credit Score Example</a></li>
 <li class="chapter" data-level="24.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>24.1.2</b> Toy Example</a></li>
 <li class="chapter" data-level="24.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>24.1.3</b> Two-class Problem</a></li>
@@ -460,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
 <li class="chapter" data-level="33" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>33</b> Intro to Decision Trees</a><ul>
-<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
+<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-7"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
 <li class="chapter" data-level="33.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>33.2</b> Some Terminology</a><ul>
 <li class="chapter" data-level="33.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>33.2.1</b> Binary Trees</a></li>
 </ul></li>
@@ -499,14 +449,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="37" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>37</b> Bagging</a><ul>
-<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
+<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-8"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
 <li class="chapter" data-level="37.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>37.1.1</b> Idea of Bagging</a></li>
 </ul></li>
 <li class="chapter" data-level="37.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>37.2</b> Why Bother Bagging?</a></li>
 </ul></li>
 <li class="chapter" data-level="38" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>38</b> Random Forests</a><ul>
-<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
-<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-9"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
+<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-2"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
 <li class="chapter" data-level="38.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>38.2.1</b> Two Sources of Randomness</a></li>
 <li class="chapter" data-level="38.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>38.2.2</b> Regressions and Classification Forests</a></li>
 <li class="chapter" data-level="38.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>38.2.3</b> Key Advantage of Random Forests</a></li>
@@ -554,7 +504,7 @@ material in this chapter. And then at the end, we present its supervised aspect,
 <p>We can formulate the classfication problem behind CDA in a geometric way. For
 sake of illustration, let’s consider three classes in a 2-dimensional space,
 like depicted in the figure below.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-231"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
 <img src="images/discrim/discrim_axes1.svg" alt="Three classes in 2-dim space" width="50%" />
 <p class="caption">
 Figure 27.1: Three classes in 2-dim space
@@ -564,7 +514,7 @@ Figure 27.1: Three classes in 2-dim space
 dimensional representation that separates the three classes. One option is to
 consider the axis associated with the predictor <span class="math inline">\(X_1\)</span>, that is, the horizontal
 axis in the next figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-232"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
 <img src="images/discrim/discrim_axes2.svg" alt="Axis $X_1$ separates class 1 from groups 2 and 3" width="50%" />
 <p class="caption">
 Figure 27.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 from groups 2 and 3
@@ -574,7 +524,7 @@ Figure 27.2: Axis <span class="math inline">\(X_1\)</span> separates class 1 fro
 from classes 2 and 3. However, class 2 is largely confounded with class 3.</p>
 <p>Another option is to consider the axis associated with the predictor <span class="math inline">\(X_2\)</span>,
 that is, the vertical axis in the figure below:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-233"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
 <img src="images/discrim/discrim_axes3.svg" alt="Axis $X_1$ separates class 3 from groups 1 and 2" width="50%" />
 <p class="caption">
 Figure 27.3: Axis <span class="math inline">\(X_1\)</span> separates class 3 from groups 1 and 2
@@ -586,7 +536,7 @@ class 2.</p>
 <p>Is there an axis or dimension that “best” separates the three clouds?</p>
 <p>We can try to look for an optimal representation in the sense of finding
 an axis that best separates the clouds, like in the following diagram:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-234"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="images/discrim/discrim_axes4.svg" alt="An axis the best separates all three classes" width="50%" />
 <p class="caption">
 Figure 27.4: An axis the best separates all three classes
@@ -602,19 +552,21 @@ are well separated.</p>
 the best separation between classes? To answer this question, we can look for
 an axis <span class="math inline">\(\Delta_u\)</span>, spanned by some vector <span class="math inline">\(\mathbf{u}\)</span>, such that the linear
 combination</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-01">\[
 Z = u_1 X_1 + u_2 X_2
+\tag{27.1}
 \]</span></p>
 <p>separates all three groups in an adequate way.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-235"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
 <img src="images/discrim/discrim_axes5.svg" alt="Looking for a discriminant axis" width="50%" />
 <p class="caption">
 Figure 27.5: Looking for a discriminant axis
 </p>
 </div>
 <p>Algebraically, the idea is to look for a linear combination of the predictors:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-02">\[
 \mathbf{z} = \mathbf{Xu}
+\tag{27.2}
 \]</span></p>
 <p>that <em>ideally</em> could achieve the following two goals:</p>
 <ul>
@@ -624,7 +576,7 @@ Figure 27.5: Looking for a discriminant axis
 <p>On one hand, it would be nice to have <span class="math inline">\(\mathbf{u}\)</span>, such that the between-class
 dispersion is maximized. This corresponds to a situation in which the class
 centroids are well separated:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-236"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
 <img src="images/discrim/discrim_maximize_between.svg" alt="Maximize between-class dispersion" width="60%" />
 <p class="caption">
 Figure 27.6: Maximize between-class dispersion
@@ -633,7 +585,7 @@ Figure 27.6: Maximize between-class dispersion
 <p>On the other hand, it would also make sense to have <span class="math inline">\(\mathbf{u}\)</span>, such that
 the within-class dispersion is minimized. This implies having classes in which,
 on average, the “inner” variation is small (i.e. concentrated local dispersion)</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-237"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
 <img src="images/discrim/discrim_minimize_within.svg" alt="Minimize within-class dispersion" width="60%" />
 <p class="caption">
 Figure 27.7: Minimize within-class dispersion
@@ -648,7 +600,7 @@ Figure 27.7: Minimize within-class dispersion
 </ul>
 <p>Let’s see a cartoon picture of this issue. Say we have two classes, each
 one with its centroid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-238"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
 <img src="images/discrim/discrim_double_goal1.svg" alt="Minimize within-class dispersion" width="40%" />
 <p class="caption">
 Figure 27.8: Minimize within-class dispersion
@@ -657,7 +609,7 @@ Figure 27.8: Minimize within-class dispersion
 <p>Maximizing the between-class separation, involves choosing <span class="math inline">\(\mathbf{u}_a\)</span>
 parallel to the segment linking the centroids. In other words, the direction
 of <span class="math inline">\(\mathbf{u}\)</span> is the one that crosses the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-239"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
 <img src="images/discrim/discrim_double_goal2.svg" alt="Maximize between-class dispersion" width="40%" />
 <p class="caption">
 Figure 27.9: Maximize between-class dispersion
@@ -666,14 +618,14 @@ Figure 27.9: Maximize between-class dispersion
 <p>Minimizing the within-class separation, involves finding <span class="math inline">\(\mathbf{u}_b\)</span>
 perpendicular to the principal axis of the ellipses. This type of <span class="math inline">\(\mathbf{u}\)</span>
 does not necessarily crosses through the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-240"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
 <img src="images/discrim/discrim_double_goal3.svg" alt="Minimize within-class dispersion" width="40%" />
 <p class="caption">
 Figure 27.10: Minimize within-class dispersion
 </p>
 </div>
 <p>In general, we end up with two possibilities <span class="math inline">\(\mathbf{u}_a \neq \mathbf{u}_b\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-241"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
 <img src="images/discrim/discrim_double_goal4.svg" alt="Double goal of discriminant analysis ... generally impossible" width="40%" />
 <p class="caption">
 Figure 27.11: Double goal of discriminant analysis … generally impossible
@@ -691,38 +643,44 @@ accomplishing these two goals in a simultaneous way is impossible.</p>
 <h2><span class="header-section-number">27.3</span> Looking for a Compromise Criterion</h2>
 <p>So far we have an impossible simultaneity involving a minimization criterion,
 as well as a maximization criterion:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-03">\[
 min \{ \mathbf{u^\mathsf{T} W u} \} \Longrightarrow  \mathbf{W u} = \alpha \mathbf{u} \\
 \textsf{and} \\
 max \{ \mathbf{u^\mathsf{T} B u} \} \Longrightarrow  \mathbf{B u} = \beta \mathbf{u}
+\tag{27.3}
 \]</span></p>
 <p>What can we do about this simultaneous impossibility?</p>
 <p>Well, we need to look for a compromise. This is where the variance
 decomposition discussed in the <a href="discrim.html#discrim">previous chapter</a> comes handy:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-04">\[
 \mathbf{V} = \mathbf{W} + \mathbf{B}
+\tag{27.4}
 \]</span></p>
 <p>Doing some algebra, it can be shown that the quadratic form
 <span class="math inline">\(\mathbf{u^\mathsf{T} V u}\)</span> can be decomposed as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-05">\[
 \mathbf{u^\mathsf{T} V u} = \mathbf{u^\mathsf{T} W u} + \mathbf{u^\mathsf{T} B u}
+\tag{27.5}
 \]</span></p>
 <p>Again, we are pursuing a dual goal that is, in general, hard to accomplish:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-06">\[
 \mathbf{u^\mathsf{T} V u} = \underbrace{\mathbf{u^\mathsf{T} W u}}_{\text{minimize}} + \underbrace{\mathbf{u^\mathsf{T} B u}}_{\text{maximize}}
+\tag{27.6}
 \]</span></p>
 <p>We have two options for the compromise:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-07">\[
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
 \quad \textsf{OR} \quad
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} \right \}
+\tag{27.7}
 \]</span></p>
 <p>which are actually associated to the two ratios described in the previous
 chapter: correlation ratio <span class="math inline">\(\eta^2\)</span>, and <span class="math inline">\(F\)</span>-ratio:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-08">\[
 \eta^2 \leftrightarrow \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}}, 
 \qquad
 F \leftrightarrow\frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} 
+\tag{27.8}
 \]</span></p>
 <p>Which option to choose? The good news is that both options are equivalent, so
 using any one of them should give you similar—although not exactly identical—results.</p>
@@ -730,32 +688,38 @@ using any one of them should give you similar—although not exactly identical�
 <h3><span class="header-section-number">27.3.1</span> Correlation Ratio Criterion</h3>
 <p>Suppose we decide to work with the first criterion. We look for <span class="math inline">\(\mathbf{u}\)</span>
 such that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-09">\[
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
+\tag{27.9}
 \]</span></p>
 <p>This criterion is scale invariant, meaning that we use any scale variation of
 <span class="math inline">\(\mathbf{u}\)</span>: i.e. <span class="math inline">\(\alpha \mathbf{u}\)</span>. For convenience, we can impose a
 normalizing restriction: <span class="math inline">\(\mathbf{u^\mathsf{T} V u} = 1\)</span>. Consequently:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-10">\[
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} V u}} \right \} 
 \Longleftrightarrow max \{\mathbf{u^\mathsf{T} B u}\} \quad \text{s.t.} \quad 
 \mathbf{u^\mathsf{T} V u} = 1
+\tag{27.10}
 \]</span></p>
 <p>Using the method of Lagrangian multiplier:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-11">\[
 L(\mathbf{u}) = \mathbf{u^\mathsf{T} B u} - \lambda (\mathbf{u^\mathsf{T} V u} - 1)
+\tag{27.11}
 \]</span></p>
 <p>Deriving w.r.t <span class="math inline">\(\mathbf{u}\)</span> and equating to zero:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-12">\[
 \frac{\partial L(\mathbf{u})}{\partial \mathbf{u}} = 2 \mathbf{Bu} - 2 \lambda \mathbf{Vu} = \mathbf{0}
+\tag{27.12}
 \]</span></p>
 <p>The optimal vector <span class="math inline">\(\mathbf{u}\)</span> is such that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-13">\[
 \mathbf{Bu} = \lambda \mathbf{Vu}
+\tag{27.13}
 \]</span></p>
 <p>If the matrix <span class="math inline">\(\mathbf{V}\)</span> is inversible (which it is in general) then:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-14">\[
 \mathbf{V^{-1}Bu} = \lambda \mathbf{u}
+\tag{27.14}
 \]</span></p>
 <p>that is, the optimal vector <span class="math inline">\(\mathbf{u}\)</span> is eigenvector of <span class="math inline">\(\mathbf{V^{-1}B}\)</span>.
 Keep in mind that, in general, <span class="math inline">\(\mathbf{V^{-1}B}\)</span> is not symmetric.</p>
@@ -764,26 +728,30 @@ Keep in mind that, in general, <span class="math inline">\(\mathbf{V^{-1}B}\)</s
 <h3><span class="header-section-number">27.3.2</span> F-ratio Criterion</h3>
 <p>If we decide to work with the criterion associated to the <span class="math inline">\(F\)</span>-ratio, then the
 criterion to be maximized is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-15">\[
 max \left \{ \frac{\mathbf{u^\mathsf{T} B u}}{\mathbf{u^\mathsf{T} W u}} \right \} 
 \Longleftrightarrow max \{\mathbf{u^\mathsf{T} B u}\} \quad \text{s.t.} \quad 
 \mathbf{u^\mathsf{T} W u} = 1
+\tag{27.15}
 \]</span></p>
 <p>Applying the same Lagrangian procedure, with a multiplier <span class="math inline">\(\rho\)</span>, we have that
 <span class="math inline">\(\mathbf{u}\)</span> is such a vector that:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-16">\[
 \mathbf{Bu} = \rho \mathbf{Wu}
+\tag{27.16}
 \]</span></p>
 <p>and if <span class="math inline">\(\mathbf{W}\)</span> is invertible (which it is in most cases), then it can be
 shown that <span class="math inline">\(\mathbf{u}\)</span> is also eigenvector of <span class="math inline">\(\mathbf{W^{-1}B}\)</span>, associated
 to eigenvalue <span class="math inline">\(\rho\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-17">\[
 \mathbf{W^{-1}Bu} = \rho \mathbf{u}
+\tag{27.17}
 \]</span></p>
 <p>Likewise, keep in mind that, in general, <span class="math inline">\(\mathbf{W^{-1}B}\)</span> is not symmetric.</p>
 <p>The relationship between the eigenvalues <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\rho\)</span> is:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-18">\[
 \rho = \frac{\lambda}{1 - \lambda}
+\tag{27.18}
 \]</span></p>
 <p>Why is it important to keep in mind that, in general, both matrices
 <span class="math inline">\(\mathbf{V^{-1}B}\)</span> and <span class="math inline">\(\mathbf{W^{-1}B}\)</span> are not symmetric? Because most
@@ -798,7 +766,7 @@ which works with symmetric matrices.</p>
 The vector <span class="math inline">\(\mathbf{u}\)</span> is the axis from the PCA on the cloud of centroids
 <span class="math inline">\(\mathbf{g_1}, \mathbf{g_2}, \dots, \mathbf{g_K}\)</span>, but it is an axis on which
 the points are projected <strong>obliquely</strong>, not orthogonally.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-242"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="images/discrim/discrim_metrics1.svg" alt="Oblique Projection" width="50%" />
 <p class="caption">
 Figure 27.12: Oblique Projection
@@ -808,7 +776,7 @@ Figure 27.12: Oblique Projection
 <span class="math inline">\(\mathbf{V^{-1}}\)</span> and <span class="math inline">\(\mathbf{W^{-1}}\)</span>, this would be a simple PCA performed
 on the centroids, in which the classes would be less well separated, because of
 an orthogonal projection.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-243"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
 <img src="images/discrim/discrim_metrics2.svg" alt="Orthogonal Projection" width="50%" />
 <p class="caption">
 Figure 27.13: Orthogonal Projection
@@ -843,33 +811,38 @@ of the family of Linear Discriminant Analysis.</p>
 <p>The first thing we need to discuss is the notion of distance used in CDA. For
 this, consider two vectors <span class="math inline">\(\mathbf{a}, \mathbf{b} \in \mathbb{R}^{p}\)</span>. Recall
 that the inner product of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> is defined to be:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-19">\[
 \langle \mathbf{a}, \mathbf{b} \rangle = \mathbf{a}^\mathsf{T} \mathbf{b}
+\tag{27.19}
 \]</span></p>
 <p>Note that we can equivalently write the inner product as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-20">\[
 \langle \mathbf{a}, \mathbf{b} \rangle = \mathbf{a}^\mathsf{T} \mathbf{I_p} \mathbf{b}
+\tag{27.20}
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{I_p}\)</span> denotes the <span class="math inline">\(p \times p\)</span> identity matrix. This notation
 allows us to generalize inner products: for a symmetric matrix <span class="math inline">\(\mathbf{M}\)</span>
 (called the <strong>metric matrix</strong>) of conformable dimensions, we define the
 inner product of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>, under metric <span class="math inline">\(\mathbf{M}\)</span>, to be</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-21">\[
 \langle \mathbf{a}, \mathbf{b} \rangle_{\mathbf{M}} = \mathbf{a}^\mathsf{T} \mathbf{M} \mathbf{b}
+\tag{27.21}
 \]</span></p>
 <p>With this new notion of an inner product, we can also expand our definition of
 <strong>distance</strong>. Recall that the squared Euclidean distance between two vectors
 <span class="math inline">\(\mathbf{x_i}\)</span> and <span class="math inline">\(\mathbf{x_\ell}\)</span> is defined as:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:704-22">\[\begin{align*}
 d^2(i, \ell) &amp;= \langle \mathbf{x_i} - \mathbf{x_\ell}, \mathbf{x_i} - \mathbf{x_\ell} \rangle \\
 &amp;= (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}} (\mathbf{x_i} - \mathbf{x_\ell}) \\
 &amp;= (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}}  \mathbf{I_p} (\mathbf{x_i} - \mathbf{x_\ell})
+\tag{27.22}
 \end{align*}\]</span></p>
 <p>Now, we can play the same game as we did for the inner product and replace
 <span class="math inline">\(\mathbf{I_p}\)</span> with any metric matrix <span class="math inline">\(\mathbf{M}\)</span> to obtain a generalized
 distance metric:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-23">\[
 d^2_{\mathbf{M}} (i, \ell)  = (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}}  \mathbf{M} (\mathbf{x_i} - \mathbf{x_\ell})
+\tag{27.23}
 \]</span></p>
 </div>
 <div id="predictive-idea" class="section level3">
@@ -884,8 +857,9 @@ d^2_{\mathbf{M}} (i, \ell)  = (\mathbf{x_i} - \mathbf{x_\ell})^{\mathsf{T}}  \ma
 different distance: the <strong>Mahalanobis</strong> distance. This other type of distance
 is based on the Mahalanobis metric matrix <span class="math inline">\(\mathbf{W^{-1}}\)</span>. Consequently,
 the formula of the (squared) distance is given by:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-24">\[
 \textsf{Mahalanobis:} \quad d^2(\mathbf{x_i, g_k}) = (\mathbf{x_i} - \mathbf{g_k})^\mathsf{T} \mathbf{W}^{-1} (\mathbf{x_i} - \mathbf{g_k})
+\tag{27.24}
 \]</span></p>
 <p>What does this distance do? The Mahalanobis distance measures the (squared)
 distance of a point <span class="math inline">\(\mathbf{x_i}\)</span> to a centroid <span class="math inline">\(\mathbf{g_k}\)</span> by taking
@@ -893,7 +867,7 @@ into account the correlational structure of the variables.</p>
 <p>The following figure illustrates what this distance is doing compared to the
 Euclidean distance. Suppose we have two points <span class="math inline">\(\mathbf{x_i}\)</span> and
 <span class="math inline">\(\mathbf{x_\ell}\)</span> lying on the same density ellipsoid.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-244"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
 <img src="images/discrim/discrim-euclidean-mahalanobis.svg" alt="Euclidean -vs- Mahalanobis distances" width="70%" />
 <p class="caption">
 Figure 27.14: Euclidean -vs- Mahalanobis distances
@@ -909,8 +883,9 @@ a particular point <span class="math inline">\(\mathbf{x_i}\)</span> to the cent
 on how spread out is the cloud of points in class <span class="math inline">\(k\)</span>. Moreover, if two points
 <span class="math inline">\(i\)</span> and <span class="math inline">\(\ell\)</span> are on the same density ellipsoid, then they are
 equidistant to the centroid:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-25">\[
 d^{2}_{\mathbf{W}^{-1}} (\mathbf{x_i}, \mathbf{g_k}) = d^{2}_{\mathbf{W}^{-1}} (\mathbf{x_\ell}, \mathbf{g_k})
+\tag{27.25}
 \]</span></p>
 </div>
 <div id="cda-classifier" class="section level3">
@@ -920,42 +895,46 @@ an object <span class="math inline">\(\mathbf{x_i}\)</span> to the class it is n
 <span class="math inline">\(\mathbf{W^{-1}}\)</span> metric to calculate the distance of the object from the
 centroid of the group. Expanding the Mahalanobis distance of <span class="math inline">\(\mathbf{x_i}\)</span> to
 centroid <span class="math inline">\(\mathbf{g_k}\)</span> we get:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:704-26">\[\begin{align*}
 d^2(\mathbf{x_i, g_k}) &amp;= (\mathbf{x_i} - \mathbf{g_k})^\mathsf{T} \mathbf{W}^{-1} (\mathbf{x_i} - \mathbf{g_k}) \\
 &amp;= \mathbf{x_i}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_i} - 2 \mathbf{g_k}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_i} + \mathbf{g_k}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_k}
+\tag{27.26}
 \end{align*}\]</span></p>
 <p>As you can tell, there are three terms: the first one does not depend on <span class="math inline">\(k\)</span>,
 but the second and third terms do depend on <span class="math inline">\(k\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-27">\[
 d^2(\mathbf{x_i, g_k}) = \underbrace{\mathbf{x_i}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_i}}_{constant} - \underbrace{2 \mathbf{g_k}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_i}}_{\text{depends on } k} + \underbrace{ \mathbf{g_k}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_k} }_{\text{depends on } k}
+\tag{27.27}
 \]</span></p>
 <p>Note that minimizing <span class="math inline">\(d^2(\mathbf{x_i, g_k})\)</span> is equivalent to maximizing the
 negative of those terms that depend on <span class="math inline">\(k\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-28">\[
 2 \mathbf{g_k}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_i} - \mathbf{g_k}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_k}
+\tag{27.28}
 \]</span></p>
 <p>Let’s go back to our hypothetical example at the beginning of the chapter. Now
 suppose that we have three unclassified individuals A, B, and C. In canonical
 discriminant analysis we compute the Mahalanobis distances of the unclassified
 objects to the three centroids.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-245"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
 <img src="images/discrim/discrim-cda-prediction1.svg" alt="Mahalanobis distance of an object to the class centroids" width="60%" />
 <p class="caption">
 Figure 27.15: Mahalanobis distance of an object to the class centroids
 </p>
 </div>
 <p>For instance, with individual A, we would have to compute:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:704-29">\[
 d^2(\mathbf{x_A}, \mathbf{g_1}), \quad d^2(\mathbf{x_A}, \mathbf{g_2}), \quad and \quad d^2(\mathbf{x_A}, \mathbf{g_3})
+\tag{27.29}
 \]</span></p>
 <p>and then select the class, in this case class <span class="math inline">\(C_2\)</span>, for which the Mahalanobis
 distance is minimal. An equivalent approach is to look for the maximum of:</p>
 <ul>
-<li><span class="math inline">\(2 \mathbf{g_1}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_1}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_1}\)</span></li>
-<li><span class="math inline">\(2 \mathbf{g_2}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_2}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_2}\)</span></li>
-<li><span class="math inline">\(2 \mathbf{g_3}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_3}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_3}\)</span></li>
+<li><p><span class="math inline">\(2 \mathbf{g_1}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_1}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_1}\)</span></p></li>
+<li><p><span class="math inline">\(2 \mathbf{g_2}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_2}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_2}\)</span></p></li>
+<li><p><span class="math inline">\(2 \mathbf{g_3}^\mathsf{T} \mathbf{W}^{-1} \mathbf{x_A} - \mathbf{g_3}^\mathsf{T} \mathbf{W}^{-1} \mathbf{g_3}\)</span></p></li>
 </ul>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-246"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
 <img src="images/discrim/discrim-cda-prediction2.svg" alt="Assign class for which Mahalanobis distance is minimal" width="60%" />
 <p class="caption">
 Figure 27.16: Assign class for which Mahalanobis distance is minimal
@@ -967,7 +946,7 @@ Figure 27.16: Assign class for which Mahalanobis distance is minimal
 <p>There is an underlying assumption behind the geometric rule of CDA. This rule
 should not be used if the two classes have different <em>a priori</em> probabilities
 or variances (we discuss this in the next chapter).</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-247"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
 <img src="images/discrim/discrim_limitations.svg" alt="To which class should we assign the new object?" width="50%" />
 <p class="caption">
 Figure 27.17: To which class should we assign the new object?
