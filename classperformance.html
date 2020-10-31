@@ -505,8 +505,9 @@ error, also referred to as the <em>Overall Measure of Error</em>:</p>
 of individual or pointwise errors <span class="math inline">\(err_i(\hat{y}_i, y_i)\)</span> that quantify the
 difference between an observed value <span class="math inline">\(y_i\)</span> and its predicted value <span class="math inline">\(\hat{y}_i\)</span>.
 Usually, most overall errors aggregate pointwise errors into a single measure:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-01">\[
 E(\widehat{f},f) = \text{measure} \left( \sum err_i(\hat{y}_i, y_i) \right )
+\tag{29.1}
 \]</span></p>
 <p>In a classification setting we still have response observations <span class="math inline">\(y_i\)</span> and
 predicted values <span class="math inline">\(\hat{y}_i\)</span>; we still want a way to compare <span class="math inline">\(y_i\)</span> versus
@@ -517,18 +518,20 @@ predicted values <span class="math inline">\(\hat{y}_i\)</span>; we still want a
 we have a binary response, that is <span class="math inline">\(y_i \in \{0, 1\}\)</span>, and assuming also that
 the predicted values are binary as well, <span class="math inline">\(\hat{y}_i \in \{0, 1\}\)</span>, then we could
 use the absolute error as a pointwise error measure:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-02">\[
 \left| y_i - \hat{y}_i \right| = \begin{cases}
 0 &amp; \text{if } y_i = \hat{y}_i \\
 &amp; \\
 1 &amp; \text{if } y_i \neq \hat{y}_i \\ \end{cases}
+\tag{29.2}
 \]</span></p>
 <p>or we could also use squared error:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-03">\[
 (y_i - \hat{y}_i)^2 = \begin{cases} 
 0 &amp; \text{if agree} \\
  &amp; \\
  1 &amp; \text{if disagree} \\ \end{cases}
+\tag{29.3}
 \]</span></p>
 <p>Again, keep in mind that the above error functions are valid as long as the
 predictions are binary, <span class="math inline">\(\hat{y}_i \in \{0, 1\}\)</span>, which is not always the
@@ -536,39 +539,43 @@ case for all classifiers.</p>
 <p>Now, suppose we still had binary data but instead we encoded our data so that
 <span class="math inline">\(y_i \in \{-1, 1\}\)</span>. What kind of pointwise error measure should we use?
 If we used squared error, we would get the following:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-04">\[
 (y_i - \hat{y}_i)^2 = \begin{cases} 
 0 &amp; \text{if agree} \\
  &amp; \\
  4 &amp; \text{if disagree} \\ \end{cases}
+\tag{29.4}
 \]</span></p>
 <p>Alternatively, under the same assumption that <span class="math inline">\(y_i \in \{-1, 1\}\)</span>, we could
 consider the product between the observed response and its predicted value:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-05">\[
 y_i \times \hat{y}_i = \begin{cases} 
  +1 &amp; \text{if agree} \\
  &amp; \\
 -1 &amp; \text{if disagree} \\
 \end{cases}
+\tag{29.5}
 \]</span></p>
 <p>The point that we are trying to make is that there are many different choices
 for pointwise error measures.</p>
 <p>Perhaps the most common option of pointwise error is the <strong>binary error</strong>,
 defined to be:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-06">\[
 [\![ \hat{y}_i \neq y_i ]\!] \to 
 \begin{cases} 
 0 \  (\text{or FALSE}) &amp; \text{if agree} \\ 
 &amp; \\
 1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\
 \end{cases}
+\tag{29.6}
 \]</span></p>
 <p>This type of error function is adequate for classification purposes, and it
 works well for the case in which we have a binary response, as well as when we
 have a response with more than two categories. Moreover, averaging these binary
 errors over our observations yields the <strong>classification error rate</strong>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-07">\[
 \text{classif. error rate:} \quad \frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
+\tag{29.7}
 \]</span></p>
 </div>
 <div id="error-for-categorical-response" class="section level3">
@@ -584,19 +591,21 @@ y &amp; a &amp; b &amp; c &amp; d &amp; b \\ \hline \hat{y} &amp; a &amp; a &amp
 <p>here the symbol <span class="math inline">\(\checkmark\)</span> denotes agreement between the observed values and
 the predicted values. In this case, it makes sense to use the <strong>binary error</strong>
 as our pointwise error measure previously defined:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-08">\[
 [\![ \hat{y}_i \neq y_i ]\!] \to 
 \begin{cases} 
 0 \  (\text{or FALSE}) &amp; \text{if agree} \\
 &amp; \\
 1 \ (\text{or TRUE}) &amp; \text{if disagree}  \\ 
 \end{cases}
+\tag{29.8}
 \]</span></p>
 <p>As in the binary-response case discussed in the previous section, averaging
 these pointwise errors over our observations yields the misclassification error
 rate:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-09">\[
 \frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
+\tag{29.9}
 \]</span></p>
 <p>This overall measure of error is the one that we’ll use in this book, unless
 mentioned otherwise.</p>
@@ -628,10 +637,11 @@ of observations that are classified as being of class <span class="math inline">
 actually of class <span class="math inline">\(b\)</span>. Likewise, the off-diagonal entries represent observations
 that are misclassified. We can calculate the misclassification error from the
 confusion matrix using the following formula:</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display" id="eq:707-10">\[\begin{align*}
 \text{Misclassification Error} &amp;= 1 - \frac{\sum (\text{all cells in diagonal}) }{n} \\
 &amp;= \frac{\sum (\text{all cells off-diagonal}) }{n} \\
 &amp;= \frac{1}{n} \sum_{i=1}^{n} [\![ \hat{y}_i \neq y_i ]\!]
+\tag{29.10}
 \end{align*}\]</span></p>
 <p>In this way, the “ideal” confusion matrix of a perfect classifier is one that
 is completely diagonal, with all off-diagonal entries equal to <span class="math inline">\(0\)</span>. The higher
@@ -663,12 +673,13 @@ such credit card, but he’s not affiliated with the brand):</p>
 <p>Using some or all of the descriptors for a customer, we want a model <span class="math inline">\(f\)</span> that
 takes the answers to these questions, denoted as <span class="math inline">\(\mathbf{x_i}\)</span>, and spits out
 either <span class="math inline">\(\text{accept}\)</span> or <span class="math inline">\(\text{reject}\)</span>. Pictorially:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-11">\[
 \mathbf{x_i} \to \boxed{\hat{f}} \to \hat{y}_i = 
 \begin{cases} \text{accept application} \\ 
 &amp; \\
 \text{reject application} \\ 
 \end{cases}
+\tag{29.11}
 \]</span></p>
 <p>Now, given past data on acceptances and rejections of previous customers, the
 confusion matrix will have the following four types of entries:</p>
@@ -703,12 +714,13 @@ cash bonus when someone opens a new checking account with them.</p>
 <p>As we mention above, using some or all of the descriptors for a customer, we
 want a model <span class="math inline">\(f\)</span> that takes the answers to the questions in the application
 form, denoted as <span class="math inline">\(\mathbf{x_i}\)</span>, and produces an output:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-12">\[
 \mathbf{x_i} \to \boxed{\hat{f}} \to \hat{y}_i = 
 \begin{cases} \text{accept} \\ 
 &amp; \\
 \text{reject} \\ 
 \end{cases}
+\tag{29.12}
 \]</span></p>
 <p>The format of the confusion matrix will be something like this:</p>
 <p><img src="images/classif/accept-reject1.svg" width="70%" style="display: block; margin: auto;" /></p>
@@ -780,16 +792,18 @@ produce a class assignment probability, or a score that is used to make a
 decision. A typical example is logistic regression.</p>
 <p>Recall that in logistic regression we model the posterior probabilities of the
 response given the data as:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-13">\[
 Prob(y_i \mid \mathbf{x_i}, \mathbf{b}) = 
 \begin{cases} 
 h(\mathbf{x_i})&amp;  \textsf{for } y_i = 1 \\ 
 &amp; \\
 1 - h(\mathbf{x_i}) &amp; \textsf{for } y_i = 0 \\ \end{cases}
+\tag{29.13}
 \]</span></p>
 <p>where <span class="math inline">\(h()\)</span> denotes the logistic function <span class="math inline">\(\phi()\)</span>:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-14">\[
 h(\mathbf{x}) = \phi(\mathbf{b^\mathsf{T} x})
+\tag{29.14}
 \]</span></p>
 <p>In this case, logistic regression provides both ways of handling the output,
 with the probability <span class="math inline">\(P(y \mid \mathbf{x})\)</span> or with a score given by the linear
@@ -798,23 +812,26 @@ signal <span class="math inline">\(s = \mathbf{b^\mathsf{T} x}\)</span>.</p>
 <span class="math inline">\(\text{reject}\)</span>. If we look at the graph of <span class="math inline">\(P(y)\)</span> and the logistic function of
 the linear signal, we can get a picture like this:</p>
 <p><img src="images/classif/prob-signal-threshold0.svg" width="70%" style="display: block; margin: auto;" /></p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-15">\[
 P(y = 1) = \frac{e^{\mathbf{b^\mathsf{T} x}} }{1 + e^{\mathbf{b^\mathsf{T} x}} }
+\tag{29.15}
 \]</span></p>
 <p>Now, suppose we have three individuals <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> with the following
 acceptance probabilities:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-16">\[
 P(\text{accept}_A) = 0.9;  \quad P(\text{accept}_B) = 0.1;  \quad  P(\text{accept}_C) = 0.5
+\tag{29.16}
 \]</span></p>
 <p>To classify these, we would need to introduce some sort of cutoff <span class="math inline">\(\tau\)</span> so that
 our decision rule is</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-17">\[
 \text{decision rule} = 
 \begin{cases} 
 \text{accept} &amp; \text{if } P(\text{accept}) &gt; \tau \\ 
  &amp; \\
 \text{reject} &amp; \text{otherwise} \\ 
 \end{cases}
+\tag{29.17}
 \]</span></p>
 <p>Where should we put <span class="math inline">\(\tau\)</span>? The default options is to set it at <span class="math inline">\(0.5\)</span>:</p>
 <p><img src="images/classif/prob-signal-threshold1.svg" width="70%" style="display: block; margin: auto;" /></p>
@@ -860,30 +877,36 @@ positive,” <span class="math inline">\(\text{FN}\)</span> stands for “false 
 “true negative.” With these values, we can obtain the following rates.</p>
 <p>We define the <strong>True Positive Rate</strong> (<span class="math inline">\(\text{TPR}\)</span>; sometimes
 called the <strong>sensitivity</strong>) as</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-18">\[
 \textsf{sensitivity:} \quad \mathrm{TPR} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\tag{29.18}
 \]</span></p>
 <p>Notice that TPR can be regarded as a conditional probability:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-19">\[
 \text{TPR} \quad \longleftrightarrow \quad P(+\hat{y} \mid +y)
+\tag{29.19}
 \]</span></p>
 <p>Similarly, we define the <strong>True Negative Rate</strong> (<span class="math inline">\(\text{TNR}\)</span>; sometimes called
 the <strong>specificity</strong>) as</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-20">\[
 \textsf{specificity:} \quad \mathrm{TNR} = \frac{\text{TN}}{\text{TN} + \text{FP}}
+\tag{29.20}
 \]</span></p>
 <p>As with TPR, we can also regard TNR as a conditional probability:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-21">\[
 \text{TNR} \quad \longleftrightarrow \quad P(-\hat{y} \mid -y)
+\tag{29.21}
 \]</span></p>
 <p>Additionally, we can also get the corresponding False Negative Rate (FNR)
 defined as one minus sensitivity:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-22">\[
 \mathrm{FNR} = 1 - \text{TPR} = \frac{\text{FN}}{\text{TP} + \text{FN}}
+\tag{29.22}
 \]</span></p>
 <p>as well as the False Positive Rate (FPR) defined as one minus specificity:</p>
-<p><span class="math display">\[
+<p><span class="math display" id="eq:707-23">\[
 \mathrm{FPR} = 1 - \text{TNR} = \frac{\text{FP}}{\text{TN} + \text{FP}}
+\tag{29.23}
 \]</span></p>
 <p>Ideally, we would like to have a classifier or decision rule that simultaneously
 minimizes both the false acceptance and false rejection rates. However,
