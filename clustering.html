@@ -51,70 +51,6 @@
 
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -203,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="gradient.html"><a href="gradient.html#moving-down-an-error-surface"><i class="fa fa-check"></i><b>6.3</b> Moving Down an Error Surface</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="gradient.html"><a href="gradient.html#the-direction-of-mathbfv"><i class="fa fa-check"></i><b>6.3.1</b> The direction of <span class="math inline">\(\mathbf{v}\)</span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gradient-descent-and-our-model"><i class="fa fa-check"></i><b>6.4</b> Gradient Descent and our Model</a></li>
+<li class="chapter" data-level="6.4" data-path="gradient.html"><a href="gradient.html#gd-algorithm-for-linear-regression"><i class="fa fa-check"></i><b>6.4</b> GD Algorithm for Linear Regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-vector-matrix-notation"><i class="fa fa-check"></i><b>6.4.1</b> GD Algorithm in vector-matrix notation</a></li>
+<li class="chapter" data-level="6.4.2" data-path="gradient.html"><a href="gradient.html#gd-algorithm-in-pointwise-notation"><i class="fa fa-check"></i><b>6.4.2</b> GD algorithm in pointwise notation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="olsml.html"><a href="olsml.html"><i class="fa fa-check"></i><b>7</b> Regression via Maximum Likelihood</a><ul>
 <li class="chapter" data-level="7.1" data-path="olsml.html"><a href="olsml.html#linear-regression-reminder"><i class="fa fa-check"></i><b>7.1</b> Linear Regression Reminder</a><ul>
@@ -221,7 +160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="learning.html"><a href="learning.html#two-types-of-errors"><i class="fa fa-check"></i><b>8.3</b> Two Types of Errors</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="learning.html"><a href="learning.html#individual-errors"><i class="fa fa-check"></i><b>8.3.1</b> Individual Errors</a></li>
 <li class="chapter" data-level="8.3.2" data-path="learning.html"><a href="learning.html#overall-errors"><i class="fa fa-check"></i><b>8.3.2</b> Overall Errors</a></li>
-<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Auxiliary Technicality</a></li>
+<li class="chapter" data-level="8.3.3" data-path="learning.html"><a href="learning.html#probability-as-an-auxiliary-technicality"><i class="fa fa-check"></i><b>8.3.3</b> Probability as an Auxiliary Technicality</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="learning.html"><a href="learning.html#noisy-targets"><i class="fa fa-check"></i><b>8.4</b> Noisy Targets</a></li>
 </ul></li>
@@ -245,9 +184,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.5.1" data-path="biasvar.html"><a href="biasvar.html#bias-variance-tradeoff-picture"><i class="fa fa-check"></i><b>10.5.1</b> Bias-Variance Tradeoff Picture</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a></li>
+<li class="chapter" data-level="11" data-path="overfit.html"><a href="overfit.html"><i class="fa fa-check"></i><b>11</b> Overfitting</a><ul>
+<li class="chapter" data-level="11.1" data-path="overfit.html"><a href="overfit.html#introduction-1"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="overfit.html"><a href="overfit.html#bias-variance-reminder-and-pitfalls"><i class="fa fa-check"></i><b>11.1.1</b> Bias-Variance Reminder and Pitfalls</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="overfit.html"><a href="overfit.html#simulation"><i class="fa fa-check"></i><b>11.2</b> Simulation</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="overfit.html"><a href="overfit.html#underfitting-overfitting-and-okayfitting"><i class="fa fa-check"></i><b>11.2.1</b> Underfitting, Overfitting and Okayfitting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="overfit.html"><a href="overfit.html#more-learning-sets"><i class="fa fa-check"></i><b>11.2.2</b> More learning sets</a></li>
+<li class="chapter" data-level="11.2.3" data-path="overfit.html"><a href="overfit.html#when-does-overfitting-occur"><i class="fa fa-check"></i><b>11.2.3</b> When does overfitting occur?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="overfit.html"><a href="overfit.html#in-summary"><i class="fa fa-check"></i><b>11.3</b> In Summary</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="phases.html"><a href="phases.html"><i class="fa fa-check"></i><b>12</b> Learning Phases</a><ul>
-<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-1"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.1" data-path="phases.html"><a href="phases.html#introduction-2"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
 <li class="chapter" data-level="12.2" data-path="phases.html"><a href="phases.html#model-assessment"><i class="fa fa-check"></i><b>12.2</b> Model Assessment</a><ul>
 <li class="chapter" data-level="12.2.1" data-path="phases.html"><a href="phases.html#holdout-test-set"><i class="fa fa-check"></i><b>12.2.1</b> Holdout Test Set</a></li>
 <li class="chapter" data-level="12.2.2" data-path="phases.html"><a href="phases.html#why-does-a-test-set-work"><i class="fa fa-check"></i><b>12.2.2</b> Why does a test set work?</a></li>
@@ -267,11 +216,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VI Regularization</b></span></li>
 <li class="chapter" data-level="14" data-path="regular.html"><a href="regular.html"><i class="fa fa-check"></i><b>14</b> Regularization Techniques</a><ul>
-<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.1</b> Multicollinearity Issues</a><ul>
-<li class="chapter" data-level="14.1.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.1.1</b> Toy Example</a></li>
+<li class="chapter" data-level="14.1" data-path="regular.html"><a href="regular.html#example-regularity-in-models"><i class="fa fa-check"></i><b>14.1</b> Example: Regularity in Models</a></li>
+<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#multicollinearity-issues"><i class="fa fa-check"></i><b>14.2</b> Multicollinearity Issues</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="regular.html"><a href="regular.html#toy-example"><i class="fa fa-check"></i><b>14.2.1</b> Toy Example</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.2</b> Irregular Coefficients</a></li>
-<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.3</b> Connection to Regularization</a></li>
+<li class="chapter" data-level="14.3" data-path="regular.html"><a href="regular.html#irregular-coefficients"><i class="fa fa-check"></i><b>14.3</b> Irregular Coefficients</a></li>
+<li class="chapter" data-level="14.4" data-path="regular.html"><a href="regular.html#connection-to-regularization"><i class="fa fa-check"></i><b>14.4</b> Connection to Regularization</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="pcr.html"><a href="pcr.html"><i class="fa fa-check"></i><b>15</b> Principal Components Regression</a><ul>
 <li class="chapter" data-level="15.1" data-path="pcr.html"><a href="pcr.html#motivation-example-1"><i class="fa fa-check"></i><b>15.1</b> Motivation Example</a></li>
@@ -315,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VII Extending Linear Regression</b></span></li>
 <li class="chapter" data-level="19" data-path="linear-extensions.html"><a href="linear-extensions.html"><i class="fa fa-check"></i><b>19</b> Beyond Linear Regression</a><ul>
-<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-2"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
+<li class="chapter" data-level="19.1" data-path="linear-extensions.html"><a href="linear-extensions.html#introduction-3"><i class="fa fa-check"></i><b>19.1</b> Introduction</a></li>
 <li class="chapter" data-level="19.2" data-path="linear-extensions.html"><a href="linear-extensions.html#expanding-the-regression-horizon"><i class="fa fa-check"></i><b>19.2</b> Expanding the Regression Horizon</a><ul>
 <li class="chapter" data-level="19.2.1" data-path="linear-extensions.html"><a href="linear-extensions.html#linearity"><i class="fa fa-check"></i><b>19.2.1</b> Linearity</a></li>
 <li class="chapter" data-level="19.2.2" data-path="linear-extensions.html"><a href="linear-extensions.html#parametric-and-nonparametric"><i class="fa fa-check"></i><b>19.2.2</b> Parametric and Nonparametric</a></li>
@@ -333,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.2" data-path="nonparametric.html"><a href="nonparametric.html#looking-at-the-neighbors"><i class="fa fa-check"></i><b>21.2</b> Looking at the Neighbors</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="knn.html"><a href="knn.html"><i class="fa fa-check"></i><b>22</b> Nearest Neighbor Estimates</a><ul>
-<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-3"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
+<li class="chapter" data-level="22.1" data-path="knn.html"><a href="knn.html#introduction-4"><i class="fa fa-check"></i><b>22.1</b> Introduction</a></li>
 <li class="chapter" data-level="22.2" data-path="knn.html"><a href="knn.html#k-nearest-neighbors-knn"><i class="fa fa-check"></i><b>22.2</b> <span class="math inline">\(k\)</span> Nearest Neighbors (KNN)</a><ul>
 <li class="chapter" data-level="22.2.1" data-path="knn.html"><a href="knn.html#distance-measures"><i class="fa fa-check"></i><b>22.2.1</b> Distance Measures</a></li>
 <li class="chapter" data-level="22.2.2" data-path="knn.html"><a href="knn.html#knn-estimator"><i class="fa fa-check"></i><b>22.2.2</b> KNN Estimator</a></li>
@@ -341,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html"><i class="fa fa-check"></i><b>23</b> Kernel Smoothers</a><ul>
-<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-4"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
+<li class="chapter" data-level="23.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#introduction-5"><i class="fa fa-check"></i><b>23.1</b> Introduction</a></li>
 <li class="chapter" data-level="23.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-smoothers-1"><i class="fa fa-check"></i><b>23.2</b> Kernel Smoothers</a><ul>
 <li class="chapter" data-level="23.2.1" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#kernel-functions"><i class="fa fa-check"></i><b>23.2.1</b> Kernel Functions</a></li>
 <li class="chapter" data-level="23.2.2" data-path="kernel-smoothers.html"><a href="kernel-smoothers.html#weights-from-kernels"><i class="fa fa-check"></i><b>23.2.2</b> Weights from Kernels</a></li>
@@ -351,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>VIII Classification</b></span></li>
 <li class="chapter" data-level="24" data-path="classif.html"><a href="classif.html"><i class="fa fa-check"></i><b>24</b> Classification</a><ul>
-<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-5"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
+<li class="chapter" data-level="24.1" data-path="classif.html"><a href="classif.html#introduction-6"><i class="fa fa-check"></i><b>24.1</b> Introduction</a><ul>
 <li class="chapter" data-level="24.1.1" data-path="classif.html"><a href="classif.html#credit-score-example"><i class="fa fa-check"></i><b>24.1.1</b> Credit Score Example</a></li>
 <li class="chapter" data-level="24.1.2" data-path="classif.html"><a href="classif.html#toy-example-1"><i class="fa fa-check"></i><b>24.1.2</b> Toy Example</a></li>
 <li class="chapter" data-level="24.1.3" data-path="classif.html"><a href="classif.html#two-class-problem"><i class="fa fa-check"></i><b>24.1.3</b> Two-class Problem</a></li>
@@ -420,8 +370,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="29.2" data-path="classperformance.html"><a href="classperformance.html#confusion-matrices"><i class="fa fa-check"></i><b>29.2</b> Confusion Matrices</a></li>
 <li class="chapter" data-level="29.3" data-path="classperformance.html"><a href="classperformance.html#binary-response-example"><i class="fa fa-check"></i><b>29.3</b> Binary Response Example</a><ul>
-<li class="chapter" data-level="29.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-checking-account"><i class="fa fa-check"></i><b>29.3.1</b> Application for Checking Account</a></li>
-<li class="chapter" data-level="29.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-loan"><i class="fa fa-check"></i><b>29.3.2</b> Application for Loan</a></li>
+<li class="chapter" data-level="29.3.1" data-path="classperformance.html"><a href="classperformance.html#application-for-a-checking-account"><i class="fa fa-check"></i><b>29.3.1</b> Application for a Checking Account</a></li>
+<li class="chapter" data-level="29.3.2" data-path="classperformance.html"><a href="classperformance.html#application-for-a-loan"><i class="fa fa-check"></i><b>29.3.2</b> Application for a Loan</a></li>
 </ul></li>
 <li class="chapter" data-level="29.4" data-path="classperformance.html"><a href="classperformance.html#decision-rules-and-errors"><i class="fa fa-check"></i><b>29.4</b> Decision Rules and Errors</a></li>
 <li class="chapter" data-level="29.5" data-path="classperformance.html"><a href="classperformance.html#roc-curves"><i class="fa fa-check"></i><b>29.5</b> ROC Curves</a><ul>
@@ -460,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>X Tree-based Methods</b></span></li>
 <li class="chapter" data-level="33" data-path="trees.html"><a href="trees.html"><i class="fa fa-check"></i><b>33</b> Intro to Decision Trees</a><ul>
-<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-6"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
+<li class="chapter" data-level="33.1" data-path="trees.html"><a href="trees.html#introduction-7"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
 <li class="chapter" data-level="33.2" data-path="trees.html"><a href="trees.html#some-terminology"><i class="fa fa-check"></i><b>33.2</b> Some Terminology</a><ul>
 <li class="chapter" data-level="33.2.1" data-path="trees.html"><a href="trees.html#binary-trees"><i class="fa fa-check"></i><b>33.2.1</b> Binary Trees</a></li>
 </ul></li>
@@ -499,14 +449,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="37" data-path="bagging.html"><a href="bagging.html"><i class="fa fa-check"></i><b>37</b> Bagging</a><ul>
-<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-7"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
+<li class="chapter" data-level="37.1" data-path="bagging.html"><a href="bagging.html#introduction-8"><i class="fa fa-check"></i><b>37.1</b> Introduction</a><ul>
 <li class="chapter" data-level="37.1.1" data-path="bagging.html"><a href="bagging.html#idea-of-bagging"><i class="fa fa-check"></i><b>37.1.1</b> Idea of Bagging</a></li>
 </ul></li>
 <li class="chapter" data-level="37.2" data-path="bagging.html"><a href="bagging.html#why-bother-bagging"><i class="fa fa-check"></i><b>37.2</b> Why Bother Bagging?</a></li>
 </ul></li>
 <li class="chapter" data-level="38" data-path="forest.html"><a href="forest.html"><i class="fa fa-check"></i><b>38</b> Random Forests</a><ul>
-<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-8"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
-<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-1"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
+<li class="chapter" data-level="38.1" data-path="forest.html"><a href="forest.html#introduction-9"><i class="fa fa-check"></i><b>38.1</b> Introduction</a></li>
+<li class="chapter" data-level="38.2" data-path="forest.html"><a href="forest.html#algorithm-2"><i class="fa fa-check"></i><b>38.2</b> Algorithm</a><ul>
 <li class="chapter" data-level="38.2.1" data-path="forest.html"><a href="forest.html#two-sources-of-randomness"><i class="fa fa-check"></i><b>38.2.1</b> Two Sources of Randomness</a></li>
 <li class="chapter" data-level="38.2.2" data-path="forest.html"><a href="forest.html#regressions-and-classification-forests"><i class="fa fa-check"></i><b>38.2.2</b> Regressions and Classification Forests</a></li>
 <li class="chapter" data-level="38.2.3" data-path="forest.html"><a href="forest.html#key-advantage-of-random-forests"><i class="fa fa-check"></i><b>38.2.3</b> Key Advantage of Random Forests</a></li>
@@ -536,7 +486,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">30</span> Clustering</h1>
 <p>In this part of the book, we go back to unsupervised learning methods. In
 particular, the so-called clustering methods.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-275"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
 <img src="images/cluster/four-corners-clustering.svg" alt="Clustering Corner" width="85%" />
 <p class="caption">
 Figure 30.1: Clustering Corner
@@ -567,7 +517,7 @@ have an explicit response in clustering; we want to (in a sense) find a “hidde
 variable that exposes group structure in the data. The groups are not defined
 in advanced. In other words, there is no observed variable that imposes a group
 structure.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-276"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
 <img src="images/cluster/data-corners2.svg" alt="Unobserved variable of interest" width="40%" />
 <p class="caption">
 Figure 30.2: Unobserved variable of interest
@@ -608,7 +558,7 @@ defining a hierarchy of partitions.</p></li>
 somewhat obvious from the data at first glance. Of course, there will be cases
 where there are no natural groups; in such a case, we might say we have
 “artificial” groups.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-277"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
 <img src="images/cluster/clustering-structures.svg" alt="Some Typical Clustering Structures" width="70%" />
 <p class="caption">
 Figure 30.3: Some Typical Clustering Structures
@@ -627,7 +577,7 @@ than objects within clusters. We give names to these concepts:</p>
 <li><p><strong>Within-cluster Homogeneity</strong>: Objects in a cluster should be similar enough;
 <em>each group is as much homogeneous as possible.</em></p></li>
 <li><p><strong>Between-cluster Heterogeneity</strong>: Objects in different clusters should be less
-similar than object within each cluster; <em>groups are as distinct as possible among them</em>.</p></li>
+similar than objects within each cluster; <em>groups are as distinct as possible among them</em>.</p></li>
 </ul>
 <p>In other words: we want high within-cluster homogeneity <em>and</em> between-cluster
 heterogeneity.</p>
@@ -648,12 +598,12 @@ to the individuals to be clustered (although you could also cluster variables).<
 </div>
 <div id="dispersion-measures" class="section level2">
 <h2><span class="header-section-number">30.2</span> Dispersion Measures</h2>
-<p>Let’s assume that the individuals are embeded in a Euclidean space
+<p>Let’s assume that the individuals are embedded in a Euclidean space
 (e.g. quantitative variables, or output of dimension reduction method). As
 usual, suppose that the individuals form a cloud of points in a <span class="math inline">\(p\)</span>-dimensional
 space, and that we also have the centroid or average individual, like in the
 following figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-278"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
 <img src="images/cluster/clusters-cloud2.svg" alt="Cloud of n points in p-dim space" width="50%" />
 <p class="caption">
 Figure 30.4: Cloud of n points in p-dim space
@@ -668,7 +618,7 @@ distances from the centroid given by:</p>
 \]</span></p>
 <p>Now suppose that we have some group structure in which objects are divided into
 several clusters <span class="math inline">\(\mathcal{C}_1, \mathcal{C}_2, \dots, \mathcal{C}_K\)</span>.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-279"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
 <img src="images/cluster/clusters-cloud3.svg" alt="Each cluster forms its own cloud" width="50%" />
 <p class="caption">
 Figure 30.5: Each cluster forms its own cloud
@@ -678,7 +628,7 @@ Figure 30.5: Each cluster forms its own cloud
 make the visual representation more pattent by using different shapes for the
 points. Likewise, we suppose that each cluster has its own centroid
 <span class="math inline">\(\mathbf{g_k}\)</span>:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-280"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
 <img src="images/cluster/clusters-cloud5.svg" alt="Each cluster has a certain within dispersion" width="50%" />
 <p class="caption">
 Figure 30.6: Each cluster has a certain within dispersion
@@ -692,7 +642,7 @@ is a specific Cluster Sum of Squared distances (<span class="math inline">\(\tex
 \text{CSSD} = \sum_{i \in \mathcal{C}_k} d^2(\mathbf{x_i}, \mathbf{g_k})
 \tag{30.2}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-281"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
 <img src="images/cluster/clusters-cloud6.svg" alt="Dispersion within each cluster" width="50%" />
 <p class="caption">
 Figure 30.7: Dispersion within each cluster
@@ -708,7 +658,7 @@ sum of squared distances <span class="math inline">\(\text{WSSD}\)</span>:</p>
 <div id="between-cluster-dispersion" class="section level4 unnumbered">
 <h4>Between Cluster Dispersion</h4>
 <p>Let’s now turn our attention to the centroids:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-282"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
 <img src="images/cluster/clusters-cloud7.svg" alt="Focusing on the centroids" width="50%" />
 <p class="caption">
 Figure 30.8: Focusing on the centroids
@@ -722,7 +672,7 @@ and the overall centroid. Let us call this between-cluster dispersion the
 \text{BSSD} = \sum_{k=1}^{K} n_k d^2(\mathbf{g_k}, \mathbf{g})
 \tag{30.4}
 \]</span></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-283"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
 <img src="images/cluster/clusters-cloud8.svg" alt="Dispersion between the centroids" width="50%" />
 <p class="caption">
 Figure 30.9: Dispersion between the centroids
@@ -771,7 +721,7 @@ satisfactory clustering.</p>
 4  0.3  0.6
 5  0.4  1.0</code></pre>
 <p>and their corresponding scatterplot</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-285"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
 <img src="images/cluster/aggregation1.svg" alt="Toy data set" width="60%" />
 <p class="caption">
 Figure 30.10: Toy data set
@@ -798,7 +748,7 @@ below the diagonal)</p>
 possible partition is the blue configuration that produces <span class="math inline">\(K = 2\)</span> clusters.
 The other partition is the red configuration which produces another set of
 <span class="math inline">\(K = 2\)</span> clusters.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-287"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
 <img src="images/cluster/aggregation2.svg" alt="Two possible clustering configurations" width="60%" />
 <p class="caption">
 Figure 30.11: Two possible clustering configurations
